@@ -1,0 +1,92 @@
+.formal-markdown-body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.formal-markdown-body h1,
+.formal-markdown-body h2,
+.formal-markdown-body h3,
+.formal-markdown-body h4,
+.formal-markdown-body h5,
+.formal-markdown-body h6 {
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.formal-markdown-body h1 { font-size: 40px; }
+.formal-markdown-body h2 { font-size: 34px; }
+.formal-markdown-body h3 { font-size: 20px; }
+.formal-markdown-body h4 { font-size: 18px; }
+.formal-markdown-body h5 { font-size: 16px; }
+.formal-markdown-body h6 { font-size: 14px; }
+
+.formal-markdown-body p {
+  margin-bottom: 15px;
+}
+
+.formal-markdown-body ul,
+.formal-markdown-body ol {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.formal-markdown-body li {
+  margin-bottom: 5px;
+}
+
+.formal-markdown-body a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.formal-markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.formal-markdown-body blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 15px;
+  color: #666;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+.formal-markdown-body code {
+  font-family: "Courier New", Courier, monospace;
+  background-color: #f4f4f4;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.formal-markdown-body pre {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.formal-markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.formal-markdown-body th,
+.formal-markdown-body td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.formal-markdown-body th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
