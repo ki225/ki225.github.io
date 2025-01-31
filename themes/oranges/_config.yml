@@ -96,7 +96,7 @@ comments:
 navbar:
   -
     name: Home
-    enable: true
+    enable: false # do not display
     path: /
     key: home
   -
