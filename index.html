@@ -107,9 +107,100 @@
 
 
       <div class="flex-container">
-        <div class="container index">
+        <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        h1, h2 {
+            overflow: hidden;
+            border-right: .15em solid black;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            opacity: 0;
+        }
+        h1 {
+            animation: typing 3.5s steps(40, end) forwards, 
+                       blink-caret .75s step-end infinite,
+                       appear 0.1s linear forwards;
+        }
+        h2 {
+            animation: typing 3.5s steps(40, end) forwards 2s, 
+                       blink-caret .75s step-end infinite 2s,
+                       appear 0.1s linear forwards 2s;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: black }
+        }
+        @keyframes appear {
+            to { opacity: 1 }
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container index">
+
+  <div class="markdown-body" style="text-align: center;">
+    <!-- 自我介紹與網站說明 -->
+    <h1>$ cat welcome.txt</h1>
+    <p>
+      Welcome to my site! I share what I've learned about programming, cloud tech, and cybersecurity, plus some student life insights. These posts are all about my learning journey—feel free to join the conversation and share your thoughts!    </p>
+
+    <p> ☆`·.·˙˙`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆`·.·˙˙`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆</p>
+      <br/>
+      <h2>$ cat latest_posts.txt</h2>
+    <p>Latest Posts | Total 2 posts</p>
+
+    <div class="post-list">
+       <!-- 只取前三篇文章 -->
+        <div class="post-item" title="Hexo 個人網頁 建立自己的 plugin!">
+          <div class="time-m-d">2025-01-31</div>
+          <div class="title">
+            <a href="/2025/01/31/hexo-create-plugin/">
+              
+                
+                  <span>Hexo 個人網頁 建立自己的 plugin!</span>
+                
+              
+            </a>
+          </div>
+        </div>
+       <!-- 只取前三篇文章 -->
+        <div class="post-item" title="2024 GICS 尋找資安女婕思 創意發想賽過程紀錄與心得">
+          <div class="time-m-d">2025-01-31</div>
+          <div class="title">
+            <a href="/2025/01/31/2024GICS/">
+              
+                
+                  <span>2024 GICS 尋找資安女婕思 創意發想賽過程紀錄與心得</span>
+                
+              
+            </a>
+          </div>
+        </div>
+      
+    </div>
+
+    <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">  　　､ゞヾ∧ ""' ∧;,</p>
+    <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　　ヾ　　  　.　 ̮.　. 　彡</p>
+    <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　　ﾐ　　   　０　　 ０　ミ</p>
+    <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　~彡　　　　　　　　ﾐ</p>
+    <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 10px;">　　/ｿ,,　,０;,;;:､０ヾ`</p>
+    
+  </div>
+
+    
+      
+
+<!-- 
   <div class="post-list">
-    <!-- 遍历渲染文章 -->
     
       <div class="post-item" title="Hexo 個人網頁 建立自己的 plugin!">
         <div class="time-m-d">2025-01-31</div>
@@ -138,13 +229,16 @@
       </div>
     
   </div>
-  <nav class="post-navigation">
+  -->
+  <!-- <nav class="post-navigation">
     
     <span class="page-num">1 / 1</span>
     
-  </nav>
-</div>
-
+  </nav> -->
+  
+</div> 
+</body>
+</html>
         
 <div class="footer">
   <div class="social">
