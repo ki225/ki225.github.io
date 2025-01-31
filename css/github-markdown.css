@@ -621,11 +621,15 @@
 
 .markdown-body img {
   max-width: 90%;
-  display: block;
-  margin: 0 auto;
+  max-height: 100%;
+  display: inline-block; /* 讓圖片保持在同一行，而不會自動換行 */
+  vertical-align: middle;
+  margin: 0 auto; /* 讓圖片水平置中 */
   box-sizing: content-box;
   background-color: #fff;
+  white-space: nowrap;
 }
+
 
 .markdown-body img[align="right"] {
   padding-left: 20px;
