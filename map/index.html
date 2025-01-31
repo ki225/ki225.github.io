@@ -13,7 +13,7 @@
   
   <title>
     
-      map 
+      Map for Coffee Seeker ouo 
       
       
       |
@@ -99,7 +99,7 @@
         </li>
       
         <li class="nav-item" data-path="/map/">
-          <a href="/map/">Map</a>
+          <a href="/map/">Coffee Seeker</a>
         </li>
       
     </ul>
@@ -159,16 +159,42 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">map</div>
+      <div class="post-title">Map for Coffee Seeker ouo</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-01-31 16:07:01
+          2025-01-31 17:55:35
         </span>
         
       </div>
       <div class="markdown-body">
+        <p>Lately, I’ve been enjoying spending time working in cozy cafés. There’s just something about the aroma of coffee, the soft background music, and the gentle hum of conversations that makes it the perfect spot to focus. Below is a map of all the cafés I’ve visited so far—I’ll be updating it as I explore more! ☕✨</p>
+<br/>
+
+<link rel="stylesheet" href="//unpkg.com/hexo-tag-map/lib/leaflet@1.7.1.css"><script data-pjax src="//unpkg.com/hexo-tag-map/lib/leaflet@1.7.1.js"></script><script data-pjax src="//unpkg.com/hexo-tag-map/lib/leaflet.ChineseTmsProviders@1.0.4.js"></script><script data-pjax src="//unpkg.com/hexo-tag-map/lib/proj4@2.4.3.js"></script><script data-pjax src="//unpkg.com/hexo-tag-map/lib/proj4leaflet@1.0.1.min.js"></script><div id="map-1738317414484-z4boc" style="max-width:90%;height:400px;margin:0 auto;border-radius:5px;"></div><script>
+        var normalMap = L.tileLayer.chinaProvider('Google.Normal.Map',{attribution:'Google Maps'}),
+            satelliteMap = L.tileLayer.chinaProvider('Google.Satellite.Map',{attribution:'Google Maps'}),
+            routeMap = L.tileLayer.chinaProvider('Google.Satellite.Annotion',{attribution:'Google Maps'});
+        var baseLayers = {"一般地圖":normalMap,"衛星圖":satelliteMap,"衛星標註":routeMap};
+        var mymap = L.map("map-1738317414484-z4boc",{zoomControl:false, layers:[normalMap]});
+        L.control.layers(baseLayers).addTo(mymap);
+        L.control.zoom({zoomInTitle:'放大',zoomOutTitle:'缩小'}).addTo(mymap);
+    
+            L.marker([24.961209276943105,121.22487506107626])
+                .addTo(mymap)
+                .bindPopup("拾午gatherdelicious")
+                .openPopup();
         
+            L.marker([24.95620157117069,121.24972508840155])
+                .addTo(mymap)
+                .bindPopup("不眠深夜")
+                .openPopup();
+        var bounds = L.latLngBounds();bounds.extend([24.961209276943105,121.22487506107626]);bounds.extend([24.95620157117069,121.24972508840155]);mymap.fitBounds(bounds);</script>
+
+<br/>
+
+<p>Feel free to reach out and share your favorite cafés with me! I’d love to hear your recommendations and explore new spots together. ☕💬✨</p>
+
       </div>
       
         <div class="prev-or-next">
@@ -178,7 +204,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-01-31 16:07:01
+              2025-01-31 17:55:35
             </span>
             
           </div>
@@ -224,14 +250,14 @@
     
     <div class="footer-more">
       
-        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2025 Oranges</a>
+        Copyright © 2025 Kiki
         
     </div>
   
     
     <div class="footer-more">
       
-        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        Theme by Kiki | Powered by Hexo
         
     </div>
   
@@ -467,7 +493,7 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + map + '&url=' + http%3A%2F%2Fexample.com%2Fmap%2Findex.html + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Map%20for%20Coffee%20Seeker%20ouo + '&url=' + http%3A%2F%2Fexample.com%2Fmap%2Findex.html + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
