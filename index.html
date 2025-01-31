@@ -109,9 +109,9 @@
       <div class="flex-container">
         <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <style>
-        h1, h2 {
+        h1, h2,  .post-list {
             overflow: hidden;
             border-right: .15em solid black;
             white-space: nowrap;
@@ -119,15 +119,31 @@
             letter-spacing: .15em;
             opacity: 0;
         }
+         p{
+            overflow: hidden;
+            border-right: .15em solid black;
+            white-space: normal;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            opacity: 0;
+        }
         h1 {
-            animation: typing 3.5s steps(40, end) forwards, 
-                       blink-caret .75s step-end infinite,
-                       appear 0.1s linear forwards;
+            animation: 
+                typing 3.5s steps(40, end) forwards, 
+                blink-caret .75s step-end 4 forwards,
+                appear 0.1s linear forwards;
         }
         h2 {
-            animation: typing 3.5s steps(40, end) forwards 2s, 
-                       blink-caret .75s step-end infinite 2s,
-                       appear 0.1s linear forwards 2s;
+            animation: 
+                typing 3.5s steps(40, end) forwards 2s, 
+                blink-caret .75s step-end 4 forwards 2s,
+                appear 0.1s linear forwards 2s;
+        }
+        p, .post-list {
+            animation: 
+                typing 3.5s steps(40, end) forwards 4s, 
+                blink-caret .75s step-end 4 forwards 4s,
+                appear 0.1s linear forwards 4s;
         }
         @keyframes typing {
             from { width: 0 }
@@ -153,7 +169,7 @@
     <p>
       Welcome to my site! I share what I've learned about programming, cloud tech, and cybersecurity, plus some student life insights. These posts are all about my learning journey—feel free to join the conversation and share your thoughts!    </p>
 
-    <p> ☆`·.·˙˙`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆`·.·˙˙`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆</p>
+    <p> ☆`·.·˙˙`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆</p>
       <br/>
       <h2>$ cat latest_posts.txt</h2>
     <p>Latest Posts | Total 2 posts</p>
@@ -196,7 +212,7 @@
     
   </div>
 
-    
+    <br/>
       
 
 <!-- 
