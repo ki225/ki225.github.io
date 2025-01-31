@@ -19,7 +19,7 @@ date: 2025-01-30 21:16:36
 <br/>
 
 
-I’m currently a **junior Computer Science student at NCU** and a **technical support member in the Ambassador Program**. Feel free to join our tech workshops! 🚀  
+I’m currently a **junior Computer Science student at NCU** and a **technical support member in the AWS Ambassador Program**. Feel free to join our tech workshops in 2025! 🚀  
 
 ## 🌱 About Me
 - 🎓 **Computer Science and Information Engineering** @NCU  
