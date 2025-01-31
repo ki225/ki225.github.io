@@ -69,7 +69,6 @@ type: (commonjs)
 
 其他要注意的是，客製化插件資料夾底下的 `index.js` 必須加上以下語法註冊你設計的 tag，這樣之後 markdown 語法打出這些 tag 的時候 hexo 才知道可以做甚麼。
 
-> [!Warning]
 > 不可以和其他 tag 撞名
 
 ```js=
@@ -89,3 +88,9 @@ npx hexo s
 ```
 
 ![image](https://hackmd.io/_uploads/ry7eqf5u1l.png)
+
+### 部署上自己的網站
+```
+npx hexo generate
+npx hexo deploy
+```
