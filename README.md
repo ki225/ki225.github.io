@@ -1,6 +1,7 @@
 # ki225.github.io
-My hexo website
 
+## ⚙️ **Built with Hexo**  
+This site is powered by **Hexo**, a fast and lightweight **static site generator** perfect for developers and bloggers. It's **customized with a minimalist theme**, ensuring a clean and distraction-free reading experience.  
 
 ## Branches
 - Main
