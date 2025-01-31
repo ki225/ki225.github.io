@@ -125,7 +125,7 @@ navbar:
     path: /about/
     key: about
   -
-    name: Coffee Seeker
+    name: CafeSeeker
     enable: true
     path: /map/
     key: coffee-map
@@ -201,8 +201,8 @@ footer:
       name: Copyright © {thisYear} Kiki
       # path: https://github.com/zchengsite/hexo-theme-oranges
     -
-      name: Theme by Kiki | Powered by Hexo
-      # path: https://github.com/zchengsite/hexo-theme-oranges
+      name: Theme by Oranges | Powered by Hexo
+      path: https://github.com/zchengsite/hexo-theme-oranges
 
   # 浏览量统计
   # http://busuanzi.ibruce.info/
