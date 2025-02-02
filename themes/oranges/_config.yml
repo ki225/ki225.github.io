@@ -167,9 +167,9 @@ footer:
       icon: github
       path: https://github.com/zchengsite/hexo-theme-oranges
     # -
-    #   name: email
-    #   icon: envelope
-    #   path: 
+      # name: email
+      # icon: envelope
+      # path: 271yeye@gmail.com
     # -
     #   name: facebook
     #   icon: facebooksquare
@@ -213,18 +213,18 @@ footer:
       -
         enable: true
         id: busuanzi_value_site_pv
-        name: 本站总访问量
-        unit: 次
+        name: Total Visits
+        unit: times
       -
         enable: true
         id: busuanzi_value_page_pv
-        name: 本文总阅读量
-        unit: 次
+        name: Page Views
+        unit: times
       -
         enable: true
         id: busuanzi_value_site_uv
-        name: 本站访客数
-        unit: 人
+        name: Total Visitors
+        unit: people
 
 # 文章搜索
 search:

@@ -49,91 +49,54 @@
         }
     </style>
 </head>
-<body>
+  <body>
+    <div class="container index">
 
+      <div class="markdown-body" style="text-align: center;">
+        <!-- 自我介紹與網站說明 -->
+        <h1>$ cat welcome</h1>
+        <p>
+          Welcome to my site! I share what I've learned about programming, cloud tech, and cybersecurity, plus some student life insights. These posts are all about my learning journey—feel free to join the conversation and share your thoughts!    </p>
 
-<div class="container index">
+        <p> ☆`·.·˙˙`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆</p>
+          <br/>
+          <h2>$ cat latest_posts</h2>
+        <p>Latest Posts | Total <%= site.posts.length %> posts</p>
 
-  <div class="markdown-body" style="text-align: center;">
-    <!-- 自我介紹與網站說明 -->
-    <h1>$ cat welcome</h1>
-    <p>
-      Welcome to my site! I share what I've learned about programming, cloud tech, and cybersecurity, plus some student life insights. These posts are all about my learning journey—feel free to join the conversation and share your thoughts!    </p>
-
-    <p> ☆`·.·˙˙`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆</p>
-      <br/>
-      <h2>$ cat latest_posts</h2>
-    <p>Latest Posts | Total <%= site.posts.length %> posts</p>
-
-    <div class="post-list">
-      <% page.posts.slice(0, 3).forEach(function(item) { %> <!-- 只取前三篇文章 -->
-        <div class="post-item" title="<%- item.title %>">
-          <div class="time-m-d"><%- item.date.format("YYYY-MM-DD") %></div>
-          <div class="title">
-            <a href="<%- url_for(item.path) %>">
-              <% if(item.title !== "") { %>
-                <% if (item.top) { %>
-                  <span><span title="<%= __('pinned') %>" class="icon iconfont icon-pin-top post-top"></span><%- item.title %></span>
-                <% } else { %>
-                  <span><%- item.title %></span>
-                <% } %>
-              <% } else { %>
-                <span>untitled</span>
-              <% } %>
-            </a>
-          </div>
+        <div class="post-list">
+          <% page.posts.slice(0, 3).forEach(function(item) { %> <!-- 只取前三篇文章 -->
+            <div class="post-item" title="<%- item.title %>">
+              <div class="time-m-d"><%- item.date.format("YYYY-MM-DD") %></div>
+              <div class="title">
+                <a href="<%- url_for(item.path) %>">
+                  <% if(item.title !== "") { %>
+                    <% if (item.top) { %>
+                      <span><span title="<%= __('pinned') %>" class="icon iconfont icon-pin-top post-top"></span><%- item.title %></span>
+                    <% } else { %>
+                      <span><%- item.title %></span>
+                    <% } %>
+                  <% } else { %>
+                    <span>untitled</span>
+                  <% } %>
+                </a>
+              </div>
+            </div>
+          <% }) %>
         </div>
-      <% }) %>
-    </div>
 
-    <br/>
-    <br/>
-    <h2>$ cat fat_cat</h2>
-    <br/>
+        <br/>
+        <br/>
+        <h2>$ cat fat_cat</h2>
+        <br/>
 
-    <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">  　　､ゞヾ∧ ""' ∧;,</p>
-    <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　　ヾ　　  　.　 ̮.　. 　彡</p>
-    <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　　ﾐ　　   　０　　 ０　ミ</p>
-    <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　~彡　　　　　　　　ﾐ</p>
-    <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 10px;">　　/ｿ,,　,０;,;;:､０ヾ`</p>
-    
-  </div>
-
-    
-      
-
-<!-- 
-  <div class="post-list">
-    <% page.posts.forEach(function(item) { %>
-      <div class="post-item" title="<%- item.title %>">
-        <div class="time-m-d"><%- item.date.format("YYYY-MM-DD") %></div>
-        <div class="title">
-          <a href="<%- url_for(item.path) %>">
-            <% if(item.title !== "") { %>
-              <% if (item.top) { %>
-                <span><span title="<%= __('pinned') %>" class="icon iconfont icon-pin-top post-top"></span><%- item.title %></span>
-              <% } else { %>
-                <span><%- item.title %></span>
-              <% } %>
-            <% } else { %>
-              <span>untitled</span>
-            <% } %>
-          </a>
-        </div>
+        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">  　　､ゞヾ∧ ""' ∧;,</p>
+        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　　ヾ　　  　.　 ̮.　. 　彡</p>
+        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　　ﾐ　　   　０　　 ０　ミ</p>
+        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　~彡　　　　　　　　ﾐ</p>
+        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 10px;">　　/ｿ,,　,０;,;;:､０ヾ`</p>
+        
       </div>
-    <% }) %>
-  </div>
-  -->
-  <!-- <nav class="post-navigation">
-    <% if(page.prev !== 0){ %>
-      <a href="<%- url_for(page.prev_link)%>"><i class="iconfont icon-angleleft"></i></a>
-    <% } %>
-    <span class="page-num"><%- page.current %> / <%- page.total -%></span>
-    <% if(page.next !== 0){ %>
-      <a href="<%- url_for(page.next_link)%>"><i class="iconfont icon-angleright"></i></a>
-    <% } %>
-  </nav> -->
-  
-</div> 
-</body>
+      
+    </div> 
+  </body>
 </html>
