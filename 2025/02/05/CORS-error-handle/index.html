@@ -159,7 +159,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-02-05 12:15:47
+          2025-02-05 15:02:27
         </span>
         
               <span class="post-tags">
@@ -191,7 +191,7 @@
 <h3 id="CORS（Cross-Origin-Resource-Sharing，跨來源資源共享）：跨來源的信任證明"><a href="#CORS（Cross-Origin-Resource-Sharing，跨來源資源共享）：跨來源的信任證明" class="headerlink" title="CORS（Cross-Origin Resource Sharing，跨來源資源共享）：跨來源的信任證明"></a>CORS（Cross-Origin Resource Sharing，跨來源資源共享）：跨來源的信任證明</h3><p>為了防止這種情況，瀏覽器才會設計「同源政策」，確保 A 奶茶店的會員系統不能被 B 奶茶店隨便存取。這樣即使你誤入 B 奶茶店，也不會讓它直接讀取你的 A 奶茶店帳號資訊！</p>
 <h4 id="但如果-B-奶茶店真的是-A-奶茶店的合作夥伴呢？"><a href="#但如果-B-奶茶店真的是-A-奶茶店的合作夥伴呢？" class="headerlink" title="但如果 B 奶茶店真的是 A 奶茶店的合作夥伴呢？"></a>但如果 B 奶茶店真的是 A 奶茶店的合作夥伴呢？</h4><p>這時候就需要 CORS 來幫忙，讓 A 奶茶店主動允許 B 奶茶店存取會員系統。當 A 奶茶店確認 B 奶茶店的請求是安全的，就會回傳一張「信任證明」，讓 B 奶茶店合法地請求 API，不會被瀏覽器擋下來。</p>
 <p>簡單來說，CORS是一種瀏覽器的安全機制，用來限制不同來源（不同 domain、port 或協議）之間的 HTTP 請求。</p>
-<h2 id="我遇到的問題-CORS-resource-sharing-error-header-preflight-invalid-status"><a href="#我遇到的問題-CORS-resource-sharing-error-header-preflight-invalid-status" class="headerlink" title="我遇到的問題: CORS resource sharing error header preflight invalid status"></a>我遇到的問題: CORS resource sharing error header preflight invalid status</h2><p>我的前端（localhost:5173）要連後端（api.example.com），這就被視為跨來源（Cross-Origin）請求，所以瀏覽器會擋掉它。</p>
+<h2 id="問題-CORS-resource-sharing-error-header-preflight-invalid-status"><a href="#問題-CORS-resource-sharing-error-header-preflight-invalid-status" class="headerlink" title="問題: CORS resource sharing error header preflight invalid status"></a>問題: CORS resource sharing error header preflight invalid status</h2><p>我的前端（localhost:5173）要連後端（api.example.com），這就被視為跨來源（Cross-Origin）請求，所以瀏覽器會擋掉它。</p>
 <p><img src="/images/cors/img1.png"></p>
 <h3 id="什麼是-Preflight-Request？為什麼我的-POST-變成-OPTIONS？"><a href="#什麼是-Preflight-Request？為什麼我的-POST-變成-OPTIONS？" class="headerlink" title="什麼是 Preflight Request？為什麼我的 POST 變成 OPTIONS？"></a>什麼是 Preflight Request？為什麼我的 POST 變成 OPTIONS？</h3><p>當時 debug 是把後端 Amazon lambda 收到的整個 event 印出來，結果發現我的 request 變成 OPTIONS 了:</p>
 <p><img src="/images/cors/img4.png"></p>
@@ -210,7 +210,7 @@
 <p>下方是一張網路上的圖，只是他是打 GET 請求過去。不過概念一樣</p>
 </blockquote>
 <p><img src="/images/cors/img7.png"></p>
-<p>如此以來就會過了 ouo</p>
+<p>如此一來就會過了 ouo</p>
 
       </div>
       
@@ -226,7 +226,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-02-05 12:15:47
+              2025-02-05 15:02:27
             </span>
             
                   <span class="post-tags">
@@ -261,7 +261,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B7%A3%E8%B5%B7"><span class="toc-text">緣起</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E6%BA%90%E6%94%BF%E7%AD%96%EF%BC%88Same-Origin-Policy%EF%BC%89%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%83%E6%9C%89-CORS-%E5%95%8F%E9%A1%8C%EF%BC%9F"><span class="toc-text">同源政策（Same-Origin Policy）是什麼？為什麼會有 CORS 問題？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%9E%E5%92%96%E5%95%A1%E5%BB%B3%E5%88%B0%E5%A5%B6%E8%8C%B6%E5%BA%97%EF%BC%9A%E7%90%86%E8%A7%A3%E5%90%8C%E6%BA%90%E6%94%BF%E7%AD%96"><span class="toc-text">從咖啡廳到奶茶店：理解同源政策</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E5%A5%B6%E8%8C%B6%E5%BA%97%E4%BE%86%E8%A7%A3%E9%87%8B%E3%80%8C%E4%B8%8D%E5%90%8C%E6%BA%90%E3%80%8D%E7%9A%84%E5%8D%B1%E9%9A%AA"><span class="toc-text">用奶茶店來解釋「不同源」的危險</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS%EF%BC%88Cross-Origin-Resource-Sharing%EF%BC%8C%E8%B7%A8%E4%BE%86%E6%BA%90%E8%B3%87%E6%BA%90%E5%85%B1%E4%BA%AB%EF%BC%89%EF%BC%9A%E8%B7%A8%E4%BE%86%E6%BA%90%E7%9A%84%E4%BF%A1%E4%BB%BB%E8%AD%89%E6%98%8E"><span class="toc-text">CORS（Cross-Origin Resource Sharing，跨來源資源共享）：跨來源的信任證明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%86%E5%A6%82%E6%9E%9C-B-%E5%A5%B6%E8%8C%B6%E5%BA%97%E7%9C%9F%E7%9A%84%E6%98%AF-A-%E5%A5%B6%E8%8C%B6%E5%BA%97%E7%9A%84%E5%90%88%E4%BD%9C%E5%A4%A5%E4%BC%B4%E5%91%A2%EF%BC%9F"><span class="toc-text">但如果 B 奶茶店真的是 A 奶茶店的合作夥伴呢？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E9%81%87%E5%88%B0%E7%9A%84%E5%95%8F%E9%A1%8C-CORS-resource-sharing-error-header-preflight-invalid-status"><span class="toc-text">我遇到的問題: CORS resource sharing error header preflight invalid status</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Preflight-Request%EF%BC%9F%E7%82%BA%E4%BB%80%E9%BA%BC%E6%88%91%E7%9A%84-POST-%E8%AE%8A%E6%88%90-OPTIONS%EF%BC%9F"><span class="toc-text">什麼是 Preflight Request？為什麼我的 POST 變成 OPTIONS？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%B1%BA"><span class="toc-text">解決</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#API-Gateway-%E8%A8%AD%E7%BD%AE-CORS-%E8%88%87-OPTIONS"><span class="toc-text">API Gateway 設置 CORS 與 OPTIONS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%8C%E7%AB%AF%E5%BF%85%E9%A0%88%E5%9B%9E%E6%87%89%E6%AD%A3%E7%A2%BA%E7%9A%84-CORS-Header"><span class="toc-text">後端必須回應正確的 CORS Header</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B7%A3%E8%B5%B7"><span class="toc-text">緣起</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E6%BA%90%E6%94%BF%E7%AD%96%EF%BC%88Same-Origin-Policy%EF%BC%89%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%83%E6%9C%89-CORS-%E5%95%8F%E9%A1%8C%EF%BC%9F"><span class="toc-text">同源政策（Same-Origin Policy）是什麼？為什麼會有 CORS 問題？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%9E%E5%92%96%E5%95%A1%E5%BB%B3%E5%88%B0%E5%A5%B6%E8%8C%B6%E5%BA%97%EF%BC%9A%E7%90%86%E8%A7%A3%E5%90%8C%E6%BA%90%E6%94%BF%E7%AD%96"><span class="toc-text">從咖啡廳到奶茶店：理解同源政策</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E5%A5%B6%E8%8C%B6%E5%BA%97%E4%BE%86%E8%A7%A3%E9%87%8B%E3%80%8C%E4%B8%8D%E5%90%8C%E6%BA%90%E3%80%8D%E7%9A%84%E5%8D%B1%E9%9A%AA"><span class="toc-text">用奶茶店來解釋「不同源」的危險</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS%EF%BC%88Cross-Origin-Resource-Sharing%EF%BC%8C%E8%B7%A8%E4%BE%86%E6%BA%90%E8%B3%87%E6%BA%90%E5%85%B1%E4%BA%AB%EF%BC%89%EF%BC%9A%E8%B7%A8%E4%BE%86%E6%BA%90%E7%9A%84%E4%BF%A1%E4%BB%BB%E8%AD%89%E6%98%8E"><span class="toc-text">CORS（Cross-Origin Resource Sharing，跨來源資源共享）：跨來源的信任證明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%86%E5%A6%82%E6%9E%9C-B-%E5%A5%B6%E8%8C%B6%E5%BA%97%E7%9C%9F%E7%9A%84%E6%98%AF-A-%E5%A5%B6%E8%8C%B6%E5%BA%97%E7%9A%84%E5%90%88%E4%BD%9C%E5%A4%A5%E4%BC%B4%E5%91%A2%EF%BC%9F"><span class="toc-text">但如果 B 奶茶店真的是 A 奶茶店的合作夥伴呢？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%95%8F%E9%A1%8C-CORS-resource-sharing-error-header-preflight-invalid-status"><span class="toc-text">問題: CORS resource sharing error header preflight invalid status</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Preflight-Request%EF%BC%9F%E7%82%BA%E4%BB%80%E9%BA%BC%E6%88%91%E7%9A%84-POST-%E8%AE%8A%E6%88%90-OPTIONS%EF%BC%9F"><span class="toc-text">什麼是 Preflight Request？為什麼我的 POST 變成 OPTIONS？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%B1%BA"><span class="toc-text">解決</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#API-Gateway-%E8%A8%AD%E7%BD%AE-CORS-%E8%88%87-OPTIONS"><span class="toc-text">API Gateway 設置 CORS 與 OPTIONS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%8C%E7%AB%AF%E5%BF%85%E9%A0%88%E5%9B%9E%E6%87%89%E6%AD%A3%E7%A2%BA%E7%9A%84-CORS-Header"><span class="toc-text">後端必須回應正確的 CORS Header</span></a></li></ol></li></ol></li></ol>
       
     </div>
   </div>
