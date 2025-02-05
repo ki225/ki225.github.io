@@ -16,14 +16,14 @@ tags:
 ## **Education**  
 
 ### **National Central University** <span style="float: right;  font-size: 0.8em;">📍 Taoyuan, Taiwan</span>  
-**B.S. in Computer Science and Information Engineering** <span style="float: right;  font-size: 0.8em;">🗓️ Sep 2023 - June 2025</span>  
+**B.S. in Computer Science and Information Engineering** <span style="float: right;  font-size: 0.8em;">🗓️ Sep 2023 - June 2026</span>  
 
 ---
 
 ## **Work Experience**  
 
 ### **Program Tutoring** <span style="float: right;  font-size: 0.8em;">📍 Taiwan</span>  
-**Python & C++ Tutor** <span style="float: right;  font-size: 0.8em;">🗓️ July 2023 - Aug 2024</span>  
+**Python & C++ Tutor** <span style="float: right;  font-size: 0.8em;">🗓️ July 2023 - Mar 2024</span>  
 
 - Guided four students from beginner to advanced levels in Python and C++, helping them grasp programming concepts through real-world analogies.  
 - Developed tailored teaching materials based on individual student needs to enhance understanding and engagement.  
