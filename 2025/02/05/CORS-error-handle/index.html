@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      CORS 錯誤解析：CORS resource sharing error header preflight invalid status 解決方案 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki H</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/resume/">
+          <a href="/resume/">Resume</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">CORS 錯誤解析：CORS resource sharing error header preflight invalid status 解決方案</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-02-05 12:15:47
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/CORS/" title="CORS">
+                    #CORS
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/AmazonAPIGateway/" title="AmazonAPIGateway">
+                    #AmazonAPIGateway
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="緣起"><a href="#緣起" class="headerlink" title="緣起"></a>緣起</h1><p>CORS 設置一直是 Amazon API Gateway 很重要的一環，過去聽到這個坑應該有快三次，但得到的解方都不是很清楚，於是這次我還是栽了 QQ，所以決定寫一下我的解決過程。</p>
+<h2 id="同源政策（Same-Origin-Policy）是什麼？為什麼會有-CORS-問題？"><a href="#同源政策（Same-Origin-Policy）是什麼？為什麼會有-CORS-問題？" class="headerlink" title="同源政策（Same-Origin Policy）是什麼？為什麼會有 CORS 問題？"></a>同源政策（Same-Origin Policy）是什麼？為什麼會有 CORS 問題？</h2><h3 id="從咖啡廳到奶茶店：理解同源政策"><a href="#從咖啡廳到奶茶店：理解同源政策" class="headerlink" title="從咖啡廳到奶茶店：理解同源政策"></a>從咖啡廳到奶茶店：理解同源政策</h3><p>想像一下，你在一家咖啡廳點了一杯飲料，店員會把你的訂單拿去內場處理，但不會隨便幫你去隔壁的奶茶店點單，對吧？因為這家咖啡廳的規定是只能處理自己店內的訂單，不能直接與其他店共享點餐資訊或資源。這就是同源政策的概念！</p>
+<p>換成網站的語言，同源政策是一種瀏覽器的安全機制，它會限制網站存取來自不同網域、協議或埠號的資源，以防止惡意網站竊取你的敏感資訊，例如銀行帳戶或個人郵件。簡單來說，網站 A 可以向網站 B 發送請求，但不能直接讀取回應的內容，這樣就能防止駭客建立一個看似正常的網站，卻暗中讀取你在其他網站的私人資料。</p>
+<p><img src="/images/cors/img3.png" alt="alt text"></p>
+<h3 id="用奶茶店來解釋「不同源」的危險"><a href="#用奶茶店來解釋「不同源」的危險" class="headerlink" title="用奶茶店來解釋「不同源」的危險"></a>用奶茶店來解釋「不同源」的危險</h3><p>假設你習慣去 A 奶茶店 買飲料，這家店的老闆認識你，每次你點珍珠奶茶，他都知道要少冰、半糖，還會幫你累積點數。某天，你經過一間裝潢幾乎一樣的 B 奶茶店，看起來就像是 A 奶茶店的分店。你不疑有他，點了一杯珍珠奶茶，甚至輸入了你的會員帳號密碼。但其實，這家 B 奶茶店 是假的！它只是模仿 A 奶茶店的樣子，偷偷記錄你的會員帳密，然後用你的資料去 A 奶茶店領取免費飲料，甚至可能做更壞的事情！</p>
+<p><img src="/images/cors/img2.png" alt="alt text"></p>
+<p>這就是所謂的 <strong>跨來源攻擊（Cross-Origin Attack）</strong>，當一個網站（B 奶茶店）冒充另一個網站（A 奶茶店），然後偷偷存取你的資料或發送惡意請求。</p>
+<h3 id="CORS（Cross-Origin-Resource-Sharing，跨來源資源共享）：跨來源的信任證明"><a href="#CORS（Cross-Origin-Resource-Sharing，跨來源資源共享）：跨來源的信任證明" class="headerlink" title="CORS（Cross-Origin Resource Sharing，跨來源資源共享）：跨來源的信任證明"></a>CORS（Cross-Origin Resource Sharing，跨來源資源共享）：跨來源的信任證明</h3><p>為了防止這種情況，瀏覽器才會設計「同源政策」，確保 A 奶茶店的會員系統不能被 B 奶茶店隨便存取。這樣即使你誤入 B 奶茶店，也不會讓它直接讀取你的 A 奶茶店帳號資訊！</p>
+<h4 id="但如果-B-奶茶店真的是-A-奶茶店的合作夥伴呢？"><a href="#但如果-B-奶茶店真的是-A-奶茶店的合作夥伴呢？" class="headerlink" title="但如果 B 奶茶店真的是 A 奶茶店的合作夥伴呢？"></a>但如果 B 奶茶店真的是 A 奶茶店的合作夥伴呢？</h4><p>這時候就需要 CORS 來幫忙，讓 A 奶茶店主動允許 B 奶茶店存取會員系統。當 A 奶茶店確認 B 奶茶店的請求是安全的，就會回傳一張「信任證明」，讓 B 奶茶店合法地請求 API，不會被瀏覽器擋下來。</p>
+<p>簡單來說，CORS是一種瀏覽器的安全機制，用來限制不同來源（不同 domain、port 或協議）之間的 HTTP 請求。</p>
+<h2 id="我遇到的問題-CORS-resource-sharing-error-header-preflight-invalid-status"><a href="#我遇到的問題-CORS-resource-sharing-error-header-preflight-invalid-status" class="headerlink" title="我遇到的問題: CORS resource sharing error header preflight invalid status"></a>我遇到的問題: CORS resource sharing error header preflight invalid status</h2><p>我的前端（localhost:5173）要連後端（api.example.com），這就被視為跨來源（Cross-Origin）請求，所以瀏覽器會擋掉它。</p>
+<p><img src="/images/cors/img1.png"></p>
+<h3 id="什麼是-Preflight-Request？為什麼我的-POST-變成-OPTIONS？"><a href="#什麼是-Preflight-Request？為什麼我的-POST-變成-OPTIONS？" class="headerlink" title="什麼是 Preflight Request？為什麼我的 POST 變成 OPTIONS？"></a>什麼是 Preflight Request？為什麼我的 POST 變成 OPTIONS？</h3><p>當時 debug 是把後端 Amazon lambda 收到的整個 event 印出來，結果發現我的 request 變成 OPTIONS 了:</p>
+<p><img src="/images/cors/img4.png"></p>
+<p>如果請求是 <strong>非簡單請求（non-simple request）</strong>，瀏覽器會先發送一個 <strong>預檢請求（Preflight Request）</strong>，這是一個 OPTIONS 請求，用來詢問後端：「嘿，你允許我這樣發請求嗎？」</p>
+<p>舉個以 JavaScript 網頁發送 POST 請求的例子，因為這個請求帶了 Content-Type: application&#x2F;json，所以會觸發 OPTIONS 預檢請求。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;https://api.example.com/data&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">  <span class="attr">headers</span>: &#123; <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;Kiki&#x27;</span> &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>如果後端沒有正確回應這個 OPTIONS，你的 API 就會報錯！</p>
+<h2 id="解決"><a href="#解決" class="headerlink" title="解決"></a>解決</h2><h3 id="API-Gateway-設置-CORS-與-OPTIONS"><a href="#API-Gateway-設置-CORS-與-OPTIONS" class="headerlink" title="API Gateway 設置 CORS 與 OPTIONS"></a>API Gateway 設置 CORS 與 OPTIONS</h3><p><img src="/images/cors/img5.png"> </p>
+<p>API Gateway 設置完 OPTIONS method 後記得整合自己的 lambda…</p>
+<p><img src="/images/cors/img6.png"></p>
+<h3 id="後端必須回應正確的-CORS-Header"><a href="#後端必須回應正確的-CORS-Header" class="headerlink" title="後端必須回應正確的 CORS Header"></a>後端必須回應正確的 CORS Header</h3><p>以無伺服器為例，我這邊加上以下這端 code</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">http_method = event[<span class="string">&quot;requestContext&quot;</span>][<span class="string">&quot;http&quot;</span>][<span class="string">&quot;method&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> http_method == <span class="string">&quot;OPTIONS&quot;</span>:</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">&quot;statusCode&quot;</span>: <span class="number">200</span>,</span><br><span class="line">        <span class="string">&quot;headers&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">            <span class="string">&quot;Access-Control-Allow-Methods&quot;</span>: <span class="string">&quot;OPTIONS, POST, GET&quot;</span>,</span><br><span class="line">            <span class="string">&quot;Access-Control-Allow-Headers&quot;</span>: <span class="string">&quot;Content-Type, Authorization&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">&quot;body&quot;</span>: <span class="string">&quot;&quot;</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如此一來，你的伺服器在收到 OPTIONS 的時候就有辦法回應請求端(你的前端)說:「可以！你可以用 POST 方法來請求我，並且可以帶上 Content-Type 標頭。」於是你的前端瀏覽器再次把 POST 請求打過去，伺服器也正確回應。</p>
+<blockquote>
+<p>下方是一張網路上的圖，只是他是打 GET 請求過去。不過概念一樣</p>
+</blockquote>
+<p><img src="/images/cors/img7.png"></p>
+<p>如此以來就會過了 ouo</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/01/31/git-delete-submodule/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-02-05 12:15:47
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/CORS/" title="CORS">
+                        #CORS
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/AmazonAPIGateway/" title="AmazonAPIGateway">
+                        #AmazonAPIGateway
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B7%A3%E8%B5%B7"><span class="toc-text">緣起</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E6%BA%90%E6%94%BF%E7%AD%96%EF%BC%88Same-Origin-Policy%EF%BC%89%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%83%E6%9C%89-CORS-%E5%95%8F%E9%A1%8C%EF%BC%9F"><span class="toc-text">同源政策（Same-Origin Policy）是什麼？為什麼會有 CORS 問題？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%9E%E5%92%96%E5%95%A1%E5%BB%B3%E5%88%B0%E5%A5%B6%E8%8C%B6%E5%BA%97%EF%BC%9A%E7%90%86%E8%A7%A3%E5%90%8C%E6%BA%90%E6%94%BF%E7%AD%96"><span class="toc-text">從咖啡廳到奶茶店：理解同源政策</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E5%A5%B6%E8%8C%B6%E5%BA%97%E4%BE%86%E8%A7%A3%E9%87%8B%E3%80%8C%E4%B8%8D%E5%90%8C%E6%BA%90%E3%80%8D%E7%9A%84%E5%8D%B1%E9%9A%AA"><span class="toc-text">用奶茶店來解釋「不同源」的危險</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS%EF%BC%88Cross-Origin-Resource-Sharing%EF%BC%8C%E8%B7%A8%E4%BE%86%E6%BA%90%E8%B3%87%E6%BA%90%E5%85%B1%E4%BA%AB%EF%BC%89%EF%BC%9A%E8%B7%A8%E4%BE%86%E6%BA%90%E7%9A%84%E4%BF%A1%E4%BB%BB%E8%AD%89%E6%98%8E"><span class="toc-text">CORS（Cross-Origin Resource Sharing，跨來源資源共享）：跨來源的信任證明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%86%E5%A6%82%E6%9E%9C-B-%E5%A5%B6%E8%8C%B6%E5%BA%97%E7%9C%9F%E7%9A%84%E6%98%AF-A-%E5%A5%B6%E8%8C%B6%E5%BA%97%E7%9A%84%E5%90%88%E4%BD%9C%E5%A4%A5%E4%BC%B4%E5%91%A2%EF%BC%9F"><span class="toc-text">但如果 B 奶茶店真的是 A 奶茶店的合作夥伴呢？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E9%81%87%E5%88%B0%E7%9A%84%E5%95%8F%E9%A1%8C-CORS-resource-sharing-error-header-preflight-invalid-status"><span class="toc-text">我遇到的問題: CORS resource sharing error header preflight invalid status</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Preflight-Request%EF%BC%9F%E7%82%BA%E4%BB%80%E9%BA%BC%E6%88%91%E7%9A%84-POST-%E8%AE%8A%E6%88%90-OPTIONS%EF%BC%9F"><span class="toc-text">什麼是 Preflight Request？為什麼我的 POST 變成 OPTIONS？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%B1%BA"><span class="toc-text">解決</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#API-Gateway-%E8%A8%AD%E7%BD%AE-CORS-%E8%88%87-OPTIONS"><span class="toc-text">API Gateway 設置 CORS 與 OPTIONS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%8C%E7%AB%AF%E5%BF%85%E9%A0%88%E5%9B%9E%E6%87%89%E6%AD%A3%E7%A2%BA%E7%9A%84-CORS-Header"><span class="toc-text">後端必須回應正確的 CORS Header</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + CORS%20%E9%8C%AF%E8%AA%A4%E8%A7%A3%E6%9E%90%EF%BC%9ACORS%20resource%20sharing%20error%20header%20preflight%20invalid%20status%20%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F05%2FCORS-error-handle%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/05/CORS-error-handle/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
