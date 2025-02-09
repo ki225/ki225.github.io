@@ -159,7 +159,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-02-09 23:26:31
+          2025-02-09 23:57:08
         </span>
         
       </div>
@@ -167,11 +167,47 @@
         <p>Lately, I’ve been enjoying spending time working in cozy cafés. There’s just something about the aroma of coffee, the soft background music, and the gentle hum of conversations that makes it the perfect spot to focus. Below is a map of all the cafés I’ve visited so far—I’ll be updating it as I explore more! ☕✨</p>
 <br/>
 
-<p>No posts found with the tag "coffeeSeeker" that contain location data.</p>
+<link rel="stylesheet" href="//unpkg.com/hexo-tag-map/lib/leaflet@1.7.1.css"><script data-pjax src="//unpkg.com/hexo-tag-map/lib/leaflet@1.7.1.js"></script><script data-pjax src="//unpkg.com/hexo-tag-map/lib/leaflet.ChineseTmsProviders@1.0.4.js"></script><script data-pjax src="//unpkg.com/hexo-tag-map/lib/proj4@2.4.3.js"></script><script data-pjax src="//unpkg.com/hexo-tag-map/lib/proj4leaflet@1.0.1.min.js"></script><div id="map-1739117263329-f5jd6" style="max-width:100%;height:400px;margin:0 auto;border-radius:5px;"></div><script>
+      var normalMap = L.tileLayer.chinaProvider('Google.Normal.Map',{attribution:'Google Maps'}),
+          satelliteMap = L.tileLayer.chinaProvider('Google.Satellite.Map',{attribution:'Google Maps'}),
+          routeMap = L.tileLayer.chinaProvider('Google.Satellite.Annotion',{attribution:'Google Maps'});
+      var baseLayers = {"一般地圖":normalMap,"衛星圖":satelliteMap,"衛星標註":routeMap};
+      var mymap = L.map("map-1739117263329-f5jd6",{zoomControl:false, layers:[normalMap]});
+      L.control.layers(baseLayers).addTo(mymap);
+      L.control.zoom({zoomInTitle:'放大',zoomOutTitle:'縮小'}).addTo(mymap);
+  
+        L.marker([24.959749907204525,121.22101768540949])
+            .addTo(mymap)
+            .bindPopup("<b>Crooked-Thumb-coffee</b>")
+            .openPopup();
+    
+        L.marker([24.961209276943105,121.22487506107626])
+            .addTo(mymap)
+            .bindPopup("<b>gatherdelicious</b>")
+            .openPopup();
+    
+        L.marker([25.040837851216452,121.54654780923177])
+            .addTo(mymap)
+            .bindPopup("<b>Homey-s-cafe</b>")
+            .openPopup();
+    
+        L.marker([24.95620157117069,121.24972508840155])
+            .addTo(mymap)
+            .bindPopup("<b>nonsleep-studio</b>")
+            .openPopup();
+    
+        L.marker([24.954532449719675,121.21758121108239])
+            .addTo(mymap)
+            .bindPopup("<b>we-and-they</b>")
+            .openPopup();
+    
+        L.marker([25.03073295642815,121.53060959573996])
+            .addTo(mymap)
+            .bindPopup("<b>YABOO</b>")
+            .openPopup();
+    var bounds = L.latLngBounds();bounds.extend([24.959749907204525,121.22101768540949]);bounds.extend([24.961209276943105,121.22487506107626]);bounds.extend([25.040837851216452,121.54654780923177]);bounds.extend([24.95620157117069,121.24972508840155]);bounds.extend([24.954532449719675,121.21758121108239]);bounds.extend([25.03073295642815,121.53060959573996]);mymap.fitBounds(bounds);</script>
 
-
-
-<li><a>Crooked-Thumb-coffee</a></li><li><a>gatherdelicious</a></li><li><a>nonsleep-studio</a></li><li><a>we-and-they</a></li>
+<!--  -->
 
 
 <br/>
@@ -187,7 +223,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-02-09 23:26:31
+              2025-02-09 23:57:08
             </span>
             
           </div>
