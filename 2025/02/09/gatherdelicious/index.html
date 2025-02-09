@@ -13,7 +13,7 @@
   
   <title>
     
-      Hexo 個人網頁 建立自己的 plugin! 
+      gatherdelicious 
       
       
       |
@@ -155,19 +155,19 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">Hexo 個人網頁 建立自己的 plugin!</div>
+      <div class="post-title">gatherdelicious</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-02-09 18:00:37
+          2025-02-09 19:38:49
         </span>
         
               <span class="post-tags">
                 <i class="iconfont icon-tags mr-10" title="Tags"></i>
                 
                 <span class="span--tag mr-8">
-                  <a href="/tags/Hexo/" title="Hexo">
-                    #Hexo
+                  <a href="/tags/coffeeSeeker/" title="coffeeSeeker">
+                    #coffeeSeeker
                   </a>
                 </span>
                 
@@ -175,46 +175,13 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>這篇文章的源起只因突然想記錄我去了那些咖啡廳，所以就決定在我的頁面放一個咖啡收藏地圖!</p>
-<h3 id="使用別人的-plugin"><a href="#使用別人的-plugin" class="headerlink" title="使用別人的 plugin"></a>使用別人的 plugin</h3><p>剛好在 <a target="_blank" rel="noopener" href="https://hexo.io/plugins/">Hexo 官網</a>找插件的時候，看到對岸有大大做了一個插件叫做 <code>hexo-tag-map</code>，所以我就按照以下步驟把他下載到本地去用。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-tag-map --save</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://hackmd.io/_uploads/BJyxwG9_ke.png" alt="image"></p>
-<blockquote>
-<p>他的地圖大概是長這樣</p>
-</blockquote>
-<p>但發現這個插件一張地圖只能放一個地標，對於去一堆咖啡廳的我來說我才不想每個咖啡廳都塞一張地圖在我的頁面上ww</p>
-<p>所以我決定自己生一個插件!</p>
-<h3 id="建立一個插件"><a href="#建立一個插件" class="headerlink" title="建立一個插件"></a>建立一個插件</h3><p>在 hexo 的資料夾底下找到 <code>node_modules</code> 資料夾，接著建立一個資料夾，這個名字就是你 plugin 的名稱，且必須是以 <code>hexo</code> 開頭。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> node_modules/hexo-my-plugin</span><br><span class="line"><span class="built_in">cd</span> node_modules/hexo-my-plugin</span><br></pre></td></tr></table></figure>
-
-<p>使用 npm 初始化一个新的 <code>package.json</code> 文件：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
-
-<p>接下來他會幫你設定 <code>package.json</code> 需要的東西，回答他的問題就好，回錯也沒關係之後還能改。大概流程如下:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">This utility will walk you through creating a package.json file.</span><br><span class="line">It only covers the most common items, and tries to guess sensible defaults.</span><br><span class="line"></span><br><span class="line">See `npm help init` for definitive documentation on these fields</span><br><span class="line">and exactly what they do.</span><br><span class="line"></span><br><span class="line">Use `npm install &lt;pkg&gt;` afterwards to install a package and</span><br><span class="line">save it as a dependency in the package.json file.</span><br><span class="line"></span><br><span class="line">Press ^C at any time to quit.</span><br><span class="line">package name: (hexo-collector-map)</span><br><span class="line">version: (1.0.0)                                                                                                                          </span><br><span class="line">description: A custom hexo plugin for keeping the place I visited.</span><br><span class="line">entry point: (index.js)                                                                                                                   </span><br><span class="line">test command:</span><br><span class="line">git repository: &lt;我的github repo&gt;</span><br><span class="line">keywords: ...</span><br><span class="line">author: ...                                                                                                                            </span><br><span class="line">license: (ISC)                                                                                                                       </span><br><span class="line">type: (commonjs)</span><br></pre></td></tr></table></figure>
-
-<p>建立好後要讓自己的 hexo 知道有這個插件，所以要找到 hexo 資料夾底下的 <code>package.json</code> ，把 dependencies 新增我們剛剛建立的插件。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;hexo&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^7.3.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    ...<span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;hexo-my-plugin&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1.0.0&quot;</span> <span class="comment">// 你新增的</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>其他要注意的是，客製化插件資料夾底下的 <code>index.js</code> 必須加上以下語法註冊你設計的 tag，這樣之後 markdown 語法打出這些 tag 的時候 hexo 才知道可以做甚麼。</p>
-<blockquote>
-<p>不可以和其他 tag 撞名</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hexo.<span class="property">extend</span>.<span class="property">tag</span>.<span class="title function_">register</span>(</span><br><span class="line">  name,</span><br><span class="line">  <span class="keyword">function</span> (<span class="params">args, content</span>) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;,</span><br><span class="line">  options,</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<h3 id="看看成果吧"><a href="#看看成果吧" class="headerlink" title="看看成果吧"></a>看看成果吧</h3><p>重新更新網頁資料，在本地跑一次</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo clean &amp;&amp; npx hexo g &amp;&amp; npx hexo s</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://hackmd.io/_uploads/ry7eqf5u1l.png" alt="image"></p>
-<h3 id="部署上自己的網站"><a href="#部署上自己的網站" class="headerlink" title="部署上自己的網站"></a>部署上自己的網站</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npx hexo generate</span><br><span class="line">npx hexo deploy</span><br></pre></td></tr></table></figure>
-
+        <h2 id="拾午-gatherdelicious"><a href="#拾午-gatherdelicious" class="headerlink" title="拾午 gatherdelicious"></a>拾午 gatherdelicious</h2>
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2025/01/31/2024GICS/" target="_self">
+              <a href="/2025/02/09/nonsleep-studio/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -223,15 +190,15 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-02-09 18:00:37
+              2025-02-09 19:38:49
             </span>
             
                   <span class="post-tags">
                     <i class="iconfont icon-tags mr-10" title="Tags"></i>
                     
                     <span class="span--tag mr-8">
-                      <a href="/tags/Hexo/" title="Hexo">
-                        #Hexo
+                      <a href="/tags/coffeeSeeker/" title="coffeeSeeker">
+                        #coffeeSeeker
                       </a>
                     </span>
                     
@@ -239,11 +206,6 @@
               
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2025/01/31/git-delete-submodule/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
@@ -257,7 +219,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%88%A5%E4%BA%BA%E7%9A%84-plugin"><span class="toc-text">使用別人的 plugin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E4%B8%80%E5%80%8B%E6%8F%92%E4%BB%B6"><span class="toc-text">建立一個插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%8B%E7%9C%8B%E6%88%90%E6%9E%9C%E5%90%A7"><span class="toc-text">看看成果吧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E4%B8%8A%E8%87%AA%E5%B7%B1%E7%9A%84%E7%B6%B2%E7%AB%99"><span class="toc-text">部署上自己的網站</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%BE%E5%8D%88-gatherdelicious"><span class="toc-text">拾午 gatherdelicious</span></a></li></ol>
       
     </div>
   </div>
@@ -545,12 +507,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Hexo%20%E5%80%8B%E4%BA%BA%E7%B6%B2%E9%A0%81%20%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84%20plugin! + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F01%2F31%2Fhexo-create-plugin%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + gatherdelicious + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F09%2Fgatherdelicious%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/01/31/hexo-create-plugin/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/09/gatherdelicious/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
