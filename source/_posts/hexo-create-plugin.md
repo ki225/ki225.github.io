@@ -82,9 +82,9 @@ hexo.extend.tag.register(
 ```
 
 ### 看看成果吧
-在本地跑一次
+重新更新網頁資料，在本地跑一次
 ```sh=
-npx hexo s
+npx hexo clean && npx hexo g && npx hexo s
 ```
 
 ![image](https://hackmd.io/_uploads/ry7eqf5u1l.png)

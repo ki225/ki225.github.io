@@ -33,7 +33,7 @@ CORS 設置一直是 Amazon API Gateway 很重要的一環，過去聽到這個�
 
 簡單來說，CORS是一種瀏覽器的安全機制，用來限制不同來源（不同 domain、port 或協議）之間的 HTTP 請求。
 
-## 我遇到的問題: CORS resource sharing error header preflight invalid status
+## 問題: CORS resource sharing error header preflight invalid status
 我的前端（localhost:5173）要連後端（api.example.com），這就被視為跨來源（Cross-Origin）請求，所以瀏覽器會擋掉它。
 
 ![](images/cors/img1.png)
@@ -86,4 +86,4 @@ if http_method == "OPTIONS":
 
 ![](images/cors/img7.png)
 
-如此以來就會過了 ouo
+如此一來就會過了 ouo

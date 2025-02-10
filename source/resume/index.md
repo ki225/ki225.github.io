@@ -22,6 +22,27 @@ tags:
 
 ## **Work Experience**  
 
+### **AWS Educate Cloud Ambassador 7th** <span style="float: right;  font-size: 0.8em;">📍 AWS Taiwan</span>  
+**Technical support** <span style="float: right;  font-size: 0.8em;">🗓️ Dec 2024 - July 2025</span>  
+
+- Led cloud technology workshops with over 60 participants as the instructor.
+- Coordinated a certification preparation program that engaged over 1,000 participants.
+- Acted as a bridge between the campus and AWS, facilitating the introduction of resources into the educational sector.  
+
+
+### **Intern - eCloudvalley Technology** <span style="float: right;  font-size: 0.8em;">📍 New Taipei City Taiwan</span>  
+**Cloud Solutions Intern (MSP Team)** <span style="float: right;  font-size: 0.8em;">🗓️ July 2024 - Sep 2024</span>  
+
+- Collaborated with a team to develop a full-stack **AWS-based cloud security automation system (AI Guardian)**.  
+- Enhanced **WAF deployment efficiency**, strengthening enterprise security frameworks.  
+
+### **Teaching Assistant - Informatics and Social Service II** <span style="float: right;  font-size: 0.8em;">📍 National Central University</span>  
+**Python TA | Online Course Instructor | Informatics Camp Mentor** <span style="float: right;  font-size: 0.8em;">🗓️ Sep 2023 - June 2025</span>  
+
+- Promoted informatics education using a "learning by doing" approach.  
+- Delivered structured Python programming lectures to enhance students’ technical proficiency.  
+- Guided students in designing and implementing projects, including AI experience camps and project-based workshops.  
+
 ### **Program Tutoring** <span style="float: right;  font-size: 0.8em;">📍 Taiwan</span>  
 **Python & C++ Tutor** <span style="float: right;  font-size: 0.8em;">🗓️ July 2023 - Mar 2024</span>  
 
@@ -31,19 +52,6 @@ tags:
 - Provided detailed code analysis and logic explanations to strengthen students' problem-solving skills and coding proficiency.  
 
 
-### **Teaching Assistant - Informatics and Social Service II** <span style="float: right;  font-size: 0.8em;">📍 National Central University</span>  
-**Python TA | Online Course Instructor | Informatics Camp Mentor** <span style="float: right;  font-size: 0.8em;">🗓️ Sep 2023 - June 2025 | Jan 2024 - Feb 2024</span>  
-
-- Promoted informatics education using a "learning by doing" approach.  
-- Delivered structured Python programming lectures to enhance students’ technical proficiency.  
-- Guided students in designing and implementing projects, including AI experience camps and project-based workshops.  
-
-
-### **Intern - eCloudvalley Technology** <span style="float: right;  font-size: 0.8em;">📍 New Taipei City Taiwan</span>  
-**Cloud Solutions Intern (MSP Team)** <span style="float: right;  font-size: 0.8em;">🗓️ July 2024 - Sep 2024</span>  
-
-- Collaborated with a team to develop a full-stack **AWS-based cloud security automation system (AI Guardian)**.  
-- Enhanced **WAF deployment efficiency**, strengthening enterprise security frameworks.  
 ---
 
 ## **Projects**
