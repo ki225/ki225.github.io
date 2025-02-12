@@ -26,7 +26,7 @@ tags:
 **Technical support** <span style="float: right;  font-size: 0.8em;">🗓️ Dec 2024 - July 2025</span>  
 
 - Led cloud technology workshops with over 60 participants as the instructor.
-- Coordinated a certification preparation program that engaged over 1,000 participants.
+- Coordinated AWS Educate TW Cloud Ambassador led- Certificate Buddy Program that engaged over 1,000 participants.
 - Acted as a bridge between the campus and AWS, facilitating the introduction of resources into the educational sector.  
 
 
