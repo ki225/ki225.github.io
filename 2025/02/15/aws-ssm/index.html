@@ -13,7 +13,7 @@
   
   <title>
     
-      問題解決: Unable to import module &#39;lambda_function&#39;: cannot import name &#39;_imaging&#39; from &#39;PIL&#39; 
+      為何我剛剛已經新增 IAM Role 到 EC2，但仍無法透過該 IAM 執行特定行為？ 
       
       
       |
@@ -155,45 +155,61 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">問題解決: Unable to import module 'lambda_function': cannot import name '_imaging' from 'PIL'</div>
+      <div class="post-title">為何我剛剛已經新增 IAM Role 到 EC2，但仍無法透過該 IAM 執行特定行為？</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-02-05 16:09:35
+          2025-02-16 01:25:13
         </span>
         
-              <span class="post-tags">
-                <i class="iconfont icon-tags mr-10" title="Tags"></i>
-                
-                <span class="span--tag mr-8">
-                  <a href="/tags/AWSLambda/" title="AWSLambda">
-                    #AWSLambda
-                  </a>
-                </span>
-                
-                <span class="span--tag mr-8">
-                  <a href="/tags/Python/" title="Python">
-                    #Python
-                  </a>
-                </span>
-                
-                <span class="span--tag mr-8">
-                  <a href="/tags/PIL/" title="PIL">
-                    #PIL
-                  </a>
-                </span>
-                
-              </span>
-          
       </div>
       <div class="markdown-body">
-        <h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+        <h2 id="緣起"><a href="#緣起" class="headerlink" title="緣起"></a>緣起</h2><p>在使用 session manager 連接 EC2 會需要一定的權限，這時候就需要設定 IAM role 來實現，然而在 AWS console 把 IAM role attach 到 EC2 上後還是沒辦法馬上用 session manager，那這是為甚麼呢？又該如何解決？</p>
+<h2 id="背景知識：IAM-Role-與-EC2-Metadata-Service"><a href="#背景知識：IAM-Role-與-EC2-Metadata-Service" class="headerlink" title="背景知識：IAM Role 與 EC2 Metadata Service"></a>背景知識：IAM Role 與 EC2 Metadata Service</h2><p>在 AWS 環境中，當我們為 EC2 實例新增 IAM Role 時，EC2 會透過 EC2 Metadata Service (IMDS) 來獲取 IAM Role 提供的臨時憑證。這些憑證允許 EC2 內的應用程式使用 AWS 服務，而不需要手動設定 Access Key 和 Secret Key。</p>
+<h3 id="EC2-Metadata-Service-IMDS-的角色"><a href="#EC2-Metadata-Service-IMDS-的角色" class="headerlink" title="EC2 Metadata Service (IMDS) 的角色"></a>EC2 Metadata Service (IMDS) 的角色</h3><ul>
+<li>EC2 Metadata Service 允許 EC2 取得與該實例相關的資訊，包括 IAM Role 的臨時憑證。</li>
+<li>主要 API 端點：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://169.254.169.254/meta-data/</span><br></pre></td></tr></table></figure></li>
+<li><code>169.254.169.254</code> 是 EC2 Metadata Service 的特殊 IP，屬於 Link-Local Address（連結本地位址），僅在該實例內部可用。AWS 使用這個固定 IP 讓 EC2 無需透過 DNS 查詢，即可直接存取 Metadata Service。</li>
+</ul>
+<h3 id="Amazon-SSM-Agent-amazon-ssm-agent-的角色"><a href="#Amazon-SSM-Agent-amazon-ssm-agent-的角色" class="headerlink" title="Amazon SSM Agent (amazon-ssm-agent) 的角色"></a>Amazon SSM Agent (<code>amazon-ssm-agent</code>) 的角色</h3><ul>
+<li><code>amazon-ssm-agent</code> 允許 AWS Systems Manager (SSM) 管理 EC2 實例，例如執行命令、存取 Session Manager 等。</li>
+<li>它會透過 EC2 Metadata Service 取得 IAM Role 的臨時憑證，並用來與 AWS Systems Manager 進行通訊。</li>
+</ul>
+<p>當 EC2 新增或更新 IAM Role 時，EC2 Metadata Service 可能會緩存舊的 IAM 憑證，導致新的 IAM 權限無法立即生效。</p>
+<hr>
+<h2 id="問題排查與解決方法"><a href="#問題排查與解決方法" class="headerlink" title="問題排查與解決方法"></a>問題排查與解決方法</h2><h3 id="1️⃣-檢查-AWS-CLI-是否正確讀取-IAM-認證"><a href="#1️⃣-檢查-AWS-CLI-是否正確讀取-IAM-認證" class="headerlink" title="1️⃣ 檢查 AWS CLI 是否正確讀取 IAM 認證"></a>1️⃣ 檢查 AWS CLI 是否正確讀取 IAM 認證</h3><p>使用以下指令檢查 AWS CLI 是否正確讀取 IAM Role 提供的憑證：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws configure list</span><br></pre></td></tr></table></figure>
+
+<p>若 <code>access_key</code> 和 <code>secret_key</code> 顯示為 <code>None</code>，表示 IAM Role 尚未正確應用。</p>
+<p>若要手動測試 EC2 Metadata Service 是否正常運作，執行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">&quot;X-aws-ec2-metadata-token: <span class="subst">$(curl -X PUT <span class="string">&quot;http://169.254.169.254/latest/api/token&quot;</span> -H <span class="string">&quot;X-aws-ec2-metadata-token-ttl-seconds: 21600&quot;</span>)</span>&quot;</span> http://169.254.169.254/latest/meta-data/iam/security-credentials/</span><br></pre></td></tr></table></figure>
+
+<p>若此指令返回 IAM Role 名稱，表示 EC2 Metadata Service 正常運作。</p>
+<hr>
+<h3 id="2️⃣-重啟-amazon-ssm-agent-來強制更新-IAM-Role"><a href="#2️⃣-重啟-amazon-ssm-agent-來強制更新-IAM-Role" class="headerlink" title="2️⃣ 重啟 amazon-ssm-agent 來強制更新 IAM Role"></a>2️⃣ 重啟 <code>amazon-ssm-agent</code> 來強制更新 IAM Role</h3><p>如果 IAM Role 尚未生效，可能需要重啟 <code>amazon-ssm-agent</code>，強制它重新向 EC2 Metadata Service 取得最新的 IAM 憑證。</p>
+<p>執行以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart amazon-ssm-agent</span><br></pre></td></tr></table></figure>
+
+<p>此指令會：</p>
+<ol>
+<li>停止 <code>amazon-ssm-agent</code>，釋放過期的 IAM 憑證。</li>
+<li>重新啟動 <code>amazon-ssm-agent</code>，強制它向 EC2 Metadata Service 重新請求最新的 IAM Role 憑證。</li>
+<li>讓 AWS CLI 和 AWS Systems Manager 取得最新的 IAM 權限。</li>
+</ol>
+<hr>
+<h3 id="3️⃣-重新啟動-EC2-Metadata-Service（如果仍然無法生效）"><a href="#3️⃣-重新啟動-EC2-Metadata-Service（如果仍然無法生效）" class="headerlink" title="3️⃣ 重新啟動 EC2 Metadata Service（如果仍然無法生效）"></a>3️⃣ 重新啟動 EC2 Metadata Service（如果仍然無法生效）</h3><p>若重啟 <code>amazon-ssm-agent</code> 仍無法解決問題，可以嘗試重新啟動 EC2 Metadata Service：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart ec2-instance-connect</span><br></pre></td></tr></table></figure>
+
+<p>這將強制 EC2 重新載入 IAM Role，確保最新的權限已經應用。</p>
+<hr>
+<p>下次如果又遇到 EC2 新增 IAM Role 後無法立即生效，試試 <code>sudo systemctl restart amazon-ssm-agent</code>！</p>
+
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2025/02/05/CORS-error-handle/" target="_self">
+              <a href="/2025/02/15/aws-with-cookies/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -202,36 +218,13 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-02-05 16:09:35
+              2025-02-16 01:25:13
             </span>
             
-                  <span class="post-tags">
-                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
-                    
-                    <span class="span--tag mr-8">
-                      <a href="/tags/AWSLambda/" title="AWSLambda">
-                        #AWSLambda
-                      </a>
-                    </span>
-                    
-                    <span class="span--tag mr-8">
-                      <a href="/tags/Python/" title="Python">
-                        #Python
-                      </a>
-                    </span>
-                    
-                    <span class="span--tag mr-8">
-                      <a href="/tags/PIL/" title="PIL">
-                        #PIL
-                      </a>
-                    </span>
-                    
-                  </span>
-              
           </div>
           <div class="post-foot-prev">
             
-              <a href="/2025/02/14/terraform-in-windows/" target="_self">
+              <a href="/2025/02/16/aws-metadata/" target="_self">
                 <span>Next</span>
                 <i class="iconfont icon-chevronright"></i>
               </a>
@@ -248,7 +241,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B7%A3%E8%B5%B7"><span class="toc-text">緣起</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AD%98%EF%BC%9AIAM-Role-%E8%88%87-EC2-Metadata-Service"><span class="toc-text">背景知識：IAM Role 與 EC2 Metadata Service</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EC2-Metadata-Service-IMDS-%E7%9A%84%E8%A7%92%E8%89%B2"><span class="toc-text">EC2 Metadata Service (IMDS) 的角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Amazon-SSM-Agent-amazon-ssm-agent-%E7%9A%84%E8%A7%92%E8%89%B2"><span class="toc-text">Amazon SSM Agent (amazon-ssm-agent) 的角色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%95%8F%E9%A1%8C%E6%8E%92%E6%9F%A5%E8%88%87%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95"><span class="toc-text">問題排查與解決方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-%E6%AA%A2%E6%9F%A5-AWS-CLI-%E6%98%AF%E5%90%A6%E6%AD%A3%E7%A2%BA%E8%AE%80%E5%8F%96-IAM-%E8%AA%8D%E8%AD%89"><span class="toc-text">1️⃣ 檢查 AWS CLI 是否正確讀取 IAM 認證</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-%E9%87%8D%E5%95%9F-amazon-ssm-agent-%E4%BE%86%E5%BC%B7%E5%88%B6%E6%9B%B4%E6%96%B0-IAM-Role"><span class="toc-text">2️⃣ 重啟 amazon-ssm-agent 來強制更新 IAM Role</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%B8%8F%E2%83%A3-%E9%87%8D%E6%96%B0%E5%95%9F%E5%8B%95-EC2-Metadata-Service%EF%BC%88%E5%A6%82%E6%9E%9C%E4%BB%8D%E7%84%B6%E7%84%A1%E6%B3%95%E7%94%9F%E6%95%88%EF%BC%89"><span class="toc-text">3️⃣ 重新啟動 EC2 Metadata Service（如果仍然無法生效）</span></a></li></ol></li></ol>
       
     </div>
   </div>
@@ -536,12 +529,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E5%95%8F%E9%A1%8C%E8%A7%A3%E6%B1%BA%3A%20Unable%20to%20import%20module%20'lambda_function'%3A%20cannot%20import%20name%20'_imaging'%20from%20'PIL' + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F05%2FUnable-to-import-module-lambda-function-cannot-import-name-imaging-from-PIL%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E7%82%BA%E4%BD%95%E6%88%91%E5%89%9B%E5%89%9B%E5%B7%B2%E7%B6%93%E6%96%B0%E5%A2%9E%20IAM%20Role%20%E5%88%B0%20EC2%EF%BC%8C%E4%BD%86%E4%BB%8D%E7%84%A1%E6%B3%95%E9%80%8F%E9%81%8E%E8%A9%B2%20IAM%20%E5%9F%B7%E8%A1%8C%E7%89%B9%E5%AE%9A%E8%A1%8C%E7%82%BA%EF%BC%9F + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F15%2Faws-ssm%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/05/Unable-to-import-module-lambda-function-cannot-import-name-imaging-from-PIL/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/15/aws-ssm/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
