@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      Presigned URLs：讓未授權用戶安全存取 Amazon S3 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki H</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/resume/">
+          <a href="/resume/">Resume</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">About</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Presigned URLs：讓未授權用戶安全存取 Amazon S3</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-02-24 20:26:25
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/security/" title="security">
+                    #security
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/AWS/" title="AWS">
+                    #AWS
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/S3/" title="S3">
+                    #S3
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/policy/" title="policy">
+                    #policy
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/PresignedURL/" title="PresignedURL">
+                    #PresignedURL
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>想到 AWS 的儲存資源，一定會馬上想到最經典的 S3 服務。在資料儲存的安全議題上，AWS 提供了很多安全保障設定，像是 ACLs、bucket policies、Block Public Access、IAM 等等，而這篇文章想和大家介紹的是 S3 的 Presigned URLs。</p>
+<p>在我們設定 bucket policies 來公開我們的檔案前，不知道大家有沒有想過:</p>
+<ul>
+<li>“為什麼我沒辦法直接透過 object url 開啟檔案?”</li>
+<li>“為什麼點開 OPEN 之後出來的 url 那麼長?”</li>
+</ul>
+<p><img src="/images/AWS/s3/img2.png" alt="alt text"></p>
+<p><img src="/images/AWS/s3/img1.png" alt="alt text"></p>
+<p>而這部分就是我們接下來要說的 Presigned URLs</p>
+<h3 id="什麼是-Presigned-URLs？"><a href="#什麼是-Presigned-URLs？" class="headerlink" title="什麼是 Presigned URLs？"></a>什麼是 Presigned URLs？</h3><p>Amazon S3（Simple Storage Service）預設所有物件都是私有的，只有擁有該物件的 AWS 使用者才可以存取。然而，透過 presigned URL，物件擁有者可以授權其他使用者在特定時間內存取該物件。</p>
+<p>Presigned URLs 是 AWS 提供的一種機制，允許用戶生成一個帶有有效期權限的 URL，用來對允許未經授權的使用者透過該 URL 對 S3 物件進行有限操作。這些 URL 是由擁有 AWS 權限的用戶生成的，並且在 URL 中已經簽名並授權了特定的操作（如上傳、下載文件等），這樣一來使用者就可以在不需要提供 AWS 憑證的情況下執行指定的操作。</p>
+<p><img src="/images/AWS/s3/img4.png" alt="alt text"></p>
+<h3 id="什麼情境適合使用-Presigned-URLs-來訪問-S3？"><a href="#什麼情境適合使用-Presigned-URLs-來訪問-S3？" class="headerlink" title="什麼情境適合使用 Presigned URLs 來訪問 S3？"></a>什麼情境適合使用 Presigned URLs 來訪問 S3？</h3><p>Presigned URLs 可用於以下情境：</p>
+<ol>
+<li>臨時文件分享：允許未經授權的使用者在一定時間內下載 S3 物件。</li>
+<li>受限存取的 API 端點：當 API 需要限制存取 S3 資源時，可動態生成 presigned URL。</li>
+<li>無需直接暴露 AWS 憑證：應用程式可產生 presigned URL，讓客戶端存取 S3 而無需提供 AWS 憑證。</li>
+<li>允許用戶上傳文件：透過 presigned URL 允許使用者上傳文件到特定 S3 存儲桶，而無需開放整個 S3 權限。</li>
+</ol>
+<p>這邊舉一個情境說明，假設你的公司與一家設計公司合作開發新產品，你需要將一些涉及商業機密的設計圖共享給設計公司，這時候就可以透過生成 Presigned URL，你可以確保只有在指定時間內，設計公司才能下載這些文件，且文件一旦過期，便無法再被訪問。</p>
+<p>不只是限制別人下載或查看檔案，我們也可以透過這個方法限制別人上傳資料。假設我們要經營一個電子商務平台，平台允許商家上傳產品圖片以展示商品。為了讓平台的順暢的運作，我們希望限制每位商家只能上傳符合平台規定的圖片，這時候就可以透過 Presigned URLs 避免商家直接存取 S3，以實現這個需求。</p>
+<p><img src="/images/AWS/s3/img3.png" alt="alt text"></p>
+<h3 id="如何透過-Presigned-URLs-存取-S3？"><a href="#如何透過-Presigned-URLs-存取-S3？" class="headerlink" title="如何透過 Presigned URLs 存取 S3？"></a>如何透過 Presigned URLs 存取 S3？</h3><p>使用 AWS SDK（如 boto3）或 CLI 來產生 presigned URL，然後可透過瀏覽器或 HTTP 請求存取 S3 物件。</p>
+<h4 id="1-產生-Presigned-URL（Python-示例）"><a href="#1-產生-Presigned-URL（Python-示例）" class="headerlink" title="1. 產生 Presigned URL（Python 示例）"></a>1. 產生 Presigned URL（Python 示例）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> boto3</span><br><span class="line"><span class="keyword">from</span> botocore.exceptions <span class="keyword">import</span> ClientError</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create_presigned_url</span>(<span class="params">bucket_name, object_name, expiration=<span class="number">3600</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;生成 Presigned URL 以存取 S3 物件&quot;&quot;&quot;</span></span><br><span class="line">    s3_client = boto3.client(<span class="string">&#x27;s3&#x27;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = s3_client.generate_presigned_url(</span><br><span class="line">            <span class="string">&#x27;get_object&#x27;</span>,</span><br><span class="line">            Params=&#123;<span class="string">&#x27;Bucket&#x27;</span>: bucket_name, <span class="string">&#x27;Key&#x27;</span>: object_name&#125;,</span><br><span class="line">            ExpiresIn=expiration</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">except</span> ClientError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Error: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-使用-Presigned-URL-下載-S3-物件（Python-示例）"><a href="#2-使用-Presigned-URL-下載-S3-物件（Python-示例）" class="headerlink" title="2. 使用 Presigned URL 下載 S3 物件（Python 示例）"></a>2. 使用 Presigned URL 下載 S3 物件（Python 示例）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = create_presigned_url(<span class="string">&#x27;my-bucket&#x27;</span>, <span class="string">&#x27;my-object&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> url:</span><br><span class="line">    response = requests.get(url)</span><br><span class="line">    <span class="built_in">print</span>(response.content)  <span class="comment"># 下載的文件內容</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-產生-Presigned-URL-以允許上傳文件"><a href="#3-產生-Presigned-URL-以允許上傳文件" class="headerlink" title="3. 產生 Presigned URL 以允許上傳文件"></a>3. 產生 Presigned URL 以允許上傳文件</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">create_presigned_post</span>(<span class="params">bucket_name, object_name, expiration=<span class="number">3600</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;生成 Presigned URL 以允許上傳 S3 物件&quot;&quot;&quot;</span></span><br><span class="line">    s3_client = boto3.client(<span class="string">&#x27;s3&#x27;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = s3_client.generate_presigned_post(</span><br><span class="line">            bucket_name,</span><br><span class="line">            object_name,</span><br><span class="line">            ExpiresIn=expiration</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">except</span> ClientError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Error: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-使用-Presigned-URL-上傳文件（Python-示例）"><a href="#4-使用-Presigned-URL-上傳文件（Python-示例）" class="headerlink" title="4. 使用 Presigned URL 上傳文件（Python 示例）"></a>4. 使用 Presigned URL 上傳文件（Python 示例）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">response = create_presigned_post(<span class="string">&#x27;my-bucket&#x27;</span>, <span class="string">&#x27;my-upload-object&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> response:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;local-file.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        files = &#123;<span class="string">&#x27;file&#x27;</span>: (<span class="string">&#x27;local-file.txt&#x27;</span>, f)&#125;</span><br><span class="line">        http_response = requests.post(response[<span class="string">&#x27;url&#x27;</span>], data=response[<span class="string">&#x27;fields&#x27;</span>], files=files)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;Upload status: <span class="subst">&#123;http_response.status_code&#125;</span>&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Presigned-URLs-的最佳實踐"><a href="#Presigned-URLs-的最佳實踐" class="headerlink" title="Presigned URLs 的最佳實踐"></a>Presigned URLs 的最佳實踐</h3><ul>
+<li>嚴格限定 AWS Identity and Access Management (IAM) 權限，只允許最小化的 Amazon S3 操作和資源，減少不必要的曝光。</li>
+<li>儘可能使用臨時憑證（例如 role）而非存取密鑰。如果使用存取密鑰，定期輪換它們，以防止長期未授權存取。</li>
+<li>使用 S3 的 VPC 端點，以讓 VPC 直接連接到 S3 存儲桶而無需通過網路，進而提高隔離性和安全性。</li>
+<li>要求生成操作使用多因素身份驗證 (MFA)，以增強身份驗證。</li>
+<li>實時創建 Presigned URLs，確保它們的有效期最短。</li>
+<li>遵循最小權限原則，並在傳輸過程中進行加密，以減少使用預簽名 URL 時無意間資料存取或曝光的風險。</li>
+<li>在 URL 中使用唯一的隨機值（nonce），以防止未經授權的存取。驗證 nonce 以防止重放攻擊。這樣，結合時間限制存取後，使猜測 URL 變得困難。</li>
+</ul>
+<h3 id="Presigned-URLs-的好處"><a href="#Presigned-URLs-的好處" class="headerlink" title="Presigned URLs 的好處"></a>Presigned URLs 的好處</h3><ol>
+<li>安全性高：URL 具有時間限制，過期後無法存取。</li>
+<li>授權細粒度控制：可僅授權特定對象，避免直接開放 S3 權限。</li>
+<li>簡化應用開發：允許應用程式臨時授權存取 S3，而無需暴露 AWS 認證。</li>
+<li>靈活性：可授權下載或上傳，根據需求自訂操作類型。</li>
+</ol>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>總之 Presigned URLs 是 Amazon S3 提供的一種簡單而安全的方法，允許未經授權的使用者在有限時間內存取 S3 物件。這種方法適用於臨時文件分享、受限 API 存取、用戶端文件上傳等場景，並且具有高度的靈活性和安全性，是開發雲端應用時不可或缺的技術之一。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/blogs/storage/using-presigned-urls-to-identify-per-requester-usage-of-amazon-s3/">Using presigned URLs to identify per-requester usage of Amazon S3</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/blogs/security/how-to-securely-transfer-files-with-presigned-urls/">How to securely transfer files with presigned URLs</a></li>
+<li><a target="_blank" rel="noopener" href="https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-presigned-urls.html">Presigned URLs</a></li>
+<li><a target="_blank" rel="noopener" href="https://kkamalesh117.medium.com/amazon-s3-presigned-urls-your-key-to-secure-temporary-access-74b92e82d700">Amazon S3 Presigned URLs: Your Key to Secure, Temporary Access</a></li>
+<li><a target="_blank" rel="noopener" href="https://abhibvp003.medium.com/aws-s3-uploads-using-pre-signed-urls-bb5dd0a8a8e3">AWS S3 uploads using pre-signed URLs</a></li>
+<li><a target="_blank" rel="noopener" href="https://fourtheorem.com/the-illustrated-guide-to-s3-pre-signed-urls/">The illustrated guide to S3 pre-signed URLs</a></li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/02/16/github-non-fast-forward/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-02-24 20:26:25
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/security/" title="security">
+                        #security
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/AWS/" title="AWS">
+                        #AWS
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/S3/" title="S3">
+                        #S3
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/policy/" title="policy">
+                        #policy
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/PresignedURL/" title="PresignedURL">
+                        #PresignedURL
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/02/24/aws-s3-public/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Presigned-URLs%EF%BC%9F"><span class="toc-text">什麼是 Presigned URLs？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%83%85%E5%A2%83%E9%81%A9%E5%90%88%E4%BD%BF%E7%94%A8-Presigned-URLs-%E4%BE%86%E8%A8%AA%E5%95%8F-S3%EF%BC%9F"><span class="toc-text">什麼情境適合使用 Presigned URLs 來訪問 S3？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%8F%E9%81%8E-Presigned-URLs-%E5%AD%98%E5%8F%96-S3%EF%BC%9F"><span class="toc-text">如何透過 Presigned URLs 存取 S3？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%94%A2%E7%94%9F-Presigned-URL%EF%BC%88Python-%E7%A4%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">1. 產生 Presigned URL（Python 示例）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-Presigned-URL-%E4%B8%8B%E8%BC%89-S3-%E7%89%A9%E4%BB%B6%EF%BC%88Python-%E7%A4%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">2. 使用 Presigned URL 下載 S3 物件（Python 示例）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%94%A2%E7%94%9F-Presigned-URL-%E4%BB%A5%E5%85%81%E8%A8%B1%E4%B8%8A%E5%82%B3%E6%96%87%E4%BB%B6"><span class="toc-text">3. 產生 Presigned URL 以允許上傳文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8-Presigned-URL-%E4%B8%8A%E5%82%B3%E6%96%87%E4%BB%B6%EF%BC%88Python-%E7%A4%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">4. 使用 Presigned URL 上傳文件（Python 示例）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Presigned-URLs-%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AF%A6%E8%B8%90"><span class="toc-text">Presigned URLs 的最佳實踐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Presigned-URLs-%E7%9A%84%E5%A5%BD%E8%99%95"><span class="toc-text">Presigned URLs 的好處</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B5%90%E8%AB%96"><span class="toc-text">結論</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-text">References</span></a>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Presigned%20URLs%EF%BC%9A%E8%AE%93%E6%9C%AA%E6%8E%88%E6%AC%8A%E7%94%A8%E6%88%B6%E5%AE%89%E5%85%A8%E5%AD%98%E5%8F%96%20Amazon%20S3 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F20%2Faws-s3%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/20/aws-s3/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
