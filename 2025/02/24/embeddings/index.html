@@ -13,7 +13,7 @@
   
   <title>
     
-      Terraform 錯誤解釋：Error： Inconsistent dependency lock file 
+      embeddings 如何讓機器了解人類世界的文字、圖像 ? 
       
       
       |
@@ -155,19 +155,31 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">Terraform 錯誤解釋：Error： Inconsistent dependency lock file</div>
+      <div class="post-title">embeddings 如何讓機器了解人類世界的文字、圖像 ?</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-03-01 11:40:25
+          2025-02-25 11:43:33
         </span>
         
               <span class="post-tags">
                 <i class="iconfont icon-tags mr-10" title="Tags"></i>
                 
                 <span class="span--tag mr-8">
-                  <a href="/tags/Terraform/" title="Terraform">
-                    #Terraform
+                  <a href="/tags/embedding/" title="embedding">
+                    #embedding
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/AI/" title="AI">
+                    #AI
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/encoding/" title="encoding">
+                    #encoding
                   </a>
                 </span>
                 
@@ -175,43 +187,42 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在我嘗試用 terraform 建 opensearch 的過程遇到這個問題</p>
-<p>以下是將原文內容整理成繁體中文的筆記：</p>
-<h3 id="Terraform-中的錯誤：”Error-Inconsistent-dependency-lock-file”"><a href="#Terraform-中的錯誤：”Error-Inconsistent-dependency-lock-file”" class="headerlink" title="Terraform 中的錯誤：”Error: Inconsistent dependency lock file”"></a>Terraform 中的錯誤：”Error: Inconsistent dependency lock file”</h3><p>這個錯誤通常表示依賴鎖定檔案中的依賴項選擇與當前配置不一致，通常會發生在 Terraform 初始化階段。</p>
-<h4 id="錯誤訊息解析："><a href="#錯誤訊息解析：" class="headerlink" title="錯誤訊息解析："></a>錯誤訊息解析：</h4><ul>
-<li>Error: Inconsistent dependency lock file：表示 Terraform 發現當前配置與 <code>.terraform.lock.hcl</code> 文件中的依賴不符。</li>
-<li>The following dependency selections recorded in the lock file are inconsistent with the current configuration：指出鎖定檔案中的依賴項選擇與配置不一致。通常是因為配置中需要某個 provider，但鎖定檔案中未選擇版本。</li>
-<li>provider registry.terraform.io&#x2F;hashicorp&#x2F;opensearch: required by this configuration but no version is selected：錯誤提示當前配置需要 <code>hashicorp/opensearch</code> provider，但鎖定檔案中未指定該 provider 的版本。</li>
-<li>To update the locked dependency selections to match a changed configuration, run: terraform init -upgrade：建議使用 <code>terraform init -upgrade</code> 命令來更新依賴鎖定檔案，與當前配置一致。</li>
+        <p>在準備生成式工作坊時接觸了不少相關的雲端服務，後來也陸續看了幾篇論文，但發現自己對於最基本的概念還沒有特別熟悉，於是就決定先認識背後原理。這篇文章就是希望記錄一下有關於 embedding 的知識。</p>
+<h2 id="什麼是-embedding（嵌入）"><a href="#什麼是-embedding（嵌入）" class="headerlink" title="什麼是 embedding（嵌入） ?"></a>什麼是 embedding（嵌入） ?</h2><p>Embedding 是一種將高維度的離散數據（如文字、圖片或用戶行為）轉換為低維度的連續數值向量的方法，這些向量保留了原始數據的語義關係，使得機器學習模型能夠更有效地處理和理解這些數據。</p>
+<p><img src="/images/embedding/img1.png" alt="alt text"></p>
+<p><img src="/images/embedding/img2.png" alt="alt text"></p>
+<h2 id="為什麼我們需要-embedding-以圖書館的管理員為例"><a href="#為什麼我們需要-embedding-以圖書館的管理員為例" class="headerlink" title="為什麼我們需要 embedding ? 以圖書館的管理員為例"></a>為什麼我們需要 embedding ? 以圖書館的管理員為例</h2><p>我們可以拿圖書館的管理員當作例子，說明 embedding 是如何幫助模型進行分辨的。想像你是一位圖書館的管理員，任務是負責整理成千上萬本書，這時候如果你只是用書名來區分它們，就會很難找到相似主題的書。例如，《哈利波特》跟《魔戒》可能放在不同的地方，雖然它們其實都是奇幻小說。</p>
+<p>這時，你決定為每本書加上標籤，例如：「奇幻」、「冒險」、「魔法」、「戰鬥」。這些標籤可以讓你更快找到類似的書，而不只是根據書名來分類。而這就像 embedding，將「書」（高維度、離散的文字資訊）轉換成「標籤數據」（低維度、數值化的向量），讓機器能夠根據內容相似度來判斷書籍的關係。假設我們轉換的向量是四維，[w, x, y, z] 中的四個數值分別代表「奇幻」、「冒險」、「魔法」、「戰鬥」四種主題的符合程度，當數值越接近 1，則代表內容越符合該主題的書。以下舉例：</p>
+<ul>
+<li>《哈利波特》→ [0.9, 0.8, 0.7, 0.6] （高度相關於奇幻、冒險、魔法）</li>
+<li>《魔戒》→ [0.8, 0.9, 0.6, 0.7] （也是奇幻、冒險、魔法，但數值稍有不同）</li>
+<li>《愛麗絲夢遊仙境》→ [0.7, 0.5, 0.8, 0.2] （更偏向童話，魔法比例較高，但戰鬥較少）</li>
 </ul>
-<h4 id="解決方法："><a href="#解決方法：" class="headerlink" title="解決方法："></a>解決方法：</h4><ol>
-<li>運行 <code>terraform init -upgrade</code>：這個命令會更新依賴鎖定檔案，並確保鎖定檔案中所有的 provider 版本與當前配置一致。</li>
-<li>檢查 Provider 配置：確保 Terraform 配置文件中 <code>required_providers</code> 區塊正確配置，包括 <code>source</code> 和 <code>version</code> 字段。</li>
-<li>清理舊檔案：刪除舊的 <code>.terraform</code> 目錄和 <code>.terraform.lock.hcl</code> 文件，然後重新執行 <code>terraform init</code>。</li>
-<li>版本控制：將 <code>.terraform.lock.hcl</code> 文件納入版本控制，確保團隊成員和 CI&#x2F;CD 環境使用一致的 provider 版本。</li>
-</ol>
-<h4 id="可能原因："><a href="#可能原因：" class="headerlink" title="可能原因："></a>可能原因：</h4><ul>
-<li>新增了新的 provider，但未運行 <code>terraform init</code> 更新鎖定檔案。</li>
-<li>更改了 provider 的版本約束，卻未更新鎖定檔案。</li>
-<li>在不同環境中使用了不同的 Terraform 配置或 provider 版本。</li>
-<li>CI&#x2F;CD 管道中緩存了舊的 <code>.terraform</code> 目錄或 <code>.terraform.lock.hcl</code> 文件。</li>
-<li>並發修改了依賴鎖定檔案。</li>
+<p>透過這些數值，就可以幫助圖書館管理員辨別哪些書的風格相近，即便他們書名大相逕庭。</p>
+<h2 id="如何透過向量做到語意關聯"><a href="#如何透過向量做到語意關聯" class="headerlink" title="如何透過向量做到語意關聯 ?"></a>如何透過向量做到語意關聯 ?</h2><p>那這些向量又是如何保留語意的呢 ? 在回答這個問題之前，我們要知道轉換成向量的目的是什麼。</p>
+<p>在高中數學裡，我們都知道向量可以表示出空間一個點的位址，這裡我們將文字、圖片等數據轉換成向量也有同樣的作用。如下圖，</p>
+<h2 id="embedding-如何生成"><a href="#embedding-如何生成" class="headerlink" title="embedding 如何生成 ?"></a>embedding 如何生成 ?</h2><h3 id="文字-embedding"><a href="#文字-embedding" class="headerlink" title="文字 embedding"></a>文字 embedding</h3><p>文字 embedding 的精隨在於將人類文字轉成 word vector，因為 word vector 他保留了原先文本數據特徵，也就是一段句子裡「字」、「詞」、「句」之間的意義。在這個部分主要有 One-Hot encoding 和 Word Embedding 兩種方式來建立向量。</p>
+<p>淺層神經網絡學習</p>
+<ul>
+<li>One-Hot encoding<ul>
+<li>維度是詞數量，例如現在有 apple、banana 兩個單字，維度就是 2</li>
+<li>當字詞庫越來越大時，每個詞的向量就會超長，導致實務上每一個 Word Vector 可能都會是好幾萬維的稀疏矩陣。</li>
+<li>每一個 Word Vector 之間都是 Independent，無法體現上下文之間的語意相關</li>
+<li><img src="/images/embedding/img3.png" alt="alt text"></li>
 </ul>
-<h4 id="terraform-lock-hcl-文件的作用："><a href="#terraform-lock-hcl-文件的作用：" class="headerlink" title=".terraform.lock.hcl 文件的作用："></a><code>.terraform.lock.hcl</code> 文件的作用：</h4><p><code>.terraform.lock.hcl</code> 用於鎖定 Terraform providers 的版本，確保在不同環境中使用相同的版本，避免不一致性問題。每次運行 <code>terraform init</code> 時，Terraform 會自動更新此鎖定檔案。</p>
-<hr>
-<h3 id="Terraform-中的-terraform-destroy-指令"><a href="#Terraform-中的-terraform-destroy-指令" class="headerlink" title="Terraform 中的 terraform destroy 指令"></a>Terraform 中的 <code>terraform destroy</code> 指令</h3><p>當你執行 <code>terraform destroy</code> 指令時，Terraform 會根據當前的 <code>.tf</code> 配置文件移除基礎設施資源。如果修改了 Terraform 配置後執行 <code>terraform destroy</code>，其行為會根據新的配置檔案決定要刪除哪些資源。</p>
-<h4 id="Terraform-運作原理："><a href="#Terraform-運作原理：" class="headerlink" title="Terraform 運作原理："></a>Terraform 運作原理：</h4><ul>
-<li>Terraform 比較當前基礎設施的狀態與 <code>.tf</code> 配置文件中的期望狀態，並顯示將要採取的動作，這些動作包括新增、刪除或修改資源。</li>
-<li><code>terraform destroy</code> 用來安全移除 Terraform 配置中定義的所有資源。</li>
+</li>
+<li>Word Embedding<ul>
+<li>克服 One-Hot encoding 的缺點</li>
+<li>將字詞轉換成可以投射到空間的向量</li>
+<li>透過詞彙在空間的距離表示語法、語意相似度</li>
 </ul>
-<h4 id="配置變更的影響："><a href="#配置變更的影響：" class="headerlink" title="配置變更的影響："></a>配置變更的影響：</h4><ul>
-<li>如果在 <code>.tf</code> 文件中移除某個資源，執行 <code>terraform destroy</code> 會刪除該資源。</li>
-<li>如果修改了某個資源的屬性，Terraform 可能會先刪除舊的資源，然後根據新定義建立新的資源。</li>
-<li>如果新增了資源，<code>terraform destroy</code> 不會刪除這些新增的資源，除非它們是用來替代舊資源的。</li>
+</li>
 </ul>
-<h4 id="建議："><a href="#建議：" class="headerlink" title="建議："></a>建議：</h4><p>在執行 <code>terraform destroy</code> 之前，最好先使用 <code>terraform plan</code> 檢查 Terraform 將要執行的動作，以預覽將被刪除的資源，並識別潛在問題。</p>
-<h3 id="resources"><a href="#resources" class="headerlink" title="resources"></a>resources</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent-status-and-restart.html">https://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent-status-and-restart.html</a></li>
+<h3 id="圖片-embedding"><a href="#圖片-embedding" class="headerlink" title="圖片 embedding"></a>圖片 embedding</h3><p>使用 CNN 或是 Autoencoders</p>
+<h2 id="references"><a href="#references" class="headerlink" title="references"></a>references</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hackmd.io/@allen108108/SJ42exwlH">Unsupervised Learning –- Word Embedding</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39172059/article/details/136661824">【大模型开发】 一文搞懂Embedding工作原理</a></li>
+<li></li>
 </ul>
 
       </div>
@@ -219,7 +230,7 @@
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2025/02/15/aws-with-cookies/" target="_self">
+              <a href="/2025/02/24/Pinterest-tech/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -228,15 +239,27 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-03-01 11:40:25
+              2025-02-25 11:43:33
             </span>
             
                   <span class="post-tags">
                     <i class="iconfont icon-tags mr-10" title="Tags"></i>
                     
                     <span class="span--tag mr-8">
-                      <a href="/tags/Terraform/" title="Terraform">
-                        #Terraform
+                      <a href="/tags/embedding/" title="embedding">
+                        #embedding
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/AI/" title="AI">
+                        #AI
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/encoding/" title="encoding">
+                        #encoding
                       </a>
                     </span>
                     
@@ -245,7 +268,7 @@
           </div>
           <div class="post-foot-prev">
             
-              <a href="/2025/02/15/aws-ssm/" target="_self">
+              <a href="/2025/03/01/vm-network/" target="_self">
                 <span>Next</span>
                 <i class="iconfont icon-chevronright"></i>
               </a>
@@ -262,7 +285,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Terraform-%E4%B8%AD%E7%9A%84%E9%8C%AF%E8%AA%A4%EF%BC%9A%E2%80%9DError-Inconsistent-dependency-lock-file%E2%80%9D"><span class="toc-text">Terraform 中的錯誤：”Error: Inconsistent dependency lock file”</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%8C%AF%E8%AA%A4%E8%A8%8A%E6%81%AF%E8%A7%A3%E6%9E%90%EF%BC%9A"><span class="toc-text">錯誤訊息解析：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-text">解決方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E5%8E%9F%E5%9B%A0%EF%BC%9A"><span class="toc-text">可能原因：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#terraform-lock-hcl-%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9A"><span class="toc-text">.terraform.lock.hcl 文件的作用：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Terraform-%E4%B8%AD%E7%9A%84-terraform-destroy-%E6%8C%87%E4%BB%A4"><span class="toc-text">Terraform 中的 terraform destroy 指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Terraform-%E9%81%8B%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-text">Terraform 運作原理：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%AE%8A%E6%9B%B4%E7%9A%84%E5%BD%B1%E9%9F%BF%EF%BC%9A"><span class="toc-text">配置變更的影響：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%BA%E8%AD%B0%EF%BC%9A"><span class="toc-text">建議：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#resources"><span class="toc-text">resources</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-embedding%EF%BC%88%E5%B5%8C%E5%85%A5%EF%BC%89"><span class="toc-text">什麼是 embedding（嵌入） ?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%88%91%E5%80%91%E9%9C%80%E8%A6%81-embedding-%E4%BB%A5%E5%9C%96%E6%9B%B8%E9%A4%A8%E7%9A%84%E7%AE%A1%E7%90%86%E5%93%A1%E7%82%BA%E4%BE%8B"><span class="toc-text">為什麼我們需要 embedding ? 以圖書館的管理員為例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%8F%E9%81%8E%E5%90%91%E9%87%8F%E5%81%9A%E5%88%B0%E8%AA%9E%E6%84%8F%E9%97%9C%E8%81%AF"><span class="toc-text">如何透過向量做到語意關聯 ?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#embedding-%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90"><span class="toc-text">embedding 如何生成 ?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E5%AD%97-embedding"><span class="toc-text">文字 embedding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%96%E7%89%87-embedding"><span class="toc-text">圖片 embedding</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#references"><span class="toc-text">references</span></a></li></ol>
       
     </div>
   </div>
@@ -550,12 +573,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Terraform%20%E9%8C%AF%E8%AA%A4%E8%A7%A3%E9%87%8B%EF%BC%9AError%EF%BC%9A%20Inconsistent%20dependency%20lock%20file + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F15%2Fterraform-Inconsistent-dependency-lock-file%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + embeddings%20%E5%A6%82%E4%BD%95%E8%AE%93%E6%A9%9F%E5%99%A8%E4%BA%86%E8%A7%A3%E4%BA%BA%E9%A1%9E%E4%B8%96%E7%95%8C%E7%9A%84%E6%96%87%E5%AD%97%E3%80%81%E5%9C%96%E5%83%8F%20%3F + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F24%2Fembeddings%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/15/terraform-Inconsistent-dependency-lock-file/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/24/embeddings/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
