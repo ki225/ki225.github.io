@@ -14,7 +14,7 @@
   <title>
     
       Tag 
-       : AWS
+       : aws
       
       |
     
@@ -73,13 +73,13 @@
         <img src="/images/funnycir.gif" alt="">
       
     </a>
-    <div class="nickname"><a href="/">Kiki H</a></div>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
   </div>
   <div class="navbar">
     <ul>
       
         <li class="nav-item" data-path="/archives/">
-          <a href="/archives/">Archives</a>
+          <a href="/archives/">Blog</a>
         </li>
       
         <li class="nav-item" data-path="/tags/">
@@ -113,33 +113,15 @@
 <div class="container tag-details">
   <div class="content-title">
     <h2>
-      <span>AWS</span>
+      <span>aws</span>
     </h2>
   </div>
   
     <div class="post-list">
-      <div class="post-item" title="跨帳戶代理建立 AWS 資源">
-        <span class="time-m-d">2025-03-16</span>
-        <a href="/2025/03/16/Building-Across-Different-Acc-With-Credential/">
-          <span>跨帳戶代理建立 AWS 資源</span>
-        </a>
-      </div>
-    </div>
-  
-    <div class="post-list">
-      <div class="post-item" title="Presigned URLs：讓未授權用戶安全存取 Amazon S3">
-        <span class="time-m-d">2025-02-20</span>
-        <a href="/2025/02/20/aws-s3/">
-          <span>Presigned URLs：讓未授權用戶安全存取 Amazon S3</span>
-        </a>
-      </div>
-    </div>
-  
-    <div class="post-list">
-      <div class="post-item" title="介紹 AWS 如何在網頁上辨識使用者帳戶？以及第三方 Cookie 封鎖對使用 AWS 資源的影響？">
-        <span class="time-m-d">2025-02-15</span>
-        <a href="/2025/02/15/aws-with-cookies/">
-          <span>介紹 AWS 如何在網頁上辨識使用者帳戶？以及第三方 Cookie 封鎖對使用 AWS 資源的影響？</span>
+      <div class="post-item" title="AWS S3 存取權限設置與公開存取管理策略">
+        <span class="time-m-d">2025-02-24</span>
+        <a href="/2025/02/24/aws-s3-public/">
+          <span>AWS S3 存取權限設置與公開存取管理策略</span>
         </a>
       </div>
     </div>
@@ -373,6 +355,50 @@
             $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
           } else {
             $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
+n class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
           }
         }
       });

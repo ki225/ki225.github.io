@@ -70,13 +70,13 @@
         <img src="/images/funnycir.gif" alt="">
       
     </a>
-    <div class="nickname"><a href="/">Kiki H</a></div>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
   </div>
   <div class="navbar">
     <ul>
       
         <li class="nav-item" data-path="/archives/">
-          <a href="/archives/">Archives</a>
+          <a href="/archives/">Blog</a>
         </li>
       
         <li class="nav-item" data-path="/tags/">
@@ -105,105 +105,136 @@
 
 
       <div class="flex-container">
-        <!DOCTYPE html>
-<html>
-  <head>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        background-color: #f4f4f9;
-      }
+        <style>
+  #content { display: none; }
+  #dynamicTitle { color: #ff9800; }
+  .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+      text-align: center;
+      color: #007bff;
+  }
+  .experience {
+      border-left: 4px solid #007bff;
+      margin: 20px 0;
+      padding: 10px 20px;
+      background: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  }
+  .experience h2 {
+      margin: 0;
+      color: #333;
+  }
+  .experience h3 {
+      margin: 5px 0;
+      color: #ffc107;
+  }
+  .location-date {
+      font-size: 0.9rem;
+      color: #6c757d;
+  }
+  ul {
+      margin: 10px 0;
+      padding-left: 20px;
+  }
+  li {
+      margin-bottom: 10px;
+  }
+  .social-icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .social-icons img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.2s ease-in-out;
+  }
+  .social-icons img:hover {
+    transform: scale(1.1);
+  }
+ 
+</style>
 
-      h1, h2, .post-list {
-        overflow: hidden;
-        border-right: 0.15em solid black;
-        white-space: nowrap;
-        margin: 10px auto;
-        letter-spacing: 0.15em;
-        opacity: 0;
-      }
 
-      p {
-        overflow: hidden;
-        border-right: 0.15em solid black;
-        white-space: normal;
-        margin: 10px auto;
-        letter-spacing: 0.15em;
-        opacity: 0;
-      }
-
-      h1 {
-        font-size: 2.5rem;
-        color: #333;
-        animation: typing 3.5s steps(40, end) forwards, 
-                  blink-caret 0.75s step-end 4 forwards, 
-                  appear 0.1s linear forwards;
-      }
-
-      h2 {
-        font-size: 1.8rem;
-        color: #555;
-        animation: typing 3.5s steps(40, end) forwards 2s, 
-                  blink-caret 0.75s step-end 4 forwards 2s, 
-                  appear 0.1s linear forwards 2s;
-      }
-
-      p, .post-list {
-        font-size: 1rem;
-        color: #666;
-        animation: typing 3.5s steps(40, end) forwards 4s, 
-                  blink-caret 0.75s step-end 4 forwards 4s, 
-                  appear 0.1s linear forwards 4s;
-      }
-
-      @keyframes typing {
-        from { width: 0 }
-        to { width: 100% }
-      }
-
-      @keyframes blink-caret {
-        from, to { border-color: transparent }
-        50% { border-color: black }
-      }
-
-      @keyframes appear {
-        to { opacity: 1 }
-      }
-
-      .container {
-        text-align: center;
-        padding: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container index">
-      <h1 id="dynamic-title">Welcome to My Website</h1>
-      <h2>Explore and Learn</h2>
-      <p>This is a demo of dynamic title changes and layout adjustments.</p>
-      <img src="../source/images/badges/academy-edcator.png" alt="academy-edcator.png" />
-
+<div class="outer-container" style="display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto;">
+  <div class="left-container" style="flex: 1; padding: 20px;">
+    <div></div>
+    <div class="markdown-body" style="font-size: 3.5rem;">
+      <span class="hi-im">Hi! I'm</span> <span id="dynamicTitle"></span>
     </div>
+    <div class="markdown-body" style="font-size: 1.5rem;">
+      A CS student from <span style="color: #ff9800;">NCU</span>, passionate about cloud and development.
+      Led two cloud technology workshops with 60+ participants as the instructor in <span style="color: #ff9800;">AWS Educate Cloud Ambassador</span> team. 
+    </div>
+    <br>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/yung-chi-huang/" target="_blank">
+        <img src="images/linkedin.svg" alt="LinkedIn">
+      </a>
+      <a href="https://www.instagram.com/photokii_/" target="_blank">
+        <img src="images/instagram.svg" alt="Instagram">
+      </a>
+      <a href="https://github.com/ki225" target="_blank">
+        <img src="images/github.svg" alt="GitHub">
+      </a>
+      <a href="https://youtu.be/Dq_z8meAShM?si=V-PEjM61sWfRuYbm" target="_blank">
+        <img src="images/youtube.svg" alt="YouTube">
+      </a>
+      <a href="https://medium.com/@271yeye" target="_blank">
+        <img src="images/medium.svg" alt="Medium">
+      </a>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=yungchi.huang0225@gmail.com" target="_blank">
+        <img src="images/gmail.png" alt="Gmail">
+      </a>
+    </div>
+   
+  </div>
+  
+  <div class="right-container" style="display: flex; justify-content: flex-end; align-items: center; padding: 20px;">
+    <img src="images/self/image.png" alt="Profile Picture" style="width: 200px; border-radius: 50%;">
+  </div>
 
-    <script>
-      app.use(express.static("public"));
+</div>
+<br>
 
-      const titles = ["Welcome to My Website", "Discover Amazing Features", "Let's Start Exploring"];
-      let currentTitleIndex = 0;
 
-      setInterval(() => {
-        currentTitleIndex = (currentTitleIndex + 1) % titles.length;
-        document.getElementById("dynamic-title").textContent = titles[currentTitleIndex];
-      }, 3000);
-    </script>
-  </body>
-</html>
+<script>
+  const titles = ["Yung-Chi (Kiki) Huang", "an ActiveLearner", "a DAY ONE person", "a Backend Developer", "a Cafe Hopper"];
+  let titleIndex = 0;
+  let charIndex = 0;
+  const dynamicTitle = document.getElementById('dynamicTitle');
+
+  function typeTitle() {
+    if (charIndex < titles[titleIndex].length) {
+      dynamicTitle.textContent = titles[titleIndex].substring(0, charIndex + 1);
+      charIndex++;
+      setTimeout(typeTitle, 100);
+    } else {
+      setTimeout(eraseTitle, 1500);
+    }
+  }
+
+  function eraseTitle() {
+    if (charIndex > 0) {
+      dynamicTitle.textContent = titles[titleIndex].substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(eraseTitle, 50);
+    } else {
+      titleIndex = (titleIndex + 1) % titles.length;
+      setTimeout(typeTitle, 500);
+    }
+  }
+
+  typeTitle();
+</script>
 
         
 <div class="footer">
