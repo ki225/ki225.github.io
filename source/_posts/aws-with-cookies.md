@@ -44,42 +44,12 @@ Set-Cookie: NAME=VALUE; expires=DATE; path=PATH; domain=DOMAIN_NAME; secure
 
 ![alt text](images/AWS/session/img4.png)
 
-
-
 ## 分頁如何知道?
-雖然無痕分頁不會儲存 cookie 在裝置上，但只要無痕頁面沒有被關閉，cookie 仍可以跨分頁去使用。
-
-這邊我們試試看在成功登入 console 後，在新分頁開啟資源頁面。可以發現我們能夠在不同分頁使用相同帳號拜訪 AWS 的其他資源，而這其實也是透過一連串的 cookie 請求和回覆組成
+一般瀏覽網頁都會把 cookie 存入我們的裝置，所以網頁可以直接從裝置上的 cookie 去取得使用者資訊；雖然無痕分頁不會儲存 cookie 在裝置上，但只要無痕頁面沒有被關閉，cookie 仍可以跨分頁去使用。這邊我們試試看在成功登入 console 後，在新分頁開啟資源頁面，可以發現我們能夠在不同分頁使用相同帳號拜訪 AWS 的其他資源，而這其實也是透過一連串的 cookie 請求和回覆組成。
 
 首先它會帶著 cookie request 透過 url 進入頁面，當瀏覽器拿到這些 cookie 後，它就知道可以吐回我們的 credential 了。所以第二次請求的 url 後面就加入了被 hash 後的辨別資訊。
 
-![alt text](image-12.png)
-
-![alt text](image-8.png)
-
-於是 redirect 到我們預計去的頁面(假設是 s3)。可以在 network 看到最初回傳的內容都和 redirect 前不同。 
-
-![alt text](image.png)
-![alt text](image-4.png)
-
-![alt text](image-7.png)
-
-
-![alt text](image-11.png)
-
-都是因為最一開始有 browser cookie 幫我們設定好的關係。其中，欄位依據傳送先後由上到下排列，所以我們能判斷出 browser cookie 是先被傳送。
-
-![alt text](images/AWS/session/img9.png)
-
-以下是結果分頁的結果
-
-![alt text](images/AWS/session/img5.png)
-
-![alt text](images/AWS/session/img6.png)
-
-![alt text](images/AWS/session/img7.png)
-
-![alt text](images/AWS/session/img8.png)
+![alt text](images/AWS/session/img16.png)
 
 
 
@@ -94,15 +64,6 @@ Set-Cookie: NAME=VALUE; expires=DATE; path=PATH; domain=DOMAIN_NAME; secure
 
 
 
-
-
-## 第三方 Cookie 的封鎖影響 ?
-
-隨著隱私保護和網頁安全問題的關注增加，許多瀏覽器已經開始封鎖第三方 Cookies，這是針對網站追蹤技術的一種限制。第三方 Cookies 是由非當前網站的域名所設置的 Cookie，這意味著當你訪問不同網站時，這些網站可以存取相同的 Cookie 來進行追蹤。這種追蹤通常用於廣告、分析，或者一些跨站點的功能，其中在 AWS 官方就有公告，他們有置入第三方 cookie 讓其他網站，像是 YouTube 等第三方平台可以推送相關內容給使用者。
-
-![alt text](images/AWS/session/img12.png)
-
-如果第三方 Cookie 被封鎖，除了像是 YT 等平台無法掌握我們的資訊以外，也可能會導致部分登入失效。
 
 
 ## resources
