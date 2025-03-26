@@ -42,7 +42,7 @@ favicon:
 # 用户头像与昵称
 avatar:
   author_photo: /images/funnycir.gif
-  author_nickname: Kiki H
+  author_nickname: Kiki's Blog
   path: /
 
 # Google 分析
@@ -100,10 +100,10 @@ navbar:
     path: /
     key: home
   -
-    name: Archives
+    name: Blog
     enable: true
     path: /archives/
-    key: archives
+    key: blog
   -
     name: Categories
     enable: false
@@ -121,7 +121,7 @@ navbar:
     key: resume
   -
     name: About
-    enable: true
+    enable: false
     path: /about/
     key: about
   -
