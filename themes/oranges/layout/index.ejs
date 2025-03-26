@@ -1,102 +1,138 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <style>
-        h1, h2,  .post-list {
-            overflow: hidden;
-            border-right: .15em solid black;
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: .15em;
-            opacity: 0;
-        }
-         p{
-            overflow: hidden;
-            border-right: .15em solid black;
-            white-space: normal;
-            margin: 0 auto;
-            letter-spacing: .15em;
-            opacity: 0;
-        }
-        h1 {
-            animation: 
-                typing 3.5s steps(40, end) forwards, 
-                blink-caret .75s step-end 4 forwards,
-                appear 0.1s linear forwards;
-        }
-        h2 {
-            animation: 
-                typing 3.5s steps(40, end) forwards 2s, 
-                blink-caret .75s step-end 4 forwards 2s,
-                appear 0.1s linear forwards 2s;
-        }
-        p, .post-list {
-            animation: 
-                typing 3.5s steps(40, end) forwards 4s, 
-                blink-caret .75s step-end 4 forwards 4s,
-                appear 0.1s linear forwards 4s;
-        }
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: black }
-        }
-        @keyframes appear {
-            to { opacity: 1 }
-        }
-    </style>
-</head>
-  <body>
-    <div class="container index">
+<style>
+  #content { display: none; }
+  #dynamicTitle { color: #ff9800; }
+  .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+      text-align: center;
+      color: #007bff;
+  }
+  .experience {
+      border-left: 4px solid #007bff;
+      margin: 20px 0;
+      padding: 10px 20px;
+      background: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  }
+  .experience h2 {
+      margin: 0;
+      color: #333;
+  }
+  .experience h3 {
+      margin: 5px 0;
+      color: #ffc107;
+  }
+  .location-date {
+      font-size: 0.9rem;
+      color: #6c757d;
+  }
+  ul {
+      margin: 10px 0;
+      padding-left: 20px;
+  }
+  li {
+      margin-bottom: 10px;
+  }
+  .social-icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .social-icons img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.2s ease-in-out;
+  }
+  .social-icons img:hover {
+    transform: scale(1.1);
+  }
+ 
+</style>
 
-      <div class="markdown-body" style="text-align: center;">
-        <!-- 自我介紹與網站說明 -->
-        <h1>$ cat welcome</h1>
-        <p>
-          Welcome to my site! I share what I've learned about programming, cloud tech, and cybersecurity, plus some student life insights. These posts are all about my learning journey.   </p>
 
-        <p> ☆`·.·˙˙`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆</p>
-          <br/>
-          <h2>$ cat latest_posts</h2>
-        <p>Latest Posts | Total <%= site.posts.length %> posts</p>
-
-        <div class="post-list">
-          <% page.posts.slice(0, 3).forEach(function(item) { %> <!-- 只取前三篇文章 -->
-            <div class="post-item" title="<%- item.title %>">
-              <div class="time-m-d"><%- item.date.format("YYYY-MM-DD") %></div>
-              <div class="title">
-                <a href="<%- url_for(item.path) %>">
-                  <% if(item.title !== "") { %>
-                    <% if (item.top) { %>
-                      <span><span title="<%= __('pinned') %>" class="icon iconfont icon-pin-top post-top"></span><%- item.title %></span>
-                    <% } else { %>
-                      <span><%- item.title %></span>
-                    <% } %>
-                  <% } else { %>
-                    <span>untitled</span>
-                  <% } %>
-                </a>
-              </div>
-            </div>
-          <% }) %>
-        </div>
-
-        <br/>
-        <br/>
-        <h2>$ cat fat_cat</h2>
-        <br/>
-
-        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">  　　､ゞヾ∧ ""' ∧;,</p>
-        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　　ヾ　　  　.　 ̮.　. 　彡</p>
-        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　　ﾐ　　   　０　　 ０　ミ</p>
-        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　~彡　　　　　　　　ﾐ</p>
-        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 10px;">　　/ｿ,,　,０;,;;:､０ヾ`</p>
-        
-      </div>
+<div class="outer-container" style="display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto;">
+  <div class="left-container" style="flex: 1; padding: 20px;">
+    <div></div>
+    <div class="markdown-body" style="font-size: 3.5rem;">
+      <span class="hi-im">Hi! I'm</span> <span id="dynamicTitle"></span>
+    </div>
+    <div class="markdown-body" style="font-size: 1.5rem;">
+      As an <span style="color: #ff9800;">AWS Educate Cloud Ambassador</span>, I led cloud workshops with <span style="color: #ff9800;">100+</span> participants.  
+      At <span style="color: #ff9800;">eCloudvalley</span>, I gained hands-on experience with <span style="color: #ff9800;">IaC</span> tools and cloud solutions as a <span style="color: #ff9800;">Cloud Development Intern</span>.  
+      Since 2023, I’ve organized <span style="color: #ff9800;">10+</span> tech camps and online courses as a <span style="color: #ff9800;">Teaching Assistant</span>, enhancing collaboration with <span style="color: #ff9800;">team-based project management</span>.  
+      <br>  
+      <br>  
+      Driven by curiosity, I explore the intersection of <span style="color: #ff9800;">cloud</span>, <span style="color: #ff9800;">AI</span>, <span style="color: #ff9800;">security</span>, and <span style="color: #ff9800;">development</span> — turning ideas into impactful solutions.  
       
-    </div> 
-  </body>
-</html>
+</div>
+
+
+    <br>
+    <br>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/yung-chi-huang/" target="_blank">
+        <img src="images/linkedin.svg" alt="LinkedIn">
+      </a>
+      <a href="https://www.instagram.com/photokii_/" target="_blank">
+        <img src="images/instagram.svg" alt="Instagram">
+      </a>
+      <a href="https://github.com/ki225" target="_blank">
+        <img src="images/github.svg" alt="GitHub">
+      </a>
+      <a href="https://youtu.be/Dq_z8meAShM?si=V-PEjM61sWfRuYbm" target="_blank">
+        <img src="images/youtube.svg" alt="YouTube">
+      </a>
+      <a href="https://medium.com/@271yeye" target="_blank">
+        <img src="images/medium.svg" alt="Medium">
+      </a>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=yungchi.huang0225@gmail.com" target="_blank">
+        <img src="images/gmail.png" alt="Gmail">
+      </a>
+    </div>
+   
+  </div>
+  
+  <div class="right-container" style="display: flex; justify-content: flex-end; align-items: center; padding: 20px;">
+    <img src="images/self/image.png" alt="Profile Picture" style="width: 200px; border-radius: 50%;">
+  </div>
+
+</div>
+<br>
+
+
+<script>
+  const titles = ["Yung-Chi (Kiki) Huang", "an Active Learner", "Team Player", "a DAY ONE person", "a Backend Developer", "a Cafe Hopper"];
+  let titleIndex = 0;
+  let charIndex = 0;
+  const dynamicTitle = document.getElementById('dynamicTitle');
+
+  function typeTitle() {
+    if (charIndex < titles[titleIndex].length) {
+      dynamicTitle.textContent = titles[titleIndex].substring(0, charIndex + 1);
+      charIndex++;
+      setTimeout(typeTitle, 100);
+    } else {
+      setTimeout(eraseTitle, 1500);
+    }
+  }
+
+  function eraseTitle() {
+    if (charIndex > 0) {
+      dynamicTitle.textContent = titles[titleIndex].substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(eraseTitle, 50);
+    } else {
+      titleIndex = (titleIndex + 1) % titles.length;
+      setTimeout(typeTitle, 500);
+    }
+  }
+
+  typeTitle();
+</script>
