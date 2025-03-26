@@ -107,126 +107,102 @@
 <html>
   <head>
     <style>
-        h1, h2,  .post-list {
-            overflow: hidden;
-            border-right: .15em solid black;
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: .15em;
-            opacity: 0;
-        }
-         p{
-            overflow: hidden;
-            border-right: .15em solid black;
-            white-space: normal;
-            margin: 0 auto;
-            letter-spacing: .15em;
-            opacity: 0;
-        }
-        h1 {
-            animation: 
-                typing 3.5s steps(40, end) forwards, 
-                blink-caret .75s step-end 4 forwards,
-                appear 0.1s linear forwards;
-        }
-        h2 {
-            animation: 
-                typing 3.5s steps(40, end) forwards 2s, 
-                blink-caret .75s step-end 4 forwards 2s,
-                appear 0.1s linear forwards 2s;
-        }
-        p, .post-list {
-            animation: 
-                typing 3.5s steps(40, end) forwards 4s, 
-                blink-caret .75s step-end 4 forwards 4s,
-                appear 0.1s linear forwards 4s;
-        }
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: black }
-        }
-        @keyframes appear {
-            to { opacity: 1 }
-        }
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f9;
+      }
+
+      h1, h2, .post-list {
+        overflow: hidden;
+        border-right: 0.15em solid black;
+        white-space: nowrap;
+        margin: 10px auto;
+        letter-spacing: 0.15em;
+        opacity: 0;
+      }
+
+      p {
+        overflow: hidden;
+        border-right: 0.15em solid black;
+        white-space: normal;
+        margin: 10px auto;
+        letter-spacing: 0.15em;
+        opacity: 0;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: #333;
+        animation: typing 3.5s steps(40, end) forwards, 
+                  blink-caret 0.75s step-end 4 forwards, 
+                  appear 0.1s linear forwards;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        color: #555;
+        animation: typing 3.5s steps(40, end) forwards 2s, 
+                  blink-caret 0.75s step-end 4 forwards 2s, 
+                  appear 0.1s linear forwards 2s;
+      }
+
+      p, .post-list {
+        font-size: 1rem;
+        color: #666;
+        animation: typing 3.5s steps(40, end) forwards 4s, 
+                  blink-caret 0.75s step-end 4 forwards 4s, 
+                  appear 0.1s linear forwards 4s;
+      }
+
+      @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+      }
+
+      @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: black }
+      }
+
+      @keyframes appear {
+        to { opacity: 1 }
+      }
+
+      .container {
+        text-align: center;
+        padding: 20px;
+      }
     </style>
-</head>
+  </head>
   <body>
     <div class="container index">
+      <h1 id="dynamic-title">Welcome to My Website</h1>
+      <h2>Explore and Learn</h2>
+      <p>This is a demo of dynamic title changes and layout adjustments.</p>
+      <img src="../source/images/badges/academy-edcator.png" alt="academy-edcator.png" />
 
-      <div class="markdown-body" style="text-align: center;">
-        <!-- 自我介紹與網站說明 -->
-        <h1>$ cat welcome</h1>
-        <p>
-          Welcome to my site! I share what I've learned about programming, cloud tech, and cybersecurity, plus some student life insights. These posts are all about my learning journey.   </p>
+    </div>
 
-        <p> ☆`·.·˙˙`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆`·..·˙˙`·..·˙☆`·.·˙˙`·..·˙☆</p>
-          <br/>
-          <h2>$ cat latest_posts</h2>
-        <p>Latest Posts | Total 17 posts</p>
+    <script>
+      app.use(express.static("public"));
 
-        <div class="post-list">
-           <!-- 只取前三篇文章 -->
-            <div class="post-item" title="跨帳戶代理建立 AWS 資源">
-              <div class="time-m-d">2025-03-16</div>
-              <div class="title">
-                <a href="/2025/03/16/Building-Across-Different-Acc-With-Credential/">
-                  
-                    
-                      <span>跨帳戶代理建立 AWS 資源</span>
-                    
-                  
-                </a>
-              </div>
-            </div>
-           <!-- 只取前三篇文章 -->
-            <div class="post-item" title="區塊鏈 & 分散式帳本技術簡介">
-              <div class="time-m-d">2025-03-05</div>
-              <div class="title">
-                <a href="/2025/03/05/blockchain1/">
-                  
-                    
-                      <span>區塊鏈 & 分散式帳本技術簡介</span>
-                    
-                  
-                </a>
-              </div>
-            </div>
-           <!-- 只取前三篇文章 -->
-            <div class="post-item" title="Terraform：加速 DevOps 之旅，實現 IaC 自動化管理">
-              <div class="time-m-d">2025-03-02</div>
-              <div class="title">
-                <a href="/2025/03/02/terraform/">
-                  
-                    
-                      <span>Terraform：加速 DevOps 之旅，實現 IaC 自動化管理</span>
-                    
-                  
-                </a>
-              </div>
-            </div>
-          
-        </div>
+      const titles = ["Welcome to My Website", "Discover Amazing Features", "Let's Start Exploring"];
+      let currentTitleIndex = 0;
 
-        <br/>
-        <br/>
-        <h2>$ cat fat_cat</h2>
-        <br/>
-
-        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">  　　､ゞヾ∧ ""' ∧;,</p>
-        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　　ヾ　　  　.　 ̮.　. 　彡</p>
-        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　　ﾐ　　   　０　　 ０　ミ</p>
-        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 5px;">　~彡　　　　　　　　ﾐ</p>
-        <p style="font-family: 'Arial', sans-serif; line-height: 1; margin-bottom: 10px;">　　/ｿ,,　,０;,;;:､０ヾ`</p>
-        
-      </div>
-      
-    </div> 
+      setInterval(() => {
+        currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+        document.getElementById("dynamic-title").textContent = titles[currentTitleIndex];
+      }, 3000);
+    </script>
   </body>
 </html>
+
         
 <div class="footer">
   <div class="social">
