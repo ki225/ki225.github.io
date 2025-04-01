@@ -13,7 +13,7 @@
   
   <title>
     
-      Tag 
+      archive_a: 2025/4 
       
       
       |
@@ -104,57 +104,230 @@
 
 
       <div class="flex-container">
-        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
-<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
 
+<!-- last: 按年份把文章分组，当前遍历到的年份 -->
+<!-- now: 当前遍历到的文章的发布年份 -->
 
-  <!-- LaTex Display -->
-
-  
-    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
-  
-  <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      }
-    }
-  </script>
-
-
-
-
-
-  <!-- clipboard -->
-
-  
-    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
-  
-  
-<script src="/js/codeCopy.js"></script>
-
-
-
-
-
-
-  <!-- 标签页 url形式：https://yoursite/tags/ -->
-  <div class="container tag-index">
-    <div>
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/" rel="tag">AWS</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS-Authentication/" rel="tag">AWS-Authentication</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AmazonAPIGateway/" rel="tag">AmazonAPIGateway</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Authentication/" rel="tag">Authentication</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CORS/" rel="tag">CORS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLT/" rel="tag">DLT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/" rel="tag">DevOps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Distributed-Ledger-Technology/" rel="tag">Distributed Ledger Technology</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GICS/" rel="tag">GICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IaC/" rel="tag">IaC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PresignedURL/" rel="tag">PresignedURL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/S3/" rel="tag">S3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Terraform/" rel="tag">Terraform</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aif/" rel="tag">aif</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws/" rel="tag">aws</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blockchain/" rel="tag">blockchain</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cid/" rel="tag">cid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie-session/" rel="tag">cookie-session</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/credentials/" rel="tag">credentials</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deployment-cross-acc/" rel="tag">deployment-cross-acc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/embedding/" rel="tag">embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encoding/" rel="tag">encoding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ipfs/" rel="tag">ipfs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine-learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/" rel="tag">networking</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/policy/" rel="tag">policy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/s3/" rel="tag">s3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/submodule/" rel="tag">submodule</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vm/" rel="tag">vm</a><span class="tag-list-count">1</span></li></ul>
-    </div>
+<div class="container archives">
+  <div class="post-list">
+    
+        <!-- 后续文章的发布年份呈现 -->
+        <div class="content-title">
+          <h2>
+            <span>2025</span>
+          </h2>
+        </div>
+      
+      <div class="post-item" title="AIF-responsibility">
+        <div class="time-m-d">04-01</div>
+        <div class="title">
+          <a href="/2025/04/01/AIF-responsibility/">
+            <span>AIF-responsibility</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="AIF 證照筆記 - 負責任 AI">
+        <div class="time-m-d">04-01</div>
+        <div class="title">
+          <a href="/2025/04/01/AIF-responsibleAI/">
+            <span>AIF 證照筆記 - 負責任 AI</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="AIF 證照筆記 - ML 模型設計">
+        <div class="time-m-d">04-01</div>
+        <div class="title">
+          <a href="/2025/04/01/AIF-ML-design/">
+            <span>AIF 證照筆記 - ML 模型設計</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="AIF 證照筆記 - genAI">
+        <div class="time-m-d">04-01</div>
+        <div class="title">
+          <a href="/2025/04/01/AIF-genAI/">
+            <span>AIF 證照筆記 - genAI</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="AIF 證照筆記 - ML">
+        <div class="time-m-d">04-01</div>
+        <div class="title">
+          <a href="/2025/04/01/AIF-ML/">
+            <span>AIF 證照筆記 - ML</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="IPFS CID">
+        <div class="time-m-d">03-31</div>
+        <div class="title">
+          <a href="/2025/03/31/IPFS-CID/">
+            <span>IPFS CID</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="跨帳戶代理建立 AWS 資源">
+        <div class="time-m-d">03-16</div>
+        <div class="title">
+          <a href="/2025/03/16/Building-Across-Different-Acc-With-Credential/">
+            <span>跨帳戶代理建立 AWS 資源</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="區塊鏈 & 分散式帳本技術簡介">
+        <div class="time-m-d">03-05</div>
+        <div class="title">
+          <a href="/2025/03/05/blockchain1/">
+            <span>區塊鏈 & 分散式帳本技術簡介</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="Terraform：加速 DevOps 之旅，實現 IaC 自動化管理">
+        <div class="time-m-d">03-02</div>
+        <div class="title">
+          <a href="/2025/03/02/terraform/">
+            <span>Terraform：加速 DevOps 之旅，實現 IaC 自動化管理</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="Ubuntu 無法連接網路問題排除筆記">
+        <div class="time-m-d">03-01</div>
+        <div class="title">
+          <a href="/2025/03/01/vm-network/">
+            <span>Ubuntu 無法連接網路問題排除筆記</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="embeddings 如何讓機器了解人類世界的文字、圖像 ?">
+        <div class="time-m-d">02-24</div>
+        <div class="title">
+          <a href="/2025/02/24/embeddings/">
+            <span>embeddings 如何讓機器了解人類世界的文字、圖像 ?</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="Pinterest-tech">
+        <div class="time-m-d">02-24</div>
+        <div class="title">
+          <a href="/2025/02/24/Pinterest-tech/">
+            <span>Pinterest-tech</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="AWS S3 存取權限設置與公開存取管理策略">
+        <div class="time-m-d">02-24</div>
+        <div class="title">
+          <a href="/2025/02/24/aws-s3-public/">
+            <span>AWS S3 存取權限設置與公開存取管理策略</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="Presigned URLs：讓未授權用戶安全存取 Amazon S3">
+        <div class="time-m-d">02-20</div>
+        <div class="title">
+          <a href="/2025/02/20/aws-s3/">
+            <span>Presigned URLs：讓未授權用戶安全存取 Amazon S3</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="AWS Metadata？">
+        <div class="time-m-d">02-16</div>
+        <div class="title">
+          <a href="/2025/02/16/aws-metadata/">
+            <span>AWS Metadata？</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="為何我剛剛已經新增 IAM Role 到 EC2，但仍無法透過該 IAM 執行特定行為？">
+        <div class="time-m-d">02-15</div>
+        <div class="title">
+          <a href="/2025/02/15/aws-ssm/">
+            <span>為何我剛剛已經新增 IAM Role 到 EC2，但仍無法透過該 IAM 執行特定行為？</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="Terraform 錯誤解釋：Error： Inconsistent dependency lock file">
+        <div class="time-m-d">02-15</div>
+        <div class="title">
+          <a href="/2025/02/15/terraform-Inconsistent-dependency-lock-file/">
+            <span>Terraform 錯誤解釋：Error： Inconsistent dependency lock file</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="介紹 AWS 如何在網頁上辨識使用者帳戶？以及第三方 Cookie 封鎖對使用 AWS 資源的影響？">
+        <div class="time-m-d">02-15</div>
+        <div class="title">
+          <a href="/2025/02/15/aws-with-cookies/">
+            <span>介紹 AWS 如何在網頁上辨識使用者帳戶？以及第三方 Cookie 封鎖對使用 AWS 資源的影響？</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="Forwarding emails with aws">
+        <div class="time-m-d">02-15</div>
+        <div class="title">
+          <a href="/2025/02/15/Forwarding-emails-with-aws/">
+            <span>Forwarding emails with aws</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="CORS 錯誤解析：CORS resource sharing error header preflight invalid status 解決方案">
+        <div class="time-m-d">02-05</div>
+        <div class="title">
+          <a href="/2025/02/05/CORS-error-handle/">
+            <span>CORS 錯誤解析：CORS resource sharing error header preflight invalid status 解決方案</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="Git Submodule 介紹與管理指南">
+        <div class="time-m-d">01-31</div>
+        <div class="title">
+          <a href="/2025/01/31/git-delete-submodule/">
+            <span>Git Submodule 介紹與管理指南</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="Hexo 個人網頁 建立自己的 plugin!">
+        <div class="time-m-d">01-31</div>
+        <div class="title">
+          <a href="/2025/01/31/hexo-create-plugin/">
+            <span>Hexo 個人網頁 建立自己的 plugin!</span>
+          </a>
+        </div>
+      </div>
+    
+      <div class="post-item" title="2024 GICS 尋找資安女婕思 創意發想賽過程紀錄與心得">
+        <div class="time-m-d">01-31</div>
+        <div class="title">
+          <a href="/2025/01/31/2024GICS/">
+            <span>2024 GICS 尋找資安女婕思 創意發想賽過程紀錄與心得</span>
+          </a>
+        </div>
+      </div>
+    
   </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+</div>
 
         
 <div class="footer">
@@ -411,24 +584,6 @@
 
 
         
-  
-    <div class="share-icon tools-bar-item">
-      <a href="javascript: void(0)" id="share-icon">
-        <i class="iconfont iconshare"></i>
-      </a>
-      <div class="share-content hidden">
-        
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + tags + '&url=' + http%3A%2F%2Fexample.com%2Ftags%2Findex.html + '" target="_blank" title="Twitter">
-            <i class="iconfont icon-twitter"></i>
-          </a>
-        
-        
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/tags/index.html" target="_blank" title="Facebook">
-            <i class="iconfont icon-facebooksquare"></i>
-          </a>
-        
-      </div>
-    </div>
   
   
 <script src="/js/shares.js"></script>

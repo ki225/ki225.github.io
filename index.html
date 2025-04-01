@@ -100,6 +100,14 @@
 
       <div class="flex-container">
         <style>
+  @media (max-width: 768px) {
+    .desktop-image-container {
+      display: none !important;
+    }
+    .mobile-image-container {
+      display: flex !important;
+    }
+  }
   #content { display: none; }
   #dynamicTitle { color: #ff9800; }
   .container {
@@ -158,12 +166,17 @@
 </style>
 
 
-<div class="outer-container" style="display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto;">
+<div class="outer-container" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto;">
   <div class="left-container" style="flex: 1; padding: 20px;">
     <div></div>
     <div class="markdown-body" style="font-size: 3.5rem;">
       <span class="hi-im">Hi! I'm</span> <span id="dynamicTitle"></span>
     </div>
+
+    <div class="mobile-image-container" style="display: none; justify-content: center; margin: 20px 0;">
+      <img src="images/self/image.png" alt="Profile Picture" style="width: 180px; border-radius: 50%;">
+    </div>
+
     <div class="markdown-body" style="font-size: 1.5rem;">
       As an <span style="color: #ff9800;">AWS Educate Cloud Ambassador</span>, I led cloud workshops with <span style="color: #ff9800;">100+</span> participants.  
       At <span style="color: #ff9800;">eCloudvalley</span>, I gained hands-on experience with <span style="color: #ff9800;">IaC</span> tools and cloud solutions as a <span style="color: #ff9800;">Cloud Development Intern</span>.  
@@ -200,7 +213,7 @@
    
   </div>
   
-  <div class="right-container" style="display: flex; justify-content: flex-end; align-items: center; padding: 20px;">
+  <div class="desktop-image-container right-container" style="display: flex; justify-content: flex-end; align-items: center; padding: 20px;">
     <img src="images/self/image.png" alt="Profile Picture" style="width: 200px; border-radius: 50%;">
   </div>
 

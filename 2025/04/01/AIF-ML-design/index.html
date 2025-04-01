@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      AIF 證照筆記 - ML 模型設計 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/resume/">
+          <a href="/resume/">Resume</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">AIF 證照筆記 - ML 模型設計</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-04-01 12:18:13
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/aif/" title="aif">
+                    #aif
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>網路上有關模型開發的流程說明都大同小異，大致上可以分成以下幾個步驟</p>
+<h2 id="機器學習模型設計流程"><a href="#機器學習模型設計流程" class="headerlink" title="機器學習模型設計流程"></a>機器學習模型設計流程</h2><p>隨著人工智慧（AI）技術的進步，機器學習（ML）模型已廣泛應用於各個領域，如影像辨識、自然語言處理和預測分析等。本文將介紹機器學習模型設計的基本流程，幫助讀者理解從資料準備到模型部署的各個步驟。</p>
+<h3 id="Step-1-訓練資料收集"><a href="#Step-1-訓練資料收集" class="headerlink" title="Step 1: 訓練資料收集"></a>Step 1: 訓練資料收集</h3><p>機器學習模型的核心是數據，因此第一步驟是收集適當的訓練資料。這些資料可以包括：</p>
+<ul>
+<li>圖片：用於影像辨識、物件偵測等應用。</li>
+<li>文字：適用於自然語言處理（NLP）、情感分析等任務。</li>
+</ul>
+<p>資料的品質與多樣性將直接影響模型的效能，因此在這個階段，需確保數據的完整性與代表性。</p>
+<h3 id="Step-2-資料清理"><a href="#Step-2-資料清理" class="headerlink" title="Step 2: 資料清理"></a>Step 2: 資料清理</h3><p>收集到的原始資料通常包含雜訊、不完整資訊或重複數據，因此必須進行資料清理。此步驟包含：</p>
+<ul>
+<li>去除遺漏值與異常值，確保數據完整性。</li>
+<li>標準化與正規化，使數據在相同尺度範圍內。</li>
+<li>資料增強（Data Augmentation），如對影像進行旋轉、翻轉等操作，以提高模型的泛化能力。</li>
+</ul>
+<h3 id="Step-3-模型訓練"><a href="#Step-3-模型訓練" class="headerlink" title="Step 3: 模型訓練"></a>Step 3: 模型訓練</h3><p>在資料準備完善後，即可進行模型訓練。此步驟包括：</p>
+<ul>
+<li>選擇適合的演算法，如深度學習中的 CNN（卷積神經網絡）適用於圖像處理，而 RNN（循環神經網絡）適用於文字分析。</li>
+<li>設定超參數，如學習率、批次大小等，以影響模型的收斂速度與準確性。</li>
+<li>模型訓練與調整，透過多次訓練與驗證來最佳化模型。</li>
+</ul>
+<h3 id="Step-4-模型部署與推論"><a href="#Step-4-模型部署與推論" class="headerlink" title="Step 4: 模型部署與推論"></a>Step 4: 模型部署與推論</h3><p>當模型訓練完成並達到滿意的效果後，下一步是將模型部署到實際應用環境，以提供推論服務。部署方式包括：</p>
+<ul>
+<li>雲端部署：使用 AWS、Google Cloud、Azure 等雲端平台。</li>
+<li>本地端部署：適用於對安全性要求較高的企業內部環境。</li>
+<li>邊緣運算（Edge Computing）：將模型運行於 IoT 裝置或手機等設備上。</li>
+</ul>
+<h4 id="模型部署（Model-Deployment）"><a href="#模型部署（Model-Deployment）" class="headerlink" title="模型部署（Model Deployment）"></a>模型部署（Model Deployment）</h4><p>模型部署是指將訓練好的模型整合到生產環境，使其能夠被應用程式或服務使用。這通常涉及：</p>
+<ul>
+<li>模型封裝：將模型轉換為 API 或嵌入應用程式。</li>
+<li>負載均衡：確保多個使用者請求能夠有效處理。</li>
+<li>監控與維護：持續追蹤模型的效能，及時修正錯誤。</li>
+</ul>
+<h4 id="模型推論（Model-Inferencing）"><a href="#模型推論（Model-Inferencing）" class="headerlink" title="模型推論（Model Inferencing）"></a>模型推論（Model Inferencing）</h4><p>推論是指根據輸入數據，利用已訓練好的模型產生預測結果的過程。這就好比說想像你是一家咖啡店的老闆，並且聘請了一位非常有經驗的咖啡師（機器學習模型），這時候我們要怎麼確定這位咖啡師真的 “很有經驗” 呢? 這時候我們就可以透過模型推論的概念，也就是當顧客點單（輸入數據）時，咖啡師迅速根據過去的經驗（已訓練好的模型），判斷最佳的咖啡配方，並沖泡出符合顧客口味的咖啡（預測結果）。</p>
+<p>高效的推論系統需要：</p>
+<ul>
+<li>低延遲與高吞吐量：確保即時回應，例如在自動駕駛或醫療診斷中。</li>
+<li>資源優化：利用 GPU、TPU 或其他加速器來提高計算效率。</li>
+<li>可擴展性：確保系統能夠應對大量請求，例如推薦系統或聊天機器人。</li>
+</ul>
+<h4 id="模型訓練-vs-模型推論"><a href="#模型訓練-vs-模型推論" class="headerlink" title="模型訓練 vs 模型推論"></a>模型訓練 vs 模型推論</h4><p>雖然兩者都是輸入樣本到模型中，並由模型產生預測結果，但模型訓練是開發階段，而模型推論是應用階段，且推論要求低延遲與高效率，和訓練不同。</p>
+<p>舉個例子，可以想像模型訓練（Model Training）是你在學習煮咖啡，過程如下：</p>
+<ol>
+<li>你試著用不同的咖啡豆、不同的水溫、不同的沖泡方式來製作咖啡。</li>
+<li>每次做完後，你請朋友品嚐，並給你反饋（類似於計算損失函數）。</li>
+<li>根據反饋，你不斷調整做法（類似於調整模型參數）。</li>
+<li>經過數百次練習後，你學會了最完美的沖泡方式。</li>
+</ol>
+<p>而模型推論則是你已經是一名專業咖啡師，當顧客點單時：</p>
+<ol>
+<li>你根據顧客的需求（輸入數據），直接用你熟悉的方法沖泡咖啡（執行推論）。</li>
+<li>這個過程不需要重新學習，只需要運用你已經掌握的技巧來製作咖啡（使用訓練好的模型來做預測）。</li>
+<li>每次製作咖啡的時間很短（推論速度快）。</li>
+</ol>
+<h3 id="Step-5-驗證與分析"><a href="#Step-5-驗證與分析" class="headerlink" title="Step 5: 驗證與分析"></a>Step 5: 驗證與分析</h3><p>模型上線後，需持續監控其效能，以確保其準確性與穩定性。驗證與分析的工作包括：</p>
+<ul>
+<li>模型評估：透過混淆矩陣、精確率、召回率等指標評估模型表現。</li>
+<li>錯誤分析：找出模型預測錯誤的原因，進行修正與優化。</li>
+<li>模型更新：根據新數據重新訓練或微調模型，以適應環境變化。</li>
+</ul>
+<p><img src="/images/aif/img6.png" alt="alt text"></p>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-configure-processing-jobs.html">官方文件的 ML 週期</a><br><img src="/images/aif/img8.png" alt="alt text"></p>
+<h3 id="Q36"><a href="#Q36" class="headerlink" title="Q36"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/151041-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q36</a></h3><p>A company built a deep learning model for object detection and deployed the model to production.</p>
+<p>Which AI process occurs when the model analyzes a new image to identify objects?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Training</li>
+<li><input checked="" disabled="" type="checkbox"> Inference </li>
+<li><input disabled="" type="checkbox"> Model deployment</li>
+<li><input disabled="" type="checkbox"> Bias correction</li>
+</ul>
+<p>選 (B)，因為有提到已經 deployed 模型</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://datasciocean.tech/machine-learning-basic-concept/machine-learning-model-inference/#google_vignette">使用機器學習解決問題的五步驟 : 模型推論</a></li>
+<li></li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/04/01/AIF-genAI/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-04-01 12:18:13
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/aif/" title="aif">
+                        #aif
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/04/01/AIF-responsibleAI/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E6%A8%A1%E5%9E%8B%E8%A8%AD%E8%A8%88%E6%B5%81%E7%A8%8B"><span class="toc-text">機器學習模型設計流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-1-%E8%A8%93%E7%B7%B4%E8%B3%87%E6%96%99%E6%94%B6%E9%9B%86"><span class="toc-text">Step 1: 訓練資料收集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-2-%E8%B3%87%E6%96%99%E6%B8%85%E7%90%86"><span class="toc-text">Step 2: 資料清理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-3-%E6%A8%A1%E5%9E%8B%E8%A8%93%E7%B7%B4"><span class="toc-text">Step 3: 模型訓練</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-4-%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2%E8%88%87%E6%8E%A8%E8%AB%96"><span class="toc-text">Step 4: 模型部署與推論</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2%EF%BC%88Model-Deployment%EF%BC%89"><span class="toc-text">模型部署（Model Deployment）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E6%8E%A8%E8%AB%96%EF%BC%88Model-Inferencing%EF%BC%89"><span class="toc-text">模型推論（Model Inferencing）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E8%A8%93%E7%B7%B4-vs-%E6%A8%A1%E5%9E%8B%E6%8E%A8%E8%AB%96"><span class="toc-text">模型訓練 vs 模型推論</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-5-%E9%A9%97%E8%AD%89%E8%88%87%E5%88%86%E6%9E%90"><span class="toc-text">Step 5: 驗證與分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q36"><span class="toc-text">Q36</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + AIF%20%E8%AD%89%E7%85%A7%E7%AD%86%E8%A8%98%20-%20ML%20%E6%A8%A1%E5%9E%8B%E8%A8%AD%E8%A8%88 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F04%2F01%2FAIF-ML-design%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/04/01/AIF-ML-design/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
