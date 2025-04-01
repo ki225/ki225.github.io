@@ -13,7 +13,7 @@
   
   <title>
     
-      AIF 證照筆記 - 負責任 AI 
+      AIF 證照筆記 - 負責任 AI、AI 解決方案的安全性、合規性和治理 
       
       
       |
@@ -151,11 +151,11 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">AIF 證照筆記 - 負責任 AI</div>
+      <div class="post-title">AIF 證照筆記 - 負責任 AI、AI 解決方案的安全性、合規性和治理</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-04-01 12:47:59
+          2025-04-01 17:36:14
         </span>
         
               <span class="post-tags">
@@ -171,8 +171,8 @@
           
       </div>
       <div class="markdown-body">
-        <p>根據<a target="_blank" rel="noopener" href="https://aws.amazon.com/ai/responsible-ai/?nc1=h_ls">官方文件</a>，一個負責任 AI 的產品設計有以下幾個核心維度，以下是每個項目的詳細介紹與說明：</p>
-<h2 id="1-公平-Fairness"><a href="#1-公平-Fairness" class="headerlink" title="1. 公平 (Fairness)"></a>1. 公平 (Fairness)</h2><p>定義：公平是指 AI 系統在運作過程中不會對特定群體或個體產生不正當的偏見或歧視。這包括對不同性別、種族、年齡、社會經濟背景或其他身份特徵的公平對待。</p>
+        <h2 id="負責任-AI-設計"><a href="#負責任-AI-設計" class="headerlink" title="負責任 AI 設計"></a>負責任 AI 設計</h2><p>根據<a target="_blank" rel="noopener" href="https://aws.amazon.com/ai/responsible-ai/?nc1=h_ls">官方文件</a>，一個負責任 AI 的產品設計有以下幾個核心維度，以下是每個項目的詳細介紹與說明：</p>
+<h3 id="1-公平-Fairness"><a href="#1-公平-Fairness" class="headerlink" title="1. 公平 (Fairness)"></a>1. 公平 (Fairness)</h3><p>定義：公平是指 AI 系統在運作過程中不會對特定群體或個體產生不正當的偏見或歧視。這包括對不同性別、種族、年齡、社會經濟背景或其他身份特徵的公平對待。</p>
 <p>詳細說明：</p>
 <ul>
 <li>AI 系統應該確保其輸出不會基於這些敏感屬性（如種族、性別等）進行不公平的區分或歧視。</li>
@@ -180,7 +180,7 @@
 <li>通過公平算法或公平評估指標來監控和調整模型的行為，確保其對所有利害關係人的影響是一致的，並且不會造成不公平的後果。</li>
 </ul>
 <p>以 Amazon Transcribe – Batch (English-US) 為例子，他們在訓練語言基礎模型時即考量到公平性，故考量到各個區域定義的演講者社群，例如中西部或紐約市，以及由身分的多個維度 (包括祖先、年齡和性別) 定義的社群，盡可能讓訓練資料涵蓋各種混雜因素下廣泛類型的人類演講者，以使模型在美國英語演講者可能使用的各種發音、語調、詞彙和語法特徵方面都能很好地發揮作用。</p>
-<h2 id="2-可解釋-Explainability"><a href="#2-可解釋-Explainability" class="headerlink" title="2. 可解釋 (Explainability)"></a>2. 可解釋 (Explainability)</h2><p>定義：可解釋性是指 AI 系統的行為和決策可以被理解和追蹤，以便利害關係人能夠解釋和評估系統的輸出。</p>
+<h3 id="2-可解釋-Explainability"><a href="#2-可解釋-Explainability" class="headerlink" title="2. 可解釋 (Explainability)"></a>2. 可解釋 (Explainability)</h3><p>定義：可解釋性是指 AI 系統的行為和決策可以被理解和追蹤，以便利害關係人能夠解釋和評估系統的輸出。</p>
 <p>詳細說明：</p>
 <ul>
 <li>人類需要能夠理解 AI 系統是如何做出特定決策的，尤其是在涉及高風險領域（如醫療、金融等）時，理解背後的邏輯尤為重要。</li>
@@ -188,7 +188,7 @@
 <li>這可以通過開發“可解釋模型”或提供決策過程的可視化來實現。</li>
 </ul>
 <p>以 Amazon Transcribe 為例子，當其記錄音訊時，它會為同一記錄建立不同的版本，並為每個版本指派置信度分數。如果客戶啟用替代記錄，Amazon Transcribe 會傳回置信度較低的記錄的替代版本。客戶可以探索替代的記錄，以更深入了解為每個音訊輸入產生的候選字詞和片語。</p>
-<h3 id="Amazon-SageMaker-Clarify"><a href="#Amazon-SageMaker-Clarify" class="headerlink" title="Amazon SageMaker Clarify"></a>Amazon SageMaker Clarify</h3><p>Amazon SageMaker Clarify  可以在幾分鐘內評估基礎模型 (FM)、建置對 ML 模型的信任、可存取的科學指標和報告、支援合規計畫。除此之外，他也可以透過以下方式實現模型解釋性（explainability）：</p>
+<h4 id="Amazon-SageMaker-Clarify"><a href="#Amazon-SageMaker-Clarify" class="headerlink" title="Amazon SageMaker Clarify"></a>Amazon SageMaker Clarify</h4><p>Amazon SageMaker Clarify  可以在幾分鐘內評估基礎模型 (FM)、建置對 ML 模型的信任、可存取的科學指標和報告、支援合規計畫。除此之外，他也可以透過以下方式實現模型解釋性（explainability）：</p>
 <ol>
 <li>特徵歸因（Feature Attribution）：SageMaker Clarify 使用 Shapley 值等方法來解釋模型預測的依據，這有助於了解哪些特徵對模型的預測有影響，進而解釋模型如何做出決策。Shapley 值能夠衡量每個特徵對預測結果的貢獻，幫助理解模型的運作邏輯。</li>
 <li>偏誤檢測（Bias Detection）：SageMaker Clarify 可以在訓練前後以及模型部署後檢測數據和模型中的偏誤，這有助於識別訓練數據中可能存在的偏誤，並在模型預測過程中檢測和解釋可能的偏誤。這樣的功能對於減少模型中的不公平性和提升透明度至關重要。</li>
@@ -197,14 +197,14 @@
 <li>增進可解釋性與合規性：透過模型解釋，SageMaker Clarify 使得模型預測結果對外部監管機構、業務決策者及開發人員更具透明度，特別是在需要解釋模型預測原因的領域（如金融服務、醫療、教育等）。</li>
 <li>支持多階段分析：SageMaker Clarify 可以在機器學習流程的不同階段進行分析，包括訓練前、訓練後和生產環境中，幫助開發者在整個生命周期中理解模型行為，並進行必要的調整以減少偏誤和增強解釋性。</li>
 </ol>
-<h2 id="3-隱私權與安全性-Privacy-and-security"><a href="#3-隱私權與安全性-Privacy-and-security" class="headerlink" title="3. 隱私權與安全性 (Privacy and security)"></a>3. 隱私權與安全性 (Privacy and security)</h2><p>定義：隱私和安全性確保資料在取得、使用和儲存過程中不會被濫用，並且符合隱私保護的法律和規範。</p>
+<h3 id="3-隱私權與安全性-Privacy-and-security"><a href="#3-隱私權與安全性-Privacy-and-security" class="headerlink" title="3. 隱私權與安全性 (Privacy and security)"></a>3. 隱私權與安全性 (Privacy and security)</h3><p>定義：隱私和安全性確保資料在取得、使用和儲存過程中不會被濫用，並且符合隱私保護的法律和規範。</p>
 <p>詳細說明：</p>
 <ul>
 <li>確保 AI 系統在收集、處理和分析個人數據時遵循相關法律法規（如 GDPR 等隱私保護法律）。</li>
 <li>需要加強對資料存取的控制，並加密敏感資料，防止數據洩露或遭到濫用。</li>
 <li>AI 系統應該能夠在不危害用戶隱私的情況下提供有效的服務，並設有適當的資料刪除機制。</li>
 </ul>
-<h3 id="共享責任模型（Shared-Responsibility-Model）"><a href="#共享責任模型（Shared-Responsibility-Model）" class="headerlink" title="共享責任模型（Shared Responsibility Model）"></a>共享責任模型（Shared Responsibility Model）</h3><p>AWS 將安全性的責任分為:</p>
+<h4 id="共享責任模型（Shared-Responsibility-Model）"><a href="#共享責任模型（Shared-Responsibility-Model）" class="headerlink" title="共享責任模型（Shared Responsibility Model）"></a>共享責任模型（Shared Responsibility Model）</h4><p>AWS 將安全性的責任分為:</p>
 <ol>
 <li>AWS 責任 (Security of the Cloud):<ul>
 <li>物理基碼資料中心的安全性</li>
@@ -223,14 +223,14 @@
 <blockquote>
 <p>只要使用third-party，雙方都要共同承擔風險</p>
 </blockquote>
-<h2 id="4-安全-Safety"><a href="#4-安全-Safety" class="headerlink" title="4. 安全 (Safety)"></a>4. 安全 (Safety)</h2><p>定義：安全是防止 AI 系統的運行或其輸出對使用者、環境或社會造成潛在的危害。</p>
+<h3 id="4-安全-Safety"><a href="#4-安全-Safety" class="headerlink" title="4. 安全 (Safety)"></a>4. 安全 (Safety)</h3><p>定義：安全是防止 AI 系統的運行或其輸出對使用者、環境或社會造成潛在的危害。</p>
 <p>詳細說明：</p>
 <ul>
 <li>確保 AI 系統在任何情況下都不會造成物理、心理或社會的傷害，特別是在敏感領域如醫療、自駕車等。</li>
 <li>需要對系統進行反覆測試和監控，識別可能的風險點並採取預防措施。</li>
 <li>這包括制定緊急關閉或修正的機制，以應對突發的系統失效或錯誤。</li>
 </ul>
-<h2 id="5-可控-Controllability"><a href="#5-可控-Controllability" class="headerlink" title="5. 可控 (Controllability)"></a>5. 可控 (Controllability)</h2><p>定義：可控性確保對 AI 系統的行為可以進行有效的監控和指導，確保其依照預期運作。</p>
+<h3 id="5-可控-Controllability"><a href="#5-可控-Controllability" class="headerlink" title="5. 可控 (Controllability)"></a>5. 可控 (Controllability)</h3><p>定義：可控性確保對 AI 系統的行為可以進行有效的監控和指導，確保其依照預期運作。</p>
 <p>詳細說明：</p>
 <ul>
 <li>AI 系統應該設有適當的監控和反饋機制，以便操作員或管理者能夠對其行為進行調整。</li>
@@ -238,7 +238,7 @@
 <li>這可以通過設立警報系統、設置自動檢查點和人類監督機制來實現。</li>
 </ul>
 <p>Amazon SageMaker Clarify 和 Fmeval 都可以用來作為模型評估，</p>
-<h2 id="6-準確與穩健-Veracity-and-robustness"><a href="#6-準確與穩健-Veracity-and-robustness" class="headerlink" title="6. 準確與穩健 (Veracity and robustness)"></a>6. 準確與穩健 (Veracity and robustness)</h2><p>定義：準確性和穩健性是指 AI 系統能夠在不同情況下穩定、準確地輸出結果，並能應對異常或不規則的輸入。</p>
+<h3 id="6-準確與穩健-Veracity-and-robustness"><a href="#6-準確與穩健-Veracity-and-robustness" class="headerlink" title="6. 準確與穩健 (Veracity and robustness)"></a>6. 準確與穩健 (Veracity and robustness)</h3><p>定義：準確性和穩健性是指 AI 系統能夠在不同情況下穩定、準確地輸出結果，並能應對異常或不規則的輸入。</p>
 <p>詳細說明：</p>
 <ul>
 <li>AI 系統必須能夠在各種情況下準確運作，即使面對不完整、不一致或噪聲數據，依然能提供有價值的結果。</li>
@@ -246,33 +246,33 @@
 <li>這需要對系統進行充分的測試，並設計防止系統失敗的機制。</li>
 </ul>
 <p><img src="/images/aif/img7.png" alt="alt text"></p>
-<h2 id="7-管控-Governance"><a href="#7-管控-Governance" class="headerlink" title="7. 管控 (Governance)"></a>7. 管控 (Governance)</h2><p>定義：管控是指將最佳實踐和合規標準納入 AI 供應鏈，包括對開發者、部署者及其使用者的指導和監管。</p>
+<h3 id="7-管控-Governance"><a href="#7-管控-Governance" class="headerlink" title="7. 管控 (Governance)"></a>7. 管控 (Governance)</h3><p>定義：管控是指將最佳實踐和合規標準納入 AI 供應鏈，包括對開發者、部署者及其使用者的指導和監管。</p>
 <p>詳細說明：</p>
 <ul>
 <li>確保 AI 開發和部署遵循行業標準、法律法規和倫理準則，並對其進行嚴格的監管。</li>
 <li>包括選擇和管理供應商的標準，確保供應商提供的技術符合負責任 AI 的要求。</li>
 <li>強調對 AI 系統全生命周期的管控，從開發到部署，直到系統退役。</li>
 </ul>
-<h3 id="Amazon-SageMaker-的-ML-治理-ML-Governance"><a href="#Amazon-SageMaker-的-ML-治理-ML-Governance" class="headerlink" title="Amazon SageMaker 的 ML 治理 (ML Governance)"></a>Amazon SageMaker 的 ML 治理 (ML Governance)</h3><p>ML 治理 是指對機器學習（ML）模型的管理、監控、合規性、風險管理和持續優化的一整套機制。在 SageMaker 中，這一概念是通過多種功能和服務來實現的，主要包括：</p>
+<h4 id="Amazon-SageMaker-的-ML-治理-ML-Governance"><a href="#Amazon-SageMaker-的-ML-治理-ML-Governance" class="headerlink" title="Amazon SageMaker 的 ML 治理 (ML Governance)"></a>Amazon SageMaker 的 ML 治理 (ML Governance)</h4><p>ML 治理 是指對機器學習（ML）模型的管理、監控、合規性、風險管理和持續優化的一整套機制。在 SageMaker 中，這一概念是通過多種功能和服務來實現的，主要包括：</p>
 <ul>
 <li>模型生命周期管理：SageMaker 提供了端到端的模型管理功能，幫助企業管理模型的開發、訓練、部署和監控等各個階段。通過這些功能，企業能夠確保模型在整個生命週期中的合規性和安全性。</li>
 <li>模型訓練與版本控制：SageMaker 能夠對模型進行版本控制，並提供詳細的訓練記錄，讓使用者能夠追蹤模型的訓練過程、數據集、超參數設定等重要信息。這有助於確保模型的可追溯性，並防止錯誤或無法解釋的決策。</li>
 <li>安全與合規性：SageMaker 提供強大的安全功能，包括加密、權限管理和審計功能。這些功能可以幫助企業遵守資料隱私和合規性要求（如 GDPR），並保護敏感資料不被未經授權的使用。</li>
 <li>監控與評估：使用 SageMaker，可以對模型的表現進行持續監控，進而評估其在實際運行中的效果。若發現問題，能夠快速進行調整或重新訓練，以避免模型產生偏見或錯誤的結果。</li>
 </ul>
-<h3 id="SageMaker-Model-Cards"><a href="#SageMaker-Model-Cards" class="headerlink" title="SageMaker Model Cards"></a>SageMaker Model Cards</h3><p>SageMaker Model Cards 是一種專門用來描述和文檔化 ML 模型的工具，旨在提供模型開發過程中關鍵資訊的透明度和可追溯性。這些卡片可以幫助企業管理、跟踪和審查每個模型的使用情況，並在實現管控（Governance）方面起到以下作用：</p>
+<h4 id="SageMaker-Model-Cards"><a href="#SageMaker-Model-Cards" class="headerlink" title="SageMaker Model Cards"></a>SageMaker Model Cards</h4><p>SageMaker Model Cards 是一種專門用來描述和文檔化 ML 模型的工具，旨在提供模型開發過程中關鍵資訊的透明度和可追溯性。這些卡片可以幫助企業管理、跟踪和審查每個模型的使用情況，並在實現管控（Governance）方面起到以下作用：</p>
 <ul>
 <li>模型描述：Model Cards 包含了模型的詳細描述，包括模型的目的、適用範圍、訓練數據的來源與質量、開發過程中使用的技術和方法等。這些信息可以幫助監管機構、開發者和使用者理解模型的背景和運行條件，確保其符合道德和合規性要求。</li>
 <li>風險評估：Model Cards 中還包括風險評估部分，詳細列出模型可能的風險點（如偏見、數據不完整等）。這有助於開發者在部署前進行風險控制，並及時采取措施來降低風險。</li>
 <li>性能指標：模型卡片還會列出模型在不同場景下的表現和效果，包括精確度、召回率等性能指標。這能夠幫助利害關係人評估模型的可靠性和有效性。</li>
 <li>透明性與合規性：Model Cards 的透明化文檔有助於增強對 AI 系統的信任，並使企業能夠遵守相關的法律法規和道德規範。這為合規性檢查提供了必要的文檔支持。</li>
 </ul>
-<h3 id="資料治理-data-governance"><a href="#資料治理-data-governance" class="headerlink" title="資料治理 data governance"></a>資料治理 data governance</h3><p>資料控管包括確保資料處於適當狀態以支援業務計畫和營運的程序和政策。現代組織大規模收集來自各種來源的資料，以增強營運和服務交付。但是，資料驅動型決策只有在資料符合所需品質和完整性標準時才有效。</p>
+<h4 id="資料治理-data-governance"><a href="#資料治理-data-governance" class="headerlink" title="資料治理 data governance"></a>資料治理 data governance</h4><p>資料控管包括確保資料處於適當狀態以支援業務計畫和營運的程序和政策。現代組織大規模收集來自各種來源的資料，以增強營運和服務交付。但是，資料驅動型決策只有在資料符合所需品質和完整性標準時才有效。</p>
 <p>資料控管決定資料使用的角色、責任和標準。概述了誰可以根據什麼資料、使用什麼方法以及在什麼情況下採取什麼動作。隨著越來越多的資料用於支援人工智慧 (AI) 和機器學習 (ML) 使用案例，所有資料使用都滿足監管和道德要求變得至關重要。資料控管平衡資料安全與戰術和策略目標，以確保最大效率。</p>
 <p>資料治理的策略包含了資料生命週期、日誌紀錄、位置紀錄、監控、觀察、保留</p>
-<h3 id="分析管控"><a href="#分析管控" class="headerlink" title="分析管控"></a>分析管控</h3><p>分析管控既可管控用於分析應用程式的資料，也可以管控分析系統的使用情況，例如分析報告版本控制和文件。與往常一樣，追蹤法規要求，制定公司政策，並為更廣泛的組織提供防護機制。</p>
+<h4 id="分析管控"><a href="#分析管控" class="headerlink" title="分析管控"></a>分析管控</h4><p>分析管控既可管控用於分析應用程式的資料，也可以管控分析系統的使用情況，例如分析報告版本控制和文件。與往常一樣，追蹤法規要求，制定公司政策，並為更廣泛的組織提供防護機制。</p>
 <p><img src="/images/aif/img9.png" alt="alt text"></p>
-<h2 id="8-透明-Transparency"><a href="#8-透明-Transparency" class="headerlink" title="8. 透明 (Transparency)"></a>8. 透明 (Transparency)</h2><p>定義：透明性是指讓利害關係人了解 AI 系統的運作方式和決策過程，幫助他們做出明智的選擇。</p>
+<h3 id="8-透明-Transparency"><a href="#8-透明-Transparency" class="headerlink" title="8. 透明 (Transparency)"></a>8. 透明 (Transparency)</h3><p>定義：透明性是指讓利害關係人了解 AI 系統的運作方式和決策過程，幫助他們做出明智的選擇。</p>
 <p>詳細說明：</p>
 <ul>
 <li>透明性意味著系統設計、開發和運營過程中的關鍵資訊應該對相關利害關係人開放，讓他們理解 AI 系統如何處理數據、做出決策和執行任務。</li>
@@ -280,14 +280,16 @@
 <li>透明的設計可以增加信任，幫助確保系統的道德和合規性。</li>
 </ul>
 <p>這些核心維度共同促進了 AI 系統的負責任設計和運營，確保它們在實現技術創新的同時，也能夠考慮到社會、法律和道德的各種要求。</p>
-<h3 id="Q43"><a href="#Q43" class="headerlink" title="Q43"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150822-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q43</a></h3><p>Which functionality does Amazon SageMaker Clarify provide?</p>
+<h2 id="AI-解決方案的安全性、合規性和治理"><a href="#AI-解決方案的安全性、合規性和治理" class="headerlink" title="AI 解決方案的安全性、合規性和治理"></a>AI 解決方案的安全性、合規性和治理</h2><h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><h3 id="Q43"><a href="#Q43" class="headerlink" title="Q43"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150822-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q43</a></h3><p>Which functionality does Amazon SageMaker Clarify provide?</p>
 <ul>
 <li><input disabled="" type="checkbox"> Integrates a Retrieval Augmented Generation (RAG) workflow</li>
 <li><input disabled="" type="checkbox"> Monitors the quality of ML models in production</li>
 <li><input disabled="" type="checkbox"> Documents critical details about ML models</li>
 <li><input checked="" disabled="" type="checkbox"> Identifies potential bias during data preparation</li>
 </ul>
+<blockquote>
 <p>(B) 屬於 SageMaker Model Monitor 的功能。(C) 是 SageMaker Model Card 的功能。</p>
+</blockquote>
 <h3 id="Q37"><a href="#Q37" class="headerlink" title="Q37"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150816-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q37</a></h3><p>An AI practitioner is building a model to generate images of humans in various professions. The AI practitioner discovered that the input data is biased and that specific attributes affect the image generation and create bias in the model.<br>Which technique will solve the problem?</p>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> Data augmentation for imbalanced classes</li>
@@ -295,12 +297,14 @@
 <li><input disabled="" type="checkbox"> Retrieval Augmented Generation (RAG)</li>
 <li><input disabled="" type="checkbox"> Watermark detection for images</li>
 </ul>
+<blockquote>
 <p>在處理不平衡類別的問題時，數據增強（Data Augmentation）可以幫助減少模型的偏見，並提升模型對少數類別的識別能力。例如:</p>
 <ul>
 <li>圖像增強：如果處理的是圖像分類問題，可以使用旋轉、翻轉、縮放、剪裁、顏色變換等技術來生成新的樣本，這樣不僅能增強少數類別的樣本數量，還能提升模型的泛化能力。</li>
 <li>文本增強：對於文本分類問題，可以使用同義詞替換、隨機刪除、插入或重排列等技術來創建多樣化的少數類別數據。</li>
 <li>噪聲注入：對數據加上隨機噪聲（如隨機擾動、隨機裁剪等）可以幫助模型學會處理變化和不確定性，減少對單一樣本的過擬合。</li>
 </ul>
+</blockquote>
 <h3 id="Q54"><a href="#Q54" class="headerlink" title="Q54"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/151080-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q54</a></h3><p>A company wants to build an interactive application for children that generates new stories based on classic stories. The company wants to use Amazon Bedrock and needs to ensure that the results and topics are appropriate for children.<br>Which AWS service or feature will meet these requirements?</p>
 <ul>
 <li><input disabled="" type="checkbox"> Amazon Rekognition</li>
@@ -308,6 +312,108 @@
 <li><input checked="" disabled="" type="checkbox"> Guardrails for Amazon Bedrock</li>
 <li><input disabled="" type="checkbox"> Agents for Amazon Bedrock</li>
 </ul>
+<h3 id="Q78"><a href="#Q78" class="headerlink" title="Q78"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/152544-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q78</a></h3><p>An AI practitioner trained a custom model on Amazon Bedrock by using a training dataset that contains confidential data. The AI practitioner wants to ensure that the custom model does not generate inference responses based on confidential data.<br>How should the AI practitioner prevent responses based on confidential data?</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Delete the custom model. Remove the confidential data from the training dataset. Retrain the custom model.</li>
+<li><input disabled="" type="checkbox"> Mask the confidential data in the inference responses by using dynamic data masking.</li>
+<li><input disabled="" type="checkbox"> Encrypt the confidential data in the inference responses by using Amazon SageMaker.</li>
+<li><input disabled="" type="checkbox"> Encrypt the confidential data in the custom model by using AWS Key Management Service (AWS KMS).</li>
+</ul>
+<blockquote>
+<p>如果訓練資料集中包含機密資料，那麼該資料可能已被納入模型的學習過程，進而影響推論結果。為了確保模型的推論結果不基於機密資料，AI 實踐者需要刪除該自訂模型，從原始訓練資料集中移除機密資料後，重新訓練模型。其他選項中的方法（例如 B、C、D）無法根本性地解決這個問題，因為這些方法無法消除模型在訓練期間已學習到的機密資料。</p>
+</blockquote>
+<h3 id="Q30"><a href="#Q30" class="headerlink" title="Q30"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150809-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q30</a></h3><p>A company is using the Generative AI Security Scoping Matrix to assess security responsibilities for its solutions. The company has identified four different solution scopes based on the matrix.<br>Which solution scope gives the company the MOST ownership of security responsibilities?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Using a third-party enterprise application that has embedded generative AI features.</li>
+<li><input disabled="" type="checkbox"> Building an application by using an existing third-party generative AI foundation model (FM).</li>
+<li><input disabled="" type="checkbox"> Refining an existing third-party generative AI foundation model (FM) by fine-tuning the model by using data specific to the business.</li>
+<li><input checked="" disabled="" type="checkbox"> Building and training a generative AI model from scratch by using specific data that a customer owns.</li>
+</ul>
+<blockquote>
+<p>在生成式 AI 安全性範圍界定矩陣中，不同的解決方案範圍代表了企業在安全責任上的擁有程度。從最低到最高，當企業完全依賴第三方服務時，安全責任主要由服務提供商承擔；而當企業自己從頭建立並訓練模型時，則需要自行管理整個模型的生命週期，從數據處理、模型訓練到部署安全，都由企業全面負責。</p>
+</blockquote>
+<h3 id="Q87"><a href="#Q87" class="headerlink" title="Q87"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/153535-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q87</a></h3><p>A company wants to use Amazon Bedrock. The company needs to review which security aspects the company is responsible for when using Amazon Bedrock.</p>
+<p>Which security aspect will the company be responsible for?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Patching and updating the versions of Amazon Bedrock</li>
+<li><input disabled="" type="checkbox"> Protecting the infrastructure that hosts Amazon Bedrock</li>
+<li><input checked="" disabled="" type="checkbox"> Securing the company’s data in transit and at rest</li>
+<li><input disabled="" type="checkbox"> Provisioning Amazon Bedrock within the company network</li>
+</ul>
+<h3 id="Q128"><a href="#Q128" class="headerlink" title="Q128"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/155864-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q128</a></h3><p>A hospital is developing an AI system to assist doctors in diagnosing diseases based on patient records and medical images. To comply with regulations, the sensitive patient data must not leave the country the data is located in.</p>
+<p>Which data governance strategy will ensure compliance and protect patient privacy?</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Data residency</li>
+<li><input disabled="" type="checkbox"> Data quality</li>
+<li><input disabled="" type="checkbox"> Data discoverability</li>
+<li><input disabled="" type="checkbox"> Data enrichment</li>
+</ul>
+<blockquote>
+<ol>
+<li>A. Data residency</li>
+</ol>
+<ul>
+<li>資料駐留是指資料在特定地理位置存儲和處理的要求，這對於符合合規性要求尤其重要。許多國家或地區的法律規定敏感數據（如病患資料）必須保存在本地，不能傳輸到其他國家。因此，這是最能確保資料不離開存放國家的策略，並且對病患隱私的保護至關重要。</li>
+</ul>
+<ol start="2">
+<li>B. Data quality</li>
+</ol>
+<ul>
+<li>資料質量指的是確保資料的準確性、完整性和一致性，這對於AI系統的有效性很重要，但它並不直接解決資料是否能夠跨境流動的問題。因此，它對合規性和數據隱私的保護作用較小。</li>
+</ul>
+<ol start="3">
+<li>C. Data discoverability</li>
+</ol>
+<ul>
+<li>資料可發現性指的是讓資料在合適的情境下容易被發現和使用。這對於資料的搜索和存取非常有用，但並沒有直接與資料的地理位置或隱私保護有關，因此也無法解決資料不離開國家的問題。</li>
+</ul>
+<ol start="4">
+<li>D. Data enrichment</li>
+</ol>
+<ul>
+<li>資料豐富化是指在現有資料的基礎上增加額外的資料內容，這對於提升資料的價值和AI模型的表現有幫助，但與資料是否能跨國移動的合規性問題無關。</li>
+</ul>
+</blockquote>
+<h3 id="Q71"><a href="#Q71" class="headerlink" title="Q71"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/151079-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q71</a></h3><p>An accounting firm wants to implement a large language model (LLM) to automate document processing. The firm must proceed responsibly to avoid potential harms.<br>What should the firm do when developing and deploying the LLM? (Choose two.)</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Include fairness metrics for model evaluation.</li>
+<li><input disabled="" type="checkbox"> Adjust the temperature parameter of the model.</li>
+<li><input checked="" disabled="" type="checkbox"> Modify the training data to mitigate bias.</li>
+<li><input disabled="" type="checkbox"> Avoid overfitting on the training data.</li>
+<li><input disabled="" type="checkbox"> Apply prompt engineering techniques.</li>
+</ul>
+<blockquote>
+<p>AC 選項可以實現模型的透明性 &amp; 可解釋性</p>
+</blockquote>
+<h3 id="Q47"><a href="#Q47" class="headerlink" title="Q47"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150827-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q47</a></h3><p>A social media company wants to use a large language model (LLM) for content moderation. The company wants to evaluate the LLM outputs for bias and potential discrimination against specific groups or individuals.<br>Which data source should the company use to evaluate the LLM outputs with the LEAST administrative effort?</p>
+<ul>
+<li><input disabled="" type="checkbox"> User-generated content</li>
+<li><input disabled="" type="checkbox"> Moderation logs</li>
+<li><input disabled="" type="checkbox"> Content moderation guidelines</li>
+<li><input checked="" disabled="" type="checkbox"> Benchmark datasets</li>
+</ul>
+<blockquote>
+<p>A 選項代表用戶生成內容，雖具有真實性和多樣性，但它的行政工作量通常較高。因為社交平台的內容非常龐大且多變，篩選和標註這些內容可能需要大量的人力和時間。因此，這不太可能是最有效的選擇來減少行政工作。</p>
+<p>B 選項的審查日志可以提供有關過去決策的詳細信息，但如果內容審查流程較為繁瑣或規模較大，這些日志資料可能會非常冗長，需要進行複雜的分析來識別偏見或歧視。因此，這也可能會增加行政負擔。</p>
+<p>C 選項代表指導方針，決定了平台對於什麼樣的內容是被允許的，什麼樣的內容應該被過濾或刪除的規範，主要是對於決策標準化，並不直接提供用來評估模型輸出的數據。</p>
+<p>D 選項是專門設計的數據集，用於評估機器學習模型的性能，通常包括標註了偏見或歧視情況的數據。</p>
+</blockquote>
+<h3 id="Q43-1"><a href="#Q43-1" class="headerlink" title="Q43"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150822-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q43</a></h3><p>Which functionality does Amazon SageMaker Clarify provide?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Integrates a Retrieval Augmented Generation (RAG) workflow</li>
+<li><input disabled="" type="checkbox"> Monitors the quality of ML models in production</li>
+<li><input disabled="" type="checkbox"> Documents critical details about ML models</li>
+<li><input checked="" disabled="" type="checkbox"> Identifies potential bias during data preparation</li>
+</ul>
+<blockquote>
+<p>Amazon SageMaker Clarify 是 AWS 提供的一個工具，專門用來偵測和減少機器學習模型的偏見（bias），並提供可解釋性（explainability）的功能。它的主要用途包括：</p>
+<ul>
+<li>在數據準備階段識別潛在偏見（如性別、種族等因素對預測結果的影響）</li>
+<li>分析訓練後的模型偏見，確保模型公平性</li>
+<li>提供模型可解釋性，幫助理解輸入特徵如何影響預測結果</li>
+</ul>
+<p>B 選項監控生產環境中的 ML 模型品質通常由 Amazon SageMaker Model Monitor 負責，而不是 SageMaker Clarify。而 C 選項雖然 SageMaker Clarify 會提供解釋性報告，但「記錄模型關鍵細節」的工作通常由 Amazon SageMaker Model Registry 或其他 MLOps 工具完成，而不是 Clarify 的主要功能。</p>
+</blockquote>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/ai/responsible-ai/resources/transcribe-speech-recognition/">AWS AI Service Cards – Amazon Transcribe – Batch (English-US)</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-configure-processing-jobs.html">Fairness, model explainability and bias detection with SageMaker Clarify</a></li>
@@ -329,7 +435,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-04-01 12:47:59
+              2025-04-01 17:36:14
             </span>
             
                   <span class="post-tags">
@@ -346,11 +452,6 @@
           </div>
           <div class="post-foot-prev">
             
-              <a href="/2025/04/01/AIF-responsibility/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
-            
           </div>
         </div>
       
@@ -363,7 +464,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%AC%E5%B9%B3-Fairness"><span class="toc-text">1. 公平 (Fairness)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8F%AF%E8%A7%A3%E9%87%8B-Explainability"><span class="toc-text">2. 可解釋 (Explainability)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Amazon-SageMaker-Clarify"><span class="toc-text">Amazon SageMaker Clarify</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%9A%B1%E7%A7%81%E6%AC%8A%E8%88%87%E5%AE%89%E5%85%A8%E6%80%A7-Privacy-and-security"><span class="toc-text">3. 隱私權與安全性 (Privacy and security)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E8%B2%AC%E4%BB%BB%E6%A8%A1%E5%9E%8B%EF%BC%88Shared-Responsibility-Model%EF%BC%89"><span class="toc-text">共享責任模型（Shared Responsibility Model）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AE%89%E5%85%A8-Safety"><span class="toc-text">4. 安全 (Safety)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%8F%AF%E6%8E%A7-Controllability"><span class="toc-text">5. 可控 (Controllability)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%BA%96%E7%A2%BA%E8%88%87%E7%A9%A9%E5%81%A5-Veracity-and-robustness"><span class="toc-text">6. 準確與穩健 (Veracity and robustness)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E7%AE%A1%E6%8E%A7-Governance"><span class="toc-text">7. 管控 (Governance)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Amazon-SageMaker-%E7%9A%84-ML-%E6%B2%BB%E7%90%86-ML-Governance"><span class="toc-text">Amazon SageMaker 的 ML 治理 (ML Governance)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SageMaker-Model-Cards"><span class="toc-text">SageMaker Model Cards</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B3%87%E6%96%99%E6%B2%BB%E7%90%86-data-governance"><span class="toc-text">資料治理 data governance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E7%AE%A1%E6%8E%A7"><span class="toc-text">分析管控</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E9%80%8F%E6%98%8E-Transparency"><span class="toc-text">8. 透明 (Transparency)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q43"><span class="toc-text">Q43</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q37"><span class="toc-text">Q37</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q54"><span class="toc-text">Q54</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B2%A0%E8%B2%AC%E4%BB%BB-AI-%E8%A8%AD%E8%A8%88"><span class="toc-text">負責任 AI 設計</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%85%AC%E5%B9%B3-Fairness"><span class="toc-text">1. 公平 (Fairness)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%AF%E8%A7%A3%E9%87%8B-Explainability"><span class="toc-text">2. 可解釋 (Explainability)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Amazon-SageMaker-Clarify"><span class="toc-text">Amazon SageMaker Clarify</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%9A%B1%E7%A7%81%E6%AC%8A%E8%88%87%E5%AE%89%E5%85%A8%E6%80%A7-Privacy-and-security"><span class="toc-text">3. 隱私權與安全性 (Privacy and security)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E8%B2%AC%E4%BB%BB%E6%A8%A1%E5%9E%8B%EF%BC%88Shared-Responsibility-Model%EF%BC%89"><span class="toc-text">共享責任模型（Shared Responsibility Model）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%AE%89%E5%85%A8-Safety"><span class="toc-text">4. 安全 (Safety)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%8F%AF%E6%8E%A7-Controllability"><span class="toc-text">5. 可控 (Controllability)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%BA%96%E7%A2%BA%E8%88%87%E7%A9%A9%E5%81%A5-Veracity-and-robustness"><span class="toc-text">6. 準確與穩健 (Veracity and robustness)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E7%AE%A1%E6%8E%A7-Governance"><span class="toc-text">7. 管控 (Governance)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Amazon-SageMaker-%E7%9A%84-ML-%E6%B2%BB%E7%90%86-ML-Governance"><span class="toc-text">Amazon SageMaker 的 ML 治理 (ML Governance)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SageMaker-Model-Cards"><span class="toc-text">SageMaker Model Cards</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B3%87%E6%96%99%E6%B2%BB%E7%90%86-data-governance"><span class="toc-text">資料治理 data governance</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E7%AE%A1%E6%8E%A7"><span class="toc-text">分析管控</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E9%80%8F%E6%98%8E-Transparency"><span class="toc-text">8. 透明 (Transparency)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E3%80%81%E5%90%88%E8%A6%8F%E6%80%A7%E5%92%8C%E6%B2%BB%E7%90%86"><span class="toc-text">AI 解決方案的安全性、合規性和治理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%8C%E7%9B%AE"><span class="toc-text">題目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q43"><span class="toc-text">Q43</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q37"><span class="toc-text">Q37</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q54"><span class="toc-text">Q54</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q78"><span class="toc-text">Q78</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q30"><span class="toc-text">Q30</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q87"><span class="toc-text">Q87</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q128"><span class="toc-text">Q128</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q71"><span class="toc-text">Q71</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q47"><span class="toc-text">Q47</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q43-1"><span class="toc-text">Q43</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
       
     </div>
   </div>
@@ -651,7 +752,7 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + AIF%20%E8%AD%89%E7%85%A7%E7%AD%86%E8%A8%98%20-%20%E8%B2%A0%E8%B2%AC%E4%BB%BB%20AI + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F04%2F01%2FAIF-responsibleAI%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + AIF%20%E8%AD%89%E7%85%A7%E7%AD%86%E8%A8%98%20-%20%E8%B2%A0%E8%B2%AC%E4%BB%BB%20AI%E3%80%81AI%20%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E3%80%81%E5%90%88%E8%A6%8F%E6%80%A7%E5%92%8C%E6%B2%BB%E7%90%86 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F04%2F01%2FAIF-responsibleAI%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
