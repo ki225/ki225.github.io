@@ -155,7 +155,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-04-01 17:36:14
+          2025-04-01 20:33:39
         </span>
         
               <span class="post-tags">
@@ -204,25 +204,6 @@
 <li>需要加強對資料存取的控制，並加密敏感資料，防止數據洩露或遭到濫用。</li>
 <li>AI 系統應該能夠在不危害用戶隱私的情況下提供有效的服務，並設有適當的資料刪除機制。</li>
 </ul>
-<h4 id="共享責任模型（Shared-Responsibility-Model）"><a href="#共享責任模型（Shared-Responsibility-Model）" class="headerlink" title="共享責任模型（Shared Responsibility Model）"></a>共享責任模型（Shared Responsibility Model）</h4><p>AWS 將安全性的責任分為:</p>
-<ol>
-<li>AWS 責任 (Security of the Cloud):<ul>
-<li>物理基碼資料中心的安全性</li>
-<li>全球基礎架構保護</li>
-<li>合規性與標準維護</li>
-</ul>
-</li>
-<li>客戶責任 (Security in the Cloud):<ul>
-<li>資料加密 (Data Encryption at Rest &amp; In Transit)</li>
-<li>安全性群組 (Security Groups) 設定</li>
-<li>IAM 存取控制與身份管理</li>
-<li>應用程式與數據保護</li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<p>只要使用third-party，雙方都要共同承擔風險</p>
-</blockquote>
 <h3 id="4-安全-Safety"><a href="#4-安全-Safety" class="headerlink" title="4. 安全 (Safety)"></a>4. 安全 (Safety)</h3><p>定義：安全是防止 AI 系統的運行或其輸出對使用者、環境或社會造成潛在的危害。</p>
 <p>詳細說明：</p>
 <ul>
@@ -280,7 +261,46 @@
 <li>透明的設計可以增加信任，幫助確保系統的道德和合規性。</li>
 </ul>
 <p>這些核心維度共同促進了 AI 系統的負責任設計和運營，確保它們在實現技術創新的同時，也能夠考慮到社會、法律和道德的各種要求。</p>
-<h2 id="AI-解決方案的安全性、合規性和治理"><a href="#AI-解決方案的安全性、合規性和治理" class="headerlink" title="AI 解決方案的安全性、合規性和治理"></a>AI 解決方案的安全性、合規性和治理</h2><h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><h3 id="Q43"><a href="#Q43" class="headerlink" title="Q43"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150822-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q43</a></h3><p>Which functionality does Amazon SageMaker Clarify provide?</p>
+<h2 id="AI-解決方案的安全性、合規性和治理"><a href="#AI-解決方案的安全性、合規性和治理" class="headerlink" title="AI 解決方案的安全性、合規性和治理"></a>AI 解決方案的安全性、合規性和治理</h2><p>安全與合規是 AWS 和客戶的共同責任。此共同模型有助於減輕客戶的操作負擔，因為從託管作業系統和虛擬化層的元件到服務運作的設施實體安全性都由 AWS 操作、管理和控制。客戶負責和管理訪客作業系統 (包含更新和安全性修補程式)、其他相關應用程式軟體，以及 AWS 提供的安全群組防火牆組態。</p>
+<h3 id="AWS-的資料保護及隱私權-Security"><a href="#AWS-的資料保護及隱私權-Security" class="headerlink" title="AWS 的資料保護及隱私權 Security"></a>AWS 的資料保護及隱私權 Security</h3><p>雲端安全是 AWS 和客戶的共同的責任。可以透過以下服務提升安全性</p>
+<ul>
+<li>Amazon GuardDuty </li>
+<li>AWS Nitro System -核心安全性、機密性和合規性要求的能力。我們所設計的 Nitro System 具備工作負載保密功能，連操作者都無法存取。Nitro System 沒有可讓任何系統或人員登入 EC2 伺服器、讀取 EC2 執行個體的記憶體或存取執行個體儲存體上所存任何資料的機制，亦無法存取加密 EBS 磁碟區上所存的任何資料。</li>
+<li>AWS CloudHSM 和 AWS Key Management Service : 安全地產生和管理加密金鑰</li>
+<li>AWS Config 和 AWS CloudTrail : 提供監控和記錄功能，以實現合規與稽核效果。</li>
+</ul>
+<h3 id="資料主權-Data-sovereignty"><a href="#資料主權-Data-sovereignty" class="headerlink" title="資料主權 Data sovereignty"></a>資料主權 Data sovereignty</h3><p>您可以選擇將您的客戶資料存放在我們全球任何一個或多個 AWS 區域中。 使用 AWS 服務時，您也可以確信您的客戶資料就放置在您所選取的 AWS 區域中。有小部分 AWS 服務涉及資料傳輸，例如，為了開發和改善特定服務，在這種情況下您可以選擇退出傳輸；或者因為傳輸本身就是服務的主要部分 (例如內容交付服務)。我們禁止且我們的系統旨在防止 AWS 人員出於任何目的 (包括服務維護) 從遠端存取客戶資料，除非您自己要求存取，或除非防止欺詐和濫用或是為了遵守法律而需要存取。如果我們收到執法申請，且假若申請與法律衝突、過於廣泛或我們有其他適當的理由這樣做，我們將質疑政府機構有關客戶資料的執法申請。我們還提供雙年度資訊申請報告，描述 AWS 從執法部門收到的資訊申請的類型和數量。</p>
+<h3 id="資料隱私權-Data-privacy"><a href="#資料隱私權-Data-privacy" class="headerlink" title="資料隱私權 Data privacy"></a>資料隱私權 Data privacy</h3><p>藉助各種服務和功能，我們不斷提高隱私保護的標準，讓您可以實作自己的隱私控制，包括進階存取、加密和日誌記錄功能。我們可以使用 AWS 受管或由您全受管的金鑰輕鬆加密傳輸中資料和靜態資料。您可以使用自己在 AWS 外部產生和管理的金鑰。我們實作穩定且可擴展的流程來 管理隱私權，包括如何收集、使用、存取、存放和刪除資料。我們提供了各種最佳實務文件、培訓和指引，您可以利用這些來保護您的資料，例如 AWS Well-Architected Framework 的安全性支柱。我們僅根據您的書面指示處理客戶資料，即您上傳到您的 AWS 帳戶的任何個人資料，並且不會在未經您同意的情況下存取、使用或分享您的資料，除非為防止詐騙和濫用或遵守法律，如我們的 AWS 客戶協議和 AWS GDPR 資料處理增補合約中所述。成千上萬的客戶須遵守 歐盟《一般資料保護規範》(GDPR)、 PCI 和 HIPAA，且將使用 AWS 服務處理這些類型的工作負載。AWS 已獲得多項國際認可的認證和資格鑑定，證明符合嚴格的國際標準，例如適用於雲端安全的 ISO 27017、適用於隱私資訊管理的 ISO 27701，和適用於雲端隱私的 ISO 27018。我們不會將客戶資料或從中衍生的資訊用於行銷或廣告。</p>
+<h3 id="資料控制與常駐-Data-controls-and-residency"><a href="#資料控制與常駐-Data-controls-and-residency" class="headerlink" title="資料控制與常駐 Data controls and residency"></a>資料控制與常駐 Data controls and residency</h3><p>藉助 AWS，您可以使用功能強大的 AWS 服務和工具來控制您的資料，包括確定資料的儲存位置、保護方式以及存取人員。AWS Identity and Access Management (IAM) 等服務可讓您安全地管理對 AWS 服務與資源的存取。AWS CloudTrail 和 Amazon Macie 支援合規、偵測及稽核，而 AWS CloudHSM 和 AWS Key Management Service (KMS) 可讓您安全地產生和管理加密金鑰。AWS Control Tower 可管控資料落地。</p>
+<h3 id="共享責任模型（Shared-Responsibility-Model）"><a href="#共享責任模型（Shared-Responsibility-Model）" class="headerlink" title="共享責任模型（Shared Responsibility Model）"></a>共享責任模型（Shared Responsibility Model）</h3><p>AWS 負責「雲端本身的安全」– AWS 負責保護執行 AWS 雲端提供的所有服務的基礎設施。此基礎設施由執行 AWS 雲端服務的硬體、軟體、聯網與設施組成。</p>
+<p>客戶負責「雲端內部的安全」– 客戶的責任由自行選擇的 AWS 雲端服務決定。這會決定客戶在安全責任中必須執行的組態工作量。例如，Amazon Elastic Compute Cloud (Amazon EC2) 等服務分類為基礎設施即服務 (IaaS)，因此，需要客戶執行所有必要的安全組態和管理任務。部署 Amazon EC2 執行個體的客戶需負責管理訪客作業系統 (包含更新和安全性修補程式)、客戶在執行個體上安裝的所有應用程式軟體或公用程式，以及 AWS 在每個執行個體提供的防火牆組態 (稱為安全群組)。 若是 Amazon S3 和 Amazon DynamoDB 等抽象服務，AWS 運作基礎設施層、作業系統和平台，客戶則存取端點以儲存及擷取資料。客戶負責管理其資料（包括加密選項），對其資產進行分類，以及使用 IAM 工具來套用適當的權限。</p>
+<p>簡單而言，AWS 將安全性的責任分為:</p>
+<ol>
+<li>AWS 責任 (Security of the Cloud):<ul>
+<li>物理基碼資料中心的安全性</li>
+<li>全球基礎架構保護</li>
+<li>合規性與標準維護</li>
+</ul>
+</li>
+<li>客戶責任 (Security in the Cloud):<ul>
+<li>資料加密 (Data Encryption at Rest &amp; In Transit)</li>
+<li>安全性群組 (Security Groups) 設定</li>
+<li>IAM 存取控制與身份管理</li>
+<li>應用程式與數據保護</li>
+</ul>
+</li>
+<li>共同的責任<ul>
+<li>修補程式管理 – AWS 負責基礎設施內的漏洞修補和修正，但客戶需負責修補自己的訪客作業系統和應用程式。</li>
+<li>組態管理 – AWS 負責維護其基礎設施裝置的組態，而客戶負責設定自己的訪客作業系統、資料庫和應用程式。</li>
+<li>感知與培訓 – AWS 訓練 AWS 員工，而客戶必須訓練自己的員工。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>只要使用third-party，雙方都要共同承擔風險</p>
+</blockquote>
+<p><img src="/images/aif/img10.png" alt="alt text"></p>
+<h2 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h2><h3 id="Q43"><a href="#Q43" class="headerlink" title="Q43"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150822-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q43</a></h3><p>Which functionality does Amazon SageMaker Clarify provide?</p>
 <ul>
 <li><input disabled="" type="checkbox"> Integrates a Retrieval Augmented Generation (RAG) workflow</li>
 <li><input disabled="" type="checkbox"> Monitors the quality of ML models in production</li>
@@ -414,11 +434,22 @@
 </ul>
 <p>B 選項監控生產環境中的 ML 模型品質通常由 Amazon SageMaker Model Monitor 負責，而不是 SageMaker Clarify。而 C 選項雖然 SageMaker Clarify 會提供解釋性報告，但「記錄模型關鍵細節」的工作通常由 Amazon SageMaker Model Registry 或其他 MLOps 工具完成，而不是 Clarify 的主要功能。</p>
 </blockquote>
+<h3 id="Q39"><a href="#Q39" class="headerlink" title="Q39"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150820-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q39</a></h3><p>A medical company is customizing a foundation model (FM) for diagnostic purposes. The company needs the model to be transparent and explainable to meet regulatory requirements.<br>Which solution will meet these requirements?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Configure the security and compliance by using Amazon Inspector.</li>
+<li><input checked="" disabled="" type="checkbox"> Generate simple metrics, reports, and examples by using Amazon SageMaker Clarify.</li>
+<li><input disabled="" type="checkbox"> Encrypt and secure training data by using Amazon Macie.</li>
+<li><input disabled="" type="checkbox"> Gather more data. Use Amazon Rekognition to add custom labels to the data.</li>
+</ul>
+<blockquote>
+<p>Amazon Inspector 主要用於安全性掃描，例如識別 AWS 環境中的漏洞，確保基礎設施合規。<br>C 選項的 Amazon Macie 主要用於識別與保護敏感數據（如醫療記錄或個人身份資訊），確保數據安全性，但它並不涉及模型的可解釋性。</p>
+</blockquote>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/ai/responsible-ai/resources/transcribe-speech-recognition/">AWS AI Service Cards – Amazon Transcribe – Batch (English-US)</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-configure-processing-jobs.html">Fairness, model explainability and bias detection with SageMaker Clarify</a></li>
 <li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/what-is/data-augmentation/?utm_source=chatgpt.com">何謂資料增強？</a></li>
 <li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/what-is/data-governance/">什麼是資料控管？</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/compliance/">AWS 合規</a></li>
 </ul>
 
       </div>
@@ -435,7 +466,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-04-01 17:36:14
+              2025-04-01 20:33:39
             </span>
             
                   <span class="post-tags">
@@ -464,7 +495,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B2%A0%E8%B2%AC%E4%BB%BB-AI-%E8%A8%AD%E8%A8%88"><span class="toc-text">負責任 AI 設計</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%85%AC%E5%B9%B3-Fairness"><span class="toc-text">1. 公平 (Fairness)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%AF%E8%A7%A3%E9%87%8B-Explainability"><span class="toc-text">2. 可解釋 (Explainability)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Amazon-SageMaker-Clarify"><span class="toc-text">Amazon SageMaker Clarify</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%9A%B1%E7%A7%81%E6%AC%8A%E8%88%87%E5%AE%89%E5%85%A8%E6%80%A7-Privacy-and-security"><span class="toc-text">3. 隱私權與安全性 (Privacy and security)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E8%B2%AC%E4%BB%BB%E6%A8%A1%E5%9E%8B%EF%BC%88Shared-Responsibility-Model%EF%BC%89"><span class="toc-text">共享責任模型（Shared Responsibility Model）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%AE%89%E5%85%A8-Safety"><span class="toc-text">4. 安全 (Safety)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%8F%AF%E6%8E%A7-Controllability"><span class="toc-text">5. 可控 (Controllability)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%BA%96%E7%A2%BA%E8%88%87%E7%A9%A9%E5%81%A5-Veracity-and-robustness"><span class="toc-text">6. 準確與穩健 (Veracity and robustness)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E7%AE%A1%E6%8E%A7-Governance"><span class="toc-text">7. 管控 (Governance)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Amazon-SageMaker-%E7%9A%84-ML-%E6%B2%BB%E7%90%86-ML-Governance"><span class="toc-text">Amazon SageMaker 的 ML 治理 (ML Governance)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SageMaker-Model-Cards"><span class="toc-text">SageMaker Model Cards</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B3%87%E6%96%99%E6%B2%BB%E7%90%86-data-governance"><span class="toc-text">資料治理 data governance</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E7%AE%A1%E6%8E%A7"><span class="toc-text">分析管控</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E9%80%8F%E6%98%8E-Transparency"><span class="toc-text">8. 透明 (Transparency)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E3%80%81%E5%90%88%E8%A6%8F%E6%80%A7%E5%92%8C%E6%B2%BB%E7%90%86"><span class="toc-text">AI 解決方案的安全性、合規性和治理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%8C%E7%9B%AE"><span class="toc-text">題目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q43"><span class="toc-text">Q43</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q37"><span class="toc-text">Q37</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q54"><span class="toc-text">Q54</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q78"><span class="toc-text">Q78</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q30"><span class="toc-text">Q30</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q87"><span class="toc-text">Q87</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q128"><span class="toc-text">Q128</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q71"><span class="toc-text">Q71</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q47"><span class="toc-text">Q47</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q43-1"><span class="toc-text">Q43</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B2%A0%E8%B2%AC%E4%BB%BB-AI-%E8%A8%AD%E8%A8%88"><span class="toc-text">負責任 AI 設計</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%85%AC%E5%B9%B3-Fairness"><span class="toc-text">1. 公平 (Fairness)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%AF%E8%A7%A3%E9%87%8B-Explainability"><span class="toc-text">2. 可解釋 (Explainability)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Amazon-SageMaker-Clarify"><span class="toc-text">Amazon SageMaker Clarify</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%9A%B1%E7%A7%81%E6%AC%8A%E8%88%87%E5%AE%89%E5%85%A8%E6%80%A7-Privacy-and-security"><span class="toc-text">3. 隱私權與安全性 (Privacy and security)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%AE%89%E5%85%A8-Safety"><span class="toc-text">4. 安全 (Safety)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%8F%AF%E6%8E%A7-Controllability"><span class="toc-text">5. 可控 (Controllability)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%BA%96%E7%A2%BA%E8%88%87%E7%A9%A9%E5%81%A5-Veracity-and-robustness"><span class="toc-text">6. 準確與穩健 (Veracity and robustness)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E7%AE%A1%E6%8E%A7-Governance"><span class="toc-text">7. 管控 (Governance)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Amazon-SageMaker-%E7%9A%84-ML-%E6%B2%BB%E7%90%86-ML-Governance"><span class="toc-text">Amazon SageMaker 的 ML 治理 (ML Governance)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SageMaker-Model-Cards"><span class="toc-text">SageMaker Model Cards</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B3%87%E6%96%99%E6%B2%BB%E7%90%86-data-governance"><span class="toc-text">資料治理 data governance</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E7%AE%A1%E6%8E%A7"><span class="toc-text">分析管控</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E9%80%8F%E6%98%8E-Transparency"><span class="toc-text">8. 透明 (Transparency)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E3%80%81%E5%90%88%E8%A6%8F%E6%80%A7%E5%92%8C%E6%B2%BB%E7%90%86"><span class="toc-text">AI 解決方案的安全性、合規性和治理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AWS-%E7%9A%84%E8%B3%87%E6%96%99%E4%BF%9D%E8%AD%B7%E5%8F%8A%E9%9A%B1%E7%A7%81%E6%AC%8A-Security"><span class="toc-text">AWS 的資料保護及隱私權 Security</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B3%87%E6%96%99%E4%B8%BB%E6%AC%8A-Data-sovereignty"><span class="toc-text">資料主權 Data sovereignty</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B3%87%E6%96%99%E9%9A%B1%E7%A7%81%E6%AC%8A-Data-privacy"><span class="toc-text">資料隱私權 Data privacy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B3%87%E6%96%99%E6%8E%A7%E5%88%B6%E8%88%87%E5%B8%B8%E9%A7%90-Data-controls-and-residency"><span class="toc-text">資料控制與常駐 Data controls and residency</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E8%B2%AC%E4%BB%BB%E6%A8%A1%E5%9E%8B%EF%BC%88Shared-Responsibility-Model%EF%BC%89"><span class="toc-text">共享責任模型（Shared Responsibility Model）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%8C%E7%9B%AE"><span class="toc-text">題目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q43"><span class="toc-text">Q43</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q37"><span class="toc-text">Q37</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q54"><span class="toc-text">Q54</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q78"><span class="toc-text">Q78</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q30"><span class="toc-text">Q30</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q87"><span class="toc-text">Q87</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q128"><span class="toc-text">Q128</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q71"><span class="toc-text">Q71</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q47"><span class="toc-text">Q47</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q43-1"><span class="toc-text">Q43</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q39"><span class="toc-text">Q39</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
       
     </div>
   </div>

@@ -155,7 +155,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-04-01 09:25:33
+          2025-04-02 10:47:35
         </span>
         
               <span class="post-tags">
@@ -179,7 +179,7 @@
       <div class="markdown-body">
         <p>機器學習</p>
 <p><img src="/images/aif/img1.png" alt="alt text"></p>
-<p>機器學習主要可分為三大類別：監督式學習、非監督式學習和強化式學習。以下是各類型的詳細介紹：  </p>
+<p>機器學習主要可分為以下類別：監督式學習、非監督式學習、半監督式學習和強化式學習。以下是各類型的詳細介紹：  </p>
 <hr>
 <h2 id="1-監督式學習（Supervised-Learning）"><a href="#1-監督式學習（Supervised-Learning）" class="headerlink" title="1. 監督式學習（Supervised Learning）"></a>1. 監督式學習（Supervised Learning）</h2><p>監督式學習是指使用帶有標籤（label）的資料來訓練模型。模型學習輸入（features）與目標輸出（target）之間的關係，並用來預測新數據的結果。監督式學習可進一步分為兩大類：分類（Classification）和回歸（Regression）。</p>
 <h3 id="1-分類（Classification）"><a href="#1-分類（Classification）" class="headerlink" title="(1) 分類（Classification）"></a>(1) 分類（Classification）</h3><p>分類問題的目標是預測數據屬於哪個類別，通常適用於離散型輸出的情境，例如判斷一封郵件是否為垃圾郵件（Spam 或 Not Spam）。</p>
@@ -264,6 +264,7 @@
 </ul>
 </li>
 </ul>
+<h2 id="Transfer-Learning（遷移學習）"><a href="#Transfer-Learning（遷移學習）" class="headerlink" title="Transfer Learning（遷移學習）"></a>Transfer Learning（遷移學習）</h2><p>將一個領域上已訓練好的模型的知識，遷移到另一個相關但不同的領域上。這樣可以節省大量的時間與資源，因為你不需要從頭訓練模型，只需針對新任務進行微調（fine-tuning）。</p>
 <h2 id="考題範例"><a href="#考題範例" class="headerlink" title="考題範例"></a>考題範例</h2><h3 id="Q17"><a href="#Q17" class="headerlink" title="Q17"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150630-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q17</a></h3><p>A company has petabytes of unlabeled customer data to use for an advertisement campaign. The company wants to classify its customers into tiers to advertise and promote the company’s products.Which methodology should the company use to meet these requirements?</p>
 <ul>
 <li><input disabled="" type="checkbox"> Supervised learning</li>
@@ -272,6 +273,36 @@
 <li><input disabled="" type="checkbox"> Reinforcement learning from human feedback (RLHF)</li>
 </ul>
 <p>答案是 (B)，因為這些資料是 unlabeled 的</p>
+<h3 id="Q7"><a href="#Q7" class="headerlink" title="Q7"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150727-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q7</a></h3><p>A company is using domain-specific models. The company wants to avoid creating new models from the beginning. The company instead wants to adapt pre-trained models to create models for new,related tasks.<br>Which ML strategy meets these requirements?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Increase the number of epochs.</li>
+<li><input checked="" disabled="" type="checkbox"> Use transfer learning.</li>
+<li><input disabled="" type="checkbox"> Decrease the number of epochs.</li>
+<li><input disabled="" type="checkbox"> Use unsupervised learning.</li>
+</ul>
+<h3 id="Q44"><a href="#Q44" class="headerlink" title="Q44"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/151044-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q44</a></h3><p>A company is developing a new model to predict the prices of specific items. The model performed well on the training dataset. When the company deployed the model to production, the model’s performance decreased significantly.<br>What should the company do to mitigate this problem?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Reduce the volume of data that is used in training.</li>
+<li><input disabled="" type="checkbox"> Add hyperparameters to the model.</li>
+<li><input checked="" disabled="" type="checkbox"> Increase the volume of data that is used in training.</li>
+<li><input disabled="" type="checkbox"> Increase the model training time.</li>
+</ul>
+<h3 id="Q35"><a href="#Q35" class="headerlink" title="Q35"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150814-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q35</a></h3><p>A company has terabytes of data in a database that the company can use for business analysis. The<br>company wants to build an AI-based application that can build a SQL query from input text that<br>employees provide. The employees have minimal experience with technology.<br>Which solution meets these requirements?</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Generative pre-trained transformers (GPT)</li>
+<li><input disabled="" type="checkbox"> Residual neural network</li>
+<li><input disabled="" type="checkbox"> Support vector machine</li>
+<li><input disabled="" type="checkbox"> WaveNet</li>
+</ul>
+<blockquote>
+<p>員工技術經驗有限，但想用「自然語言」（例如：用英文輸入問題）來查詢資料。需要一個 AI 應用程式能夠：</p>
+<ul>
+<li>將自然語言轉換成 SQL 查詢語句</li>
+<li>讓非技術員工也能使用</li>
+</ul>
+<p>這種應用最常見的模型就是 GPT（Generative Pre-trained Transformer）系列，像是 ChatGPT、Codex、Amazon Q Developer 背後的模型等。</p>
+<p>B. Residual Neural Network (ResNet) 用於 圖像辨識 的深度學習模型，不適合處理語言或文字生成。<br>C. Support Vector Machine (SVM) 傳統的機器學習分類器，不具備生成 SQL 語句的能力，且對自然語言處理能力有限。<br>D. WaveNet 由 DeepMind 開發，用於語音合成（例如 Google Assistant 語音），與 SQL 或文字生成無關。</p>
+</blockquote>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/what-is/machine-learning/">https://aws.amazon.com/tw/what-is/machine-learning/</a></li>
 <li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/what-is/reinforcement-learning/">問：什麼是強化學習？</a></li>
@@ -291,7 +322,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-04-01 09:25:33
+              2025-04-02 10:47:35
             </span>
             
                   <span class="post-tags">
@@ -331,7 +362,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%A3%E7%9D%A3%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Supervised-Learning%EF%BC%89"><span class="toc-text">1. 監督式學習（Supervised Learning）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%86%E9%A1%9E%EF%BC%88Classification%EF%BC%89"><span class="toc-text">(1) 分類（Classification）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-%E4%BA%8C%E5%85%83%E5%88%86%E9%A1%9E%EF%BC%88Binary-Classification%EF%BC%89"><span class="toc-text">a. 二元分類（Binary Classification）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-%E5%A4%9A%E5%85%83%E5%88%86%E9%A1%9E%EF%BC%88Multiclass-Classification%EF%BC%89"><span class="toc-text">b. 多元分類（Multiclass Classification）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%9B%9E%E6%AD%B8%EF%BC%88Regression%EF%BC%89"><span class="toc-text">(2) 回歸（Regression）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%9D%9E%E7%9B%A3%E7%9D%A3%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Unsupervised-Learning%EF%BC%89"><span class="toc-text">2. 非監督式學習（Unsupervised Learning）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%86%E7%BE%A4%EF%BC%88Clustering%EF%BC%89"><span class="toc-text">(1) 分群（Clustering）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8D%8A%E7%9B%A3%E7%9D%A3%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Semi-Supervised-Learning%EF%BC%89"><span class="toc-text">3. 半監督式學習（Semi-Supervised Learning）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%BC%B7%E5%8C%96%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Reinforcement-Learning-RL%EF%BC%89"><span class="toc-text">4. 強化式學習（Reinforcement Learning, RL）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B7%E5%8C%96%E5%AD%B8%E7%BF%92%E7%9A%84%E9%97%9C%E9%8D%B5%E6%A6%82%E5%BF%B5%E8%88%87%E9%81%8B%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-text">強化學習的關鍵概念與運作方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E9%A1%8C%E7%AF%84%E4%BE%8B"><span class="toc-text">考題範例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q17"><span class="toc-text">Q17</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%A3%E7%9D%A3%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Supervised-Learning%EF%BC%89"><span class="toc-text">1. 監督式學習（Supervised Learning）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%86%E9%A1%9E%EF%BC%88Classification%EF%BC%89"><span class="toc-text">(1) 分類（Classification）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-%E4%BA%8C%E5%85%83%E5%88%86%E9%A1%9E%EF%BC%88Binary-Classification%EF%BC%89"><span class="toc-text">a. 二元分類（Binary Classification）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-%E5%A4%9A%E5%85%83%E5%88%86%E9%A1%9E%EF%BC%88Multiclass-Classification%EF%BC%89"><span class="toc-text">b. 多元分類（Multiclass Classification）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%9B%9E%E6%AD%B8%EF%BC%88Regression%EF%BC%89"><span class="toc-text">(2) 回歸（Regression）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%9D%9E%E7%9B%A3%E7%9D%A3%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Unsupervised-Learning%EF%BC%89"><span class="toc-text">2. 非監督式學習（Unsupervised Learning）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%86%E7%BE%A4%EF%BC%88Clustering%EF%BC%89"><span class="toc-text">(1) 分群（Clustering）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8D%8A%E7%9B%A3%E7%9D%A3%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Semi-Supervised-Learning%EF%BC%89"><span class="toc-text">3. 半監督式學習（Semi-Supervised Learning）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%BC%B7%E5%8C%96%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Reinforcement-Learning-RL%EF%BC%89"><span class="toc-text">4. 強化式學習（Reinforcement Learning, RL）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B7%E5%8C%96%E5%AD%B8%E7%BF%92%E7%9A%84%E9%97%9C%E9%8D%B5%E6%A6%82%E5%BF%B5%E8%88%87%E9%81%8B%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-text">強化學習的關鍵概念與運作方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transfer-Learning%EF%BC%88%E9%81%B7%E7%A7%BB%E5%AD%B8%E7%BF%92%EF%BC%89"><span class="toc-text">Transfer Learning（遷移學習）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E9%A1%8C%E7%AF%84%E4%BE%8B"><span class="toc-text">考題範例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q17"><span class="toc-text">Q17</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7"><span class="toc-text">Q7</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q44"><span class="toc-text">Q44</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q35"><span class="toc-text">Q35</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
       
     </div>
   </div>
