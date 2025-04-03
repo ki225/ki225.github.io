@@ -155,7 +155,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-04-02 13:06:01
+          2025-04-03 11:53:55
         </span>
         
               <span class="post-tags">
@@ -172,7 +172,7 @@
       </div>
       <div class="markdown-body">
         <h2 id="生成式-AI-觀念介紹"><a href="#生成式-AI-觀念介紹" class="headerlink" title="生成式 AI 觀念介紹"></a>生成式 AI 觀念介紹</h2><p>生成式 AI（Generative AI）是一種能夠根據輸入的數據自動生成新內容的人工智慧技術，例如文字、圖像、音樂或程式碼。這類 AI 主要依賴大型機器學習模型來理解和產生類似人類創作的內容。在生成式 AI 中，以下幾個概念至關重要：  </p>
-<h2 id="1-Tokens（字元或字詞）"><a href="#1-Tokens（字元或字詞）" class="headerlink" title="1. Tokens（字元或字詞）"></a>1. Tokens（字元或字詞）</h2><p>在自然語言處理（NLP）中，Token 是 AI 解析與理解語言的基本單位。  </p>
+<h2 id="Tokens（字元或字詞）"><a href="#Tokens（字元或字詞）" class="headerlink" title="Tokens（字元或字詞）"></a>Tokens（字元或字詞）</h2><p>在自然語言處理（NLP）中，Token 是 AI 解析與理解語言的基本單位。  </p>
 <ul>
 <li>字元級 Token：模型將輸入拆分為單個字母或符號。例如：「AI」會被視為「A」和「I」兩個 Token。  </li>
 <li>字詞級 Token：將單詞或詞組視為一個 Token。例如：「machine learning」可能被視為一個 Token，而不是兩個。  </li>
@@ -181,15 +181,23 @@
 <p>但其實每個模型的分詞方式都會有所不同，比方說我們可以到 <a target="_blank" rel="noopener" href="https://platform.openai.com/tokenizer">OpenAI Tokenizer</a> 比較同樣一句話，就能發現光是 gpt-4o 和 gpt-3 legacy 就具有分詞差異。</p>
 <p><img src="/images/aif/img4.png" alt="alt text"></p>
 <p><img src="/images/aif/img5.png" alt="alt text"></p>
-<h2 id="2-Embeddings（嵌入）"><a href="#2-Embeddings（嵌入）" class="headerlink" title="2. Embeddings（嵌入）"></a>2. Embeddings（嵌入）</h2><p>Embeddings 是將語言轉換為數學向量（vector）的一種方式，使 AI 能夠理解詞語的關聯性與語境。  </p>
+<h2 id="Embeddings（嵌入）"><a href="#Embeddings（嵌入）" class="headerlink" title="Embeddings（嵌入）"></a>Embeddings（嵌入）</h2><p>Embeddings 是將語言轉換為數學向量（vector）的一種方式，使 AI 能夠理解詞語的關聯性與語境。  </p>
 <ul>
 <li>每個詞語（Token）會被映射到一個高維度的向量空間，數值越相近，代表詞語之間的語意越相似。  </li>
 <li>例如：「king」和「queen」的向量會彼此接近，而「dog」和「cat」的向量也會有類似的關聯。</li>
 </ul>
-<h2 id="3-Foundation-Models-FM-（基礎模型）"><a href="#3-Foundation-Models-FM-（基礎模型）" class="headerlink" title="3. Foundation Models (FM)（基礎模型）"></a>3. Foundation Models (FM)（基礎模型）</h2><p>基礎模型 是大規模預訓練的 AI 模型，能夠執行多種任務，如文本生成、圖像辨識、程式碼生成等。</p>
+<h2 id="Foundation-Models-FM-（基礎模型）"><a href="#Foundation-Models-FM-（基礎模型）" class="headerlink" title="Foundation Models (FM)（基礎模型）"></a>Foundation Models (FM)（基礎模型）</h2><p>基礎模型 是大規模預訓練的 AI 模型，能夠執行多種任務，如文本生成、圖像辨識、程式碼生成等。</p>
 <ul>
 <li>這些模型（如 GPT、BERT、DALL·E）是基於海量數據訓練的，然後可以針對特定應用微調（fine-tune）。  </li>
 <li>具有遷移學習（Transfer Learning）能力，能夠從廣泛的知識基礎中適應不同的任務。</li>
+</ul>
+<h2 id="inference"><a href="#inference" class="headerlink" title="inference"></a>inference</h2><p>通常推論會拿來與模型的訓練做比較。在生成式人工智慧（GenAI）的語境中，inference（推論）指的是使用訓練好的模型來產生輸出的過程，也就是模型在接收到輸入後「推論」出對應的結果。例如對於語言模型（如 GPT）來說，inference 是你輸入一段提示（prompt）後，模型生成回應的過程。又或是說對於圖像生成模型（如 Stable Diffusion）而言，inference 是輸入一段文字描述後，模型生成圖片的過程。</p>
+<p>舉個例子，假設輸入「寫一首關於春天的詩」，然後 GPT-4 回你一首詩。這整個從接收輸入 → 模型處理 → 回傳詩句的過程，就是一次 inference。更具體來說，inference 包含：</p>
+<ul>
+<li>載入一個訓練完成的模型（模型參數已固定）</li>
+<li>接收輸入（prompt、文字、圖片、聲音等）</li>
+<li>經過模型內部的神經網路計算</li>
+<li>輸出生成結果（文字、圖像、回應等）</li>
 </ul>
 <h2 id="Prompt-engineering"><a href="#Prompt-engineering" class="headerlink" title="Prompt engineering"></a>Prompt engineering</h2><h3 id="選擇有效的提示工程（Prompt-engineering）"><a href="#選擇有效的提示工程（Prompt-engineering）" class="headerlink" title="選擇有效的提示工程（Prompt engineering）"></a>選擇有效的提示工程（Prompt engineering）</h3><ul>
 <li>zero shot<ul>
@@ -292,7 +300,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-04-02 13:06:01
+              2025-04-03 11:53:55
             </span>
             
                   <span class="post-tags">
@@ -326,7 +334,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%BC%8F-AI-%E8%A7%80%E5%BF%B5%E4%BB%8B%E7%B4%B9"><span class="toc-text">生成式 AI 觀念介紹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Tokens%EF%BC%88%E5%AD%97%E5%85%83%E6%88%96%E5%AD%97%E8%A9%9E%EF%BC%89"><span class="toc-text">1. Tokens（字元或字詞）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Embeddings%EF%BC%88%E5%B5%8C%E5%85%A5%EF%BC%89"><span class="toc-text">2. Embeddings（嵌入）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Foundation-Models-FM-%EF%BC%88%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-text">3. Foundation Models (FM)（基礎模型）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prompt-engineering"><span class="toc-text">Prompt engineering</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%B8%E6%93%87%E6%9C%89%E6%95%88%E7%9A%84%E6%8F%90%E7%A4%BA%E5%B7%A5%E7%A8%8B%EF%BC%88Prompt-engineering%EF%BC%89"><span class="toc-text">選擇有效的提示工程（Prompt engineering）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E5%BC%8F"><span class="toc-text">其他方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%EF%BC%88FM%EF%BC%89%E6%87%89%E7%94%A8%E7%9A%84%E8%A8%AD%E8%A8%88%E8%80%83%E9%87%8F"><span class="toc-text">基礎模型（FM）應用的設計考量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%A8%93%E7%B7%B4%E8%88%87%E5%BE%AE%E8%AA%BF%EF%BC%88Fine-tuning%EF%BC%89%E9%81%8E%E7%A8%8B"><span class="toc-text">基礎模型的訓練與微調（Fine-tuning）過程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A9%95%E4%BC%B0%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%80%A7%E8%83%BD"><span class="toc-text">評估基礎模型的性能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E9%A1%8C%E7%AF%84%E4%BE%8B"><span class="toc-text">考題範例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q63"><span class="toc-text">Q63</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q82"><span class="toc-text">Q82</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q97"><span class="toc-text">Q97</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q73"><span class="toc-text">Q73</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%BC%8F-AI-%E8%A7%80%E5%BF%B5%E4%BB%8B%E7%B4%B9"><span class="toc-text">生成式 AI 觀念介紹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tokens%EF%BC%88%E5%AD%97%E5%85%83%E6%88%96%E5%AD%97%E8%A9%9E%EF%BC%89"><span class="toc-text">Tokens（字元或字詞）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Embeddings%EF%BC%88%E5%B5%8C%E5%85%A5%EF%BC%89"><span class="toc-text">Embeddings（嵌入）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Foundation-Models-FM-%EF%BC%88%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-text">Foundation Models (FM)（基礎模型）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inference"><span class="toc-text">inference</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prompt-engineering"><span class="toc-text">Prompt engineering</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%B8%E6%93%87%E6%9C%89%E6%95%88%E7%9A%84%E6%8F%90%E7%A4%BA%E5%B7%A5%E7%A8%8B%EF%BC%88Prompt-engineering%EF%BC%89"><span class="toc-text">選擇有效的提示工程（Prompt engineering）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E5%BC%8F"><span class="toc-text">其他方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%EF%BC%88FM%EF%BC%89%E6%87%89%E7%94%A8%E7%9A%84%E8%A8%AD%E8%A8%88%E8%80%83%E9%87%8F"><span class="toc-text">基礎模型（FM）應用的設計考量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%A8%93%E7%B7%B4%E8%88%87%E5%BE%AE%E8%AA%BF%EF%BC%88Fine-tuning%EF%BC%89%E9%81%8E%E7%A8%8B"><span class="toc-text">基礎模型的訓練與微調（Fine-tuning）過程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A9%95%E4%BC%B0%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%80%A7%E8%83%BD"><span class="toc-text">評估基礎模型的性能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E9%A1%8C%E7%AF%84%E4%BE%8B"><span class="toc-text">考題範例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q63"><span class="toc-text">Q63</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q82"><span class="toc-text">Q82</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q97"><span class="toc-text">Q97</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q73"><span class="toc-text">Q73</span></a></li></ol></li></ol>
       
     </div>
   </div>
