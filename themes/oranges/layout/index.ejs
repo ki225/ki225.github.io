@@ -1,4 +1,26 @@
 <style>
+  :root {
+    --button-text: white;
+    --button-bg: #ff9800;
+    --button-hover-bg: #e08600;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --button-text: #1a1a1a;
+      --button-bg: #ff9800;
+      --button-hover-bg: #ffaa33;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .desktop-image-container {
+      display: none !important;
+    }
+    .mobile-image-container {
+      display: flex !important;
+    }
+  }
   #content { display: none; }
   #dynamicTitle { color: #ff9800; }
   .container {
@@ -53,23 +75,79 @@
   .social-icons img:hover {
     transform: scale(1.1);
   }
+
+  .download-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .download-button:hover {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .title-container {
+    height: 4.5rem;  /* 減小固定高度讓內容更緊湊 */
+    overflow: visible; /* 改為可見，確保文字不被裁切 */
+    position: relative;
+    margin-bottom: 3rem; /* 增加下方間距，避免與下方內容重疊 */
+  }
+
+  .markdown-body.title-text {
+    font-size: 3.5rem;
+    white-space: nowrap;  /* 保持不換行 */
+    overflow: visible;    /* 改為可見而非隱藏 */
+    position: absolute;
+    width: 100%;
+  }
+  
+  #dynamicTitle {
+    color: #ff9800;
+    display: inline-block;
+  }
+  
+  @media (max-width: 768px) {
+    .markdown-body.title-text {
+      font-size: 2.5rem; 
+    }
+    
+    .title-container {
+      height: 3.5rem;
+      margin-bottom: 2rem; /* 調整在手機上的下方間距 */
+    }
+  }
  
 </style>
 
 
-<div class="outer-container" style="display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto;">
+<div class="outer-container" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto;">
   <div class="left-container" style="flex: 1; padding: 20px;">
     <div></div>
-    <div class="markdown-body" style="font-size: 3.5rem;">
-      <span class="hi-im">Hi! I'm</span> <span id="dynamicTitle"></span>
+    <div class="title-container">
+      <div class="markdown-body title-text">
+        <span class="hi-im">Hi! I'm</span> <span id="dynamicTitle"></span>
+      </div>
     </div>
+
+    <div class="mobile-image-container" style="display: none; justify-content: center; margin: 20px 0;">
+      <img src="images/self/image.png" alt="Profile Picture" style="width: 180px; border-radius: 50%;">
+    </div>
+
     <div class="markdown-body" style="font-size: 1.5rem;">
       As an <span style="color: #ff9800;">AWS Educate Cloud Ambassador</span>, I led cloud workshops with <span style="color: #ff9800;">100+</span> participants.  
       At <span style="color: #ff9800;">eCloudvalley</span>, I gained hands-on experience with <span style="color: #ff9800;">IaC</span> tools and cloud solutions as a <span style="color: #ff9800;">Cloud Development Intern</span>.  
       Since 2023, I’ve organized <span style="color: #ff9800;">10+</span> tech camps and online courses as a <span style="color: #ff9800;">Teaching Assistant</span>, enhancing collaboration with <span style="color: #ff9800;">team-based project management</span>.  
       <br>  
       <br>  
-      Driven by curiosity, I explore the intersection of <span style="color: #ff9800;">cloud</span>, <span style="color: #ff9800;">AI</span>, <span style="color: #ff9800;">security</span>, and <span style="color: #ff9800;">development</span> — turning ideas into impactful solutions.  
+      Driven by curiosity, I explore the intersection of <span style="color: #ff9800;">cloud</span>, <span style="color: #ff9800;">AI application</span>, <span style="color: #ff9800;">security</span>, <span style="color: #ff9800;">networking</span>, and <span style="color: #ff9800;">development</span> — turning ideas into impactful solutions.  
       
 </div>
 
@@ -99,13 +177,24 @@
    
   </div>
   
-  <div class="right-container" style="display: flex; justify-content: flex-end; align-items: center; padding: 20px;">
+  <div class="desktop-image-container right-container" style="display: flex; justify-content: flex-end; align-items: center; padding: 20px;">
     <img src="images/self/image.png" alt="Profile Picture" style="width: 200px; border-radius: 50%;">
   </div>
 
 </div>
 <br>
-
+<div class="resume-download" style="margin-top: 20px; text-align: center;">
+  <a href="files/Yung-Chi_Huang_Resume.pdf" download class="download-button">
+    <span style="display: flex; align-items: center; justify-content: center;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      Download Resume (PDF)
+    </span>
+  </a>
+</div>
 
 <script>
   const titles = ["Yung-Chi (Kiki) Huang", "an Active Learner", "Team Player", "a DAY ONE person", "a Backend Developer", "a Cafe Hopper"];
@@ -135,4 +224,35 @@
   }
 
   typeTitle();
+
+  function adjustTitleFontSize() {
+    const titleContainer = document.querySelector('.title-container');
+    const titleText = document.querySelector('.markdown-body.title-text');
+    
+    // 獲取當前文本寬度
+    const textWidth = titleText.scrollWidth;
+    // 獲取容器寬度
+    const containerWidth = titleContainer.clientWidth;
+    
+    if (textWidth > containerWidth) {
+      // 如果文本寬度超過容器寬度，縮小字體
+      const scaleFactor = containerWidth / textWidth * 0.95; // 留一點邊距
+      const currentSize = parseFloat(window.getComputedStyle(titleText).fontSize);
+      const newSize = currentSize * scaleFactor;
+      
+      // 設置最小字體大小限制
+      const minSize = window.innerWidth < 768 ? 1.8 : 2.2;
+      titleText.style.fontSize = Math.max(newSize, minSize) + 'rem';
+    }
+  }
+  
+  // 在每次更新標題時調用調整函數
+  const originalTypeTitle = typeTitle;
+  typeTitle = function() {
+    originalTypeTitle();
+    setTimeout(adjustTitleFontSize, 10);
+  };
+  
+  // 在視窗大小改變時重新調整
+  window.addEventListener('resize', adjustTitleFontSize);
 </script>

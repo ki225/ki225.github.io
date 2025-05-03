@@ -46,6 +46,6 @@ I’m currently a **junior Computer Science student at NCU** and a **technical s
 
 <div style="text-align: center;">
 
-[![LinkedIn](images/linkedin.svg)](https://www.linkedin.com/in/yung-chi-huang/) [![Ins](images/instagram.svg)](https://www.instagram.com/photokii_/) [![github](images/github.svg)](https://github.com/ki225) [![Youtube](images/youtube.svg)](https://youtu.be/Ku_RJBdrjYo?si=ALwhYMmxk2UH1UMi) [![medium](images/medium.svg)](https://medium.com/@271yeye)
+[![LinkedIn](images/linkedin.svg)](https://www.linkedin.com/in/yung-chi-huang/) [![Ins](images/instagram.svg)](https://www.instagram.com/photokii_/) [![github](images/github.svg)](https://github.com/ki225) [![Youtube](images/youtube.svg)](https://youtu.be/Dq_z8meAShM?si=V-PEjM61sWfRuYbm) [![medium](images/medium.svg)](https://medium.com/@271yeye)
 
 </div>

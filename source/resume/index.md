@@ -6,10 +6,11 @@ categories:
 tags:
 ---
 
+
 # **Yung-Chi Huang**  
 
 ## Contact Information  
-📧 Email: 271yeye@gmail.com | h111502@g.ncu.edu.tw  
+📧 Email: yungchi.huang0225@gmail.com | h111502@g.ncu.edu.tw  
 
 ---
 
@@ -20,18 +21,22 @@ tags:
 
 ---
 
+
 ## **Work Experience**  
 
 ### **AWS Educate Cloud Ambassador 7th** <span style="float: right;  font-size: 0.8em;">📍 AWS Taiwan</span>  
-**Technical support** <span style="float: right;  font-size: 0.8em;">🗓️ Dec 2024 - July 2025</span>  
+**Technical support team member** <span style="float: right;  font-size: 0.8em;">🗓️ Dec 2024 - July 2025</span>  
 
-- Led cloud technology workshops with over 60 participants as the instructor.
-- Coordinated AWS Educate TW Cloud Ambassador led- Certificate Buddy Program that engaged over 1,000 participants.
-- Acted as a bridge between the campus and AWS, facilitating the introduction of resources into the educational sector.  
+- Led two cloud technology workshops with 60+ participants as the instructor.
+    - The AI Tour: Unlocking Business Insights from Taylor Swift’s Concert with AI
+    - Building a Multimodal Image Recommendation System – Recreating Pinterest Search Experience with Amazon Bedrock 
+- Conducted an online lecture for the AIF certificate program, sharing insights on AI and cloud technology.
+- Coordinated AWS Educate TW Cloud Ambassador led - Certificate Buddy Program that engaged over 1,700 participants.
+- Acted as a bridge between the campus and AWS, facilitating the introduction of resources into the educational sector.
 
 
 ### **Intern - eCloudvalley Technology** <span style="float: right;  font-size: 0.8em;">📍 New Taipei City Taiwan</span>  
-**Cloud Solutions Intern (MSP Team)** <span style="float: right;  font-size: 0.8em;">🗓️ July 2024 - Sep 2024</span>  
+**Cloud Development Intern** <span style="float: right;  font-size: 0.8em;">🗓️ July 2024 - Sep 2024</span>  
 
 - Collaborated with a team to develop a full-stack **AWS-based cloud security automation system (AI Guardian)**.  
 - Enhanced **WAF deployment efficiency**, strengthening enterprise security frameworks.  
@@ -51,13 +56,34 @@ tags:
 - Emphasized hands-on learning by encouraging students to implement concepts through projects and exercises, fostering both theoretical knowledge and practical application.  
 - Provided detailed code analysis and logic explanations to strengthen students' problem-solving skills and coding proficiency.  
 
+---
+## **Team Work Experience**
+### **AWS Educate Dev Team** <span style="float: right;  font-size: 0.8em;">📍 AWS Taiwan</span>  
+**Technical support** <span style="float: right;  font-size: 0.8em;">🗓️ Jan 2025 - Now</span>  
+
+- Implemented and maintained Infrastructure as Code using Terraform, streamlining cloud resource provisioning and ensuring infrastructure consistency.
+- Collaborated with 10 developers and cloud engineers to troubleshoot issues, optimize workflows, and enhance infrastructure reliability.
+- Enhanced and modified existing services, optimizing performance and scalability.
+- Managed team workflows using **Jira** and **Scrum** agile framework, ensuring timely and efficient project delivery through sprint planning, daily stand-ups, and sprint retrospectives.
+
 
 ---
 
-## **Projects**
-### **AI Guardian Project** 
-**Full-Stack Developer** 
+## **Projects & Worshops**
+### **The AI Tour: Unlocking Business Insights from Taylor Swift’s Concert with AI**
+#### **Backend Developer** | **Workshop Instructor** <span style="float: right;  font-size: 0.8em;">🗓️ March 2025</span> 
+- Implemented AI assistant workflows using Amazon Bedrock Flow, streamlining and automating complex processes for enhanced efficiency.
+- Utilized Amplify AI tools to enable AI agents to autonomously call and integrate tools, optimizing operational workflows and boosting automation.
 
+
+### **Building a Multimodal Image Recommendation System – Recreating Pinterest Search Experience with Amazon Bedrock** 
+#### **Backend Developer** | **Workshop Instructor** <span style="float: right;  font-size: 0.8em;"> 🗓️ Feb 2025</span> 
+- Developed a serverless reverse search system utilizing **Amazon Bedrock** for image and text embedding generation. 
+- Implemented vector-based k-NN search using **OpenSearch Serverless Vector Search**, enabling efficient similarity search for both text and image queries.
+- Architected serverless AI-driven functionalities with **AWS Lambda** and **Infrastructure as Code (IaC) using Terraform**.
+
+### **AI Guardian Project** 
+#### **Backend Developer** 
 - Architected serverless AI-driven functionalities with **AWS Lambda** and **Infrastructure as Code (IaC) using Terraform**.  
 - Integrated **DynamoDB** and **Amazon Bedrock** to build an intelligent assistant with context-aware responses.  
 - Implemented **asynchronous API handling** using **asyncio, Hypercorn, and Quart** for efficient concurrent processing.  
@@ -65,7 +91,10 @@ tags:
 
 ---
 
-## **Awards**  
+## **Awards and Certificates**  
+### **AWS Certified** <span style="float: right;  font-size: 0.8em;">📍 Taiwan</span>  
+**Cloud Practitioner** <span style="float: right;  font-size: 0.8em;">🗓️ July 2024</span> 
+Demonstrates foundational expertise in AWS Cloud architecture, security, cost management, and core services, enabling effective cloud adoption and strategic decision-making.
 
 ### **Collegiate Programming Examination** <span style="float: right;  font-size: 0.8em;">📍 Taiwan</span>  
 **Top 4.5% | Solved 5/7 problems | Professional (A)** <span style="float: right;  font-size: 0.8em;">🗓️ April 2024</span>  
@@ -88,11 +117,6 @@ tags:
 ### **Cybersecurity**  
 - Competing in the **2024 GICS Competition** to explore cybersecurity fundamentals.  
 - Attending **conferences, workshops, and training sessions** related to cybersecurity.  
-
----
-
-## **Certifications**  
-- **AWS Certified Cloud Practitioner**  
 
 ---
 

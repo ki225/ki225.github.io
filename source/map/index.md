@@ -67,9 +67,9 @@ date: 2025-01-31 15:24:47
 
 ### [Crooked Thumb coffee](https://www.google.com/maps/place/Crooked+Thumb+coffee/@24.9593614,121.2185597,17z/data=!3m1!4b1!4m6!3m5!1s0x346823001e291ccd:0x13864c5f84bd56f1!8m2!3d24.9593566!4d121.2211346!16s%2Fg%2F11w8lyqt34?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw%3D%3D)
 
-- 綜合評分 🌟🌟🌟🌟
-- 安靜程度 🌟🌟🌟
-- 食物 🌟🌟🌟🌟
+- 綜合評分 🌟🌟🌟🌟🌟
+- 安靜程度 🌟🌟🌟🌟
+- 食物 🌟🌟🌟🌟🌟
 - 插座：室內座位區幾乎都有
 - 光線：充足
 - 完全不限時
@@ -144,3 +144,24 @@ date: 2025-01-31 15:24:47
 <br/>
 
 ![](images/coffeeSeeker/IMG_1646.jpeg)
+
+### [Leafy Arms Coffee 綠手臂生活實驗室](https://www.google.com/maps/place/Leafy+Arms+Coffee+%E7%B6%A0%E6%89%8B%E8%87%82%E7%94%9F%E6%B4%BB%E5%AF%A6%E9%A9%97%E5%AE%A4%28%E5%92%96%E5%95%A1%2F%E9%96%B1%E8%AE%80%2F%E9%81%B8%E7%89%A9%EF%BC%89%E6%AF%8F%E6%9C%88%E7%89%B9%E5%88%A5%E5%BA%97%E4%BC%91%E6%97%A5%E8%A9%B3%E8%A6%8BIG/@24.9683741,121.2241764,15.42z/data=!4m6!3m5!1s0x3468231c35e33afd:0x7d0f762396411c97!8m2!3d24.9656614!4d121.2181597!16s%2Fg%2F11sm6_7fp_?entry=ttu&g_ep=EgoyMDI1MDIwOS4wIKXMDSoASAFQAw%3D%3D)
+
+
+- 綜合評分 🌟🌟🌟🌟🌟
+- 安靜程度 🌟🌟🌟🌟🌟
+- 食物 🌟🌟🌟🌟🌟
+- 插座：店內座位幾乎都有插座
+- 光線：光線充足
+- 不限時
+- 每週一二店休，其他公休時間要看官方 ins
+- 提供自取白開水
+
+店內飲品和甜點超級讚，價格也偏便宜，我點了西西里和香蕉蛋糕只要 $230 真的不可思議，西西里超級順口清爽，蛋糕也吃起來很扎實好吃，店內裝潢超漂亮，重點沒什麼人來，超適合去工作一整個下午！會回訪！
+
+
+![](images/coffeeSeeker/IMG_1705.jpeg)
+
+店貓超胖是超級可愛虎皮蛋糕（x！雖然不親客人但一直對主人喵喵喵超級可愛的啦ｗｗｗ他還一直吸我外套袖子真的超ㄎㄧㄤ
+
+![](images/coffeeSeeker/IMG_1670.jpeg)

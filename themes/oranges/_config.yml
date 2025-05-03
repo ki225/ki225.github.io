@@ -114,11 +114,11 @@ navbar:
     enable: true
     path: /tags/
     key: tags
-  -
-    name: Resume
-    enable: true
-    path: /resume/
-    key: resume
+  # -
+  #   name: Resume
+  #   enable: true
+  #   path: /resume/
+  #   key: resume
   -
     name: About
     enable: false
