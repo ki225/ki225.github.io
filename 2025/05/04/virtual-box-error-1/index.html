@@ -13,7 +13,7 @@
   
   <title>
     
-      archive_a: 2025/2 
+      VirtialBox 網路排查 VERR_INTNET_FLT_IF_NOT_FOUND 
       
       
       |
@@ -100,275 +100,176 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2025</span>
-          </h2>
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">VirtialBox 網路排查 VERR_INTNET_FLT_IF_NOT_FOUND</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-05-04 12:09:17
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/networking/" title="networking">
+                    #networking
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/VirtualBox/" title="VirtualBox">
+                    #VirtualBox
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>在我要打 Linux networking 指令筆記的時候，打開虛擬機發現噴了以下錯誤</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to open/create the internal network &#x27;HostInterfaceNetworking-VirtualBox Host-Only Ethernet Adapter&#x27; (VERR_INTNET_FLT_IF_NOT_FOUND).</span><br></pre></td></tr></table></figure>
+<p>這句錯誤其實是代表 VirtualBox 嘗試使用 Host-Only Network 介面時失敗了，而原因是找不到對應的網路介面，所以解決方式就是想辦法把 Host-Only Network 介面生出來。</p>
+<h2 id="Host-Only-Network-介面"><a href="#Host-Only-Network-介面" class="headerlink" title="Host-Only Network 介面"></a>Host-Only Network 介面</h2><h3 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h3><p>簡單來說，Host-Only Networking 是一種僅讓虛擬機（VM）與主機（Host）通訊的網路模式，而不能連線至外部網路，這樣的作法實現了以下幾點：</p>
+<ul>
+<li>不需要實體網路卡</li>
+<li>不會讓 VM 暴露在主機的外部網路中，因此較安全</li>
+<li>適合在主機與 VM 或 VM 與 VM 間建立隔離的本地網路</li>
+</ul>
+<h3 id="實現方式"><a href="#實現方式" class="headerlink" title="實現方式"></a>實現方式</h3><p>VirtualBox 會在主機上建立一個虛擬的網路介面（Host-Only Adapter），類似 loopback interface，所有設為 Host-Only 的 VM 會像是透過虛擬交換器（switch）彼此相連，並與主機通訊，可以看到<a target="_blank" rel="noopener" href="https://www.nakivo.com/blog/virtualbox-network-setting-guide/">下圖</a>就清楚的表示 Host-Only Adapter 對於虛擬機的作用。</p>
+<p>在圖片裡，虛擬機（VM1 ~ VM3）與主機透過這個私有網段進行通訊，而他們能使用的網段來自於 Host-Only Network 網段提供的 <code>192.168.56.0/24</code>，一旁的 DHCP Server 位於 <code>192.168.56.100</code>，則是用來為 Host-Only 網段的 VM 提供自動 IP 配置（如 VM1: 192.168.56.101）。</p>
+<p><img src="/images/networking/virtualbox/img1.png"></p>
+<h2 id="如何設定-Host-Only-Networking"><a href="#如何設定-Host-Only-Networking" class="headerlink" title="如何設定 Host-Only Networking ?"></a>如何設定 Host-Only Networking ?</h2><p>進入到 VirtualBox 選取 VM → 設定 → 網路，我們需要勾選「啟用網路介面卡」，選擇 Attached to：Host-Only Adapter。但由於我之前就有設定過了，所以可以看到我已經有了 Host-Only Adapter。</p>
+<p><img src="/images/networking/virtualbox/img2.png"></p>
+<p>接著進入到 Windows 控制台 → 網路和網際網路 → 網路和共用中心  → 變更介面卡設定，畫面會類似下方。</p>
+<p><img src="/images/networking/virtualbox/img3.png"></p>
+<p>找到 VirtualBox 的 Host-Only 網路介面，點右鍵並選擇”停用”，再點右鍵並選擇”啟用”，等待大概十秒就可以啦!</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://forums.virtualbox.org/viewtopic.php?t=94277">Windows 10 - Host Only Adapters</a></li>
+<li><a target="_blank" rel="noopener" href="https://forums.virtualbox.org/viewtopic.php?f=6&t=94568&p=456926#p456926">VERR_INTNET_FLT_IF_NOT_FOUND of death</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.nakivo.com/blog/virtualbox-network-setting-guide/">VirtualBox Network Settings: Complete Guide</a></li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/05/04/linux-networking-commands/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-05-04 12:09:17
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/networking/" title="networking">
+                        #networking
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/VirtualBox/" title="VirtualBox">
+                        #VirtualBox
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
         </div>
       
-      <div class="post-item" title="VirtialBox 網路排查 VERR_INTNET_FLT_IF_NOT_FOUND">
-        <div class="time-m-d">05-04</div>
-        <div class="title">
-          <a href="/2025/05/04/virtual-box-error-1/">
-            <span>VirtialBox 網路排查 VERR_INTNET_FLT_IF_NOT_FOUND</span>
-          </a>
-        </div>
-      </div>
+    </div>
     
-      <div class="post-item" title="進入 Linux Networking 必備的基礎指令">
-        <div class="time-m-d">05-04</div>
-        <div class="title">
-          <a href="/2025/05/04/linux-networking-commands/">
-            <span>進入 Linux Networking 必備的基礎指令</span>
-          </a>
-        </div>
-      </div>
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Host-Only-Network-%E4%BB%8B%E9%9D%A2"><span class="toc-text">Host-Only Network 介面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%A6%E7%8F%BE%E6%96%B9%E5%BC%8F"><span class="toc-text">實現方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%A8%AD%E5%AE%9A-Host-Only-Networking"><span class="toc-text">如何設定 Host-Only Networking ?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-text">References</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      <div class="post-item" title="HLF-heartbeat">
-        <div class="time-m-d">04-06</div>
-        <div class="title">
-          <a href="/2025/04/06/HLF-heartbeat/">
-            <span>HLF-heartbeat</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="HLF-server-client-trust">
-        <div class="time-m-d">04-05</div>
-        <div class="title">
-          <a href="/2025/04/05/HLF-server-client-trust/">
-            <span>HLF-server-client-trust</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Hyperledger Fabric 筆記 - 應用程式與網路的橋樑 Connection Profile">
-        <div class="time-m-d">04-05</div>
-        <div class="title">
-          <a href="/2025/04/05/HLF-Connection-Profile/">
-            <span>Hyperledger Fabric 筆記 - 應用程式與網路的橋樑 Connection Profile</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AIF 證照準備與心得">
-        <div class="time-m-d">04-03</div>
-        <div class="title">
-          <a href="/2025/04/03/AIF-experience/">
-            <span>AIF 證照準備與心得</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AIF 證照筆記 - 負責任 AI、AI 解決方案的安全性、合規性和治理">
-        <div class="time-m-d">04-01</div>
-        <div class="title">
-          <a href="/2025/04/01/AIF-responsibleAI/">
-            <span>AIF 證照筆記 - 負責任 AI、AI 解決方案的安全性、合規性和治理</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AIF 證照筆記 - ML 模型設計">
-        <div class="time-m-d">04-01</div>
-        <div class="title">
-          <a href="/2025/04/01/AIF-ML-design/">
-            <span>AIF 證照筆記 - ML 模型設計</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AIF 證照筆記 - genAI">
-        <div class="time-m-d">04-01</div>
-        <div class="title">
-          <a href="/2025/04/01/AIF-genAI/">
-            <span>AIF 證照筆記 - genAI</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AIF 證照筆記 - ML">
-        <div class="time-m-d">04-01</div>
-        <div class="title">
-          <a href="/2025/04/01/AIF-ML/">
-            <span>AIF 證照筆記 - ML</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="IPFS CID">
-        <div class="time-m-d">03-31</div>
-        <div class="title">
-          <a href="/2025/03/31/HLF-IPFS-CID/">
-            <span>IPFS CID</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="跨帳戶代理建立 AWS 資源">
-        <div class="time-m-d">03-16</div>
-        <div class="title">
-          <a href="/2025/03/16/Building-Across-Different-Acc-With-Credential/">
-            <span>跨帳戶代理建立 AWS 資源</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="區塊鏈 & 分散式帳本技術簡介">
-        <div class="time-m-d">03-05</div>
-        <div class="title">
-          <a href="/2025/03/05/blockchain1/">
-            <span>區塊鏈 & 分散式帳本技術簡介</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Terraform：加速 DevOps 之旅，實現 IaC 自動化管理">
-        <div class="time-m-d">03-02</div>
-        <div class="title">
-          <a href="/2025/03/02/terraform/">
-            <span>Terraform：加速 DevOps 之旅，實現 IaC 自動化管理</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Ubuntu 無法連接網路問題排除筆記">
-        <div class="time-m-d">03-01</div>
-        <div class="title">
-          <a href="/2025/03/01/vm-network/">
-            <span>Ubuntu 無法連接網路問題排除筆記</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="embeddings 如何讓機器了解人類世界的文字、圖像 ?">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2025/02/24/embeddings/">
-            <span>embeddings 如何讓機器了解人類世界的文字、圖像 ?</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Pinterest-tech">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2025/02/24/Pinterest-tech/">
-            <span>Pinterest-tech</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AWS S3 存取權限設置與公開存取管理策略">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2025/02/24/aws-s3-public/">
-            <span>AWS S3 存取權限設置與公開存取管理策略</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Presigned URLs：讓未授權用戶安全存取 Amazon S3">
-        <div class="time-m-d">02-20</div>
-        <div class="title">
-          <a href="/2025/02/20/aws-s3/">
-            <span>Presigned URLs：讓未授權用戶安全存取 Amazon S3</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AWS Metadata？">
-        <div class="time-m-d">02-16</div>
-        <div class="title">
-          <a href="/2025/02/16/aws-metadata/">
-            <span>AWS Metadata？</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="為何我剛剛已經新增 IAM Role 到 EC2，但仍無法透過該 IAM 執行特定行為？">
-        <div class="time-m-d">02-15</div>
-        <div class="title">
-          <a href="/2025/02/15/aws-ssm/">
-            <span>為何我剛剛已經新增 IAM Role 到 EC2，但仍無法透過該 IAM 執行特定行為？</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Terraform 錯誤解釋：Error： Inconsistent dependency lock file">
-        <div class="time-m-d">02-15</div>
-        <div class="title">
-          <a href="/2025/02/15/terraform-Inconsistent-dependency-lock-file/">
-            <span>Terraform 錯誤解釋：Error： Inconsistent dependency lock file</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="介紹 AWS 如何在網頁上辨識使用者帳戶？以及第三方 Cookie 封鎖對使用 AWS 資源的影響？">
-        <div class="time-m-d">02-15</div>
-        <div class="title">
-          <a href="/2025/02/15/aws-with-cookies/">
-            <span>介紹 AWS 如何在網頁上辨識使用者帳戶？以及第三方 Cookie 封鎖對使用 AWS 資源的影響？</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Forwarding emails with aws">
-        <div class="time-m-d">02-15</div>
-        <div class="title">
-          <a href="/2025/02/15/Forwarding-emails-with-aws/">
-            <span>Forwarding emails with aws</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="CORS 錯誤解析：CORS resource sharing error header preflight invalid status 解決方案">
-        <div class="time-m-d">02-05</div>
-        <div class="title">
-          <a href="/2025/02/05/CORS-error-handle/">
-            <span>CORS 錯誤解析：CORS resource sharing error header preflight invalid status 解決方案</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Git Submodule 介紹與管理指南">
-        <div class="time-m-d">01-31</div>
-        <div class="title">
-          <a href="/2025/01/31/git-delete-submodule/">
-            <span>Git Submodule 介紹與管理指南</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Hexo 個人網頁 建立自己的 plugin!">
-        <div class="time-m-d">01-31</div>
-        <div class="title">
-          <a href="/2025/01/31/hexo-create-plugin/">
-            <span>Hexo 個人網頁 建立自己的 plugin!</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="2024 GICS 尋找資安女婕思 創意發想賽過程紀錄與心得">
-        <div class="time-m-d">01-31</div>
-        <div class="title">
-          <a href="/2025/01/31/2024GICS/">
-            <span>2024 GICS 尋找資安女婕思 創意發想賽過程紀錄與心得</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         
 <div class="footer">
@@ -625,6 +526,24 @@
 
 
         
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + VirtialBox%20%E7%B6%B2%E8%B7%AF%E6%8E%92%E6%9F%A5%20VERR_INTNET_FLT_IF_NOT_FOUND + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F05%2F04%2Fvirtual-box-error-1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/05/04/virtual-box-error-1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
   
   
 <script src="/js/shares.js"></script>

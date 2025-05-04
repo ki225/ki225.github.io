@@ -13,7 +13,7 @@
   
   <title>
     
-      archive_a: 2025/2 
+      進入 Linux Networking 必備的基礎指令 
       
       
       |
@@ -100,275 +100,143 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2025</span>
-          </h2>
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">進入 Linux Networking 必備的基礎指令</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-05-04 11:34:27
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/networking/" title="networking">
+                    #networking
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/linux/" title="linux">
+                    #linux
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>linux-networking-commands</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/04/06/HLF-heartbeat/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-05-04 11:34:27
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/networking/" title="networking">
+                        #networking
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/linux/" title="linux">
+                        #linux
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/05/04/virtual-box-error-1/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
       
-      <div class="post-item" title="VirtialBox 網路排查 VERR_INTNET_FLT_IF_NOT_FOUND">
-        <div class="time-m-d">05-04</div>
-        <div class="title">
-          <a href="/2025/05/04/virtual-box-error-1/">
-            <span>VirtialBox 網路排查 VERR_INTNET_FLT_IF_NOT_FOUND</span>
-          </a>
-        </div>
-      </div>
+    </div>
     
-      <div class="post-item" title="進入 Linux Networking 必備的基礎指令">
-        <div class="time-m-d">05-04</div>
-        <div class="title">
-          <a href="/2025/05/04/linux-networking-commands/">
-            <span>進入 Linux Networking 必備的基礎指令</span>
-          </a>
-        </div>
-      </div>
+
     
-      <div class="post-item" title="HLF-heartbeat">
-        <div class="time-m-d">04-06</div>
-        <div class="title">
-          <a href="/2025/04/06/HLF-heartbeat/">
-            <span>HLF-heartbeat</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="HLF-server-client-trust">
-        <div class="time-m-d">04-05</div>
-        <div class="title">
-          <a href="/2025/04/05/HLF-server-client-trust/">
-            <span>HLF-server-client-trust</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Hyperledger Fabric 筆記 - 應用程式與網路的橋樑 Connection Profile">
-        <div class="time-m-d">04-05</div>
-        <div class="title">
-          <a href="/2025/04/05/HLF-Connection-Profile/">
-            <span>Hyperledger Fabric 筆記 - 應用程式與網路的橋樑 Connection Profile</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AIF 證照準備與心得">
-        <div class="time-m-d">04-03</div>
-        <div class="title">
-          <a href="/2025/04/03/AIF-experience/">
-            <span>AIF 證照準備與心得</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AIF 證照筆記 - 負責任 AI、AI 解決方案的安全性、合規性和治理">
-        <div class="time-m-d">04-01</div>
-        <div class="title">
-          <a href="/2025/04/01/AIF-responsibleAI/">
-            <span>AIF 證照筆記 - 負責任 AI、AI 解決方案的安全性、合規性和治理</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AIF 證照筆記 - ML 模型設計">
-        <div class="time-m-d">04-01</div>
-        <div class="title">
-          <a href="/2025/04/01/AIF-ML-design/">
-            <span>AIF 證照筆記 - ML 模型設計</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AIF 證照筆記 - genAI">
-        <div class="time-m-d">04-01</div>
-        <div class="title">
-          <a href="/2025/04/01/AIF-genAI/">
-            <span>AIF 證照筆記 - genAI</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AIF 證照筆記 - ML">
-        <div class="time-m-d">04-01</div>
-        <div class="title">
-          <a href="/2025/04/01/AIF-ML/">
-            <span>AIF 證照筆記 - ML</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="IPFS CID">
-        <div class="time-m-d">03-31</div>
-        <div class="title">
-          <a href="/2025/03/31/HLF-IPFS-CID/">
-            <span>IPFS CID</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="跨帳戶代理建立 AWS 資源">
-        <div class="time-m-d">03-16</div>
-        <div class="title">
-          <a href="/2025/03/16/Building-Across-Different-Acc-With-Credential/">
-            <span>跨帳戶代理建立 AWS 資源</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="區塊鏈 & 分散式帳本技術簡介">
-        <div class="time-m-d">03-05</div>
-        <div class="title">
-          <a href="/2025/03/05/blockchain1/">
-            <span>區塊鏈 & 分散式帳本技術簡介</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Terraform：加速 DevOps 之旅，實現 IaC 自動化管理">
-        <div class="time-m-d">03-02</div>
-        <div class="title">
-          <a href="/2025/03/02/terraform/">
-            <span>Terraform：加速 DevOps 之旅，實現 IaC 自動化管理</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Ubuntu 無法連接網路問題排除筆記">
-        <div class="time-m-d">03-01</div>
-        <div class="title">
-          <a href="/2025/03/01/vm-network/">
-            <span>Ubuntu 無法連接網路問題排除筆記</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="embeddings 如何讓機器了解人類世界的文字、圖像 ?">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2025/02/24/embeddings/">
-            <span>embeddings 如何讓機器了解人類世界的文字、圖像 ?</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Pinterest-tech">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2025/02/24/Pinterest-tech/">
-            <span>Pinterest-tech</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AWS S3 存取權限設置與公開存取管理策略">
-        <div class="time-m-d">02-24</div>
-        <div class="title">
-          <a href="/2025/02/24/aws-s3-public/">
-            <span>AWS S3 存取權限設置與公開存取管理策略</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Presigned URLs：讓未授權用戶安全存取 Amazon S3">
-        <div class="time-m-d">02-20</div>
-        <div class="title">
-          <a href="/2025/02/20/aws-s3/">
-            <span>Presigned URLs：讓未授權用戶安全存取 Amazon S3</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="AWS Metadata？">
-        <div class="time-m-d">02-16</div>
-        <div class="title">
-          <a href="/2025/02/16/aws-metadata/">
-            <span>AWS Metadata？</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="為何我剛剛已經新增 IAM Role 到 EC2，但仍無法透過該 IAM 執行特定行為？">
-        <div class="time-m-d">02-15</div>
-        <div class="title">
-          <a href="/2025/02/15/aws-ssm/">
-            <span>為何我剛剛已經新增 IAM Role 到 EC2，但仍無法透過該 IAM 執行特定行為？</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Terraform 錯誤解釋：Error： Inconsistent dependency lock file">
-        <div class="time-m-d">02-15</div>
-        <div class="title">
-          <a href="/2025/02/15/terraform-Inconsistent-dependency-lock-file/">
-            <span>Terraform 錯誤解釋：Error： Inconsistent dependency lock file</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="介紹 AWS 如何在網頁上辨識使用者帳戶？以及第三方 Cookie 封鎖對使用 AWS 資源的影響？">
-        <div class="time-m-d">02-15</div>
-        <div class="title">
-          <a href="/2025/02/15/aws-with-cookies/">
-            <span>介紹 AWS 如何在網頁上辨識使用者帳戶？以及第三方 Cookie 封鎖對使用 AWS 資源的影響？</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Forwarding emails with aws">
-        <div class="time-m-d">02-15</div>
-        <div class="title">
-          <a href="/2025/02/15/Forwarding-emails-with-aws/">
-            <span>Forwarding emails with aws</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="CORS 錯誤解析：CORS resource sharing error header preflight invalid status 解決方案">
-        <div class="time-m-d">02-05</div>
-        <div class="title">
-          <a href="/2025/02/05/CORS-error-handle/">
-            <span>CORS 錯誤解析：CORS resource sharing error header preflight invalid status 解決方案</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Git Submodule 介紹與管理指南">
-        <div class="time-m-d">01-31</div>
-        <div class="title">
-          <a href="/2025/01/31/git-delete-submodule/">
-            <span>Git Submodule 介紹與管理指南</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="Hexo 個人網頁 建立自己的 plugin!">
-        <div class="time-m-d">01-31</div>
-        <div class="title">
-          <a href="/2025/01/31/hexo-create-plugin/">
-            <span>Hexo 個人網頁 建立自己的 plugin!</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="2024 GICS 尋找資安女婕思 創意發想賽過程紀錄與心得">
-        <div class="time-m-d">01-31</div>
-        <div class="title">
-          <a href="/2025/01/31/2024GICS/">
-            <span>2024 GICS 尋找資安女婕思 創意發想賽過程紀錄與心得</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         
 <div class="footer">
@@ -625,6 +493,24 @@
 
 
         
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E9%80%B2%E5%85%A5%20Linux%20Networking%20%E5%BF%85%E5%82%99%E7%9A%84%E5%9F%BA%E7%A4%8E%E6%8C%87%E4%BB%A4 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F05%2F04%2Flinux-networking-commands%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/05/04/linux-networking-commands/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
   
   
 <script src="/js/shares.js"></script>
