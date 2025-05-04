@@ -255,6 +255,36 @@
     originalTypeTitle();
     setTimeout(adjustTitleFontSize, 10);
   };
+
+  async function downloadResume(event) {
+    event.preventDefault();
+    
+    try {
+      // GitHub 原始內容 URL
+      const pdfUrl = 'https://raw.githubusercontent.com/ki225/ki225.github.io/main/source/files/resume.pdf';
+      
+      // 使用 fetch API 獲取 PDF 內容
+      const response = await fetch(pdfUrl);
+      const blob = await response.blob();
+      
+      // 創建下載鏈接
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = 'Yung-Chi_Huang_Resume.pdf'; // 設置下載文件的名稱
+      document.body.appendChild(a);
+      a.click();
+      
+      // 清理
+      window.URL.revokeObjectURL(downloadUrl);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('下載失敗:', error);
+      // 如果下載失敗，嘗試直接在新頁面打開
+      window.open('https://raw.githubusercontent.com/ki225/ki225.github.io/main/source/files/resume.pdf', '_blank');
+    }
+  }
+  
   
   // 在視窗大小改變時重新調整
   window.addEventListener('resize', adjustTitleFontSize);
