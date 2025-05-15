@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      docker container network 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">docker container network</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-05-15 11:10:08
+        </span>
+        
+      </div>
+      <div class="markdown-body">
+        <h2 id="Docker-Network-基礎概念"><a href="#Docker-Network-基礎概念" class="headerlink" title="Docker Network 基礎概念"></a>Docker Network 基礎概念</h2><ul>
+<li>什麼是 Docker Network？<ul>
+<li>Docker Network 是 Docker 平台用來連接和管理容器間網路通訊的機制，允許多個容器在同一主機或跨多主機間透過虛擬網路互相通訊。而更值得去討論的是 docker 所創立出來的 container networking</li>
+</ul>
+</li>
+<li>Container networking<ul>
+<li>容器之間，或容器與非 Docker 工作負載之間連接與通訊的能力。</li>
+<li>容器預設是啟用網路功能的，且能夠發起外部連線。容器只會看到一個具備 IP 位址、閘道（gateway）、路由表、DNS 服務及其他網路細節的網路介面。<ul>
+<li>唯有當容器使用 none 網路驅動時，才不會有這些網路設定。</li>
+</ul>
+</li>
+<li>容器對其網路環境沒有「意識」或「識別能力」<ul>
+<li>容器內部的應用程式不會知道自己是連接在 Docker 建立的哪一種網路（如 bridge、host、overlay 等）。</li>
+<li>容器也不會分辨通訊對象是另一個 Docker 容器、其他虛擬機器，或是任何其他非 Docker 的主機或設備。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Docker-Network-類型"><a href="#Docker-Network-類型" class="headerlink" title="Docker Network 類型"></a>Docker Network 類型</h2><p>Docker 的網路子系統是可插拔（pluggable）的，透過不同的驅動程式（drivers）來實現，細節可以參考<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/network/drivers/">官方文件</a></p>
+<p><img src="https://hackmd.io/_uploads/SJl08B3--xg.png" alt="image"></p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>用途說明</th>
+<th>可跨主機</th>
+<th>是否有隔離</th>
+<th>特別適用場景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bridge</td>
+<td>單機容器互通</td>
+<td>否</td>
+<td>是</td>
+<td>預設網路、開發環境</td>
+</tr>
+<tr>
+<td>Host</td>
+<td>使用主機網路</td>
+<td>否</td>
+<td>否</td>
+<td>高效能需求</td>
+</tr>
+<tr>
+<td>None</td>
+<td>完全隔離</td>
+<td>否</td>
+<td>是</td>
+<td>安全性測試或全離線</td>
+</tr>
+<tr>
+<td>Overlay</td>
+<td>多主機容器互通，Swarm 支援</td>
+<td>是</td>
+<td>是</td>
+<td>分散式應用、Swarm</td>
+</tr>
+<tr>
+<td>Macvlan</td>
+<td>模擬實體主機，分配 MAC</td>
+<td>否</td>
+<td>是</td>
+<td>舊系統整合</td>
+</tr>
+<tr>
+<td>IPvlan</td>
+<td>更底層控制，支援 VLAN 與路由控制</td>
+<td>否</td>
+<td>是</td>
+<td>資訊管理高需求場域</td>
+</tr>
+</tbody></table>
+<p><img src="https://hackmd.io/_uploads/Sk24LeZZee.png" alt="image"></p>
+<h3 id="Bridge-Network（預設橋接網路）"><a href="#Bridge-Network（預設橋接網路）" class="headerlink" title="Bridge Network（預設橋接網路）"></a>Bridge Network（預設橋接網路）</h3><ul>
+<li><p>Docker engine 會建立必要的 Linux bridge、內部介面、iptables 規則以及主機路由，讓連接到同一橋接網路的容器可以互相通訊，同時與未連接該網路的容器隔離，例如從下圖可以看到不同 bridge 底下的容器不能直接溝通。</p>
+<ul>
+<li>Bridge Network 是建立在 Linux bridge 之上，而 Linux bridge 模擬一個 Layer 2 網路，主要負責同一主機內容器間的資料鏈路層封包轉發。</li>
+</ul>
+</li>
+<li><p>橋接網路適用於運行於單一 Docker daemon 主機上的容器，若要實現跨不同 Docker daemon 的容器通訊或 Layer-3 路由，可以使用 overlay network。</p>
+<p><img src="https://hackmd.io/_uploads/S1uVagZZlg.png" alt="image"><br> <img src="https://hackmd.io/_uploads/S1x4r3Z-ge.png" alt="image"></p>
+</li>
+</ul>
+<h3 id="Host-Network（主機網路）"><a href="#Host-Network（主機網路）" class="headerlink" title="Host Network（主機網路）"></a>Host Network（主機網路）</h3><ul>
+<li>移除容器與 Docker 主機之間的網路隔離，直接使用主機的網路。</li>
+</ul>
+<p> <img src="https://hackmd.io/_uploads/HkcHrhWWll.png" alt="image"></p>
+<h3 id="None-Network（無網路）"><a href="#None-Network（無網路）" class="headerlink" title="None Network（無網路）"></a>None Network（無網路）</h3><p>完全隔離容器，使其無法與主機或其他容器通訊。</p>
+<h3 id="Overlay-Network（疊加網路）"><a href="#Overlay-Network（疊加網路）" class="headerlink" title="Overlay Network（疊加網路）"></a>Overlay Network（疊加網路）</h3><ul>
+<li><p>Overlay 網路驅動程式會在多個 Docker daemon 主機之間建立一個分散式網路，用來連接多個 Docker daemon，使 Swarm 服務與容器能跨節點通訊。這種方式不需進行作業系統層級的路由設定。</p>
+</li>
+<li><p>Overlay 網路多數是使用 VXLAN 技術封裝封包，使得封包能在主機間的底層網路傳輸。若啟用加密選項，則在 VXLAN 層級使用 IPsec 進行加密，保障資料安全。</p>
+<ul>
+<li>VXLAN 是一種「隧道技術」，把虛擬網路封包包裹起來，透過底層網路傳送，讓不同實體主機的虛擬機器或容器能像在同一個局域網內通訊。</li>
+</ul>
+<p> <img src="https://hackmd.io/_uploads/H1teCxZbel.png" alt="image"><br> <img src="https://hackmd.io/_uploads/SkxtfSn-bll.png" alt="image"><br><img src="https://hackmd.io/_uploads/ByDxeMbZel.png" alt="image"></p>
+</li>
+</ul>
+<h3 id="ipvlan"><a href="#ipvlan" class="headerlink" title="ipvlan"></a>ipvlan</h3><p>IPvlan 網路讓使用者完全掌控 IPv4 與 IPv6 位址。VLAN 驅動基於此，讓管理者可完全控制第 2 層 VLAN 標記，甚至 IPvlan 第 3 層路由，適合需要底層網路整合的使用者</p>
+<h3 id="Macvlan-Network（MAC-地址網路）"><a href="#Macvlan-Network（MAC-地址網路）" class="headerlink" title="Macvlan Network（MAC 地址網路）"></a>Macvlan Network（MAC 地址網路）</h3><p>允許為容器分配 MAC 位址，讓容器在網路上看起來像一個實體裝置。Docker 守護程序會依 MAC 位址將流量導向容器。使用 macvlan 驅動有時是處理需要直接連接實體網路（而非透過 Docker 主機網路堆疊路由）的舊有應用程式的最佳選擇。</p>
+<h3 id="Docker-daemon"><a href="#Docker-daemon" class="headerlink" title="Docker daemon"></a>Docker daemon</h3><p>使用者透過 docker cli 來對 docker daemon 操作，當 Docker Daemon 接收這些請求，執行對應的操作，並回傳結果給 CLI</p>
+<p><img src="https://hackmd.io/_uploads/BJy1ul-Wxl.png" alt="image"></p>
+<h2 id="Docker-Network-的架構與組成"><a href="#Docker-Network-的架構與組成" class="headerlink" title="Docker Network 的架構與組成"></a>Docker Network 的架構與組成</h2><h3 id="Network-Namespace-概念"><a href="#Network-Namespace-概念" class="headerlink" title="Network Namespace 概念"></a>Network Namespace 概念</h3><p>Namespace 是 Linux Kernel 用於實現資源隔離的一項功能，它能讓不同的 process 看到不同的系統資源視圖，達到彼此互不干擾的效果。</p>
+<p>Docker 利用 Namespace 來隔離容器，使每個容器彷彿擁有自己獨立的系統環境。</p>
+<p><img src="https://hackmd.io/_uploads/HyphXW--gg.png" alt="image"></p>
+<h3 id="Container-Network-Interface-CNI"><a href="#Container-Network-Interface-CNI" class="headerlink" title="Container Network Interface (CNI)"></a>Container Network Interface (CNI)</h3><p>CNI 整合了許多網路插件，像是 bridge、ipvlan 等 CNI plugin，提供最簡單且單一的網路架構，更多可以參考<a target="_blank" rel="noopener" href="https://www.hwchiu.com/docs/2018/cni-compare">這篇筆記</a></p>
+<p><img src="https://hackmd.io/_uploads/S19CBhZZgx.png" alt="image"></p>
+<h3 id="Docker-Daemon-與-Network-Driver-互動"><a href="#Docker-Daemon-與-Network-Driver-互動" class="headerlink" title="Docker Daemon 與 Network Driver 互動"></a>Docker Daemon 與 Network Driver 互動</h3><p>Docker Daemon 是 Docker 系統的核心服務，負責管理容器的生命週期、映像檔、網路及儲存資源。Daemon 接收來自 Docker CNI 或 API 的指令，並執行相應操作。</p>
+<p>Network Driver 是 Docker 用來實現容器網路功能的模組。它負責建立、管理及控制容器之間以及容器與外部世界的網路連結。不同的 Driver 代表不同的網路技術與架構，例如 bridge、overlay、macvlan 等。</p>
+<p>Docker Daemon 與 Network Driver 的互動流程：</p>
+<ol>
+<li>用戶或系統發出網路相關指令<br>例如使用 docker network create 建立網路，或在啟動容器時指定網路。</li>
+<li>Docker Daemon 接收指令並解析<br>Daemon 判斷網路類型與配置需求，決定使用哪個 Network Driver。</li>
+<li>呼叫 Network Driver API<br>Docker Daemon 通過 Network Driver 的介面呼叫對應驅動程式，要求建立網路資源（如虛擬橋接器、Overlay 網路）或將容器連接到指定網路。</li>
+<li>Network Driver 執行網路設定<br>Driver 根據需求在作業系統層面執行相應操作，例如建立 Linux bridge、設定 IPAM（IP 位址管理）、配置路由與防火牆規則。</li>
+<li>Docker Daemon 監控並管理<br>Daemon 負責保持網路狀態同步，處理網路事件（如容器新增、刪除），並在容器生命週期中維護網路連線。</li>
+</ol>
+<p><img src="https://hackmd.io/_uploads/B1B9njWbgx.png" alt="image"></p>
+<ul>
+<li>Docker 使用 libnetwork 函式庫作為網路抽象層，統一管理不同 Network Driver 的操作。</li>
+<li>Network Driver 以插件（plugin）形式存在，也就是 CLI，Daemon 動態載入並與之通訊。</li>
+<li>Network Driver 需支援標準 API，確保 Docker Daemon 能呼叫其功能。</li>
+<li>Docker Daemon 透過管理 iptables 規則、Linux namespace、虛擬介面等，實現容器網路隔離與連通。</li>
+</ul>
+<h3 id="網路橋接-Bridge-與虛擬交換機-vSwitch"><a href="#網路橋接-Bridge-與虛擬交換機-vSwitch" class="headerlink" title="網路橋接 (Bridge) 與虛擬交換機 (vSwitch)"></a>網路橋接 (Bridge) 與虛擬交換機 (vSwitch)</h3><p>虛擬交換機通常指虛擬化平台（如 VMware vSphere、Hyper-V、Open vSwitch）中提供的軟體交換機，用於連結虛擬機器（VM）或容器的虛擬網路介面，並實現流量轉發與網路隔離</p>
+<h2 id="IP-地址與-DNS-管理"><a href="#IP-地址與-DNS-管理" class="headerlink" title="IP 地址與 DNS 管理"></a>IP 地址與 DNS 管理</h2><h3 id="Docker-網路的-IP-分配機制"><a href="#Docker-網路的-IP-分配機制" class="headerlink" title="Docker 網路的 IP 分配機制"></a>Docker 網路的 IP 分配機制</h3><p>Docker 網路中的每個容器會被分配一個私有 IP 位址，以便容器之間及容器與主機或外部網路的通訊。Docker 透過內建的 IP 地址管理（IP Address Management, IPAM） 機制自動分配和管理這些 IP 位址。</p>
+<p>而 <a target="_blank" rel="noopener" href="https://docs.docker.com/reference/compose-file/networks/">docker 官方文件</a>也提供透過於網路設定 <code>docker-compose.yaml</code> 增加<code>ipam</code> 以自訂 IPAM 配置的物件。它可以包含多個可選屬性，用來精細控制容器的 IP 位址分配方式。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">mynet1:</span></span><br><span class="line">    <span class="attr">ipam:</span></span><br><span class="line">      <span class="attr">driver:</span> <span class="string">default</span></span><br><span class="line">      <span class="attr">config:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">subnet:</span> <span class="number">172.28</span><span class="number">.0</span><span class="number">.0</span><span class="string">/16</span></span><br><span class="line">          <span class="attr">ip_range:</span> <span class="number">172.28</span><span class="number">.5</span><span class="number">.0</span><span class="string">/24</span></span><br><span class="line">          <span class="attr">gateway:</span> <span class="number">172.28</span><span class="number">.5</span><span class="number">.254</span></span><br><span class="line">          <span class="attr">aux_addresses:</span></span><br><span class="line">            <span class="attr">host1:</span> <span class="number">172.28</span><span class="number">.1</span><span class="number">.5</span></span><br><span class="line">            <span class="attr">host2:</span> <span class="number">172.28</span><span class="number">.1</span><span class="number">.6</span></span><br><span class="line">            <span class="attr">host3:</span> <span class="number">172.28</span><span class="number">.1</span><span class="number">.7</span></span><br><span class="line">      <span class="attr">options:</span></span><br><span class="line">        <span class="attr">foo:</span> <span class="string">bar</span></span><br><span class="line">        <span class="attr">baz:</span> <span class="string">&quot;0&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Docker-內建-DNS-解析"><a href="#Docker-內建-DNS-解析" class="headerlink" title="Docker 內建 DNS 解析"></a>Docker 內建 DNS 解析</h3><p>當容器使用預設橋接網路啟動時，Docker daemon 會將主機中 <code>/etc/resolv.conf</code>、<code>/etc/hosts</code> 及 <code>/etc/hostname</code> 檔案中所有非本地回環位址（non-localhost）的設定複製到容器內，並讓容器直接繼承 <code>/etc/resolv.conf</code> 設定；如果找不到非本地回環的設定，容器內的 <code>/etc/resolv.conf</code> 將會被初始化為硬編碼的 DNS 伺服器 <code>8.8.8.8</code>。如果主機的 DNS 設定改變（例如 DHCP 更新 DNS），已經運行中的容器內的 <code>/etc/resolv.conf</code> 不會自動更新，除非容器重啟。</p>
+<p>自訂網路容器則使用 Docker 內建 DNS 伺服器，並轉發請求給主機 DNS。</p>
+<p><img src="https://hackmd.io/_uploads/SyGBonbWgg.jpg" alt="docker_container_dns_issue-3"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10236066?sc=rss.iron">https://ithelp.ithome.com.tw/articles/10236066?sc=rss.iron</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.devgenius.io/docker-networking-all-types-explained-with-real-examples-ab1cf11f4cb2">https://blog.devgenius.io/docker-networking-all-types-explained-with-real-examples-ab1cf11f4cb2</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/learn-docker/9781788997027/0ea54c42-5c46-4a30-b935-c65b5aa1f0ab.xhtml">https://www.oreilly.com/library/view/learn-docker/9781788997027/0ea54c42-5c46-4a30-b935-c65b5aa1f0ab.xhtml</a></li>
+<li><a target="_blank" rel="noopener" href="https://collabnix.com/a-beginners-guide-to-docker-networking/">https://collabnix.com/a-beginners-guide-to-docker-networking/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.educba.com/docker-networking/">https://www.educba.com/docker-networking/</a></li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/05/15/certificate/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-05-15 11:10:08
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Network-%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5"><span class="toc-text">Docker Network 基礎概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Network-%E9%A1%9E%E5%9E%8B"><span class="toc-text">Docker Network 類型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bridge-Network%EF%BC%88%E9%A0%90%E8%A8%AD%E6%A9%8B%E6%8E%A5%E7%B6%B2%E8%B7%AF%EF%BC%89"><span class="toc-text">Bridge Network（預設橋接網路）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Host-Network%EF%BC%88%E4%B8%BB%E6%A9%9F%E7%B6%B2%E8%B7%AF%EF%BC%89"><span class="toc-text">Host Network（主機網路）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#None-Network%EF%BC%88%E7%84%A1%E7%B6%B2%E8%B7%AF%EF%BC%89"><span class="toc-text">None Network（無網路）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overlay-Network%EF%BC%88%E7%96%8A%E5%8A%A0%E7%B6%B2%E8%B7%AF%EF%BC%89"><span class="toc-text">Overlay Network（疊加網路）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ipvlan"><span class="toc-text">ipvlan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Macvlan-Network%EF%BC%88MAC-%E5%9C%B0%E5%9D%80%E7%B6%B2%E8%B7%AF%EF%BC%89"><span class="toc-text">Macvlan Network（MAC 地址網路）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-daemon"><span class="toc-text">Docker daemon</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Network-%E7%9A%84%E6%9E%B6%E6%A7%8B%E8%88%87%E7%B5%84%E6%88%90"><span class="toc-text">Docker Network 的架構與組成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Network-Namespace-%E6%A6%82%E5%BF%B5"><span class="toc-text">Network Namespace 概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Container-Network-Interface-CNI"><span class="toc-text">Container Network Interface (CNI)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-Daemon-%E8%88%87-Network-Driver-%E4%BA%92%E5%8B%95"><span class="toc-text">Docker Daemon 與 Network Driver 互動</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B6%B2%E8%B7%AF%E6%A9%8B%E6%8E%A5-Bridge-%E8%88%87%E8%99%9B%E6%93%AC%E4%BA%A4%E6%8F%9B%E6%A9%9F-vSwitch"><span class="toc-text">網路橋接 (Bridge) 與虛擬交換機 (vSwitch)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP-%E5%9C%B0%E5%9D%80%E8%88%87-DNS-%E7%AE%A1%E7%90%86"><span class="toc-text">IP 地址與 DNS 管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-%E7%B6%B2%E8%B7%AF%E7%9A%84-IP-%E5%88%86%E9%85%8D%E6%A9%9F%E5%88%B6"><span class="toc-text">Docker 網路的 IP 分配機制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-%E5%85%A7%E5%BB%BA-DNS-%E8%A7%A3%E6%9E%90"><span class="toc-text">Docker 內建 DNS 解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + docker%20container%20network + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F05%2F15%2Fdocker-container-network%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/05/15/docker-container-network/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
