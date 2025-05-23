@@ -13,8 +13,8 @@
   
   <title>
     
-      Pinterest-tech 
-      
+      Tag 
+       : intern
       
       |
     
@@ -100,134 +100,30 @@
 
 
       <div class="flex-container">
-        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
-<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+        <!-- 标签详情页，展示某个标签下的文章列表，url形式：https://yoursite/tags/某个标签/ -->
 
-
-  <!-- LaTex Display -->
-
+<div class="container tag-details">
+  <div class="content-title">
+    <h2>
+      <span>intern</span>
+    </h2>
+  </div>
   
-    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
-  
-  <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      }
-    }
-  </script>
-
-
-
-
-
-  <!-- clipboard -->
-
-  
-    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
-  
-  
-<script src="/js/codeCopy.js"></script>
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
-  <div class="container post-details" id="post-details">
-    <div class="post-content">
-      <div class="post-title">Pinterest-tech</div>
-      <div class="post-attach">
-        <span class="post-pubtime">
-          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-02-25 11:43:32
-        </span>
-        
+    <div class="post-list">
+      <div class="post-item" title="25sprout Intern 面試分享">
+        <span class="time-m-d">2025-05-23</span>
+        <a href="/2025/05/23/25sprout-interview-feedback/">
+          <span>25sprout Intern 面試分享</span>
+        </a>
       </div>
-      <div class="markdown-body">
-        <p>在準備 0307 大使工作坊的過程中，因為主題是做出類似 Pinterest 圖片搜尋引擎效果，所以希望在正式進入實作環節前的以圖搜圖、以文字搜圖效果，</p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Pinterest 是一個視覺化搜尋引擎，讓使用者能夠發現並儲存各種主題的靈感，如食譜、居家設計、時尚等。使用者可以透過 Pin（釘圖）將喜愛的內容儲存到個人圖版（Board），方便日後參考和整理。此外，Pinterest 提供強大的搜尋功能，使用者可以透過關鍵字或圖片進行搜尋，發掘更多相關的點子。平台也支援社交互動，使用者可以追蹤其他人的圖版，分享靈感，並與朋友交流。</p>
-<p>為了提升使用者體驗，Pinterest 開發了 PinSage 和 ItemSage 等技術。PinSage 是一種基於圖卷積網路（Graph Convolutional Network, GCN）的推薦系統演算法，透過從龐大的圖資料中學習每個 Pin（釘圖）的 embeddings 來學習 pins 之間的圖結構關係，並使用最近鄰搜尋（Approximate Nearest Neighbors, ANN）技術來加速推薦結果的檢索，以在數十億個 pins 中即時尋找最相關的內容。而 ItemSage 採用多任務學習（Multi-Task Learning），可以同時學習多種使用者互動行為，從而提高整體推薦效果。</p>
-<p>可以整合文字、影音、圖片等不同類型的數據與多任務學習來優化購物推薦，確保推薦系統的準確性、效率與個人化體驗。這些技術使 Pinterest 能夠在龐大的視覺資料庫中快速識別相關內容，提升使用者體驗，並增強購物與廣告變現的能力。</p>
-<p>Pinterest 上的購物推薦需要針對不同的使用者行為（如點擊、儲存、加入購物車等）進行最佳化。ItemSage 採用多任務學習（Multi-Task Learning），可以同時學習多種使用者互動行為，從而提高整體推薦效果。例如，某位使用者習慣先儲存商品再購買，而另一位則可能直接點擊購買，ItemSage 能夠根據這些行為模式提供個人化的推薦結果。</p>
-<h2 id="references"><a href="#references" class="headerlink" title="references"></a>references</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://medium.com/pinterest-engineering/pinsage-a-new-graph-convolutional-neural-network-for-web-scale-recommender-systems-88795a107f48">PinSage: A new graph convolutional neural network for web-scale recommender systems</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40013463/article/details/81089223">从CNN到GCN的联系与区别——GCN从入门到精（fang）通（qi）</a></li>
-</ul>
-
-      </div>
-      
-        <div class="prev-or-next">
-          <div class="post-foot-next">
-            
-              <a href="/2025/02/24/aws-s3-public/" target="_self">
-                <i class="iconfont icon-chevronleft"></i>
-                <span>Prev</span>
-              </a>
-            
-          </div>
-          <div class="post-attach">
-            <span class="post-pubtime">
-              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-02-25 11:43:32
-            </span>
-            
-          </div>
-          <div class="post-foot-prev">
-            
-              <a href="/2025/02/24/embeddings/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
-            
-          </div>
-        </div>
-      
     </div>
-    
-  <div id="btn-catalog" class="btn-catalog">
-    <i class="iconfont icon-catalog"></i>
-  </div>
-  <div class="post-catalog hidden" id="catalog">
-    <div class="title">Contents</div>
-    <div class="catalog-content">
-      
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#references"><span class="toc-text">references</span></a></li></ol>
-      
-    </div>
-  </div>
-
   
-<script src="/js/catalog.js"></script>
-
-
-
-
+  <nav class="post-navigation">
     
-      <div class="comments-container">
-        
-
-
-
-
-
-
-
-      </div>
+    <span class="page-num">1 / 1</span>
     
-  </div>
-
+  </nav>
+</div>
 
         
 <div class="footer">
@@ -484,24 +380,6 @@
 
 
         
-  
-    <div class="share-icon tools-bar-item">
-      <a href="javascript: void(0)" id="share-icon">
-        <i class="iconfont iconshare"></i>
-      </a>
-      <div class="share-content hidden">
-        
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Pinterest-tech + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F24%2FPinterest-tech%2F + '" target="_blank" title="Twitter">
-            <i class="iconfont icon-twitter"></i>
-          </a>
-        
-        
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/24/Pinterest-tech/" target="_blank" title="Facebook">
-            <i class="iconfont icon-facebooksquare"></i>
-          </a>
-        
-      </div>
-    </div>
   
   
 <script src="/js/shares.js"></script>

@@ -13,7 +13,7 @@
   
   <title>
     
-      HLF-server-client-trust 
+      25sprout Intern 面試分享 
       
       
       |
@@ -147,87 +147,75 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">HLF-server-client-trust</div>
+      <div class="post-title">25sprout Intern 面試分享</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-04-08 14:39:11
+          2025-05-23 13:44:26
         </span>
         
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/intern/" title="intern">
+                    #intern
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/interview/" title="interview">
+                    #interview
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
       <div class="markdown-body">
-        <p>這是一個很關鍵的問題，也是許多使用 Hyperledger Fabric 或處理 TLS 的開發者常混淆的點。以下我會用清楚的方式幫你釐清：</p>
-<hr>
-<h2 id="✅-為什麼-client-要信任-ca-cert-pem？"><a href="#✅-為什麼-client-要信任-ca-cert-pem？" class="headerlink" title="✅ 為什麼 client 要信任 ca-cert.pem？"></a>✅ <strong>為什麼 client 要信任 <code>ca-cert.pem</code>？</strong></h2><p>當一個 <strong>client（例如 <code>fabric-ca-client</code>）要透過 HTTPS（TLS）連線到 server（如 <code>fabric-ca-server</code>）</strong> 時，它需要確保：</p>
-<ol>
-<li>伺服器提供的憑證是<strong>有效的</strong></li>
-<li>憑證是由一個**可信任的憑證機構（CA）**簽發的</li>
-<li>憑證的主機名稱與 URL 符合（例如 CN 或 SAN 包含 <code>localhost</code>）</li>
-</ol>
-<p>而 client 根本<strong>無法直接驗證 server 提供的 <code>tls-cert.pem</code> 本身是否可信</strong>，它只能從一份「CA 憑證」出發，反查 server 提供的憑證是否為此 CA 所簽。</p>
-<p>這份 CA 憑證就是我們說的：</p>
-<h3 id="✅-ca-cert-pem：CA-的公開根憑證"><a href="#✅-ca-cert-pem：CA-的公開根憑證" class="headerlink" title="✅ ca-cert.pem：CA 的公開根憑證"></a>✅ <code>ca-cert.pem</code>：<strong>CA 的公開根憑證</strong></h3><hr>
-<h2 id="🔍-那-tls-cert-pem-又是什麼？"><a href="#🔍-那-tls-cert-pem-又是什麼？" class="headerlink" title="🔍 那 tls-cert.pem 又是什麼？"></a>🔍 <strong>那 <code>tls-cert.pem</code> 又是什麼？</strong></h2><p>這是 <strong>Server 自己的「憑證」</strong>，就像一張身份證，上面寫著：</p>
+        <p>25sprout 這份實習是我的第二份實習，有關於另一個實習的心得可以參考另一篇筆記。</p>
+<h2 id="我的背景"><a href="#我的背景" class="headerlink" title="我的背景"></a>我的背景</h2><p>大一的時候其實主要是做課堂上的專案，還算是摸索階段。到大二我開始比較積極去找機會，接觸到一個地端的團隊專案，第一次體驗敏捷開發，也真正感受到團隊合作的節奏。</p>
+<p>大二下剛好有個契機，開始接觸到雲端領域，並在升大三的暑假去 eCloudvalley 實習。當時和另一位實習生組員兩個人一起從零幹出整個 IT 網路基礎建設加上前後端的開發，讓我第一次完整看到一個系統是怎麼從架構一路做到能運作起來，感受雲端力量的同時也決定繼續往這個領域去深入探索。</p>
+<p>大三上尾聲加入 AWS 校園大使，接觸到更多不同的開發任務，發現自己對系統架構感到興趣，於是在大三下挑戰了這個職缺。</p>
+<h2 id="時程"><a href="#時程" class="headerlink" title="時程"></a>時程</h2><p>因為三越忙大使計畫、四月爆趕專題跟打比賽，所以拖到五月才開始認真準備履歷(好孩子不要學)</p>
 <ul>
-<li>CN: tls.ca.orderer3.example.com</li>
-<li>有效期限</li>
-<li>被誰簽發：Issued By → 某個 CA</li>
+<li>5&#x2F;6 官網投遞履歷</li>
+<li>5&#x2F;7 私下寄送求職信</li>
+<li>5&#x2F;13 收到面試邀約</li>
+<li>5&#x2F;19 線上面試與測驗</li>
+<li>5&#x2F;20 收到錄取通知</li>
 </ul>
-<p>這張憑證是 <strong>由 CA 所簽發出來的</strong>，對應的一般是 server 的私鑰（<code>key.pem</code>）一起使用。</p>
-<hr>
-<h2 id="🧠-具體比喻說明："><a href="#🧠-具體比喻說明：" class="headerlink" title="🧠 具體比喻說明："></a>🧠 具體比喻說明：</h2><table>
-<thead>
-<tr>
-<th>角色</th>
-<th>檔案</th>
-<th>說明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>👨‍🏫 TLS CA</td>
-<td><code>ca-cert.pem</code></td>
-<td>一家戶政事務所的「印章」樣本，公開提供給所有人驗證用</td>
-</tr>
-<tr>
-<td>🏢 Server</td>
-<td><code>tls-cert.pem</code></td>
-<td>由戶政事務所發給 server 的「身份證」，上有簽章與名稱</td>
-</tr>
-<tr>
-<td>🔍 Client</td>
-<td><code>--tls.certfiles</code></td>
-<td>拿著戶政事務所的「印章樣本」，來驗證 server 的身份證是不是真的</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="✅-實際過程簡化流程圖："><a href="#✅-實際過程簡化流程圖：" class="headerlink" title="✅ 實際過程簡化流程圖："></a>✅ 實際過程簡化流程圖：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fabric-ca-client ➡️ Connect to ➡️ https://localhost:9059</span><br><span class="line"></span><br><span class="line">Server sends: tls-cert.pem (含 CN、有效期、簽發者)</span><br><span class="line">Client checks:</span><br><span class="line">  - tls-cert.pem 是由 ca-cert.pem 簽的嗎？</span><br><span class="line">  - CN/SAN 是否包含 localhost？</span><br><span class="line">  - 有效期限還沒過嗎？</span><br></pre></td></tr></table></figure>
+<h2 id="面試職缺"><a href="#面試職缺" class="headerlink" title="面試職缺"></a>面試職缺</h2><p>DevOps Engineer Intern</p>
+<p><img src="/images/intern/25sprout/img1.png"></p>
+<h2 id="書審準備"><a href="#書審準備" class="headerlink" title="書審準備"></a>書審準備</h2><p>履歷是能不能進入面試官的評斷標準，所以要盡可能讓面試官從這份履歷看出你和這份職缺的匹配性。可以先去職缺介紹找出關鍵字，例如 “職缺會用到的技術工具”、”職缺會需要做的工作”，接著盡可能讓專案敘述內呈現出你如何運用這些技術、解決了哪些問題、帶來了那些影響，如果可以用數據呈現出自己的價值會更具有說服力。</p>
+<p>因為履歷能呈現的個人特質比較有限，例如我當時從實習招募官網感受到這間新創也很在意求職者的熱情(畢竟人家主打年輕活力嘛ovo)，所以我在隔天有另外寄出求職信去做更進一步的說明。</p>
+<h2 id="面試內容"><a href="#面試內容" class="headerlink" title="面試內容"></a>面試內容</h2><p>因為過去的面試經驗都是團體面試，一個人能被分配到的自我介紹大約只有一分鐘，被面試官詢問經歷的時間大約是五分鐘。這次的面試是單人面試，面試官是部門內的所有正職，時間是一小時，接下來我會針對面試的可以做出的準備去拆成不同面向分享。</p>
+<p>而在正式開始分享前，我還想再次感謝 AWS Educate Dev team 團隊的老闆們在這幾個月內帶給我的成長，無論是技術上、眼界上還是經驗的傳承，以及在我求職焦慮時給我許多支持和實質方向。</p>
+<h3 id="自我介紹"><a href="#自我介紹" class="headerlink" title="自我介紹"></a>自我介紹</h3><p>在所有面試官都進入到線上會議廳後，他們確認我聽的到聲音後就沒有其他回應，所以我就詢問他們能不能分享畫面，並開始自我介紹。</p>
+<p>自我介紹非常重要，因為這會引導面試官後續對你的提問，如果覺得先前投遞的履歷尚有不足或是有新的調整，就可以趁接下來的自我介紹去搶救。<strong>每間公司的面試時間不一樣，不同時間內展現出最大價值的方法也不同，可以先和人資確認面試方式再來決定要怎麼準備</strong>。因為我是一小時的個人面試，所以我排了大概 10 ~ 15 分鐘的自我介紹，自介簡報依照自己組織的習慣去準備就好，但內容不可以太過發散，盡可能讓內容環環相扣。</p>
+<blockquote>
+<p>因為我並不是從很早就開始專攻 DevOps，所以比起去強硬說自己有多少硬實力，透過包裝自己的真實經歷讓面試官可以更好的感受到我對職缺的重視和努力。我是分成 “經歷簡述”、 “專案經驗說明” 、 “Why DevOps？”、 “未來展望” 去分享，讓面試官了解我的背景、學習軌跡、技術能力、規劃等。</p>
+</blockquote>
+<p>雖然自己的經歷有趣，但<strong>面試官比起漂亮的背景，更希望認識你的能力，來評估你是否適合這個職位</strong>，尤其 DevOps 是一個常常要排查系統錯誤的職位，這時候就可以在 “專案經驗說明” 去展現自己的技術能力、問題解決能力、學習力。我在簡報內會先說明我在那份專案裡的貢獻，接著用 STAR 的方式去為每一個專案做二至三個案例說明。</p>
+<blockquote>
+<p>「STAR」全名是 Situation（情境）、Task（任務）、Action（行動）、Result（結果），這個方法幫助你以有條理的方式講述過去的經驗，讓面試官更好去了解你的能力與價值。</p>
+</blockquote>
+<p>第三 part 的內容其實都融入在先前的經歷內，但為了讓面試官更好去區分每個環節的重點，我才額外拉出一個部份，整理出剛剛經歷內我符合此職缺的特質。最後部分就只是和他們分享我自己的規劃，這部分也可以變成後續面試官和你討論工作內容、未來規劃的開端。</p>
+<h3 id="面試官提問"><a href="#面試官提問" class="headerlink" title="面試官提問"></a>面試官提問</h3><p>主要是根據剛才的自我介紹去提問，接下來的問題就是根據自己的回答去延伸，所以千萬不要掰。</p>
+<h3 id="技術測驗"><a href="#技術測驗" class="headerlink" title="技術測驗"></a>技術測驗</h3><p>這部分超刺激的 XD 面試官直接分享畫面秀出大概五種工具的語法考題叫我解釋，不過題目完全不會刁鑽，只要有認真接觸過都可以回答。回答的時候可以搭配自己曾經使用過的情境與用途，例如考題是 Linux 指令 <code>ls</code>，就可以延伸說 <code>ls -l</code> 以及他會呈現的內容、自己使用的場景；不會的面試官表示可以猜猜看，但我自己是直接表示我沒用過，或是說我的其他解法。</p>
+<p>技術測驗的考題都是來自於公司會用到的工具，因為我的履歷有特別一欄是說明我的 Skill set，面試官也有注意到我有些工具沒用過，他就會跳過哈哈人超好的 qwq</p>
+<blockquote>
+<p>履歷不要亂寫 !! 不然答不出來很難看 TAT</p>
+</blockquote>
+<h2 id="面試者提問"><a href="#面試者提問" class="headerlink" title="面試者提問"></a>面試者提問</h2><p>在面試官介紹完公司過後通常會給你提問環節，這時候就可以去用問題讓面試官知道你對這份工作的準備和求知慾，例如可以詢問該職位會需要的技術能力和使用比例，或更詳細的去了解官網職缺的工作內容，也可以針對自己原先的未來規劃去做進一步詢問，了解工作內容是否能帶給自己預期的成長。</p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>25sprout 是一間主打年輕、活力、自由、開放的網路公司，在面試過程中我也確實這麼感覺，正職們給我的感覺都非常友善，後來還問我的興趣、吃飯時間(我說我吃半小時以上哈哈因為都配動漫，結果他們說找到同伴w)，也在後續介紹部門時說主要採取遠距、排班式上班非常彈性，聽完只能說太期待了，也很高興在5&#x2F;20 這個非常吉利(?)的日子拿到 offer，非常感激 (；v；)</p>
 
-<p>只有全部都通過，TLS 連線才會成功。否則就會報：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x509: certificate signed by unknown authority</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="✅-所以-tls-certfiles-應該指向的是："><a href="#✅-所以-tls-certfiles-應該指向的是：" class="headerlink" title="✅ 所以 --tls.certfiles 應該指向的是："></a>✅ 所以 <code>--tls.certfiles</code> 應該指向的是：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--tls.certfiles /path/to/ca-cert.pem</span><br></pre></td></tr></table></figure>
-
-<p>而<strong>不是</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--tls.certfiles /path/to/tls-cert.pem ❌</span><br></pre></td></tr></table></figure>
-
-<p>因為 client 要信任的是<strong>誰簽了憑證</strong>（CA），不是憑證本身。</p>
-<hr>
-<h2 id="🧪-想驗證的話你可以做這件事："><a href="#🧪-想驗證的話你可以做這件事：" class="headerlink" title="🧪 想驗證的話你可以做這件事："></a>🧪 想驗證的話你可以做這件事：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl verify -CAfile ca-cert.pem tls-cert.pem</span><br></pre></td></tr></table></figure>
-
-<p>若返回：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tls-cert.pem: OK</span><br></pre></td></tr></table></figure>
-
-<p>就代表這張 server 憑證的確是由 <code>ca-cert.pem</code> 所簽發，client 就會信任。</p>
-<hr>
-<p>有需要我幫你畫一個流程圖或整理出你整個 CA 架構的信任鏈嗎？對 multi-org&#x2F;multi-CA 系統會很有幫助！</p>
-<h2 id="如何確認-TLS-握手"><a href="#如何確認-TLS-握手" class="headerlink" title="如何確認 TLS 握手?"></a>如何確認 TLS 握手?</h2><h2 id="驗證憑證是否依樣"><a href="#驗證憑證是否依樣" class="headerlink" title="驗證憑證是否依樣"></a>驗證憑證是否依樣</h2>
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2025/04/05/HLF-Connection-Profile/" target="_self">
+              <a href="/2025/05/15/linux-ops-tools/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -236,16 +224,28 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-04-08 14:39:11
+              2025-05-23 13:44:26
             </span>
             
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/intern/" title="intern">
+                        #intern
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/interview/" title="interview">
+                        #interview
+                      </a>
+                    </span>
+                    
+                  </span>
+              
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2025/05/04/linux-networking-commands/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
@@ -259,7 +259,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-%E7%82%BA%E4%BB%80%E9%BA%BC-client-%E8%A6%81%E4%BF%A1%E4%BB%BB-ca-cert-pem%EF%BC%9F"><span class="toc-text">✅ 為什麼 client 要信任 ca-cert.pem？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-ca-cert-pem%EF%BC%9ACA-%E7%9A%84%E5%85%AC%E9%96%8B%E6%A0%B9%E6%86%91%E8%AD%89"><span class="toc-text">✅ ca-cert.pem：CA 的公開根憑證</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E9%82%A3-tls-cert-pem-%E5%8F%88%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F"><span class="toc-text">🔍 那 tls-cert.pem 又是什麼？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%85%B7%E9%AB%94%E6%AF%94%E5%96%BB%E8%AA%AA%E6%98%8E%EF%BC%9A"><span class="toc-text">🧠 具體比喻說明：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-%E5%AF%A6%E9%9A%9B%E9%81%8E%E7%A8%8B%E7%B0%A1%E5%8C%96%E6%B5%81%E7%A8%8B%E5%9C%96%EF%BC%9A"><span class="toc-text">✅ 實際過程簡化流程圖：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-%E6%89%80%E4%BB%A5-tls-certfiles-%E6%87%89%E8%A9%B2%E6%8C%87%E5%90%91%E7%9A%84%E6%98%AF%EF%BC%9A"><span class="toc-text">✅ 所以 --tls.certfiles 應該指向的是：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%AA-%E6%83%B3%E9%A9%97%E8%AD%89%E7%9A%84%E8%A9%B1%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%81%9A%E9%80%99%E4%BB%B6%E4%BA%8B%EF%BC%9A"><span class="toc-text">🧪 想驗證的話你可以做這件事：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%A2%BA%E8%AA%8D-TLS-%E6%8F%A1%E6%89%8B"><span class="toc-text">如何確認 TLS 握手?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A9%97%E8%AD%89%E6%86%91%E8%AD%89%E6%98%AF%E5%90%A6%E4%BE%9D%E6%A8%A3"><span class="toc-text">驗證憑證是否依樣</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E8%83%8C%E6%99%AF"><span class="toc-text">我的背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%82%E7%A8%8B"><span class="toc-text">時程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E8%A9%A6%E8%81%B7%E7%BC%BA"><span class="toc-text">面試職缺</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B8%E5%AF%A9%E6%BA%96%E5%82%99"><span class="toc-text">書審準備</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E8%A9%A6%E5%85%A7%E5%AE%B9"><span class="toc-text">面試內容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E6%88%91%E4%BB%8B%E7%B4%B9"><span class="toc-text">自我介紹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E8%A9%A6%E5%AE%98%E6%8F%90%E5%95%8F"><span class="toc-text">面試官提問</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E8%A1%93%E6%B8%AC%E9%A9%97"><span class="toc-text">技術測驗</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E8%A9%A6%E8%80%85%E6%8F%90%E5%95%8F"><span class="toc-text">面試者提問</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%8C%E8%A8%98"><span class="toc-text">後記</span></a></li></ol>
       
     </div>
   </div>
@@ -547,12 +547,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + HLF-server-client-trust + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F04%2F05%2FHLF-server-client-trust%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + 25sprout%20Intern%20%E9%9D%A2%E8%A9%A6%E5%88%86%E4%BA%AB + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F05%2F23%2F25sprout-interview-feedback%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/04/05/HLF-server-client-trust/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/05/23/25sprout-interview-feedback/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
