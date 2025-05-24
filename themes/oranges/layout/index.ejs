@@ -3,6 +3,11 @@
     --button-text: white;
     --button-bg: #ff9800;
     --button-hover-bg: #e08600;
+    
+    /* 添加字體大小變數，方便全局控制 */
+    --title-font-size: 3.5rem;
+    --intro-font-size: 1.5rem;
+    --highlight-color: #ff9800;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -13,6 +18,7 @@
     }
   }
   
+  /* 基本響應式佈局 */
   @media (max-width: 768px) {
     .desktop-image-container {
       display: none !important;
@@ -20,62 +26,121 @@
     .mobile-image-container {
       display: flex !important;
     }
+    :root {
+      --title-font-size: 2.5rem;
+      --intro-font-size: 1.2rem;
+    }
   }
+
+  @media (max-width: 480px) {
+    :root {
+      --title-font-size: 2rem;
+      --intro-font-size: 1.1rem;
+    }
+  }
+
+  /* 非常小的螢幕 */
+  @media (max-width: 360px) {
+    :root {
+      --title-font-size: 1.8rem;
+      --intro-font-size: 1rem;
+    }
+  }
+  
   #content { display: none; }
-  #dynamicTitle { color: #ff9800; }
-  .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  
+  /* 標題容器樣式優化 */
+  .title-container {
+    min-height: 4.5rem;
+    overflow: visible;
+    position: relative;
+    margin-bottom: 3rem;
+    width: 100%;
   }
-  h1 {
-      text-align: center;
-      color: #007bff;
+
+  .markdown-body.title-text {
+    font-size: var(--title-font-size);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: visible;
+    position: absolute;
+    width: 100%;
   }
-  .experience {
-      border-left: 4px solid #007bff;
-      margin: 20px 0;
-      padding: 10px 20px;
-      background: #ffffff;
-      border-radius: 5px;
-      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  
+  #dynamicTitle {
+    color: var(--highlight-color);
+    display: inline-block;
   }
-  .experience h2 {
-      margin: 0;
-      color: #333;
+  
+  @media (max-width: 768px) {
+    .title-container {
+      min-height: 3.5rem;
+      margin-bottom: 2rem;
+    }
   }
-  .experience h3 {
-      margin: 5px 0;
-      color: #ffc107;
+
+  /* 自我介紹樣式優化 */
+  .introduction-container {
+    font-size: var(--intro-font-size);
+    line-height: 1.5;
+    margin-top: 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 100%;
   }
-  .location-date {
-      font-size: 0.9rem;
-      color: #6c757d;
+  
+  /* 高亮文字的處理 */
+  .highlight-text {
+    color: var(--highlight-color);
+    display: inline;
+    white-space: normal;
+    font-weight: 500;
   }
-  ul {
-      margin: 10px 0;
-      padding-left: 20px;
+  
+  /* 段落間距 */
+  .intro-paragraph {
+    margin-bottom: 1rem;
+    width: 100%;
   }
-  li {
-      margin-bottom: 10px;
+  
+  @media (max-width: 768px) {
+    .introduction-container {
+      line-height: 1.4;
+    }
   }
+  
+  @media (max-width: 480px) {
+    .introduction-container {
+      line-height: 1.3;
+    }
+    
+    .intro-paragraph {
+      margin-bottom: 0.8rem;
+    }
+  }
+  
+  /* 按鈕與社交圖示的響應式調整 */
   .social-icons {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     align-items: center;
+    margin-top: 1.5rem;
   }
+  
   .social-icons img {
     width: 40px;
     height: 40px;
     transition: transform 0.2s ease-in-out;
   }
-  .social-icons img:hover {
-    transform: scale(1.1);
+  
+  @media (max-width: 480px) {
+    .social-icons img {
+      width: 32px;
+      height: 32px;
+    }
   }
-
+  
   .download-button {
     display: inline-block;
     padding: 12px 24px;
@@ -87,44 +152,13 @@
     transition: all 0.3s ease;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   }
-
-  .download-button:hover {
-    background-color: var(--button-hover-bg);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
-
-  .title-container {
-    height: 4.5rem;  /* 減小固定高度讓內容更緊湊 */
-    overflow: visible; /* 改為可見，確保文字不被裁切 */
-    position: relative;
-    margin-bottom: 3rem; /* 增加下方間距，避免與下方內容重疊 */
-  }
-
-  .markdown-body.title-text {
-    font-size: 3.5rem;
-    white-space: nowrap;  /* 保持不換行 */
-    overflow: visible;    /* 改為可見而非隱藏 */
-    position: absolute;
-    width: 100%;
-  }
   
-  #dynamicTitle {
-    color: #ff9800;
-    display: inline-block;
-  }
-  
-  @media (max-width: 768px) {
-    .markdown-body.title-text {
-      font-size: 2.5rem; 
-    }
-    
-    .title-container {
-      height: 3.5rem;
-      margin-bottom: 2rem; /* 調整在手機上的下方間距 */
+  @media (max-width: 480px) {
+    .download-button {
+      padding: 10px 18px;
+      font-size: 0.9rem;
     }
   }
- 
 </style>
 
 
@@ -142,12 +176,11 @@
     </div>
 
     <div class="markdown-body" style="font-size: 1.5rem;">
-      As an <span style="color: #ff9800;">AWS Educate Cloud Ambassador</span>, I led cloud workshops with <span style="color: #ff9800;">100+</span> participants.  
-      At <span style="color: #ff9800;">eCloudvalley</span>, I gained hands-on experience with <span style="color: #ff9800;">IaC</span> tools and cloud solutions as a <span style="color: #ff9800;">Cloud Development Intern</span>.  
-      Since 2023, I’ve organized <span style="color: #ff9800;">10+</span> tech camps and online courses as a <span style="color: #ff9800;">Teaching Assistant</span>, enhancing collaboration with <span style="color: #ff9800;">team-based project management</span>.  
-      <br>  
-      <br>  
-      Driven by curiosity, I explore the intersection of <span style="color: #ff9800;">cloud</span>, <span style="color: #ff9800;">AI application</span>, <span style="color: #ff9800;">security</span>, <span style="color: #ff9800;">networking</span>, and <span style="color: #ff9800;">development</span> — turning ideas into impactful solutions.  
+      Welcome to my tech note site!
+      <br>
+      I focus on cloud, networking, and development, and I enjoy exploring the intersection of AI, security, and infrastructure.
+      <br>
+      This is where I document what I learn, what I break (and fix), and what excites me in tech.
       
 </div>
 
@@ -200,15 +233,18 @@
 </div>
 
 <script>
-  const titles = ["Yung-Chi (Kiki) Huang", "an Active Learner", "Team Player", "a DAY ONE person", "a Backend Developer", "a Cafe Hopper"];
+  const titles = ["Kiki", "an Active Learner", "Team Player", "a DAY ONE person", "a Cafe Hopper"];
   let titleIndex = 0;
   let charIndex = 0;
   const dynamicTitle = document.getElementById('dynamicTitle');
+  const titleContainer = document.querySelector('.title-container');
+  const titleText = document.querySelector('.markdown-body.title-text');
 
   function typeTitle() {
     if (charIndex < titles[titleIndex].length) {
       dynamicTitle.textContent = titles[titleIndex].substring(0, charIndex + 1);
       charIndex++;
+      setTimeout(adjustTitleFontSize, 10); // 每次添加字符後調整大小
       setTimeout(typeTitle, 100);
     } else {
       setTimeout(eraseTitle, 1500);
@@ -219,6 +255,7 @@
     if (charIndex > 0) {
       dynamicTitle.textContent = titles[titleIndex].substring(0, charIndex - 1);
       charIndex--;
+      setTimeout(adjustTitleFontSize, 10); // 每次刪除字符後調整大小
       setTimeout(eraseTitle, 50);
     } else {
       titleIndex = (titleIndex + 1) % titles.length;
@@ -226,35 +263,31 @@
     }
   }
 
-  typeTitle();
-
   function adjustTitleFontSize() {
-    const titleContainer = document.querySelector('.title-container');
-    const titleText = document.querySelector('.markdown-body.title-text');
+    // 重置字體大小為基礎大小
+    const baseSize = window.innerWidth <= 360 ? 1.8 :
+                     window.innerWidth <= 480 ? 2 : 
+                     window.innerWidth <= 768 ? 2.5 : 3.5;
+                     
+    titleText.style.fontSize = baseSize + 'rem';
     
-    // 獲取當前文本寬度
+    // 測量文字寬度
     const textWidth = titleText.scrollWidth;
-    // 獲取容器寬度
     const containerWidth = titleContainer.clientWidth;
     
     if (textWidth > containerWidth) {
-      // 如果文本寬度超過容器寬度，縮小字體
-      const scaleFactor = containerWidth / textWidth * 0.95; // 留一點邊距
-      const currentSize = parseFloat(window.getComputedStyle(titleText).fontSize);
-      const newSize = currentSize * scaleFactor;
-      
-      // 設置最小字體大小限制
-      const minSize = window.innerWidth < 768 ? 1.8 : 2.2;
+      // 計算縮放因子
+      const scaleFactor = containerWidth / textWidth * 0.95;
+      // 新的字體大小
+      const newSize = baseSize * scaleFactor;
+      // 最小字體大小限制
+      const minSize = window.innerWidth <= 360 ? 1.4 :
+                      window.innerWidth <= 480 ? 1.6 : 
+                      window.innerWidth <= 768 ? 1.8 : 2;
+                      
       titleText.style.fontSize = Math.max(newSize, minSize) + 'rem';
     }
   }
-  
-  // 在每次更新標題時調用調整函數
-  const originalTypeTitle = typeTitle;
-  typeTitle = function() {
-    originalTypeTitle();
-    setTimeout(adjustTitleFontSize, 10);
-  };
 
   async function downloadResume(event) {
     event.preventDefault();
@@ -286,6 +319,21 @@
   }
   
   
-  // 在視窗大小改變時重新調整
-  window.addEventListener('resize', adjustTitleFontSize);
+  document.addEventListener('DOMContentLoaded', function() {
+    typeTitle(); // 開始打字動畫
+    
+    // 調整圖像尺寸和間距在小螢幕上
+    if (window.innerWidth <= 480) {
+      const desktopImg = document.querySelector('.desktop-image-container img');
+      const mobileImg = document.querySelector('.mobile-image-container img');
+      
+      if (desktopImg) desktopImg.style.width = "150px";
+      if (mobileImg) mobileImg.style.width = "150px";
+    }
+  });
+  
+  // 在視窗改變大小時重新調整
+  window.addEventListener('resize', function() {
+    adjustTitleFontSize();
+  });
 </script>

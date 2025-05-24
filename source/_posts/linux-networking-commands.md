@@ -279,7 +279,37 @@ MASQUERADE 和 SNAT 的功能是一樣的，他們都會改寫封包的來源 IP
     udp      17 20 src=10.0.2.15 dst=10.0.2.3 sport=56977 dport=53 src=10.0.2.3 dst=10.0.2.15 sport=53 dport=56977 mark=0 use=1
     conntrack v1.4.5 (conntrack-tools): 6 flow entries have been shown.
     ```
+## iptables 實作 - 查看封包流向與 iptables 關係
+在鳥哥那張圖裡面可以看到封包流向，這邊做個簡單的實驗驗證封包經過 `PREROUTING → 路由判斷 → INPUT`。
 
+![](images/networking/cmds/img3.png)
+
+1. 加入規則: `sudo iptables -I FORWARD 1 -s 10.10.0.2 -d 10.10.0.3 -j DROP`
+2. `docker exec c1 ping -c 3 10.10.0.3`
+3.  `sudo iptables -L FORWARD -v -n --line-numbers` 可以看到結果如下，`pkts` 表示封包數量，他從 0 變成 3，表示剛剛那三個封包都有成功進入到 FORWARD chain，而這是因為封包經過 PREROUTING 並被判斷「不是送給本機」，就會經過 FORWARD
+    ```
+    Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    num   pkts bytes target     prot opt in     out     source               destination         
+    1        3   252 DROP       all  --  *      *       10.10.0.2            10.10.0.3           
+    2       12  1008 DOCKER-USER  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    3       12  1008 DOCKER-ISOLATION-STAGE-1  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    4       10   840 ACCEPT     all  --  *      br-13eaf78191b4  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    5        2   168 DOCKER     all  --  *      br-13eaf78191b4  0.0.0.0/0            0.0.0.0/0           
+    6        0     0 ACCEPT     all  --  br-13eaf78191b4 !br-13eaf78191b4  0.0.0.0/0            0.0.0.0/0           
+    7        2   168 ACCEPT     all  --  br-13eaf78191b4 br-13eaf78191b4  0.0.0.0/0            0.0.0.0/0           
+    8        0     0 ACCEPT     all  --  *      docker0  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    9        0     0 DOCKER     all  --  *      docker0  0.0.0.0/0            0.0.0.0/0           
+    10       0     0 ACCEPT     all  --  docker0 !docker0  0.0.0.0/0            0.0.0.0/0           
+    11       0     0 ACCEPT     all  --  docker0 docker0  0.0.0.0/0            0.0.0.0/0           
+    12       0     0 ACCEPT     all  --  *      br-ed05190a252d  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    13       0     0 DOCKER     all  --  *      br-ed05190a252d  0.0.0.0/0            0.0.0.0/0           
+    14       0     0 ACCEPT     all  --  br-ed05190a252d !br-ed05190a252d  0.0.0.0/0            0.0.0.0/0           
+    15       0     0 ACCEPT     all  --  br-ed05190a252d br-ed05190a252d  0.0.0.0/0            0.0.0.0/0           
+    16       0     0 ACCEPT     all  --  *      br-e4d2a678019e  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    17       0     0 DOCKER     all  --  *      br-e4d2a678019e  0.0.0.0/0            0.0.0.0/0           
+    18       0     0 ACCEPT     all  --  br-e4d2a678019e !br-e4d2a678019e  0.0.0.0/0            0.0.0.0/0           
+    19       0     0 ACCEPT     all  --  br-e4d2a678019e br-e4d2a678019e  0.0.0.0/0            0.0.0.0/0  
+    ```
 
 ## References
 - [25+ Most Common iptables Commands with Examples](https://geekflare.com/dev/common-iptables-commands/)
