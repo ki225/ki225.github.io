@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      區塊鏈 &amp; 分散式帳本技術簡介 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">區塊鏈 & 分散式帳本技術簡介</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-03-05 13:44:09
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/blockchain/" title="blockchain">
+                    #blockchain
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/DLT/" title="DLT">
+                    #DLT
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/Distributed-Ledger-Technology/" title="Distributed Ledger Technology">
+                    #Distributed Ledger Technology
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="區塊鏈介紹"><a href="#區塊鏈介紹" class="headerlink" title="區塊鏈介紹"></a>區塊鏈介紹</h2><p>區塊鏈平台是一種點對點（peer-to-peer）的電腦網路，利用複雜的加密技術與共識機制來共同驗證與批准網路節點間的互動，即使這些節點彼此之間不一定信任。</p>
+<p>區塊鏈將網路互動的紀錄儲存在分散式資料庫中，並由所有網路參與者共同維護。透過加密技術與共識機制的結合，節點能夠在無需中央機構介入的情況下誠實互動。當區塊鏈技術被適當應用於合適的情境時，它能提供去中心化服務，使網路具備自我管理、自我監管、智能化與安全性的功能。</p>
+<h2 id="歷史簡介"><a href="#歷史簡介" class="headerlink" title="歷史簡介"></a>歷史簡介</h2><p>區塊鏈技術最早由中本聰（Satoshi Nakamoto）於 2008 年發表的白皮書《Bitcoin: A Peer-to-Peer Electronic Cash System》中正式公開。在該論文中，中本聰提出了一個基於點對點網路的分散式支付系統，並將其命名為區塊鏈（Blockchain）。在該系統中，節點之間的互動是透過一種隨機共識機制「工作量證明（Proof of Work, PoW）」來驗證與批准，並將交易紀錄存儲於所有網路節點共同維護的加密資料結構中。這是第一個已知的去中心化網路實現，使參與者能夠安全地進行交易，而無需依賴中央機構來監督網路互動。</p>
+<h2 id="共識機制與智能合約"><a href="#共識機制與智能合約" class="headerlink" title="共識機制與智能合約"></a>共識機制與智能合約</h2><p>區塊鏈節點可以透過交易來參與網路，這些交易受到集體共識的約束。因此，共識機制可被視為區塊鏈網路中的一種「民主」機制，允許系統做出集體決策，使節點能夠對交易的有效性進行「投票」。交易可分為兩種：</p>
+<ol>
+<li>硬編碼交易（Hard-coded Transactions），即寫死在系統內的交易</li>
+<li>可編程交易（Programmable Transactions），即智能合約（Smart Contracts）。<blockquote>
+<p>不同共識機制的「民主程度」不同，其中一些機制需要高運算成本的算法。</p>
+</blockquote>
+</li>
+</ol>
+<p>當交易被確認為有效時，這些交易將被組成數據區塊，並透過加密技術（特別是哈希指標，hash pointers）按時間順序連結，形成一條區塊鏈（Blockchain）。包含有效交易的數據區塊將被新增至區塊鏈資料庫（Blockchain Ledger），簡稱為「帳本（Ledger）」。該帳本記錄了網路內所有有效交易，形成區塊鏈網路的官方歷史紀錄。透過維護帳本的本地副本，每個區塊鏈節點皆能擔任歷史紀錄的守護者，促進透明度與問責制，這對於建立分散式系統的信任至關重要。</p>
+<h2 id="區塊鏈的三大核心特性"><a href="#區塊鏈的三大核心特性" class="headerlink" title="區塊鏈的三大核心特性"></a>區塊鏈的三大核心特性</h2><p>一般而言，區塊鏈網路具備以下三大基本特性：</p>
+<ol>
+<li>帳本的不可變性（Immutability）：一旦數據進入區塊鏈，便無法被竄改或刪除。</li>
+<li>資訊的透明性（Transparency）：網路內的交易紀錄可供參與者查閱，確保資訊公開。</li>
+<li>數據的一致性（Consistency）：所有節點的帳本副本始終保持同步，以確保資料一致。</li>
+</ol>
+<h2 id="區塊鏈分類"><a href="#區塊鏈分類" class="headerlink" title="區塊鏈分類"></a>區塊鏈分類</h2><p>根據不同的區塊鏈應用，區塊鏈系統可以分為以下三個層級：</p>
+<h3 id="1-會員權限（Membership）"><a href="#1-會員權限（Membership）" class="headerlink" title="1. 會員權限（Membership）"></a>1. 會員權限（Membership）</h3><ul>
+<li>存取控制（Access Control）<ul>
+<li>公開、無需許可（Public Unpermissioned）</li>
+<li>私有、需許可（Private Permissioned）</li>
+<li>聯盟鏈、需許可（Consortium Permissioned）</li>
+</ul>
+</li>
+<li>身份管理（Identity Management）<ul>
+<li>匿名身份（Anonymous）</li>
+<li>公鑰基礎設施（Public Key Infrastructure, PKI）</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-共識機制（Consensus）"><a href="#2-共識機制（Consensus）" class="headerlink" title="2. 共識機制（Consensus）"></a>2. 共識機制（Consensus）</h3><ul>
+<li>治理結構（Governance）<ul>
+<li>去中心化（Decentralized）</li>
+<li>階層式治理（Hierarchical）</li>
+<li>中心化（Centralized）</li>
+</ul>
+</li>
+<li>共識類型（Type of Consensus）<ul>
+<li>工作量證明（Proof-of-Work, PoW）</li>
+<li>權益證明（Proof-of-Stake, PoS）</li>
+<li>權威證明（Proof-of-Authority, PoA）</li>
+<li>燒毀證明（Proof-of-Burn, PoB）</li>
+<li>容量證明（Proof-of-Capacity, PoC）</li>
+<li>背書機制（Endorsement-based）</li>
+<li>混合共識（Hybrid）</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-帳本（Ledger）"><a href="#3-帳本（Ledger）" class="headerlink" title="3. 帳本（Ledger）"></a>3. 帳本（Ledger）</h3><ul>
+<li>存取權限（Permissions）<ul>
+<li>開放讀寫（Open Read&#x2F;Write）</li>
+<li>基於身份的讀寫（Identity-based Read&#x2F;Write）</li>
+</ul>
+</li>
+<li>數據庫類型（Type of Database）<ul>
+<li>LevelDB</li>
+<li>CouchDB</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-智能合約（Smart-Contracts）"><a href="#4-智能合約（Smart-Contracts）" class="headerlink" title="4. 智能合約（Smart Contracts）"></a>4. 智能合約（Smart Contracts）</h3><ul>
+<li>邏輯結構（Logic Structure）<ul>
+<li>硬編碼邏輯（Hard-coded Logic）</li>
+<li>可編程邏輯（Programmable Logic）</li>
+</ul>
+</li>
+<li>程式語言（Coding Language）<ul>
+<li>專用語法（Single Dedicated Syntax）</li>
+<li>通用語法（General Purpose Syntax）</li>
+</ul>
+</li>
+<li>授權模式（License）<ul>
+<li>開源（Open Source）</li>
+<li>封閉源（Closed Source）</li>
+</ul>
+</li>
+</ul>
+<h2 id="分散式帳本技術（DLT）"><a href="#分散式帳本技術（DLT）" class="headerlink" title="分散式帳本技術（DLT）"></a>分散式帳本技術（DLT）</h2><p>區塊鏈系統直接衍生自分散式帳本技術（Distributed Ledger Technology, DLT）。DLT 是一種數據庫架構，它透過一組加密協議來分散存儲交易記錄，並提供存取、驗證、更新和管理這些記錄的方式。這些協議確保了記錄的不可變性、一致性、可用性與透明度。相比於中心化系統，DLT 能有效消除單點故障（Single Point of Failure, SPOF），提高數據安全性與抗審查能力。</p>
+<p><img src="/images/blockchain/img1.png" alt="image"></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://kctheservant.medium.com/a-quick-overview-of-hyperledger-fabric-348e8c4da451">A Quick Overview of Hyperledger Fabric</a></li>
+<li><a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-2.5/private-data/private-data.html">Private data</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/djklsajdklsajdlk/article/details/125334014">Hyperledger Fabric专业词汇解释</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.arxiv.org/pdf/2502.06540">Decentralizing Trust: Consortium Blockchains and Hyperledger Fabric Explained</a></li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/03/02/terraform/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-03-05 13:44:09
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/blockchain/" title="blockchain">
+                        #blockchain
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/DLT/" title="DLT">
+                        #DLT
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/Distributed-Ledger-Technology/" title="Distributed Ledger Technology">
+                        #Distributed Ledger Technology
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/03/16/Building-Across-Different-Acc-With-Credential/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BB%8B%E7%B4%B9"><span class="toc-text">區塊鏈介紹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%B7%E5%8F%B2%E7%B0%A1%E4%BB%8B"><span class="toc-text">歷史簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B1%E8%AD%98%E6%A9%9F%E5%88%B6%E8%88%87%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84"><span class="toc-text">共識機制與智能合約</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%80%E5%A1%8A%E9%8F%88%E7%9A%84%E4%B8%89%E5%A4%A7%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7"><span class="toc-text">區塊鏈的三大核心特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%80%E5%A1%8A%E9%8F%88%E5%88%86%E9%A1%9E"><span class="toc-text">區塊鏈分類</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9C%83%E5%93%A1%E6%AC%8A%E9%99%90%EF%BC%88Membership%EF%BC%89"><span class="toc-text">1. 會員權限（Membership）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%85%B1%E8%AD%98%E6%A9%9F%E5%88%B6%EF%BC%88Consensus%EF%BC%89"><span class="toc-text">2. 共識機制（Consensus）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B8%B3%E6%9C%AC%EF%BC%88Ledger%EF%BC%89"><span class="toc-text">3. 帳本（Ledger）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88Smart-Contracts%EF%BC%89"><span class="toc-text">4. 智能合約（Smart Contracts）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%95%A3%E5%BC%8F%E5%B8%B3%E6%9C%AC%E6%8A%80%E8%A1%93%EF%BC%88DLT%EF%BC%89"><span class="toc-text">分散式帳本技術（DLT）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-text">References</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E5%8D%80%E5%A1%8A%E9%8F%88%20%26%20%E5%88%86%E6%95%A3%E5%BC%8F%E5%B8%B3%E6%9C%AC%E6%8A%80%E8%A1%93%E7%B0%A1%E4%BB%8B + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F03%2F05%2Fblockchain1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/03/05/blockchain1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

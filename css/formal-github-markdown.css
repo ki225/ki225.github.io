@@ -1,0 +1,34 @@
+.formal-markdown-body h1{
+  font-size: 2.3rem;
+}
+
+.formal-markdown-body h2{
+  font-size: 2rem;
+}
+
+.formal-markdown-body h3{
+  font-size: 1.8rem;
+}
+
+.formal-markdown-body h4{
+  font-size: 1.6rem;
+}
+
+.formal-markdown-body h5{
+  font-size: 1.4rem;
+}
+
+.formal-markdown-body h6{
+  font-size: 1.2rem;
+} 
+
+.formal-markdown-body p {
+  font-size: 1.3rem;
+  margin-bottom: 2em;
+}
+
+.formal-markdown-body ul, .formal-markdown-body ol {
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+  font-size: 1.5rem;
+}

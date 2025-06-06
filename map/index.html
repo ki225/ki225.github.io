@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      跑咖地圖 ⛾ 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">跑咖地圖 ⛾</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-02-14 23:01:29
+        </span>
+        
+      </div>
+      <div class="markdown-body">
+        <p>上大學後開始跑露易莎或星巴克工作，最近決定來拓展我的跑咖地圖了！以下是我去過的一些咖啡廳和主觀評價，主要在中壢和台北，如果有推薦的不限時咖啡廳也歡迎推薦給我！☕︎</p>
+<br/>
+
+<link rel="stylesheet" href="//unpkg.com/hexo-tag-map/lib/leaflet@1.7.1.css"><script data-pjax src="//unpkg.com/hexo-tag-map/lib/leaflet@1.7.1.js"></script><script data-pjax src="//unpkg.com/hexo-tag-map/lib/leaflet.ChineseTmsProviders@1.0.4.js"></script><script data-pjax src="//unpkg.com/hexo-tag-map/lib/proj4@2.4.3.js"></script><script data-pjax src="//unpkg.com/hexo-tag-map/lib/proj4leaflet@1.0.1.min.js"></script><div id="map-1749173458638-7pg6o" style="max-width:100%;height:400px;margin:0 auto;border-radius:5px;"></div><script>
+      var normalMap = L.tileLayer.chinaProvider('Google.Normal.Map',{attribution:'Google Maps'}),
+          satelliteMap = L.tileLayer.chinaProvider('Google.Satellite.Map',{attribution:'Google Maps'}),
+          routeMap = L.tileLayer.chinaProvider('Google.Satellite.Annotion',{attribution:'Google Maps'});
+      var baseLayers = {"一般地圖":normalMap,"衛星圖":satelliteMap,"衛星標註":routeMap};
+      var mymap = L.map("map-1749173458638-7pg6o", {zoomControl:false, layers:[normalMap]});
+      L.control.layers(baseLayers).addTo(mymap);
+      L.control.zoom({zoomInTitle:'放大',zoomOutTitle:'縮小'}).addTo(mymap);
+  
+        L.marker([25.0405219, 121.5440051])
+            .addTo(mymap)
+            .bindPopup("<b>Homey's cafe</b>")
+            .openPopup();
+    
+        L.marker([25.0304608, 121.5245136])
+            .addTo(mymap)
+            .bindPopup("<b>鴉埠咖啡 YABOO II 貳號店</b>")
+            .openPopup();
+    
+        L.marker([24.960939, 121.2222548])
+            .addTo(mymap)
+            .bindPopup("<b>拾午 gatherdelicious</b>")
+            .openPopup();
+    
+        L.marker([24.9593614, 121.2185597])
+            .addTo(mymap)
+            .bindPopup("<b>Crooked Thumb coffee</b>")
+            .openPopup();
+    
+        L.marker([24.954333, 121.2149634])
+            .addTo(mymap)
+            .bindPopup("<b>我們。 他們 咖啡廳</b>")
+            .openPopup();
+    
+        L.marker([24.9555895, 121.2413148])
+            .addTo(mymap)
+            .bindPopup("<b>深夜不眠｜深夜咖啡工作空間</b>")
+            .openPopup();
+    
+        L.marker([24.9505468, 121.2208066])
+            .addTo(mymap)
+            .bindPopup("<b>拾事咖啡</b>")
+            .openPopup();
+    
+        L.marker([24.9631946, 121.2101834])
+            .addTo(mymap)
+            .bindPopup("<b>綠沐恬拾 Café & Pâtisserie</b>")
+            .openPopup();
+    
+        L.marker([24.9683741, 121.2241764])
+            .addTo(mymap)
+            .bindPopup("<b>Leafy Arms Coffee 綠手臂生活實驗室</b>")
+            .openPopup();
+    var bounds = L.latLngBounds();bounds.extend([25.0405219, 121.5440051]);bounds.extend([25.0304608, 121.5245136]);bounds.extend([24.960939, 121.2222548]);bounds.extend([24.9593614, 121.2185597]);bounds.extend([24.954333, 121.2149634]);bounds.extend([24.9555895, 121.2413148]);bounds.extend([24.9505468, 121.2208066]);bounds.extend([24.9631946, 121.2101834]);bounds.extend([24.9683741, 121.2241764]);mymap.fitBounds(bounds);</script>
+
+<br/>
+
+<hr>
+<h1 id="跑咖地圖"><a href="#跑咖地圖" class="headerlink" title="跑咖地圖"></a>跑咖地圖</h1><h2 id="台北咖啡廳"><a href="#台北咖啡廳" class="headerlink" title="台北咖啡廳"></a>台北咖啡廳</h2><h3 id="Homey’s-cafe"><a href="#Homey’s-cafe" class="headerlink" title="Homey’s cafe"></a><a target="_blank" rel="noopener" href="https://www.google.com/maps/place/Homey's+cafe/@25.0405219,121.5440051,17z/data=!3m1!4b1!4m6!3m5!1s0x3442abd06e2f88b1:0x6414376b1f3e1b9f!8m2!3d25.0405171!4d121.54658!16s%2Fg%2F1v_skyym?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw==">Homey’s cafe</a></h3><ul>
+<li>綜合評分 🌟🌟🌟</li>
+<li>安靜程度 🌟🌟🌟</li>
+<li>食物 🌟🌟</li>
+<li>插座：小房間靠窗座位有插座，其餘不太確定</li>
+<li>光線：中等偏暗</li>
+<li>不限時</li>
+<li>白開水自取</li>
+<li>小房間的個人座位區要預約</li>
+<li>後付制</li>
+</ul>
+<p>這間隱身在老宅裡，從圖片的那個樓梯上去就可以看到了。店內其實蠻多人在讀書或工作的，我當時選小房間內靠窗座位，小房間內其實還有適合三到四人聊天的沙發區，大概到傍晚的時候會有人進來聊天，我自己戴耳罩式耳機所以不太介意，但其他人可能要斟酌一下。Oreo 蛋糕很像受潮到很不好吃的餅乾配上一大堆奶油來充量，很容易膩，飲料也沒有很好喝，老闆講話口氣比較直接，飲料價格最後的收費跟菜單上標示不一樣，跟他反應他還堅持己見我只能說送他 qwq</p>
+<p><img src="/images/coffeeSeeker/IMG_1564.jpeg"><br><br/></p>
+<p><img src="/images/coffeeSeeker/IMG_1565.jpeg"></p>
+<h3 id="鴉埠咖啡-YABOO-II-貳號店"><a href="#鴉埠咖啡-YABOO-II-貳號店" class="headerlink" title="鴉埠咖啡 YABOO II 貳號店"></a><a target="_blank" rel="noopener" href="https://www.google.com/maps/place/%E9%B4%89%E5%9F%A0%E5%92%96%E5%95%A1+YABOO+II+%E8%B2%B3%E8%99%9F%E5%BA%97/@25.0304608,121.5245136,17z/data=!4m10!1m2!2m1!1z6bSJ5Z-g5ZKW5ZWhWUFCT08!3m6!1s0x3442a98397a75c69:0xa9fc35938a61ca45!8m2!3d25.0304608!4d121.5292772!15sChHptInln6DlkpbllaFZQUJPT1oWIhTptIkg5Z-gIOWSluWVoSB5YWJvb5IBBGNhZmXgAQA!16s%2Fg%2F11dxs2t3pf?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw==">鴉埠咖啡 YABOO II 貳號店</a></h3><p><img src="/images/coffeeSeeker/IMG_1560.jpeg"></p>
+<ul>
+<li>綜合評分 🌟🌟🌟🌟</li>
+<li>安靜程度 🌟🌟🌟🌟</li>
+<li>食物 🌟🌟🌟🌟</li>
+<li>插座：插座很多</li>
+<li>光線：中等偏暗</li>
+<li>平日不限時</li>
+<li>每人都有一壺白開水</li>
+<li>小房間的個人座位區要預約</li>
+<li>冷氣很涼</li>
+<li>後付制</li>
+</ul>
+<p>誤打誤撞去的咖啡店，因為高鐵票買晚了無處可去，走著走著往旁邊一看發現是間咖啡廳，就進去把自己暫寄在那ㄌ。老闆播的歌單超小眾，有記下來的 Tha omedetaz 就像日文版的五屆政大黑音，不過後來我就跑去聽館青的歌了。店內是後付制，老闆還會給每個人一大壺的白開水i人覺得豪貼心，提拉米蘇 14:00-17:00 會打折，吃起來有種很像某些酒聞起來的味道（至於是什麼酒我也不確定，我沒喝過qwq）</p>
+<h2 id="桃園咖啡廳"><a href="#桃園咖啡廳" class="headerlink" title="桃園咖啡廳"></a>桃園咖啡廳</h2><h3 id="拾午-gatherdelicious"><a href="#拾午-gatherdelicious" class="headerlink" title="拾午 gatherdelicious"></a><a target="_blank" rel="noopener" href="https://www.google.com/maps/place/%E6%8B%BE%E5%8D%88gatherdelicious/@24.960939,121.2222548,17z/data=!3m1!4b1!4m6!3m5!1s0x346823ec13a5ef37:0x91051831503c7f14!8m2!3d24.9609342!4d121.2248297!16s%2Fg%2F11fw7n7597?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw==">拾午 gatherdelicious</a></h3><ul>
+<li>綜合評分 🌟🌟</li>
+<li>安靜程度 🌟🌟</li>
+<li>食物 🌟🌟</li>
+<li>插座：部分靠牆座位</li>
+<li>光線：充足</li>
+</ul>
+<p>這間位於 sogo 百貨附近，大概 12. 後陸續會有很多婆婆媽媽進來，聊天的聲音其實蠻大的很容易讀書讀到一半被迫接收一堆八卦 ww，不過剛開店兩小時跟下午 3.30 後都沒什麼人，我覺得還挺適合讀書工作的！食物的部分我覺得普，就是看起來份量很大但不扎實，味覺上也不驚豔。</p>
+<p><img src="/images/coffeeSeeker/IMG_1561.jpeg"></p>
+<h3 id="Crooked-Thumb-coffee"><a href="#Crooked-Thumb-coffee" class="headerlink" title="Crooked Thumb coffee"></a><a target="_blank" rel="noopener" href="https://www.google.com/maps/place/Crooked+Thumb+coffee/@24.9593614,121.2185597,17z/data=!3m1!4b1!4m6!3m5!1s0x346823001e291ccd:0x13864c5f84bd56f1!8m2!3d24.9593566!4d121.2211346!16s%2Fg%2F11w8lyqt34?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw==">Crooked Thumb coffee</a></h3><ul>
+<li>綜合評分 🌟🌟🌟🌟🌟</li>
+<li>安靜程度 🌟🌟🌟🌟</li>
+<li>食物 🌟🌟🌟🌟🌟</li>
+<li>插座：室內座位區幾乎都有</li>
+<li>光線：充足</li>
+<li>完全不限時</li>
+<li>提供自取白開水</li>
+<li>後付制</li>
+</ul>
+<p>老闆很帥很親切也很好聊天，不過如果你是 I 人老闆也會給你個人空間，我覺得環境上拿捏很好很適合 E 跟 I 人，btw 店內有時候還有可愛的狗狗出沒！老闆很用心在做咖啡飲品，無論是拿鐵還是西西里都超好喝，不過飲品的咖啡因效果是我目前喝過最強大的，下午 3. 喝直接嗨到凌晨。店內氛圍超讚播的是 Keshi 的歌單（我超愛）。點心份量小但真的很好吃，每天都會提供大概一兩個甜點，可以到櫃檯去詢問喔～</p>
+<p><img src="/images/coffeeSeeker/IMG_1562.jpeg"><br><br/></p>
+<p><img src="/images/coffeeSeeker/IMG_1563.jpeg"></p>
+<h3 id="我們。-他們-咖啡廳"><a href="#我們。-他們-咖啡廳" class="headerlink" title="我們。 他們 咖啡廳"></a><a target="_blank" rel="noopener" href="https://www.google.com/maps/place/%E6%88%91%E5%80%91%E3%80%82+%E4%BB%96%E5%80%91+%E5%92%96%E5%95%A1%E5%BB%B3/@24.954333,121.2149634,17z/data=!3m1!4b1!4m6!3m5!1s0x3468224b4faa038b:0x99b608500dc61bf0!8m2!3d24.9543282!4d121.2175383!16s%2Fg%2F11g9qgrxbf?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw==">我們。 他們 咖啡廳</a></h3><ul>
+<li>綜合評分 🌟🌟🌟</li>
+<li>安靜程度 🌟🌟🌟</li>
+<li>食物 🌟🌟🌟</li>
+<li>插座：室內座位區幾乎都有</li>
+<li>光線：中等偏暗</li>
+<li>完全不限時</li>
+</ul>
+<p>這間有分成室內和室外環境，如果是希望大聲聊天的話會建議到戶外席。我是在十月的時候前往，不過一發限時動態後大家都跟我反應夏天蚊子爆炸多哈哈～我是覺得有兩個美中不足的點，第一是櫃台磨咖啡等等的聲音真的太大，第二是室內空調循環很差（只有一台冷氣），所以精油和咖啡的氣味混雜容易讓人覺得有點窒息哈哈 XD</p>
+<p><img src="/images/coffeeSeeker/IMG_1559.jpeg"></p>
+<h3 id="深夜不眠｜深夜咖啡工作空間"><a href="#深夜不眠｜深夜咖啡工作空間" class="headerlink" title="深夜不眠｜深夜咖啡工作空間"></a><a target="_blank" rel="noopener" href="https://www.google.com/maps/place/%E4%B8%8D%E7%9C%A0%E6%B7%B1%E5%A4%9C/@24.9555895,121.2413148,17z/data=!3m1!4b1!4m6!3m5!1s0x346823000f6b8761:0xeef166d3940230a4!8m2!3d24.9555847!4d121.2438897!16s%2Fg%2F11wqhgz92m?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw==">深夜不眠｜深夜咖啡工作空間</a></h3><ul>
+<li>綜合評分 🌟🌟🌟🌟</li>
+<li>安靜程度 🌟🌟🌟🌟</li>
+<li>食物 🌟🌟🌟</li>
+<li>插座：每個座位區幾乎都有</li>
+<li>光線：較昏暗</li>
+<li>完全不限時</li>
+<li>提供自取白開水</li>
+</ul>
+<p>在中壢的大家如果晚上想去讀書或工作，一定不能錯過這間！食物的部分我是覺得還不錯啦，但身為庶民嘴偏木舌，沒有到讓我驚豔的話我不敢給予太高的評價ｗｗ</p>
+<p><img src="/images/coffeeSeeker/IMG_8403.jpeg"></p>
+<h3 id="拾事咖啡"><a href="#拾事咖啡" class="headerlink" title="拾事咖啡"></a><a target="_blank" rel="noopener" href="https://www.google.com/maps/place/%E6%8B%BE%E4%BA%8B%E5%92%96%E5%95%A1/@24.9505468,121.2208066,14.6z/data=!4m14!1m7!3m6!1s0x346823000f6b8761:0xeef166d3940230a4!2z5LiN55yg5rex5aSc!8m2!3d24.9555847!4d121.2438897!16s%2Fg%2F11wqhgz92m!3m5!1s0x34682224b6e3f27d:0x10148531e123a340!8m2!3d24.9663016!4d121.2328779!16s%2Fg%2F11c1nz2xsp?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw==">拾事咖啡</a></h3><ul>
+<li>綜合評分 🌟🌟🌟🌟🌟</li>
+<li>安靜程度 🌟🌟🌟🌟🌟</li>
+<li>食物 🌟🌟🌟🌟</li>
+<li>插座：大長方桌座位區確定有插座，其餘不確定</li>
+<li>光線：白天光線充足，傍晚中等</li>
+<li>完全不限時</li>
+<li>提供自取白開水</li>
+</ul>
+<p>這間我已經回訪多次，老闆很有禮貌很客氣，會很貼心的準備小籃子放包包。每天點心不固定，要到櫃台玻璃櫃查看。這間店主打辦公讀書，也提供一面放滿書的書牆讓大家閱讀，非常推薦！</p>
+<p><img src="/images/coffeeSeeker/IMG_1566.jpeg"><br><br/></p>
+<p><img src="/images/coffeeSeeker/IMG_1567.jpeg"></p>
+<h3 id="綠沐恬拾-Cafe-Patisserie"><a href="#綠沐恬拾-Cafe-Patisserie" class="headerlink" title="綠沐恬拾 Café &amp; Pâtisserie"></a><a target="_blank" rel="noopener" href="https://www.google.com/maps/place/%E7%B6%A0%E6%B2%90%E6%81%AC%E6%8B%BE+Caf%C3%A9+%26+P%C3%A2tisserie+%EF%BC%88+2.0+%EF%BC%89/@24.9631946,121.2101834,17z/data=!4m6!3m5!1s0x346823ca6bb94541:0x5b136096a5d374b0!8m2!3d24.9631898!4d121.2127583!16s%2Fg%2F11dxml70zm?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw==">綠沐恬拾 Café &amp; Pâtisserie</a></h3><ul>
+<li>綜合評分 🌟🌟🌟🌟🌟</li>
+<li>安靜程度 🌟🌟🌟🌟</li>
+<li>食物 🌟🌟🌟🌟🌟</li>
+<li>插座：只有門口三個座位區有插座</li>
+<li>光線：大片落地窗讓室內光線超級充足</li>
+<li>非客滿期間不限時</li>
+<li>提供自取白開水</li>
+</ul>
+<p>我是在平日前往，到下午三點半前只有兩三位客人，環境很空曠舒適，客人大多不會大聲交談。點心部分抹茶生乳捲超級無敵好吃大推特推，最讓我意外的是她家廁所不是芳香劑的味道而是蛋糕剛出爐真的超香．．．上個廁所肚子又餓了qwq</p>
+<p>點心沒有固定菜單，要到櫃檯看看當天有哪些喔！總之是會再訪的店！</p>
+<p><img src="/images/coffeeSeeker/IMG_1621.jpeg"><br><br/></p>
+<p><img src="/images/coffeeSeeker/IMG_1646.jpeg"></p>
+<h3 id="Leafy-Arms-Coffee-綠手臂生活實驗室"><a href="#Leafy-Arms-Coffee-綠手臂生活實驗室" class="headerlink" title="Leafy Arms Coffee 綠手臂生活實驗室"></a><a target="_blank" rel="noopener" href="https://www.google.com/maps/place/Leafy+Arms+Coffee+%E7%B6%A0%E6%89%8B%E8%87%82%E7%94%9F%E6%B4%BB%E5%AF%A6%E9%A9%97%E5%AE%A4%28%E5%92%96%E5%95%A1%2F%E9%96%B1%E8%AE%80%2F%E9%81%B8%E7%89%A9%EF%BC%89%E6%AF%8F%E6%9C%88%E7%89%B9%E5%88%A5%E5%BA%97%E4%BC%91%E6%97%A5%E8%A9%B3%E8%A6%8BIG/@24.9683741,121.2241764,15.42z/data=!4m6!3m5!1s0x3468231c35e33afd:0x7d0f762396411c97!8m2!3d24.9656614!4d121.2181597!16s%2Fg%2F11sm6_7fp_?entry=ttu&g_ep=EgoyMDI1MDIwOS4wIKXMDSoASAFQAw==">Leafy Arms Coffee 綠手臂生活實驗室</a></h3><ul>
+<li>綜合評分 🌟🌟🌟🌟🌟</li>
+<li>安靜程度 🌟🌟🌟🌟🌟</li>
+<li>食物 🌟🌟🌟🌟🌟</li>
+<li>插座：店內座位幾乎都有插座</li>
+<li>光線：光線充足</li>
+<li>不限時</li>
+<li>每週一二店休，其他公休時間要看官方 ins</li>
+<li>提供自取白開水</li>
+</ul>
+<p>店內飲品和甜點超級讚，價格也偏便宜，我點了西西里和香蕉蛋糕只要 $230 真的不可思議，西西里超級順口清爽，蛋糕也吃起來很扎實好吃，店內裝潢超漂亮，重點沒什麼人來，超適合去工作一整個下午！會回訪！</p>
+<p><img src="/images/coffeeSeeker/IMG_1705.jpeg"></p>
+<p>店貓超胖是超級可愛虎皮蛋糕（x！雖然不親客人但一直對主人喵喵喵超級可愛的啦ｗｗｗ他還一直吸我外套袖子真的超ㄎㄧㄤ</p>
+<p><img src="/images/coffeeSeeker/IMG_1670.jpeg"></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-02-14 23:01:29
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B7%91%E5%92%96%E5%9C%B0%E5%9C%96"><span class="toc-text">跑咖地圖</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%B0%E5%8C%97%E5%92%96%E5%95%A1%E5%BB%B3"><span class="toc-text">台北咖啡廳</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Homey%E2%80%99s-cafe"><span class="toc-text">Homey’s cafe</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%B4%89%E5%9F%A0%E5%92%96%E5%95%A1-YABOO-II-%E8%B2%B3%E8%99%9F%E5%BA%97"><span class="toc-text">鴉埠咖啡 YABOO II 貳號店</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%83%E5%9C%92%E5%92%96%E5%95%A1%E5%BB%B3"><span class="toc-text">桃園咖啡廳</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%BE%E5%8D%88-gatherdelicious"><span class="toc-text">拾午 gatherdelicious</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Crooked-Thumb-coffee"><span class="toc-text">Crooked Thumb coffee</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E5%80%91%E3%80%82-%E4%BB%96%E5%80%91-%E5%92%96%E5%95%A1%E5%BB%B3"><span class="toc-text">我們。 他們 咖啡廳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%A4%9C%E4%B8%8D%E7%9C%A0%EF%BD%9C%E6%B7%B1%E5%A4%9C%E5%92%96%E5%95%A1%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%96%93"><span class="toc-text">深夜不眠｜深夜咖啡工作空間</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%BE%E4%BA%8B%E5%92%96%E5%95%A1"><span class="toc-text">拾事咖啡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B6%A0%E6%B2%90%E6%81%AC%E6%8B%BE-Cafe-Patisserie"><span class="toc-text">綠沐恬拾 Café &amp; Pâtisserie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Leafy-Arms-Coffee-%E7%B6%A0%E6%89%8B%E8%87%82%E7%94%9F%E6%B4%BB%E5%AF%A6%E9%A9%97%E5%AE%A4"><span class="toc-text">Leafy Arms Coffee 綠手臂生活實驗室</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%B7%91%E5%92%96%E5%9C%B0%E5%9C%96%20%E2%9B%BE + '&url=' + http%3A%2F%2Fexample.com%2Fmap%2Findex.html + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/map/index.html" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

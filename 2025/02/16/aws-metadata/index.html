@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      AWS Metadata？ 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">AWS Metadata？</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-02-24 20:29:25
+        </span>
+        
+      </div>
+      <div class="markdown-body">
+        <h1 id="什麼是-AWS-Metadata？"><a href="#什麼是-AWS-Metadata？" class="headerlink" title="什麼是 AWS Metadata？"></a>什麼是 AWS Metadata？</h1><p>AWS Metadata（AWS Instance Metadata Service，IMDS）是一種提供 EC2 執行個體相關資訊的機制，允許應用程式和腳本存取該執行個體的元數據（如執行個體 ID、區域、IAM 資訊等）。AWS 提供兩個版本的 Metadata 服務：</p>
+<ul>
+<li><strong>IMDSv1</strong>：透過 HTTP 請求 <code>http://169.254.169.254/latest/meta-data/</code> 來取得元數據。</li>
+<li><strong>IMDSv2</strong>：增強了安全性，需要透過 Token 來存取。</li>
+</ul>
+<p>開發者可使用 AWS Metadata 來獲取 IAM 角色憑證、監控 EC2 狀態或是動態設定應用程式參數。例如，要獲取執行個體的公有 IP，可以執行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://169.254.169.254/latest/meta-data/public-ipv4</span><br></pre></td></tr></table></figure>
+
+<h1 id="systemctl-指令介紹與背後原理"><a href="#systemctl-指令介紹與背後原理" class="headerlink" title="systemctl 指令介紹與背後原理"></a><code>systemctl</code> 指令介紹與背後原理</h1><p><code>systemctl</code> 是用於管理 systemd 服務的指令。<code>systemd</code> 是現代 Linux 發行版（如 Ubuntu、CentOS、Amazon Linux 2）預設的初始化系統（init system），負責管理系統啟動、服務與資源。</p>
+<h2 id="常見-systemctl-指令"><a href="#常見-systemctl-指令" class="headerlink" title="常見 systemctl 指令"></a>常見 <code>systemctl</code> 指令</h2><p><code>systemctl</code> 代表 <strong>system control</strong>，它是 Linux <code>systemd</code> 初始化系統（init system）的一部分，主要用來管理系統服務（services）、單元（units）和系統狀態（state）。  </p>
+<h3 id="啟動、停止與重啟服務"><a href="#啟動、停止與重啟服務" class="headerlink" title="啟動、停止與重啟服務"></a>啟動、停止與重啟服務</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start &lt;service-name&gt;   <span class="comment"># 啟動服務</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl stop &lt;service-name&gt;    <span class="comment"># 停止服務</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl restart &lt;service-name&gt; <span class="comment"># 重啟服務</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查詢服務狀態"><a href="#查詢服務狀態" class="headerlink" title="查詢服務狀態"></a>查詢服務狀態</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl status &lt;service-name&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="啟用與停用開機自動啟動"><a href="#啟用與停用開機自動啟動" class="headerlink" title="啟用與停用開機自動啟動"></a>啟用與停用開機自動啟動</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> &lt;service-name&gt;   <span class="comment"># 設定服務開機啟動</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">disable</span> &lt;service-name&gt;  <span class="comment"># 取消服務開機啟動</span></span><br></pre></td></tr></table></figure>
+<p>簡單來說，<code>systemctl</code> 讓你可以啟動、停止、重啟服務，查詢狀態，並設定服務是否隨系統開機自動執行。例如：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start nginx     <span class="comment"># 啟動 Nginx 服務</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl stop nginx      <span class="comment"># 停止 Nginx 服務</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl restart nginx   <span class="comment"># 重新啟動 Nginx 服務</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl status nginx    <span class="comment"># 查看 Nginx 服務狀態</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> nginx    <span class="comment"># 設定 Nginx 服務開機自動啟動</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">disable</span> nginx   <span class="comment"># 停用 Nginx 服務的開機自動啟動</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="服務管理的原理"><a href="#服務管理的原理" class="headerlink" title="服務管理的原理"></a>服務管理的原理</h3><p><code>systemctl</code> 透過 systemd 管理 <code>unit</code>（單元），而每個服務都有對應的 <code>.service</code> 檔案，通常位於 <code>/etc/systemd/system/</code> 或 <code>/lib/systemd/system/</code> 目錄內。這些檔案定義了服務的執行方式、依賴關係等。</p>
+<p>在 <code>systemd</code> 之前，Linux 主要使用 <code>SysVinit</code> 或 <code>Upstart</code> 來管理系統服務，但 <code>systemd</code> 提供了更高效能的並行啟動機制，並且更容易管理，所以現在大多數的 Linux 發行版都已經採用 <code>systemd</code>。</p>
+<h1 id="為何增添-IAM-Role-到-EC2-後-EC2-不一定能馬上更新？"><a href="#為何增添-IAM-Role-到-EC2-後-EC2-不一定能馬上更新？" class="headerlink" title="為何增添 IAM Role 到 EC2 後 EC2 不一定能馬上更新？"></a>為何增添 IAM Role 到 EC2 後 EC2 不一定能馬上更新？</h1><p>當你為 EC2 執行個體新增 IAM Role 或變更權限時，EC2 並不會立即感知變更，這是因為：</p>
+<ol>
+<li><strong>Metadata 緩存機制</strong>：EC2 會緩存 IAM Role 憑證一段時間，因此權限變更不會立即生效。</li>
+<li><strong>AWS SSM Agent 依賴 IAM 權限</strong>：如果 EC2 上的 AWS Systems Manager (SSM) Agent 無法獲取新的 IAM 權限，則某些 SSM 命令可能無法執行。</li>
+</ol>
+<h2 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h2><h3 id="重新啟動-Metadata-服務"><a href="#重新啟動-Metadata-服務" class="headerlink" title="重新啟動 Metadata 服務"></a>重新啟動 Metadata 服務</h3><p>如果 IAM Role 更新後無法立即反映在 EC2 上，可以嘗試重新啟動 Amazon SSM Agent，並強制重新整理 Metadata。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart amazon-ssm-agent</span><br></pre></td></tr></table></figure>
+
+<p>接著，檢查 AWS 配置來確認 IAM 權限是否正確更新：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws configure list</span><br></pre></td></tr></table></figure>
+
+<p>若仍然無法取得最新的 IAM 權限，可以嘗試執行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT <span class="string">&quot;http://169.254.169.254/latest/api/token&quot;</span> -H <span class="string">&quot;X-aws-ec2-metadata-token-ttl-seconds: 21600&quot;</span></span><br><span class="line">curl http://169.254.169.254/latest/meta-data/iam/security-credentials/</span><br></pre></td></tr></table></figure>
+<p>這將重新獲取 Metadata Token，並顯示 IAM 角色的安全憑證資訊。</p>
+<p>透過這些步驟，即可確保 EC2 正確更新 IAM 權限，並讓相關服務正常運行。</p>
+<hr>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/02/15/aws-ssm/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-02-24 20:29:25
+            </span>
+            
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/02/20/aws-s3/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-AWS-Metadata%EF%BC%9F"><span class="toc-text">什麼是 AWS Metadata？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#systemctl-%E6%8C%87%E4%BB%A4%E4%BB%8B%E7%B4%B9%E8%88%87%E8%83%8C%E5%BE%8C%E5%8E%9F%E7%90%86"><span class="toc-text">systemctl 指令介紹與背後原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A6%8B-systemctl-%E6%8C%87%E4%BB%A4"><span class="toc-text">常見 systemctl 指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%9F%E5%8B%95%E3%80%81%E5%81%9C%E6%AD%A2%E8%88%87%E9%87%8D%E5%95%9F%E6%9C%8D%E5%8B%99"><span class="toc-text">啟動、停止與重啟服務</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E8%A9%A2%E6%9C%8D%E5%8B%99%E7%8B%80%E6%85%8B"><span class="toc-text">查詢服務狀態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%9F%E7%94%A8%E8%88%87%E5%81%9C%E7%94%A8%E9%96%8B%E6%A9%9F%E8%87%AA%E5%8B%95%E5%95%9F%E5%8B%95"><span class="toc-text">啟用與停用開機自動啟動</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8B%99%E7%AE%A1%E7%90%86%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-text">服務管理的原理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%82%BA%E4%BD%95%E5%A2%9E%E6%B7%BB-IAM-Role-%E5%88%B0-EC2-%E5%BE%8C-EC2-%E4%B8%8D%E4%B8%80%E5%AE%9A%E8%83%BD%E9%A6%AC%E4%B8%8A%E6%9B%B4%E6%96%B0%EF%BC%9F"><span class="toc-text">為何增添 IAM Role 到 EC2 後 EC2 不一定能馬上更新？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95"><span class="toc-text">解決方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%96%B0%E5%95%9F%E5%8B%95-Metadata-%E6%9C%8D%E5%8B%99"><span class="toc-text">重新啟動 Metadata 服務</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + AWS%20Metadata%EF%BC%9F + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F16%2Faws-metadata%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/16/aws-metadata/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

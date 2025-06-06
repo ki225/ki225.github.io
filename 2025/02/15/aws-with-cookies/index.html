@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      介紹 AWS 如何在網頁上辨識使用者帳戶？以及第三方 Cookie 封鎖對使用 AWS 資源的影響？ 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">介紹 AWS 如何在網頁上辨識使用者帳戶？以及第三方 Cookie 封鎖對使用 AWS 資源的影響？</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-03-16 14:31:09
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/AWS/" title="AWS">
+                    #AWS
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/cookie-session/" title="cookie-session">
+                    #cookie-session
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/AWS-Authentication/" title="AWS-Authentication">
+                    #AWS-Authentication
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/Authentication/" title="Authentication">
+                    #Authentication
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>不知道大家有沒有想過，在瀏覽器使用 AWS console 跑服務時，為什麼登入一次 AWS 帳號就可以在其他分頁也使用同樣帳號去操作資源？此外，當我們切去其他的 assumed role 後，再到其他原先已登入過的分頁會看到 “You have been signed out”，這又是為什麼呢？</p>
+<p><img src="/images/AWS/session/img1.png" alt="alt text"></p>
+<h2 id="背景知識-AWS-如何辨識使用者帳戶"><a href="#背景知識-AWS-如何辨識使用者帳戶" class="headerlink" title="背景知識: AWS 如何辨識使用者帳戶 ?"></a>背景知識: AWS 如何辨識使用者帳戶 ?</h2><p>AWS 透過 Cookies（Cookie）來管理網頁登入的使用者資訊，當我們登入 AWS 控制台後，AWS 會將一個 session Cookie 存儲在瀏覽器中，這個 Cookie 是用來辨識、維持使用者的登入狀態，或是用來提供個人化內容(像是語言)。這樣當我們再次訪問 AWS 服務或在 console 中進行操作時，AWS 會使用這個 Cookie 來確定當前操作是由哪個帳戶發起的，並確保對應的權限正確。</p>
+<h2 id="什麼是-cookie"><a href="#什麼是-cookie" class="headerlink" title="什麼是 cookie ?"></a>什麼是 cookie ?</h2><p>Cookie 是一種小型的文字檔案，由伺服器發送給網頁瀏覽器的一段可閱讀文本。當使用者(瀏覽器)造訪網站(呼叫伺服器)時，該伺服器會將其不加修改地返回並存儲在使用者的瀏覽器中。目前的 cookie 大多用在個人化、加速身份認證等地方。</p>
+<p>當客戶端向伺服器發送請求時，伺服器可以透過 HTTP response header 的 Set-Cookie 欄位來設定 cookie，cookie的生成方式可以是透過像 CGI script 等方法生成。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: NAME=VALUE; expires=DATE; path=PATH; domain=DOMAIN_NAME; secure</span><br></pre></td></tr></table></figure>
+<h3 id="cookie-的壽命"><a href="#cookie-的壽命" class="headerlink" title="cookie 的壽命 ?"></a>cookie 的壽命 ?</h3><p>從上述 <code>Set-Cookie</code> 的設定裡可以看到 <code>expires</code> 這個 attribute。expires 屬性指定了一個日期字串，定義該 cookie 的有效存續時間。一旦達到到期日，該 cookie 將不再被儲存或傳送，此屬性可以讓 cookie 跨 sessions；然而若沒有設定 expires，則 cookie 會在 session 結束時就失效。</p>
+<p>根據這個特性，我們可以把 cookie 分成兩類：有設置 expiration date 就是 Persistent cookie；反之則為 non-persistent cookie，又叫做 session cookie，因為它只在瀏覽器開啟時有效，關閉瀏覽器後就會刪除。</p>
+<h2 id="AWS-透過-cookie-記錄了什麼"><a href="#AWS-透過-cookie-記錄了什麼" class="headerlink" title="AWS 透過 cookie 記錄了什麼 ?"></a>AWS 透過 cookie 記錄了什麼 ?</h2><p>前面有提到我們的 “登入”、”個人化內容” 都是透過 cookie 來記錄，這邊我們就用 F12 打開後台看一下，可以發現一些 cookie 內容，像是 “aws-creds” 就是存著 url 編碼後的 JSON 內容。</p>
+<p><img src="/images/AWS/session/img2.png" alt="alt text"></p>
+<h2 id="剛登入時，如何取得-cookie"><a href="#剛登入時，如何取得-cookie" class="headerlink" title="剛登入時，如何取得 cookie ?"></a>剛登入時，如何取得 cookie ?</h2><p>剛登入時，會向 Amazon 伺服器發送 cookie request，之後就是透過一連串的 cookie 請求和回覆組成</p>
+<ul>
+<li>cookie request: 客戶(browser)送給 server 的 cookie</li>
+<li>cookie response: server 回傳給 client (browser) 的</li>
+</ul>
+<p><img src="/images/AWS/session/img3.png" alt="alt text"></p>
+<p>假設我們切換 region，這時 domain 又會不一樣，所以又會請求一次，伺服器就會給我們屬於新 domain 的 cookie。</p>
+<p><img src="/images/AWS/session/img4.png" alt="alt text"></p>
+<h2 id="分頁如何知道"><a href="#分頁如何知道" class="headerlink" title="分頁如何知道?"></a>分頁如何知道?</h2><p>一般瀏覽網頁都會把 cookie 存入我們的裝置，所以網頁可以直接從裝置上的 cookie 去取得使用者資訊；雖然無痕分頁不會儲存 cookie 在裝置上，但只要無痕頁面沒有被關閉，cookie 仍可以跨分頁去使用。這邊我們試試看在成功登入 console 後，在新分頁開啟資源頁面，可以發現我們能夠在不同分頁使用相同帳號拜訪 AWS 的其他資源，而這其實也是透過一連串的 cookie 請求和回覆組成。</p>
+<p>首先它會帶著 cookie request 透過 url 進入頁面，當瀏覽器拿到這些 cookie 後，它就知道可以吐回我們的 credential 了。所以第二次請求的 url 後面就加入了被 hash 後的辨別資訊。</p>
+<p><img src="/images/AWS/session/img16.png" alt="alt text"></p>
+<h3 id="為什麼會需要重新登入"><a href="#為什麼會需要重新登入" class="headerlink" title="為什麼會需要重新登入 ?"></a>為什麼會需要重新登入 ?</h3><p>往右邊看可以發現每個 cookie 都有過期的時間，其中有關我當前 credential 的 cookie 會在一天內就過期(我使用 IAM role)。<a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_tw/singlesignon/latest/userguide/howtosessionduration.html">官網文件</a> 也表示 IAM role 最短工作階段(session)持續時間為 1 小時，最多只能設定為 12 小時。</p>
+<p><img src="/images/AWS/session/img11.png" alt="alt text"></p>
+<h2 id="resources"><a href="#resources" class="headerlink" title="resources"></a>resources</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/appstream2/latest/developerguide/cookie-auth.html">Cookie-Based Authentication in Amazon AppStream 2.0</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/legal/cookies/">Cookie Notice</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/singlesignon/latest/userguide/howtosessionduration.html">Set session duration for AWS accounts</a></li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/02/05/CORS-error-handle/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-03-16 14:31:09
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/AWS/" title="AWS">
+                        #AWS
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/cookie-session/" title="cookie-session">
+                        #cookie-session
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/AWS-Authentication/" title="AWS-Authentication">
+                        #AWS-Authentication
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/Authentication/" title="Authentication">
+                        #Authentication
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/02/15/terraform-Inconsistent-dependency-lock-file/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AD%98-AWS-%E5%A6%82%E4%BD%95%E8%BE%A8%E8%AD%98%E4%BD%BF%E7%94%A8%E8%80%85%E5%B8%B3%E6%88%B6"><span class="toc-text">背景知識: AWS 如何辨識使用者帳戶 ?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-cookie"><span class="toc-text">什麼是 cookie ?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cookie-%E7%9A%84%E5%A3%BD%E5%91%BD"><span class="toc-text">cookie 的壽命 ?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AWS-%E9%80%8F%E9%81%8E-cookie-%E8%A8%98%E9%8C%84%E4%BA%86%E4%BB%80%E9%BA%BC"><span class="toc-text">AWS 透過 cookie 記錄了什麼 ?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%9B%E7%99%BB%E5%85%A5%E6%99%82%EF%BC%8C%E5%A6%82%E4%BD%95%E5%8F%96%E5%BE%97-cookie"><span class="toc-text">剛登入時，如何取得 cookie ?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A0%81%E5%A6%82%E4%BD%95%E7%9F%A5%E9%81%93"><span class="toc-text">分頁如何知道?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%83%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E7%99%BB%E5%85%A5"><span class="toc-text">為什麼會需要重新登入 ?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#resources"><span class="toc-text">resources</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E4%BB%8B%E7%B4%B9%20AWS%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%B6%B2%E9%A0%81%E4%B8%8A%E8%BE%A8%E8%AD%98%E4%BD%BF%E7%94%A8%E8%80%85%E5%B8%B3%E6%88%B6%EF%BC%9F%E4%BB%A5%E5%8F%8A%E7%AC%AC%E4%B8%89%E6%96%B9%20Cookie%20%E5%B0%81%E9%8E%96%E5%B0%8D%E4%BD%BF%E7%94%A8%20AWS%20%E8%B3%87%E6%BA%90%E7%9A%84%E5%BD%B1%E9%9F%BF%EF%BC%9F + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F15%2Faws-with-cookies%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/15/aws-with-cookies/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

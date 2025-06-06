@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      AIF 證照筆記 - genAI 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">AIF 證照筆記 - genAI</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-04-03 11:53:55
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/aif/" title="aif">
+                    #aif
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="生成式-AI-觀念介紹"><a href="#生成式-AI-觀念介紹" class="headerlink" title="生成式 AI 觀念介紹"></a>生成式 AI 觀念介紹</h2><p>生成式 AI（Generative AI）是一種能夠根據輸入的數據自動生成新內容的人工智慧技術，例如文字、圖像、音樂或程式碼。這類 AI 主要依賴大型機器學習模型來理解和產生類似人類創作的內容。在生成式 AI 中，以下幾個概念至關重要：  </p>
+<h2 id="Tokens（字元或字詞）"><a href="#Tokens（字元或字詞）" class="headerlink" title="Tokens（字元或字詞）"></a>Tokens（字元或字詞）</h2><p>在自然語言處理（NLP）中，Token 是 AI 解析與理解語言的基本單位。  </p>
+<ul>
+<li>字元級 Token：模型將輸入拆分為單個字母或符號。例如：「AI」會被視為「A」和「I」兩個 Token。  </li>
+<li>字詞級 Token：將單詞或詞組視為一個 Token。例如：「machine learning」可能被視為一個 Token，而不是兩個。  </li>
+<li>子詞級 Token（如 BPE、WordPiece）：拆分成更小的語言單元，使 AI 可以更有效地處理新詞彙。例如：「unhappiness」可能被拆成「un」、「happiness」。</li>
+</ul>
+<p>但其實每個模型的分詞方式都會有所不同，比方說我們可以到 <a target="_blank" rel="noopener" href="https://platform.openai.com/tokenizer">OpenAI Tokenizer</a> 比較同樣一句話，就能發現光是 gpt-4o 和 gpt-3 legacy 就具有分詞差異。</p>
+<p><img src="/images/aif/img4.png" alt="alt text"></p>
+<p><img src="/images/aif/img5.png" alt="alt text"></p>
+<h2 id="Embeddings（嵌入）"><a href="#Embeddings（嵌入）" class="headerlink" title="Embeddings（嵌入）"></a>Embeddings（嵌入）</h2><p>Embeddings 是將語言轉換為數學向量（vector）的一種方式，使 AI 能夠理解詞語的關聯性與語境。  </p>
+<ul>
+<li>每個詞語（Token）會被映射到一個高維度的向量空間，數值越相近，代表詞語之間的語意越相似。  </li>
+<li>例如：「king」和「queen」的向量會彼此接近，而「dog」和「cat」的向量也會有類似的關聯。</li>
+</ul>
+<h2 id="Foundation-Models-FM-（基礎模型）"><a href="#Foundation-Models-FM-（基礎模型）" class="headerlink" title="Foundation Models (FM)（基礎模型）"></a>Foundation Models (FM)（基礎模型）</h2><p>基礎模型 是大規模預訓練的 AI 模型，能夠執行多種任務，如文本生成、圖像辨識、程式碼生成等。</p>
+<ul>
+<li>這些模型（如 GPT、BERT、DALL·E）是基於海量數據訓練的，然後可以針對特定應用微調（fine-tune）。  </li>
+<li>具有遷移學習（Transfer Learning）能力，能夠從廣泛的知識基礎中適應不同的任務。</li>
+</ul>
+<h2 id="inference"><a href="#inference" class="headerlink" title="inference"></a>inference</h2><p>通常推論會拿來與模型的訓練做比較。在生成式人工智慧（GenAI）的語境中，inference（推論）指的是使用訓練好的模型來產生輸出的過程，也就是模型在接收到輸入後「推論」出對應的結果。例如對於語言模型（如 GPT）來說，inference 是你輸入一段提示（prompt）後，模型生成回應的過程。又或是說對於圖像生成模型（如 Stable Diffusion）而言，inference 是輸入一段文字描述後，模型生成圖片的過程。</p>
+<p>舉個例子，假設輸入「寫一首關於春天的詩」，然後 GPT-4 回你一首詩。這整個從接收輸入 → 模型處理 → 回傳詩句的過程，就是一次 inference。更具體來說，inference 包含：</p>
+<ul>
+<li>載入一個訓練完成的模型（模型參數已固定）</li>
+<li>接收輸入（prompt、文字、圖片、聲音等）</li>
+<li>經過模型內部的神經網路計算</li>
+<li>輸出生成結果（文字、圖像、回應等）</li>
+</ul>
+<h2 id="Prompt-engineering"><a href="#Prompt-engineering" class="headerlink" title="Prompt engineering"></a>Prompt engineering</h2><h3 id="選擇有效的提示工程（Prompt-engineering）"><a href="#選擇有效的提示工程（Prompt-engineering）" class="headerlink" title="選擇有效的提示工程（Prompt engineering）"></a>選擇有效的提示工程（Prompt engineering）</h3><ul>
+<li>zero shot<ul>
+<li><img src="/images/aif/img11.png" alt="alt text"></li>
+</ul>
+</li>
+<li>single shot<ul>
+<li><img src="/images/aif/img12.png" alt="alt text"></li>
+</ul>
+</li>
+<li>few shot<ul>
+<li><img src="/images/aif/img13.png" alt="alt text"></li>
+</ul>
+</li>
+<li>Chain-of-Thought<ul>
+<li>讓模型在得到答案之前多思考一下</li>
+<li><img src="/images/aif/img14.png" alt="alt text"></li>
+</ul>
+</li>
+</ul>
+<h3 id="其他方式"><a href="#其他方式" class="headerlink" title="其他方式"></a>其他方式</h3><ul>
+<li>Negative Prompts<ul>
+<li>Negative prompts 是在生成圖像時，明確告訴模型不要包含哪些元素或風格</li>
+<li>example<ul>
+<li>Prompt: “A cat sitting on a beach”</li>
+<li>Negative Prompt: “blurry, distorted, low quality, text, watermark”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Positive prompt <ul>
+<li>正常描述你想要的東西（例如 “a futuristic city”）。</li>
+</ul>
+</li>
+<li>ambiguous prompts<ul>
+<li>含糊的 prompt 會增加生成圖像的隨機性，更容易導致無關圖片，完全與目標相反。</li>
+</ul>
+</li>
+</ul>
+<h3 id="基礎模型（FM）應用的設計考量"><a href="#基礎模型（FM）應用的設計考量" class="headerlink" title="基礎模型（FM）應用的設計考量"></a>基礎模型（FM）應用的設計考量</h3><h3 id="基礎模型的訓練與微調（Fine-tuning）過程"><a href="#基礎模型的訓練與微調（Fine-tuning）過程" class="headerlink" title="基礎模型的訓練與微調（Fine-tuning）過程"></a>基礎模型的訓練與微調（Fine-tuning）過程</h3><h3 id="評估基礎模型的性能"><a href="#評估基礎模型的性能" class="headerlink" title="評估基礎模型的性能"></a>評估基礎模型的性能</h3><h2 id="考題範例"><a href="#考題範例" class="headerlink" title="考題範例"></a>考題範例</h2><h2 id="Q63"><a href="#Q63" class="headerlink" title="Q63"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/151750-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q63</a></h2><p>Which term describes the numerical representations of real-world objects and concepts that AI and natural language processing (NLP) models use to improve understanding of textual information?</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Embeddings</li>
+<li><input disabled="" type="checkbox"> Tokens</li>
+<li><input disabled="" type="checkbox"> Models</li>
+<li><input disabled="" type="checkbox"> Binaries</li>
+</ul>
+<blockquote>
+<p>答案是 (A)，因為題目中說的是 numerical representations</p>
+</blockquote>
+<h2 id="Q82"><a href="#Q82" class="headerlink" title="Q82"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/151661-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q82</a></h2><p>What are tokens in the context of generative AI models?</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Tokens are the basic units of input and output that a generative AI model operates on, representing words, subwords, or other linguistic units.</li>
+<li><input disabled="" type="checkbox"> Tokens are the mathematical representations of words or concepts used in generative AI models.</li>
+<li><input disabled="" type="checkbox"> Tokens are the pre-trained weights of a generative AI model that are fine-tuned for specific tasks.</li>
+<li><input disabled="" type="checkbox"> Tokens are the specific prompts or instructions given to a generative AI model to generate output.</li>
+</ul>
+<blockquote>
+<p>這題答案是 (A)，而 (B)、(C)、(D) 分別代表 embeddings、weight 和 prompt</p>
+</blockquote>
+<h3 id="Q97"><a href="#Q97" class="headerlink" title="Q97"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/153489-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q97</a></h3><p>A company is using Retrieval Augmented Generation (RAG) with Amazon Bedrock and Stable Diffusion to generate product images based on text descriptions. The results are often random and lack specific details. The company wants to increase the specificity of the generated images.</p>
+<p>Which solution meets these requirements?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Increase the number of generation steps.</li>
+<li><input disabled="" type="checkbox"> Use the MASK_IMAGE_BLACK mask source option.</li>
+<li><input checked="" disabled="" type="checkbox"> Increase the classifier-free guidance (CFG) scale.</li>
+<li><input disabled="" type="checkbox"> Increase the prompt strength.</li>
+</ul>
+<blockquote>
+<p>在 Stable Diffusion 中，CFG Scale 控制模型在圖像生成時要「多大程度上遵循提示（prompt）」。</p>
+<ul>
+<li>低 CFG 值（如 3~5）：生成圖像比較自由、創意高，但可能和 prompt 關聯較弱。</li>
+<li>高 CFG 值（如 10~20）：模型會更嚴格依照 prompt 的描述來生成圖像，具體性與可控性更強。</li>
+</ul>
+<p>A. Increase the number of generation steps 增加步數（如從 25 → 50）會提高圖像質量與細節，但對於「是否忠於 prompt」的影響較小。<br>B. Use the MASK_IMAGE_BLACK mask source option 這是用在 圖像修補（inpainting） 情境下的 mask 設定，與從文字生成整圖（text-to-image）無關。</p>
+</blockquote>
+<h3 id="Q73"><a href="#Q73" class="headerlink" title="Q73"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150983-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q73</a></h3><p>A company has documents that are missing some words because of a database error. The company wants to build an ML model that can suggest potential words to fill in the missing text.</p>
+<p>Which type of model meets this requirement?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Topic modeling</li>
+<li><input disabled="" type="checkbox"> Clustering models</li>
+<li><input disabled="" type="checkbox"> Prescriptive ML models</li>
+<li><input checked="" disabled="" type="checkbox"> BERT-based models</li>
+</ul>
+<blockquote>
+<p>這屬於典型的 填空（Fill-in-the-blank）任務，又稱為 Masked Language Modeling（MLM），而這正是 BERT（Bidirectional Encoder Representations from Transformers） 模型的設計核心。</p>
+<p>A. Topic modeling 用來找出文本中的主題（如 LDA），Clustering models 是無監督學習，用來分群資料，C. Prescriptive ML models 是一種較模糊的說法，指給出「最佳決策建議」的模型（如最佳路徑、最優資源分配）</p>
+</blockquote>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/04/01/AIF-ML/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-04-03 11:53:55
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/aif/" title="aif">
+                        #aif
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/04/01/AIF-ML-design/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%BC%8F-AI-%E8%A7%80%E5%BF%B5%E4%BB%8B%E7%B4%B9"><span class="toc-text">生成式 AI 觀念介紹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tokens%EF%BC%88%E5%AD%97%E5%85%83%E6%88%96%E5%AD%97%E8%A9%9E%EF%BC%89"><span class="toc-text">Tokens（字元或字詞）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Embeddings%EF%BC%88%E5%B5%8C%E5%85%A5%EF%BC%89"><span class="toc-text">Embeddings（嵌入）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Foundation-Models-FM-%EF%BC%88%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-text">Foundation Models (FM)（基礎模型）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inference"><span class="toc-text">inference</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prompt-engineering"><span class="toc-text">Prompt engineering</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%B8%E6%93%87%E6%9C%89%E6%95%88%E7%9A%84%E6%8F%90%E7%A4%BA%E5%B7%A5%E7%A8%8B%EF%BC%88Prompt-engineering%EF%BC%89"><span class="toc-text">選擇有效的提示工程（Prompt engineering）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E5%BC%8F"><span class="toc-text">其他方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%EF%BC%88FM%EF%BC%89%E6%87%89%E7%94%A8%E7%9A%84%E8%A8%AD%E8%A8%88%E8%80%83%E9%87%8F"><span class="toc-text">基礎模型（FM）應用的設計考量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%A8%93%E7%B7%B4%E8%88%87%E5%BE%AE%E8%AA%BF%EF%BC%88Fine-tuning%EF%BC%89%E9%81%8E%E7%A8%8B"><span class="toc-text">基礎模型的訓練與微調（Fine-tuning）過程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A9%95%E4%BC%B0%E5%9F%BA%E7%A4%8E%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%80%A7%E8%83%BD"><span class="toc-text">評估基礎模型的性能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E9%A1%8C%E7%AF%84%E4%BE%8B"><span class="toc-text">考題範例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q63"><span class="toc-text">Q63</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q82"><span class="toc-text">Q82</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q97"><span class="toc-text">Q97</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q73"><span class="toc-text">Q73</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + AIF%20%E8%AD%89%E7%85%A7%E7%AD%86%E8%A8%98%20-%20genAI + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F04%2F01%2FAIF-genAI%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/04/01/AIF-genAI/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

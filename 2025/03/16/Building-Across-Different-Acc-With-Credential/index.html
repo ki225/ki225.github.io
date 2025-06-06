@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      跨帳戶代理建立 AWS 資源 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">跨帳戶代理建立 AWS 資源</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-03-16 12:13:29
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/AWS/" title="AWS">
+                    #AWS
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/credentials/" title="credentials">
+                    #credentials
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/deployment-cross-acc/" title="deployment-cross-acc">
+                    #deployment-cross-acc
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>在實習的某一天，我的 mentor 在與我們聊工作的時候突然讓我們去試著透過自己的帳號部署資源到其他帳號，這突如其來的任務對於剛進實習的我們來說很是不解，於是 mentor 就和我們進一步說明了這個任務的背景情境。</p>
+<p>在現今雲端服務的運作中，許多公司需要協助客戶建置和管理雲端資源，這不僅是技術層面的挑戰，也涉及跨帳號操作的複雜性。但為什麼這些公司不自己建資源呢? 又或是為什麼客戶不直接給受委託的公司自己的帳密來部署呢? 接下來我們用一個簡單的部署情境來介紹背景和實作。</p>
+<p><img src="/images/AWS/credentials/img1.png" alt="image"></p>
+<h2 id="故事情境"><a href="#故事情境" class="headerlink" title="故事情境"></a>故事情境</h2><p>假設有一家名為 A公司的企業，專門提供雲端安全服務，協助客戶在雲端上部署各式各樣的資安防護工具。近期，B公司是 A公司的客戶，B公司有一個新創電商平台，對於網站安全非常重視，尤其是面對 DDoS 攻擊和網站流量篩選需求。B公司希望能夠透過 AWS 上的 Web Application Firewall (WAF) 保護他們的網站，免受惡意流量的威脅。為什麼 B公司不自己建立 WAF 資源呢? B公司雖然有雲端基礎架構的相關知識，但他們的工程團隊專注於開發和維護平台功能，資安防護是他們的次要任務，因此 B公司選擇外包這項工作，交由 A公司來協助他們在 AWS 上部署並管理 WAF。</p>
+<p>A公司的雲端工程師小李被指派協助B公司建置 AWS WAF。小李要負責設置防火牆規則、配置 AWS WAF 並將它綁定到 B公司現有的 Application Load Balancer (ALB)，從而實現對 B公司網站的保護。但小李沒辦法拿到 B 公司的 AWS 帳戶密碼，這是為什麼呢?</p>
+<h3 id="實施最小權限原則-least-privilege-access"><a href="#實施最小權限原則-least-privilege-access" class="headerlink" title="實施最小權限原則 (least privilege access)"></a>實施最小權限原則 (least privilege access)</h3><p>這是出於安全性考量中的最小權限原則。試想一下，如果 A公司員工直接使用 B公司的 AWS root user、IAM user，這樣會違反基本的資安原則，讓人員獲得過多不必要的權限，並增加帳號被濫用的風險。尤其是在涉及敏感操作（如修改 IAM 角色、配置防火牆規則）時，這樣的做法會讓客戶的雲端資源暴露於潛在的風險之中。</p>
+<h3 id="實踐方案-假設角色（Assume-Role）與信任關係機制"><a href="#實踐方案-假設角色（Assume-Role）與信任關係機制" class="headerlink" title="實踐方案: 假設角色（Assume Role）與信任關係機制"></a>實踐方案: 假設角色（Assume Role）與信任關係機制</h3><ul>
+<li>設定 IAM 角色：小李在 A公司帳號中建立了一個特定環境(執行 IaC 的環境)中的 IAM 角色，並將其設定為可以假設 B公司帳號中的角色。這樣，A公司員工就能夠無需直接訪問 B公司的帳號密碼，便可在 B公司帳號內進行必要的操作。</li>
+<li>建立信任關係：小李為了確保 B公司願意授權 A公司進行操作，必須讓 B公司同仁在 B公司帳號內建立與 A公司的信任關係。這通常是由 B公司提供的一個 IAM 角色，並允許 A公司使用這個角色執行特定的操作。例如，B公司設置的 IAM 角色允許 A公司部署 WAF，並且授權給 A公司對應的 EC2 實例來操作。</li>
+</ul>
+<h3 id="換一個生活化的例子說明上述情況"><a href="#換一個生活化的例子說明上述情況" class="headerlink" title="換一個生活化的例子說明上述情況"></a>換一個生活化的例子說明上述情況</h3><p>假設小華有一間他自己整理的倉庫，裡面放著很多貴重的物品（比如書籍、紀錄片等），他需要請清潔工幫忙整理倉庫，但是又不想讓清潔工直接擁有倉庫的鑰匙，因為他不想讓清潔工隨時都能進入倉庫。</p>
+<p>為了讓清潔工幫忙整理倉庫，小華決定設置一個特殊的“訪客證明”。這個訪客證明只授權清潔工在特定時間內進入倉庫，並且只能做一些整理的工作，比如清理書架或整理箱子，而不是隨意拿走倉庫裡的東西。小華會告訴清潔工，當他需要進入倉庫時，可以使用這個特殊的訪客證明，且這個證明有註明使用對象只有那位清潔工，所以他無法把證明借給別人，確保其他人無法隨便進入倉庫。</p>
+<p>針對上述故事和我們原文的情境對照如下:</p>
+<ul>
+<li>訪客證明: 這就像 B 公司提供給 A 公司的 IAM 角色</li>
+<li>清潔工: A公司帳號用來執行 IaC 的 IAM 角色</li>
+<li>小華只信任清潔工來做整理打掃的動作:  B 公司設定的 IAM 角色透過 trust relationship 來信任 A 公司的 role</li>
+</ul>
+<h2 id="實踐"><a href="#實踐" class="headerlink" title="實踐"></a>實踐</h2><p>接下來我們要針對原本 A 公司與 B 公司的情境，透過 Tarraform 實際部署 WAF 資源。</p>
+<h3 id="決定我們需要什麼"><a href="#決定我們需要什麼" class="headerlink" title="決定我們需要什麼?"></a>決定我們需要什麼?</h3><p>為了讓程式設計師在不進入客戶帳戶的情況下完成這項任務，我們需要從公司帳戶到客戶帳戶建立一個隧道。因此，我們需要兩個 <code>IAM-角色的 arn</code>。此外，我們還需要知道哪些資源應該由 WAF 保護。因此，我們所需要的有：</p>
+<ol>
+<li>2 個 IAM role 的 arn<ul>
+<li>公司的帳戶用於程式設計師</li>
+<li>客戶的假設角色</li>
+</ul>
+</li>
+<li>哪些資源將與 WAF 關聯</li>
+</ol>
+<h3 id="設定-IAM-角色-為工作環境創建角色"><a href="#設定-IAM-角色-為工作環境創建角色" class="headerlink" title="設定 IAM 角色: 為工作環境創建角色"></a>設定 IAM 角色: 為工作環境創建角色</h3><p>讓我們繼續處理我們所需要的 IAM 角色。第一個是在 A公司帳戶中。由於工作環境是在 A 公司的機器 EC2 中，我們根據以下需求來創建角色：</p>
+<ul>
+<li>Trusted entity type：Trusted entity type</li>
+<li>use case：EC2（這樣我們就可以將它附加到 EC2 實例）</li>
+</ul>
+<p><img src="/images/AWS/credentials/img2.png" alt="image"></p>
+<p>A 公司帳戶中的 IAM 角色將如下所示：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2012-10-17&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Statement&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Effect&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Allow&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Principal&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;Service&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ec2.amazonaws.com&quot;</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Action&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sts:AssumeRole&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="設定-IAM-角色-從客戶獲取認證並建立信任關係"><a href="#設定-IAM-角色-從客戶獲取認證並建立信任關係" class="headerlink" title="設定 IAM 角色: 從客戶獲取認證並建立信任關係"></a>設定 IAM 角色: 從客戶獲取認證並建立信任關係</h3><p>另一個角色是在客戶 (B公司) 帳戶中。此角色應該擁有足夠的權限來建立目標資源，假設是 AdminRole。在 A公司開始創建 Terraform 文件之前，我們需要先建立兩間公司的信任關係，如此一來就可以透過信任關係，表示客戶允許你在他們的帳戶中執行某些操作。</p>
+<p>例如，以下是客戶 (B公司) 角色的 trust relationship policy：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2012-10-17&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Statement&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Effect&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Allow&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Principal&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;Service&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ec2.amazonaws.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;AWS&quot;</span><span class="punctuation">:</span> <span class="string">&quot;arn:aws:iam::&lt;COMPANYA_ACC_ID&gt;:role/&lt;COMPANYA_IAM_ROLE&gt;&quot;</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Action&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sts:AssumeRole&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;Condition&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>讓我們逐步解析 “Statement” 部分：</p>
+<ul>
+<li>Effect<ul>
+<li>指定該聲明是否允許或拒絕訪問</li>
+<li>“Allow” 表示允許指定的操作</li>
+</ul>
+</li>
+<li>Principal<ul>
+<li>指定允許或拒絕訪問資源的實體（使用者、服務或帳戶）</li>
+<li>在這個例子中，它允許 EC2 服務和特定的 IAM 角色來假設此角色</li>
+</ul>
+</li>
+<li>Action<ul>
+<li>指定允許或拒絕的操作</li>
+<li>在這個例子中它允許假設此角色</li>
+</ul>
+</li>
+<li>Condition<ul>
+<li>指定此政策生效的條件</li>
+<li>空對象意味著沒有應用額外條件</li>
+</ul>
+</li>
+</ul>
+<h3 id="部署過程中的角色假設"><a href="#部署過程中的角色假設" class="headerlink" title="部署過程中的角色假設"></a>部署過程中的角色假設</h3><p>A 公司將在 EC2 環境中使用 Terraform 文件來完成此任務，因此 A 公司需要在 tf 文件中定義客戶 (B 公司)的資訊。首先定義一個 provider：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Provider 配置</span><br><span class="line">provider &quot;aws&quot; &#123;</span><br><span class="line">      alias  = &quot;customer&quot;</span><br><span class="line">      region = &quot;us-east-1&quot;</span><br><span class="line">      assume_role &#123;</span><br><span class="line">            role_arn = &quot;arn:aws:iam::&lt;CUSTOMER_ACC_ID&gt;:role/&lt;CUSTOMER_ROLE_NAME&gt;&quot;</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這樣，A 公司就可以在客戶的帳戶中獲取現有的資源：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data &quot;aws_lb&quot; &quot;target_alb&quot; &#123;</span><br><span class="line">  provider = aws.waf</span><br><span class="line">  name     = var.alb_name</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此外，如果有資源將在客戶帳戶中創建，而不是A公司帳戶中，就可以像下面這樣定義：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 範例：使用公司帳戶在客戶帳戶中建立 WAF</span><br><span class="line">resource &quot;aws_wafv2_web_acl&quot; &quot;customer_waf_acl&quot; &#123;</span><br><span class="line">  # provider: 定義該資源的目標</span><br><span class="line">  provider = aws.customer </span><br><span class="line">  name        = ...</span><br><span class="line">  description = ...</span><br><span class="line">  scope       = ...</span><br><span class="line"></span><br><span class="line">  # 詳細設置</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="沒正確設置-provider-會怎樣"><a href="#沒正確設置-provider-會怎樣" class="headerlink" title="沒正確設置 provider 會怎樣?"></a>沒正確設置 provider 會怎樣?</h3><p>如果使用者想要在不同帳戶上創建資源而未正確設置 provider，可能會發生類似下方的問題：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">│ Error: creating WAFv2 WebACL Association (arn:aws:wafv2:us-east-1:&lt;COMPANY_ACC_ID&gt;:regional/webacl/test_waf/...,arn:aws:elasticloadbalancing:us-east-1:&lt;CUSTOMER_ACC_ID&gt;:loadbalancer/app/cutomer-alb/...): operation error WAFV2: AssociateWebACL, https response error StatusCode: 400, RequestID: ..., api error AccessDeniedException: User: arn:aws:sts::&lt;CUSTOMER_ACC_ID&gt;:assumed-role/customer-role/aws-go-sdk-... is not authorized to perform: wafv2:AssociateWebACL on resource: arn:aws:wafv2:us-east-1:&lt;COMPANY_ACC_ID&gt;:regional/webacl/test_waf/... because noresource-based policy allows the wafv2:AssociateWebACL action</span><br><span class="line">│</span><br></pre></td></tr></table></figure>
+<p>這個問題發生的原因是系統認為 WAFv2 資源應該在公司帳戶中建立。因此，在關聯過程中權限不足。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/03/05/blockchain1/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-03-16 12:13:29
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/AWS/" title="AWS">
+                        #AWS
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/credentials/" title="credentials">
+                        #credentials
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/deployment-cross-acc/" title="deployment-cross-acc">
+                        #deployment-cross-acc
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/04/01/AIF-ML/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%85%E4%BA%8B%E6%83%85%E5%A2%83"><span class="toc-text">故事情境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%A6%E6%96%BD%E6%9C%80%E5%B0%8F%E6%AC%8A%E9%99%90%E5%8E%9F%E5%89%87-least-privilege-access"><span class="toc-text">實施最小權限原則 (least privilege access)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%A6%E8%B8%90%E6%96%B9%E6%A1%88-%E5%81%87%E8%A8%AD%E8%A7%92%E8%89%B2%EF%BC%88Assume-Role%EF%BC%89%E8%88%87%E4%BF%A1%E4%BB%BB%E9%97%9C%E4%BF%82%E6%A9%9F%E5%88%B6"><span class="toc-text">實踐方案: 假設角色（Assume Role）與信任關係機制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%9B%E4%B8%80%E5%80%8B%E7%94%9F%E6%B4%BB%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90%E8%AA%AA%E6%98%8E%E4%B8%8A%E8%BF%B0%E6%83%85%E6%B3%81"><span class="toc-text">換一個生活化的例子說明上述情況</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E8%B8%90"><span class="toc-text">實踐</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%BA%E5%AE%9A%E6%88%91%E5%80%91%E9%9C%80%E8%A6%81%E4%BB%80%E9%BA%BC"><span class="toc-text">決定我們需要什麼?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-IAM-%E8%A7%92%E8%89%B2-%E7%82%BA%E5%B7%A5%E4%BD%9C%E7%92%B0%E5%A2%83%E5%89%B5%E5%BB%BA%E8%A7%92%E8%89%B2"><span class="toc-text">設定 IAM 角色: 為工作環境創建角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-IAM-%E8%A7%92%E8%89%B2-%E5%BE%9E%E5%AE%A2%E6%88%B6%E7%8D%B2%E5%8F%96%E8%AA%8D%E8%AD%89%E4%B8%A6%E5%BB%BA%E7%AB%8B%E4%BF%A1%E4%BB%BB%E9%97%9C%E4%BF%82"><span class="toc-text">設定 IAM 角色: 從客戶獲取認證並建立信任關係</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E9%81%8E%E7%A8%8B%E4%B8%AD%E7%9A%84%E8%A7%92%E8%89%B2%E5%81%87%E8%A8%AD"><span class="toc-text">部署過程中的角色假設</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B2%92%E6%AD%A3%E7%A2%BA%E8%A8%AD%E7%BD%AE-provider-%E6%9C%83%E6%80%8E%E6%A8%A3"><span class="toc-text">沒正確設置 provider 會怎樣?</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%B7%A8%E5%B8%B3%E6%88%B6%E4%BB%A3%E7%90%86%E5%BB%BA%E7%AB%8B%20AWS%20%E8%B3%87%E6%BA%90 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F03%2F16%2FBuilding-Across-Different-Acc-With-Credential%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/03/16/Building-Across-Different-Acc-With-Credential/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

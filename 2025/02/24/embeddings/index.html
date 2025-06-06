@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      embeddings 如何讓機器了解人類世界的文字、圖像 ? 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">embeddings 如何讓機器了解人類世界的文字、圖像 ?</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-03-02 13:30:24
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/embedding/" title="embedding">
+                    #embedding
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/AI/" title="AI">
+                    #AI
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/encoding/" title="encoding">
+                    #encoding
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>在準備生成式工作坊時接觸了不少相關的雲端服務，後來也陸續看了幾篇論文，但發現自己對於最基本的概念還沒有特別熟悉，於是就決定先認識背後原理。這篇文章就是希望記錄一下有關於 embedding 的知識。</p>
+<h2 id="什麼是-embedding（嵌入）"><a href="#什麼是-embedding（嵌入）" class="headerlink" title="什麼是 embedding（嵌入） ?"></a>什麼是 embedding（嵌入） ?</h2><p>Embedding 是一種將高維度的離散數據（如文字、圖片或用戶行為）轉換為低維度的連續數值向量的方法，這些向量保留了原始數據的語義關係，使得機器學習模型能夠更有效地處理和理解這些數據。</p>
+<p><img src="/images/embedding/img1.png" alt="alt text"></p>
+<h3 id="為什麼我們需要-embedding-以圖書館的管理員為例"><a href="#為什麼我們需要-embedding-以圖書館的管理員為例" class="headerlink" title="為什麼我們需要 embedding ? 以圖書館的管理員為例"></a>為什麼我們需要 embedding ? 以圖書館的管理員為例</h3><p>我們可以拿圖書館的管理員當作例子，說明 embedding 是如何幫助模型進行分辨的。想像你是一位圖書館的管理員，任務是負責整理成千上萬本書，這時候如果你只是用書名來區分它們，就會很難找到相似主題的書。例如，《哈利波特》跟《魔戒》可能放在不同的地方，雖然它們其實都是奇幻小說。</p>
+<p>這時，你決定為每本書加上標籤，例如：「奇幻」、「冒險」、「魔法」、「戰鬥」。這些標籤可以讓你更快找到類似的書，而不只是根據書名來分類。而這就像 embedding，將「書」（高維度、離散的文字資訊）轉換成「標籤數據」（低維度、數值化的向量），讓機器能夠根據內容相似度來判斷書籍的關係。假設我們轉換的向量是四維，[w, x, y, z] 中的四個數值分別代表「奇幻」、「冒險」、「魔法」、「戰鬥」四種主題的符合程度，當數值越接近 1，則代表內容越符合該主題的書。以下舉例：</p>
+<ul>
+<li>《哈利波特》→ [0.9, 0.8, 0.7, 0.6] （高度相關於奇幻、冒險、魔法）</li>
+<li>《魔戒》→ [0.8, 0.9, 0.6, 0.7] （也是奇幻、冒險、魔法，但數值稍有不同）</li>
+<li>《愛麗絲夢遊仙境》→ [0.7, 0.5, 0.8, 0.2] （更偏向童話，魔法比例較高，但戰鬥較少）</li>
+</ul>
+<p>透過這些數值，就可以幫助圖書館管理員辨別哪些書的風格相近，即便他們書名大相逕庭。</p>
+<p><img src="/images/embedding/img2.png" alt="alt text"></p>
+<h3 id="各維度向量數值代表特徵嗎-embedding-模型其實是超大黑箱"><a href="#各維度向量數值代表特徵嗎-embedding-模型其實是超大黑箱" class="headerlink" title="各維度向量數值代表特徵嗎 ? embedding 模型其實是超大黑箱 !"></a>各維度向量數值代表特徵嗎 ? embedding 模型其實是超大黑箱 !</h3><p>目前針對 embedding 每個維度的向量意涵眾說紛紜，上述以圖書館的管理員為例之說明僅是幫助大家對於 embeddings 如何幫助搜索更有想像空間，事實上沒有人可以理解 Embedding 模型產生的向量值所代表的含意。</p>
+<p>我們可以用比喻來理解多個模型在應用中的情況。假設 LLM 進入了 ChatBot 的考場，而這場考試允許攜帶大抄。在這個比喻中，大抄就是 RAG，實際上它代表了 embedding 方法與資料庫。就像每個學生的大抄會依據他們的讀書方式、理解能力與記憶方式而有所不同，內容、編排和組織方式也各不相同，LLM 的「大抄」也是如此。每個模型使用的 RAG 會根據其訓練方法與知識結構的不同而有所區別，影響其在考試中檢索和應對問題的能力。</p>
+<p>因此，我們無法確定生成式領域中模型 embeddings 內容的具體含義，或者說它們代表著不同特徵的相似比例，因為這些向量的組織方式與數值並非以人類直觀的方式呈現。每個模型如何生成並利用這些向量，取決於其訓練過程與結構設計，這讓我們難以直接理解每個向量背後所代表的具體特徵。</p>
+<p><img src="/images/embedding/img4.png" alt="alt text"></p>
+<h2 id="如何透過向量做到語意關聯"><a href="#如何透過向量做到語意關聯" class="headerlink" title="如何透過向量做到語意關聯 ?"></a>如何透過向量做到語意關聯 ?</h2><p>那這些向量又是如何保留語意的呢 ? 當我們獲得詞的向量後，可以通過計算向量之間的相似度來衡量語意關聯。常見的相似度度量方法有：</p>
+<p><img src="/images/embedding/img6.png" alt="alt text"></p>
+<h3 id="餘弦相似度-Cosine-Similarity"><a href="#餘弦相似度-Cosine-Similarity" class="headerlink" title="餘弦相似度 (Cosine Similarity)"></a>餘弦相似度 (Cosine Similarity)</h3><p>餘弦相似度是一種衡量兩個向量在空間中方向相似度的方法，它專注於向量間的角度差異，而不是大小差異。這意味著即使兩個向量的長度（大小）不同，只要它們的方向相似，餘弦相似度會較高。</p>
+<p>$$<br>\text{Cosine Similarity}(A, B) &#x3D; \frac{A \cdot B}{|A| |B|}<br>$$</p>
+<ul>
+<li>當兩個向量方向完全相同時，餘弦相似度的值為 1。</li>
+<li>當兩個向量的方向完全相反時，餘弦相似度的值為 -1。</li>
+<li>當兩個向量正交（沒有任何關聯）時，餘弦相似度的值為 0。</li>
+</ul>
+<p><img src="/images/embedding/img5.png" alt="alt text"></p>
+<h3 id="歐氏距離-Euclidean-Distance"><a href="#歐氏距離-Euclidean-Distance" class="headerlink" title="歐氏距離 (Euclidean Distance)"></a>歐氏距離 (Euclidean Distance)</h3><p>歐氏距離是衡量兩個向量之間的直線距離，即在向量空間中，兩點之間的最短距離。這個距離與向量的大小和方向都相關，較小的歐氏距離表示兩向量（或詞語）之間的相似度較高。</p>
+<p>$$<br>\text{Euclidean Distance}(A, B) &#x3D; \sqrt{(A_1 - B_1)^2 + (A_2 - B_2)^2 + \dots + (A_n - B_n)^2}<br>$$</p>
+<p><img src="/images/embedding/img7.png" alt="alt text"></p>
+<h2 id="embedding-如何生成"><a href="#embedding-如何生成" class="headerlink" title="embedding 如何生成 ?"></a>embedding 如何生成 ?</h2><h3 id="文字-embedding"><a href="#文字-embedding" class="headerlink" title="文字 embedding"></a>文字 embedding</h3><p>文字 embedding 的精隨在於將人類文字轉成 word vector，因為 word vector 他保留了原先文本數據特徵，也就是一段句子裡「字」、「詞」、「句」之間的意義。在這個部分主要有 One-Hot encoding 和 Word Embedding 兩種方式來建立向量。</p>
+<p>淺層神經網絡學習</p>
+<ul>
+<li>One-Hot encoding<ul>
+<li>維度是詞數量，例如現在有 apple、banana 兩個單字，維度就是 2</li>
+<li>當字詞庫越來越大時，每個詞的向量就會超長，導致實務上每一個 Word Vector 可能都會是好幾萬維的稀疏矩陣。</li>
+<li>每一個 Word Vector 之間都是 Independent，無法體現上下文之間的語意相關</li>
+<li><img src="/images/embedding/img3.png" alt="alt text"></li>
+</ul>
+</li>
+<li>Word Embedding<ul>
+<li>克服 One-Hot encoding 的缺點</li>
+<li>將字詞轉換成可以投射到空間的向量</li>
+<li>透過詞彙在空間的距離表示語法、語意相似度</li>
+</ul>
+</li>
+</ul>
+<h2 id="references"><a href="#references" class="headerlink" title="references"></a>references</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hackmd.io/@allen108108/SJ42exwlH">Unsupervised Learning –- Word Embedding</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39172059/article/details/136661824">【大模型开发】 一文搞懂Embedding工作原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloud.baidu.com/article/3267522">深入理解Embedding：从理论到实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.facebook.com/groups/gaitech/posts/%E7%94%B1%E6%96%BC-rag-%E6%89%80%E9%9C%80%E7%9A%84-embedding-%E6%A8%A1%E5%9E%8B%E6%9C%AC%E8%B3%AA%E4%B8%8A%E5%B0%B1%E6%98%AF%E4%B8%80%E5%80%8B%E5%A4%A7%E9%BB%91%E7%AE%B1%E6%B2%92%E6%9C%89%E4%BA%BA%E5%8F%AF%E4%BB%A5%E7%90%86%E8%A7%A3-embedding-%E6%A8%A1%E5%9E%8B%E7%94%A2%E7%94%9F%E7%9A%84%E5%90%91%E9%87%8F%E5%80%BC%E6%89%80%E4%BB%A3%E8%A1%A8%E7%9A%84%E5%90%AB%E6%84%8F%E5%9B%A0%E6%AD%A4%E8%A6%81%E8%A9%95%E4%BC%B0%E4%B8%80%E4%BB%BD%E4%B8%8D%E9%8C%AF%E7%9A%84-embe/1178683329982547/">FB 社團討論</a></li>
+<li><a target="_blank" rel="noopener" href="https://sfoteini.github.io/blog/image-vector-similarity-search-with-azure-computer-vision-and-postgresql/">https://sfoteini.github.io/blog/image-vector-similarity-search-with-azure-computer-vision-and-postgresql/</a></li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/02/24/aws-s3-public/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-03-02 13:30:24
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/embedding/" title="embedding">
+                        #embedding
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/AI/" title="AI">
+                        #AI
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/encoding/" title="encoding">
+                        #encoding
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/03/01/vm-network/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-embedding%EF%BC%88%E5%B5%8C%E5%85%A5%EF%BC%89"><span class="toc-text">什麼是 embedding（嵌入） ?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%88%91%E5%80%91%E9%9C%80%E8%A6%81-embedding-%E4%BB%A5%E5%9C%96%E6%9B%B8%E9%A4%A8%E7%9A%84%E7%AE%A1%E7%90%86%E5%93%A1%E7%82%BA%E4%BE%8B"><span class="toc-text">為什麼我們需要 embedding ? 以圖書館的管理員為例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%84%E7%B6%AD%E5%BA%A6%E5%90%91%E9%87%8F%E6%95%B8%E5%80%BC%E4%BB%A3%E8%A1%A8%E7%89%B9%E5%BE%B5%E5%97%8E-embedding-%E6%A8%A1%E5%9E%8B%E5%85%B6%E5%AF%A6%E6%98%AF%E8%B6%85%E5%A4%A7%E9%BB%91%E7%AE%B1"><span class="toc-text">各維度向量數值代表特徵嗎 ? embedding 模型其實是超大黑箱 !</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%8F%E9%81%8E%E5%90%91%E9%87%8F%E5%81%9A%E5%88%B0%E8%AA%9E%E6%84%8F%E9%97%9C%E8%81%AF"><span class="toc-text">如何透過向量做到語意關聯 ?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A4%98%E5%BC%A6%E7%9B%B8%E4%BC%BC%E5%BA%A6-Cosine-Similarity"><span class="toc-text">餘弦相似度 (Cosine Similarity)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%90%E6%B0%8F%E8%B7%9D%E9%9B%A2-Euclidean-Distance"><span class="toc-text">歐氏距離 (Euclidean Distance)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#embedding-%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90"><span class="toc-text">embedding 如何生成 ?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E5%AD%97-embedding"><span class="toc-text">文字 embedding</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#references"><span class="toc-text">references</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + embeddings%20%E5%A6%82%E4%BD%95%E8%AE%93%E6%A9%9F%E5%99%A8%E4%BA%86%E8%A7%A3%E4%BA%BA%E9%A1%9E%E4%B8%96%E7%95%8C%E7%9A%84%E6%96%87%E5%AD%97%E3%80%81%E5%9C%96%E5%83%8F%20%3F + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F02%2F24%2Fembeddings%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/02/24/embeddings/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      AIF 證照筆記 - ML 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">AIF 證照筆記 - ML</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-04-02 10:47:35
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/aif/" title="aif">
+                    #aif
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/machine-learning/" title="machine-learning">
+                    #machine-learning
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>機器學習</p>
+<p><img src="/images/aif/img1.png" alt="alt text"></p>
+<p>機器學習主要可分為以下類別：監督式學習、非監督式學習、半監督式學習和強化式學習。以下是各類型的詳細介紹：  </p>
+<hr>
+<h2 id="1-監督式學習（Supervised-Learning）"><a href="#1-監督式學習（Supervised-Learning）" class="headerlink" title="1. 監督式學習（Supervised Learning）"></a>1. 監督式學習（Supervised Learning）</h2><p>監督式學習是指使用帶有標籤（label）的資料來訓練模型。模型學習輸入（features）與目標輸出（target）之間的關係，並用來預測新數據的結果。監督式學習可進一步分為兩大類：分類（Classification）和回歸（Regression）。</p>
+<h3 id="1-分類（Classification）"><a href="#1-分類（Classification）" class="headerlink" title="(1) 分類（Classification）"></a>(1) 分類（Classification）</h3><p>分類問題的目標是預測數據屬於哪個類別，通常適用於離散型輸出的情境，例如判斷一封郵件是否為垃圾郵件（Spam 或 Not Spam）。</p>
+<h4 id="a-二元分類（Binary-Classification）"><a href="#a-二元分類（Binary-Classification）" class="headerlink" title="a. 二元分類（Binary Classification）"></a>a. 二元分類（Binary Classification）</h4><ul>
+<li>目標變數只有兩種可能的類別（如 0 或 1、是或否、正面或負面）。</li>
+<li>應用案例：<ul>
+<li>電子郵件垃圾過濾（Spam 或 Not Spam）</li>
+<li>醫療診斷（是否患有某種疾病）</li>
+<li>貸款核准（批准或拒絕）</li>
+</ul>
+</li>
+</ul>
+<h4 id="b-多元分類（Multiclass-Classification）"><a href="#b-多元分類（Multiclass-Classification）" class="headerlink" title="b. 多元分類（Multiclass Classification）"></a>b. 多元分類（Multiclass Classification）</h4><ul>
+<li>目標變數有多個類別，但每個樣本只能屬於其中一個類別。</li>
+<li>應用案例：<ul>
+<li>手寫數字辨識（0～9）</li>
+<li>影像分類（貓、狗、馬等）</li>
+<li>文章分類（科技、政治、娛樂）</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-回歸（Regression）"><a href="#2-回歸（Regression）" class="headerlink" title="(2) 回歸（Regression）"></a>(2) 回歸（Regression）</h3><p>回歸問題的目標是預測連續數值（Continuous Values），適用於數值型輸出的情境，例如預測房價或股票價格。常見的回歸演算法有： </p>
+<ul>
+<li><p>線性回歸（Linear Regression）</p>
+</li>
+<li><p>決策樹回歸（Decision Tree Regression）</p>
+</li>
+<li><p>支援向量回歸（Support Vector Regression, SVR）</p>
+</li>
+<li><p>隨機森林回歸（Random Forest Regression）</p>
+</li>
+<li><p>神經網絡回歸（Neural Network Regression）</p>
+</li>
+<li><p>應用案例：</p>
+<ul>
+<li>房價預測（依據房屋大小、地點等）</li>
+<li>銷售額預測（基於歷史數據）</li>
+<li>天氣溫度預測</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-非監督式學習（Unsupervised-Learning）"><a href="#2-非監督式學習（Unsupervised-Learning）" class="headerlink" title="2. 非監督式學習（Unsupervised Learning）"></a>2. 非監督式學習（Unsupervised Learning）</h2><p>非監督式學習指的是數據沒有標籤（沒有 target 變數），模型的目標是從數據中發掘潛在的模式或結構。  </p>
+<h3 id="1-分群（Clustering）"><a href="#1-分群（Clustering）" class="headerlink" title="(1) 分群（Clustering）"></a>(1) 分群（Clustering）</h3><p>分群的目標是將相似的數據點歸類在一起，這在資料探索與市場分析等應用中非常重要。  </p>
+<ul>
+<li>應用案例：<ul>
+<li>客戶分群（依據購買行為將顧客分成不同群體）</li>
+<li>影像壓縮（將類似顏色的像素分組以減少存儲需求）</li>
+<li>基因分析（根據 DNA 數據分類不同類型的生物）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-半監督式學習（Semi-Supervised-Learning）"><a href="#3-半監督式學習（Semi-Supervised-Learning）" class="headerlink" title="3. 半監督式學習（Semi-Supervised Learning）"></a>3. 半監督式學習（Semi-Supervised Learning）</h3><p>半監督式學習介於監督式學習與非監督式學習之間，指的是模型在訓練時同時使用少量的標註數據和大量的未標註數據。這種方法適用於標註成本高昂但未標註數據豐富的場景，如：  </p>
+<ul>
+<li>網頁分類（少量標註的網頁，大量未標註的網頁）  </li>
+<li>醫學影像分析（標註的醫學影像昂貴，但未標註的影像數量龐大）</li>
+</ul>
+<p>常見技術包括：  </p>
+<ul>
+<li>自監督學習（Self-supervised Learning）  </li>
+<li>生成對抗網絡（GANs, Generative Adversarial Networks）</li>
+</ul>
+<hr>
+<h2 id="4-強化式學習（Reinforcement-Learning-RL）"><a href="#4-強化式學習（Reinforcement-Learning-RL）" class="headerlink" title="4. 強化式學習（Reinforcement Learning, RL）"></a>4. 強化式學習（Reinforcement Learning, RL）</h2><p>強化式學習是一種透過試錯法（trial and error）學習的方式，換句話說就是透過一種基於獎勵與懲罰的學習方式，讓模型（代理人，Agent）透過與環境互動來學習最佳策略，以最大化累積的獎勵。其實這樣的學習方式就像一個孩子會因為做好家務而獲得父母的讚美，或者因為亂丟玩具而受到責備，久而久之，他就會學習哪些行為可以帶來正面的結果。</p>
+<p><img src="/images/aif/img3.png" alt="alt text"></p>
+<h3 id="強化學習的關鍵概念與運作方式"><a href="#強化學習的關鍵概念與運作方式" class="headerlink" title="強化學習的關鍵概念與運作方式"></a>強化學習的關鍵概念與運作方式</h3><p>強化學習基於馬可夫決策過程（Markov Decision Process, MDP），代理程式根據當前狀態選擇行動，行動會影響環境的變化並導致新的狀態，環境則會提供對應的獎勵或懲罰。透過大量試錯，代理程式最終學會如何選擇最佳的行動策略，以最大化長期獎勵。 以下為此方法的關鍵概念:</p>
+<ol>
+<li>代理程式（Agent）：負責執行行動的學習系統，例如 AI 模型。  </li>
+<li>環境（Environment）：代理程式所處的世界，包含規則、條件和變數，例如遊戲中的關卡或真實世界的交通環境。  </li>
+<li>動作（Action）：代理程式在環境中可以採取的步驟，例如機器人行走的方向或遊戲角色的移動。  </li>
+<li>狀態（State）：環境在某個時間點的情況，例如一台自駕車目前的位置、車流狀況等。  </li>
+<li>獎勵（Reward）：代理程式執行動作後獲得的回饋，可以是正值（獎勵）或負值（懲罰）。  </li>
+<li>累積獎勵（Cumulative Reward）：所有獎勵的總和，代理程式的目標是最大化累積獎勵。</li>
+</ol>
+<p><img src="/images/aif/img2.png" alt="alt text"></p>
+<ul>
+<li>應用案例：<ul>
+<li>遊戲 AI（如 AlphaGo、Dota 2 AI）</li>
+<li>機器人控制（讓機器人學習如何走路、避障）</li>
+<li>自動駕駛（學習如何根據環境做出駕駛決策）</li>
+</ul>
+</li>
+</ul>
+<h2 id="Transfer-Learning（遷移學習）"><a href="#Transfer-Learning（遷移學習）" class="headerlink" title="Transfer Learning（遷移學習）"></a>Transfer Learning（遷移學習）</h2><p>將一個領域上已訓練好的模型的知識，遷移到另一個相關但不同的領域上。這樣可以節省大量的時間與資源，因為你不需要從頭訓練模型，只需針對新任務進行微調（fine-tuning）。</p>
+<h2 id="考題範例"><a href="#考題範例" class="headerlink" title="考題範例"></a>考題範例</h2><h3 id="Q17"><a href="#Q17" class="headerlink" title="Q17"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150630-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q17</a></h3><p>A company has petabytes of unlabeled customer data to use for an advertisement campaign. The company wants to classify its customers into tiers to advertise and promote the company’s products.Which methodology should the company use to meet these requirements?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Supervised learning</li>
+<li><input checked="" disabled="" type="checkbox"> Unsupervised learning</li>
+<li><input disabled="" type="checkbox"> Reinforcement learning</li>
+<li><input disabled="" type="checkbox"> Reinforcement learning from human feedback (RLHF)</li>
+</ul>
+<p>答案是 (B)，因為這些資料是 unlabeled 的</p>
+<h3 id="Q7"><a href="#Q7" class="headerlink" title="Q7"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150727-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q7</a></h3><p>A company is using domain-specific models. The company wants to avoid creating new models from the beginning. The company instead wants to adapt pre-trained models to create models for new,related tasks.<br>Which ML strategy meets these requirements?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Increase the number of epochs.</li>
+<li><input checked="" disabled="" type="checkbox"> Use transfer learning.</li>
+<li><input disabled="" type="checkbox"> Decrease the number of epochs.</li>
+<li><input disabled="" type="checkbox"> Use unsupervised learning.</li>
+</ul>
+<h3 id="Q44"><a href="#Q44" class="headerlink" title="Q44"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/151044-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q44</a></h3><p>A company is developing a new model to predict the prices of specific items. The model performed well on the training dataset. When the company deployed the model to production, the model’s performance decreased significantly.<br>What should the company do to mitigate this problem?</p>
+<ul>
+<li><input disabled="" type="checkbox"> Reduce the volume of data that is used in training.</li>
+<li><input disabled="" type="checkbox"> Add hyperparameters to the model.</li>
+<li><input checked="" disabled="" type="checkbox"> Increase the volume of data that is used in training.</li>
+<li><input disabled="" type="checkbox"> Increase the model training time.</li>
+</ul>
+<h3 id="Q35"><a href="#Q35" class="headerlink" title="Q35"></a><a target="_blank" rel="noopener" href="https://www.examtopics.com/discussions/amazon/view/150814-exam-aws-certified-ai-practitioner-aif-c01-topic-1-question/">Q35</a></h3><p>A company has terabytes of data in a database that the company can use for business analysis. The<br>company wants to build an AI-based application that can build a SQL query from input text that<br>employees provide. The employees have minimal experience with technology.<br>Which solution meets these requirements?</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Generative pre-trained transformers (GPT)</li>
+<li><input disabled="" type="checkbox"> Residual neural network</li>
+<li><input disabled="" type="checkbox"> Support vector machine</li>
+<li><input disabled="" type="checkbox"> WaveNet</li>
+</ul>
+<blockquote>
+<p>員工技術經驗有限，但想用「自然語言」（例如：用英文輸入問題）來查詢資料。需要一個 AI 應用程式能夠：</p>
+<ul>
+<li>將自然語言轉換成 SQL 查詢語句</li>
+<li>讓非技術員工也能使用</li>
+</ul>
+<p>這種應用最常見的模型就是 GPT（Generative Pre-trained Transformer）系列，像是 ChatGPT、Codex、Amazon Q Developer 背後的模型等。</p>
+<p>B. Residual Neural Network (ResNet) 用於 圖像辨識 的深度學習模型，不適合處理語言或文字生成。<br>C. Support Vector Machine (SVM) 傳統的機器學習分類器，不具備生成 SQL 語句的能力，且對自然語言處理能力有限。<br>D. WaveNet 由 DeepMind 開發，用於語音合成（例如 Google Assistant 語音），與 SQL 或文字生成無關。</p>
+</blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/what-is/machine-learning/">https://aws.amazon.com/tw/what-is/machine-learning/</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/what-is/reinforcement-learning/">問：什麼是強化學習？</a></li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/03/16/Building-Across-Different-Acc-With-Credential/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-04-02 10:47:35
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/aif/" title="aif">
+                        #aif
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/machine-learning/" title="machine-learning">
+                        #machine-learning
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/04/01/AIF-genAI/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%A3%E7%9D%A3%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Supervised-Learning%EF%BC%89"><span class="toc-text">1. 監督式學習（Supervised Learning）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%86%E9%A1%9E%EF%BC%88Classification%EF%BC%89"><span class="toc-text">(1) 分類（Classification）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-%E4%BA%8C%E5%85%83%E5%88%86%E9%A1%9E%EF%BC%88Binary-Classification%EF%BC%89"><span class="toc-text">a. 二元分類（Binary Classification）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-%E5%A4%9A%E5%85%83%E5%88%86%E9%A1%9E%EF%BC%88Multiclass-Classification%EF%BC%89"><span class="toc-text">b. 多元分類（Multiclass Classification）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%9B%9E%E6%AD%B8%EF%BC%88Regression%EF%BC%89"><span class="toc-text">(2) 回歸（Regression）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%9D%9E%E7%9B%A3%E7%9D%A3%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Unsupervised-Learning%EF%BC%89"><span class="toc-text">2. 非監督式學習（Unsupervised Learning）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%86%E7%BE%A4%EF%BC%88Clustering%EF%BC%89"><span class="toc-text">(1) 分群（Clustering）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8D%8A%E7%9B%A3%E7%9D%A3%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Semi-Supervised-Learning%EF%BC%89"><span class="toc-text">3. 半監督式學習（Semi-Supervised Learning）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%BC%B7%E5%8C%96%E5%BC%8F%E5%AD%B8%E7%BF%92%EF%BC%88Reinforcement-Learning-RL%EF%BC%89"><span class="toc-text">4. 強化式學習（Reinforcement Learning, RL）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B7%E5%8C%96%E5%AD%B8%E7%BF%92%E7%9A%84%E9%97%9C%E9%8D%B5%E6%A6%82%E5%BF%B5%E8%88%87%E9%81%8B%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-text">強化學習的關鍵概念與運作方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transfer-Learning%EF%BC%88%E9%81%B7%E7%A7%BB%E5%AD%B8%E7%BF%92%EF%BC%89"><span class="toc-text">Transfer Learning（遷移學習）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E9%A1%8C%E7%AF%84%E4%BE%8B"><span class="toc-text">考題範例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q17"><span class="toc-text">Q17</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7"><span class="toc-text">Q7</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q44"><span class="toc-text">Q44</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q35"><span class="toc-text">Q35</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + AIF%20%E8%AD%89%E7%85%A7%E7%AD%86%E8%A8%98%20-%20ML + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F04%2F01%2FAIF-ML%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/04/01/AIF-ML/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
