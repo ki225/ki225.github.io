@@ -13,7 +13,7 @@
   
   <title>
     
-      Git Submodule 介紹與管理指南 
+      PHP 在 Web Server 中的整合方式與效能比較：從 CGI 到 PHP-FPM 的演進 
       
       
       |
@@ -147,25 +147,25 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">Git Submodule 介紹與管理指南</div>
+      <div class="post-title">PHP 在 Web Server 中的整合方式與效能比較：從 CGI 到 PHP-FPM 的演進</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-06-10 03:18:36
+          2025-07-11 17:18:52
         </span>
         
               <span class="post-tags">
                 <i class="iconfont icon-tags mr-10" title="Tags"></i>
                 
                 <span class="span--tag mr-8">
-                  <a href="/tags/git/" title="git">
-                    #git
+                  <a href="/tags/LAMP/" title="LAMP">
+                    #LAMP
                   </a>
                 </span>
                 
                 <span class="span--tag mr-8">
-                  <a href="/tags/submodule/" title="submodule">
-                    #submodule
+                  <a href="/tags/PHP/" title="PHP">
+                    #PHP
                   </a>
                 </span>
                 
@@ -173,23 +173,72 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="Git-Submodule-介紹與刪除教學"><a href="#Git-Submodule-介紹與刪除教學" class="headerlink" title="Git Submodule 介紹與刪除教學"></a>Git Submodule 介紹與刪除教學</h2><h3 id="什麼是-Git-Submodule？"><a href="#什麼是-Git-Submodule？" class="headerlink" title="什麼是 Git Submodule？"></a>什麼是 Git Submodule？</h3><p>Git Submodule 讓你可以將另一個 Git 倉庫作為 子模組 添加到自己的專案中，簡單來說就是別人的 repo 剛好有你要的功能，然後你就把他 clone 到自己的 repo 底下來用</p>
-<h3 id="如何檢查-Git-專案是否包含-Submodule？"><a href="#如何檢查-Git-專案是否包含-Submodule？" class="headerlink" title="如何檢查 Git 專案是否包含 Submodule？"></a>如何檢查 Git 專案是否包含 Submodule？</h3><ul>
-<li>方法 1：使用 <code>git submodule status</code>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule status</span><br></pre></td></tr></table></figure></li>
-<li>方法 2：檢查 <code>.gitmodules</code> 檔案</li>
+        <blockquote>
+<p>因為多數網頁是 LAMP 架構，同事讓我研究了一下 PHP-FPM 相關的內容，在過程裡面發現了不少新知識，所以寫了這篇筆記。在正式介紹 PHP-FPM 之前，我會先介紹一下它誕生的背景，也就是 CGI ! </p>
+</blockquote>
+<h2 id="CGI"><a href="#CGI" class="headerlink" title="CGI"></a>CGI</h2><p>CGI（Common Gateway Interface）並不是一個工具，而是早期 Web 技術中用來連接 Web 伺服器與應用程式（例如 PHP、Python）的橋接標準，它允許伺服器在收到請求後，將該請求傳遞給外部程式處理，並將結果返回給用戶端。</p>
+<p><img src="/images/LAMP/img1.png" alt="alt text"></p>
+<p>雖然 CGI 實作簡單、相容性高，但其實非常消耗資源且沒效率。在<a target="_blank" rel="noopener" href="https://apachetoday.com/mailprint.php3?action=pv&ltsn=2000-06-30-002-01-NW-LF-SW">這篇文章</a>有提到 <code>mod_cgi</code> 模組允許 Apache 收到 CGI 請求時，子程序會 fork 出一個新的 PHP-CGI process 再執行該 CGI，並將其輸出作為回應發送給客戶端，就像下圖所呈現的，每次瀏覽器發送一次請求， cgi 會替每一個請求建立一個 process 來解析 cgi 請求、進行 php 語法編譯。</p>
+<p><img src="/images/LAMP/img3.png" alt="alt text"></p>
+<p>在 Apache 1.3 中這沒問題，但在 Apache 2.0 中會影響效能。因為 Apache 2.0 採用執行緒型架構（threaded MPM），當多執行緒的程序進行 fork 時，會複製所有執行緒並立即終止除一個之外的其他執行緒。因此，後續發展出如 mod_php、FastCGI 與 PHP-FPM 等更高效的整合方式。</p>
+<h2 id="mod-php"><a href="#mod-php" class="headerlink" title="mod_php"></a>mod_php</h2><p>為了解決剛剛說到傳統 CGI 的問題，mod_php 就誕生了。mod_php 是一個 Apache HTTP Server 的模組，將 PHP interpreter 內建於 Apache process 中，讓 Apache 能夠直接編譯 PHP 程式，處理 PHP 請求時不需要重複啟動外部程序，進而減少啟動與溝通的開銷。</p>
+<p><img src="/images/LAMP/img4.png" alt="alt text"></p>
+<p>看似解決了問題，但還是有以下缺點 :</p>
+<ul>
+<li>mod_php 則在每個 Apache process 中都載入完整的 PHP Interpreter，造成記憶體等資源的浪費</li>
+<li>無法將 PHP 處理與 Apache 分開部署，PHP 版本切換也不方便</li>
+<li>因為 PHP 與 Apache 同個 process，mod_php 只可與 non-threaded 的 prefork MPM 搭配使用，無法在 threaded MPM (如 worker 或 event) 運作</li>
 </ul>
-<h3 id="如何移除-Git-Submodule？"><a href="#如何移除-Git-Submodule？" class="headerlink" title="如何移除 Git Submodule？"></a>如何移除 Git Submodule？</h3><ul>
-<li><p>步驟 1：刪除 <code>.gitmodules</code> 記錄</p>
-  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule deinit -f -- &lt;submodule-name&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>步驟 2：刪除 <code>&lt;submodule-name&gt;</code> 內的 Git 設定</p>
-  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf &lt;submodule-name&gt;/.git</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>步驟 3：從 Git 中刪除該子模組</p>
-  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">rm</span> -rf &lt;submodule-name&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>步驟 4：確認變更並提交</p>
-  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;Removed submodule &lt;submodule-name&gt;&quot;</span></span><br><span class="line">git push origin main</span><br></pre></td></tr></table></figure></li>
+<h2 id="FastCGI-的誕生-和-php-fpm-的關係"><a href="#FastCGI-的誕生-和-php-fpm-的關係" class="headerlink" title="FastCGI 的誕生? 和 php-fpm 的關係?"></a>FastCGI 的誕生? 和 php-fpm 的關係?</h2><p>為了解決 CGI 造成的資源消耗問題，CGI 被改良並發展成不同形式，像是 FastCGI ( 協議，給 PHP語言使用 )、WSGI ( 給 Python )。我們可以從下面兩張圖看出 CGI 和 FastCGI 的差異，FastCGI process 會在伺服器啟動前先行啟動，且一旦啟動後，子 process 會持續在事件迴圈 &#x2F; FCGI 協議接收區等待下一次請求，而不會因應單一請求而終止或立即重新 fork process。</p>
+<p><img src="/images/LAMP/img2.png" alt="alt text"><br><img src="/images/LAMP/img5.png" alt="alt text"></p>
+<p>為了實現 FastCGI 協議，發展出 php-fpm（FastCGI Process Manager）作為用戶請求和 PHP 透過 FastCGI 溝通的實作方式。和 CGI 與 php_mod 不同，php-fpm 是讓 PHP 以獨立 process 運作，這些 PHP process 會在  worker process pool 裡，由 master process 管理。</p>
+<p><img src="/images/LAMP/img6.png" alt="alt text"></p>
+<p>每個 process 並不是執行完請求就關閉，而是會先閒置，等待處理下一個 request，如果閒置太久，且已經太多 process 都閒置狀態才會關閉，所以不會有反覆啟動 processs 導致資源浪費。</p>
+<h2 id="Apache-使用-mod-php-與-php-fpm-的比較"><a href="#Apache-使用-mod-php-與-php-fpm-的比較" class="headerlink" title="Apache 使用 mod_php 與 php-fpm 的比較"></a>Apache 使用 mod_php 與 php-fpm 的比較</h2><table>
+<thead>
+<tr>
+<th>比較項目</th>
+<th>Apache + mod_php</th>
+<th>Apache + php-fpm</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>運作方式</td>
+<td>PHP 嵌入 Apache process</td>
+<td>PHP 為獨立 process，透過 FastCGI 溝通</td>
+</tr>
+<tr>
+<td>所需 MPM</td>
+<td>只能搭配 prefork MPM</td>
+<td>可搭配 worker 或 event MPM</td>
+</tr>
+<tr>
+<td>記憶體使用</td>
+<td>每個 process 含 PHP，記憶體高</td>
+<td>靜態資源不需 PHP，記憶體更節省</td>
+</tr>
+<tr>
+<td>安全性與彈性</td>
+<td>同一使用者執行，無法隔離</td>
+<td>可設定不同 user&#x2F;pool，支援多版本與安全隔離</td>
+</tr>
+<tr>
+<td>效能擴展性</td>
+<td>有限</td>
+<td>高，可彈性配置與自動調整 process 數量</td>
+</tr>
+</tbody></table>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.ibm.com/docs/en/i/7.4.0?topic=functionality-cgi">https://www.ibm.com/docs/en/i/7.4.0?topic=functionality-cgi</a></li>
+<li><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/questions/10146391"><strong>各種不同PHP的差異在那？</strong></a></li>
+<li><a target="_blank" rel="noopener" href="https://www.atlantic.net/vps-hosting/how-to-add-php-fpm-support-on-apache-and-nginx-web-server-on-ubuntu/"><strong>How to Add PHP-FPM Support on Apache and Nginx Web Server on Ubuntu</strong></a></li>
+<li><a target="_blank" rel="noopener" href="https://hackmd.io/@KaiChen/HyeWkd-3Y">Apache - MPM 工作模式調優</a></li>
+<li><a target="_blank" rel="noopener" href="https://apachetoday.com/mailprint.php3?action=pv&ltsn=2000-06-30-002-01-NW-LF-SW"><strong>Looking at Apache 2.0 Alpha 4</strong></a></li>
+<li><a target="_blank" rel="noopener" href="https://labs.botsnova.com/2024/09/15/php-fpm/"><strong>PHP 基礎：PHP-FPM 與 mod_php？</strong></a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zend.com/blog/apache-phpfpm-modphp"><strong>How to Use Apache HTTPD With php-fpm and mod_php</strong></a></li>
+<li><a target="_blank" rel="noopener" href="https://mt116.blogspot.com/2020/03/httpd-php-fpm.html"><strong>在 httpd 上使用 PHP-FPM</strong></a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ywnds.com/?p=5986"><strong>CGI、FastCGI及PHP-FPM的关系</strong></a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@mgonzalezbaile/demystifying-nginx-and-php-fpm-for-php-developers-bba548dd38f9">Demystifying Nginx and PHP-FPM for PHP Developers</a></li>
 </ul>
 
       </div>
@@ -197,7 +246,7 @@
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2025/01/31/hexo-create-plugin/" target="_self">
+              <a href="/2025/05/23/25sprout-interview/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -206,21 +255,21 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-06-10 03:18:36
+              2025-07-11 17:18:52
             </span>
             
                   <span class="post-tags">
                     <i class="iconfont icon-tags mr-10" title="Tags"></i>
                     
                     <span class="span--tag mr-8">
-                      <a href="/tags/git/" title="git">
-                        #git
+                      <a href="/tags/LAMP/" title="LAMP">
+                        #LAMP
                       </a>
                     </span>
                     
                     <span class="span--tag mr-8">
-                      <a href="/tags/submodule/" title="submodule">
-                        #submodule
+                      <a href="/tags/PHP/" title="PHP">
+                        #PHP
                       </a>
                     </span>
                     
@@ -228,11 +277,6 @@
               
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2025/02/05/CORS-error-handle/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
@@ -246,7 +290,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-Submodule-%E4%BB%8B%E7%B4%B9%E8%88%87%E5%88%AA%E9%99%A4%E6%95%99%E5%AD%B8"><span class="toc-text">Git Submodule 介紹與刪除教學</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Git-Submodule%EF%BC%9F"><span class="toc-text">什麼是 Git Submodule？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%AA%A2%E6%9F%A5-Git-%E5%B0%88%E6%A1%88%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB-Submodule%EF%BC%9F"><span class="toc-text">如何檢查 Git 專案是否包含 Submodule？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%A7%BB%E9%99%A4-Git-Submodule%EF%BC%9F"><span class="toc-text">如何移除 Git Submodule？</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CGI"><span class="toc-text">CGI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mod-php"><span class="toc-text">mod_php</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FastCGI-%E7%9A%84%E8%AA%95%E7%94%9F-%E5%92%8C-php-fpm-%E7%9A%84%E9%97%9C%E4%BF%82"><span class="toc-text">FastCGI 的誕生? 和 php-fpm 的關係?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Apache-%E4%BD%BF%E7%94%A8-mod-php-%E8%88%87-php-fpm-%E7%9A%84%E6%AF%94%E8%BC%83"><span class="toc-text">Apache 使用 mod_php 與 php-fpm 的比較</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ref"><span class="toc-text">Ref</span></a></li></ol>
       
     </div>
   </div>
@@ -534,12 +578,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Git%20Submodule%20%E4%BB%8B%E7%B4%B9%E8%88%87%E7%AE%A1%E7%90%86%E6%8C%87%E5%8D%97 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F01%2F31%2Fgit-delete-submodule%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + PHP%20%E5%9C%A8%20Web%20Server%20%E4%B8%AD%E7%9A%84%E6%95%B4%E5%90%88%E6%96%B9%E5%BC%8F%E8%88%87%E6%95%88%E8%83%BD%E6%AF%94%E8%BC%83%EF%BC%9A%E5%BE%9E%20CGI%20%E5%88%B0%20PHP-FPM%20%E7%9A%84%E6%BC%94%E9%80%B2 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F07%2F11%2FLAMP%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/01/31/git-delete-submodule/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/07/11/LAMP/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
