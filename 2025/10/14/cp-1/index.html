@@ -13,7 +13,7 @@
   
   <title>
     
-      NFV 與 SDN 之比較 
+      cp 證照 - Cloud Economics and Billing 
       
       
       |
@@ -147,25 +147,25 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">NFV 與 SDN 之比較</div>
+      <div class="post-title">cp 證照 - Cloud Economics and Billing</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-10-14 20:05:01
+          2025-10-14 21:04:06
         </span>
         
               <span class="post-tags">
                 <i class="iconfont icon-tags mr-10" title="Tags"></i>
                 
                 <span class="span--tag mr-8">
-                  <a href="/tags/5g/" title="5g">
-                    #5g
+                  <a href="/tags/aws/" title="aws">
+                    #aws
                   </a>
                 </span>
                 
                 <span class="span--tag mr-8">
-                  <a href="/tags/NFV/" title="NFV">
-                    #NFV
+                  <a href="/tags/cp/" title="cp">
+                    #cp
                   </a>
                 </span>
                 
@@ -173,91 +173,167 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="Network-Function-Virtualization-NFV"><a href="#Network-Function-Virtualization-NFV" class="headerlink" title="Network Function Virtualization(NFV)"></a>Network Function Virtualization(NFV)</h2><p>NFV 是一種利用虛擬化技術（virtualization），將原本異質的網路設備（heterogeneous network devices）整合到標準化的商用伺服器、交換器與儲存設備上的技術。換句話說，它把原本需要專用硬體的網路功能（例如防火牆、負載平衡器、路由器）改成軟體化（software-based）的形式，在虛擬環境中（像是容器）執行。</p>
-<h3 id="NFV-主要元素"><a href="#NFV-主要元素" class="headerlink" title="NFV 主要元素"></a>NFV 主要元素</h3><ol>
-<li>虛擬化網路功能（Virtualized Network Function，VNF）<ul>
-<li>指以軟體方式實作的網路功能，可以在 NFV 基礎設施（NFVI）上運行。</li>
-</ul>
-</li>
-<li>NFV 基礎設施（NFV Infrastructure, NFVI）<ul>
-<li>包含被虛擬化的運算（compute）、網路（network）與儲存（storage）資源。</li>
-</ul>
-</li>
-<li>NFV 管理與編排（NFV Management and Orchestration）<ul>
-<li>在 NFVI 上運行的軟體化網路功能（如防火牆、CDN 等），涵蓋實體與虛擬資源的協調與生命週期管理。</li>
-<li>聚焦於支援基礎設施虛擬化的軟體資源。</li>
-<li>負責 VNF（虛擬化網路功能）的生命週期管理。</li>
-</ul>
-</li>
+        <h2 id="Section-1-Fundamentals-of-pricing"><a href="#Section-1-Fundamentals-of-pricing" class="headerlink" title="Section 1: Fundamentals of pricing"></a>Section 1: Fundamentals of pricing</h2><h3 id="pricing-model"><a href="#pricing-model" class="headerlink" title="pricing model"></a>pricing model</h3><p>AWS 主要有三種基本的花費項目，包括:</p>
+<ol>
+<li>compute</li>
+<li>storage</li>
+<li>data transfer</li>
 </ol>
-<p><img src="/images/cloud/img21.png" alt="alt text"></p>
-<h3 id="NFV-在不同網路中的應用"><a href="#NFV-在不同網路中的應用" class="headerlink" title="NFV 在不同網路中的應用"></a>NFV 在不同網路中的應用</h3><ol>
-<li>家用與企業網路虛擬化 (Virtualization of Home &amp; Enterprise Networks)<ul>
-<li>功能：NAT、BNG（寬頻網關）、STB（機上盒）</li>
-<li>目的：讓企業或家庭網路設備以虛擬化形式運作，提高彈性與可管理性。</li>
+<h3 id="how-to-pay"><a href="#how-to-pay" class="headerlink" title="how to pay"></a>how to pay</h3><ol>
+<li>pay as you go</li>
+<li>pay less when you reserve, save up to 75 percen<ul>
+<li>Reserved Instances (RIs)<ul>
+<li>All Upfront Reserved Instance (AURI) → largest discount</li>
+<li>Partial Upfront Reserved Instance (PURI) → lower discounts</li>
+<li>No Upfront Payments Reserved Instance (NURI) → smaller discount</li>
 </ul>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">subgraph Cloud[&quot;Virtualization of Home &amp; Enterprise Networks&quot;]</span><br><span class="line">    NAT[NAT]</span><br><span class="line">    BNG[BNG / Broadband Network Gateway]</span><br><span class="line">    STB[STB Set-Top Box]</span><br><span class="line">    NFVI[NFV Infrastructure]</span><br><span class="line">end</span><br><span class="line">NAT --&gt; NFVI</span><br><span class="line">BNG --&gt; NFVI</span><br><span class="line">STB --&gt; NFVI</span><br></pre></td></tr></table></figure></li>
-<li>內容傳遞網路虛擬化 (Virtualization of Content Delivery Networks)<ul>
-<li>功能：CDN-1、CDN-2、CDN-3</li>
-<li>目的：虛擬化多個內容節點，提升資料傳遞效率與負載分散能力。</li>
+</li>
 </ul>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">subgraph Cloud[&quot;Virtualization of Content Delivery Networks&quot;]</span><br><span class="line">    CDN1[CDN-1]</span><br><span class="line">    CDN2[CDN-2]</span><br><span class="line">    CDN3[CDN-3]</span><br><span class="line">    NFVI[NFV Infrastructure]</span><br><span class="line">end</span><br><span class="line">CDN1 --&gt; NFVI</span><br><span class="line">CDN2 --&gt; NFVI</span><br><span class="line">CDN3 --&gt; NFVI</span><br></pre></td></tr></table></figure></li>
-<li>安全功能虛擬化 (Virtualization of Security Functions)<ul>
-<li>功能：防火牆（Firewall）、病毒掃描（Virus Scanner）、垃圾郵件偵測（Spam Detector）</li>
-<li>目的：以軟體形式實現安全機制，方便動態部署與更新。</li>
-</ul>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">subgraph Cloud[&quot;Virtualization of Security Functions&quot;]</span><br><span class="line">    FW[Firewall]</span><br><span class="line">    VS[Virus Scanner]</span><br><span class="line">    SP[Spam Detector]</span><br><span class="line">    NFVI[NFV Infrastructure]</span><br><span class="line">end</span><br><span class="line">FW --&gt; NFVI</span><br><span class="line">VS --&gt; NFVI</span><br><span class="line">SP --&gt; NFVI</span><br></pre></td></tr></table></figure></li>
-<li>行動核心網路虛擬化 (Virtualization of Mobile Core Network)<ul>
-<li>功能：MME、SGW、PGW</li>
-<li>目的：將行動網路核心模組（控制、閘道）虛擬化，降低硬體依賴、提升可擴展性。</li>
-</ul>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">subgraph Cloud[&quot;Virtualization of Mobile Core Network&quot;]</span><br><span class="line">    MME[MME]</span><br><span class="line">    SGW[SGW]</span><br><span class="line">    PGW[PGW]</span><br><span class="line">    NFVI[NFV Infrastructure]</span><br><span class="line">end</span><br><span class="line">MME --&gt; NFVI</span><br><span class="line">SGW --&gt; NFVI</span><br><span class="line">PGW --&gt; NFVI</span><br></pre></td></tr></table></figure></li>
-<li>家用與行動基地台虛擬化 (Virtualization of Home &amp; Mobile Base Stations)</li>
+</li>
+<li>pay less when you use more</li>
 </ol>
 <ul>
-<li>功能：LTE BS、3G BS、2G BS</li>
-<li>目的：以軟體方式模擬不同世代基地台，方便集中管理與多標準共存。   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    subgraph Cloud[&quot;Virtualization of Home &amp; Mobile Base Stations&quot;]</span><br><span class="line">        LTE[LTE BS]</span><br><span class="line">        _3G[3G BS]</span><br><span class="line">        _2G[2G BS]</span><br><span class="line">        NFVI[NFV Infrastructure]</span><br><span class="line">    end</span><br><span class="line">    LTE --&gt; NFVI</span><br><span class="line">    _3G --&gt; NFVI</span><br><span class="line">    _2G --&gt; NFVI</span><br></pre></td></tr></table></figure></li>
+<li>分級定價（Tiered pricing）：像是 Amazon S3、Amazon EBS、Amazon EFS 等服務，</li>
+<li>使用量越大，每 GB 的單價就越低。<br>多種儲存服務：可根據需求選擇不同方案，以進一步降低整體儲存成本。</li>
 </ul>
-<h3 id="NFV-vs-SDN"><a href="#NFV-vs-SDN" class="headerlink" title="NFV vs SDN"></a>NFV vs SDN</h3><ul>
-<li>NFV 與 SDN 是互補的（complementary）技術。</li>
-<li>NFV 提供了 SDN 可運行的虛擬化基礎架構（infrastructure）。<ul>
-<li>SDN 管「如何控制流量」，</li>
-<li>NFV 管「這些控制或服務跑在哪些虛擬資源上」</li>
+<ol start="4">
+<li>pay less as aws grow</li>
+<li>Services with no charge<ul>
+<li>完全不用錢<ul>
+<li>Amazon VPC</li>
+</ul>
+</li>
+<li>如果關聯其他服務就需要錢<ul>
+<li>Elastic Beanstalk</li>
+<li>Auto Scaling</li>
+<li>AWS CloudFormation</li>
+<li>IAM</li>
 </ul>
 </li>
 </ul>
-<table>
+</li>
+</ol>
+<h2 id="Section-2-Total-Cost-of-OwnershipIntroducing"><a href="#Section-2-Total-Cost-of-OwnershipIntroducing" class="headerlink" title="Section 2: Total Cost of OwnershipIntroducing"></a>Section 2: Total Cost of OwnershipIntroducing</h2><h3 id="Total-Cost-of-Ownership-TCO"><a href="#Total-Cost-of-Ownership-TCO" class="headerlink" title="Total Cost of Ownership (TCO)?"></a>Total Cost of Ownership (TCO)?</h3><ul>
+<li>是一種財務估算方式，用來識別系統的直接成本與間接成本。可以幫助：<ul>
+<li>比較成本：<ul>
+<li>用來比較在本地（on-premises）執行整個基礎架構環境或特定工作負載，與在 AWS 雲端上執行的成本差異。</li>
+</ul>
+</li>
+<li>預算與決策依據：<ul>
+<li>幫助規劃預算，並為遷移至雲端建立合理的商業理由（business case）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="AWS-Pricing-Calculator"><a href="#AWS-Pricing-Calculator" class="headerlink" title="AWS Pricing Calculator"></a>AWS Pricing Calculator</h3><ul>
+<li><strong>估算</strong>每月成本<br>預先了解在 AWS 上運行服務的每月預估費用。</li>
+<li>找出降低成本的機會<br>分析支出組成，找出可節省開銷的部分。</li>
+<li>在建置前進行方案建模<br>先模擬架構與資源配置，避免實際部署後超支。</li>
+<li>探索價格細節與計算方式<br>檢視估算背後的計價依據與單位成本。</li>
+<li>尋找符合需求的執行個體類型與合約方案<br>比較不同的 Instance 類型與付費條件（如 On-Demand、Reserved、Savings Plans）。</li>
+<li>命名並建立服務群組<br>可為估算命名，並依專案或功能分類不同服務群組，方便管理與比較。</li>
+</ul>
+<h2 id="AWS-Organizations"><a href="#AWS-Organizations" class="headerlink" title="AWS Organizations"></a>AWS Organizations</h2><h3 id="主要優點"><a href="#主要優點" class="headerlink" title="主要優點"></a>主要優點</h3><ul>
+<li>集中式管理多個帳號的存取政策<br>可在組織層級統一設定與管理 IAM 政策，簡化多帳號權限控管。</li>
+<li>控制對 AWS 服務的存取<br>可限制或允許特定帳號使用哪些 AWS 服務，提升安全性與治理能力。</li>
+<li>自動化帳號建立與管理<br>能自動建立新的 AWS 帳號並套用預設設定，方便大規模管理。</li>
+<li>整合帳單管理（Consolidated Billing）<br>將多個 AWS 帳號的費用集中管理與支付，方便追蹤總成本並享有量價折扣。</li>
+</ul>
+<p><img src="/images/AWS/cp/img1.png" alt="alt text"></p>
+<h3 id="Set-up-步驟"><a href="#Set-up-步驟" class="headerlink" title="Set up 步驟"></a>Set up 步驟</h3><ol>
+<li>Create Organization </li>
+<li>Create organizational units</li>
+<li>Create service control policies</li>
+<li>Test restrictions</li>
+</ol>
+<h2 id="AWS-Billing-and-Cost-Management"><a href="#AWS-Billing-and-Cost-Management" class="headerlink" title="AWS Billing and Cost Management"></a>AWS Billing and Cost Management</h2><ul>
+<li>支付 AWS 帳單: 管理所有帳號的付款方式與帳單資訊。</li>
+<li>監控使用量與支出: 即時追蹤你在各項服務上的使用情況與費用。</li>
+<li>設定預算與預測成本: 透過預算與預測功能，提前了解未來的支出趨勢，以便做好資金規劃。</li>
+</ul>
+<p>底下包含了:</p>
+<ol>
+<li>AWS Budgets</li>
+<li>AWS Cost and Usage Report: 了解長期的成本趨勢與使用模式(並非預估)</li>
+<li>AWS Cost Explore</li>
+</ol>
+<h2 id="Technical-support"><a href="#Technical-support" class="headerlink" title="Technical support"></a>Technical support</h2><h3 id="主動式指導（Proactive-guidance）"><a href="#主動式指導（Proactive-guidance）" class="headerlink" title="主動式指導（Proactive guidance）"></a>主動式指導（Proactive guidance）</h3><ul>
+<li>Technical Account Manager（TAM，技術帳戶經理）<ul>
+<li>TAM 是專屬於你的主要聯絡人，負責提供：<ul>
+<li>架構設計與最佳化建議</li>
+<li>專案部署與風險規劃指導</li>
+<li>持續性技術溝通與狀況追蹤</li>
+</ul>
+</li>
+<li>TAM 會協助你在規劃、部署、與持續營運 AWS 解決方案時保持穩定與高效。</li>
+</ul>
+</li>
+</ul>
+<h3 id="最佳實踐建議（Best-practices）"><a href="#最佳實踐建議（Best-practices）" class="headerlink" title="最佳實踐建議（Best practices）"></a>最佳實踐建議（Best practices）</h3><ul>
+<li>AWS Trusted Advisor（受信任顧問）<ul>
+<li>這是一個線上工具，相當於你的「雲端顧問」，能：<ul>
+<li>檢查系統設定是否符合 AWS 最佳實踐</li>
+<li>找出降低每月支出與提升效能的機會</li>
+<li>提升安全性與容錯能力（例如偵測未使用的資源、弱安全設定、或可升級的方案）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="帳號協助（Account-assistance）"><a href="#帳號協助（Account-assistance）" class="headerlink" title="帳號協助（Account assistance）"></a>帳號協助（Account assistance）</h3><ul>
+<li>AWS Support Concierge（支援禮賓服務）<ul>
+<li>負責處理帳務與帳號層級的非技術問題，例如：<ul>
+<li>帳單分析與費用查詢</li>
+<li>付款方式、帳號設定</li>
+<li>統合帳單或發票問題</li>
+</ul>
+</li>
+<li>Concierge 會提供快速且有效率的帳務支援，協助你釐清財務與帳號管理相關疑問。</li>
+</ul>
+</li>
+</ul>
+<h2 id="AWS-Support-提供四種支援方案"><a href="#AWS-Support-提供四種支援方案" class="headerlink" title="AWS Support 提供四種支援方案"></a>AWS Support 提供四種支援方案</h2><table>
 <thead>
 <tr>
-<th>項目</th>
-<th><strong>SDN（Software-Defined Networking）</strong></th>
-<th><strong>NFV（Network Function Virtualization）</strong></th>
+<th>支援方案</th>
+<th>適用對象</th>
+<th>主要特色</th>
+<th>適用情境</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>方法 (Method)</strong></td>
-<td>分離控制層（Control Plane）與資料層（Data Plane）。</td>
-<td>將原本依賴專用硬體（如路由器、防火牆、應用傳遞控制器）的網路功能，轉化為可在標準商用硬體（如 x86 伺服器）上運行的虛擬化軟體平台。</td>
+<td><strong>Basic Support（基本支援）</strong></td>
+<td>所有 AWS 使用者自動擁有</td>
+<td>- 24&#x2F;7 客服服務<br>- 學習資源（文件、白皮書、論壇）<br>- 六項 Trusted Advisor 核心檢查<br>- 個人健康儀表板（Personal Health Dashboard）</td>
+<td>初學者、學習與小型專案</td>
 </tr>
 <tr>
-<td><strong>效益 (Benefit)</strong></td>
-<td>透過集中化控制與可程式化管理，解決快速成長與分散式網路的管理複雜度問題。</td>
-<td>能根據需求在網路中靈活移動、擴充或縮減功能，避免新硬體部署的延遲與高成本負擔。</td>
+<td><strong>Developer Support（開發者支援）</strong></td>
+<td>測試或早期開發階段的使用者</td>
+<td>- 提供開發階段技術指導與支援<br>- 協助快速導入 AWS<br>- 適用於非正式環境或測試用途</td>
+<td>應用程式開發中、PoC 測試階段</td>
+</tr>
+<tr>
+<td><strong>Business Support（商業支援）</strong></td>
+<td>在 AWS 上執行<strong>生產環境</strong>的客戶</td>
+<td>- 24&#x2F;7 技術支援與架構建議<br>- 全面 Trusted Advisor 檢查<br>- 支援多項服務與高可用性架構<br>- 可聯絡 AWS Support 工程師</td>
+<td>正式上線系統、營運中應用</td>
+</tr>
+<tr>
+<td><strong>Enterprise Support（企業支援）</strong></td>
+<td>執行<strong>商業與關鍵任務系統</strong>的企業</td>
+<td>- 專屬 <strong>Technical Account Manager (TAM)</strong><br>- 主動管理與架構審查<br>- 專家協助部署與遷移<br>- 最佳實踐與效能優化建議</td>
+<td>關鍵業務、金融級、全球部署系統</td>
 </tr>
 </tbody></table>
-<h2 id="5G-Network"><a href="#5G-Network" class="headerlink" title="5G Network"></a>5G Network</h2><p>下一代的 5G 網路架構將帶來重大變革，使電信服務更加靈活，並允許可程式化的控制。這將促成以「客戶需求為導向」的新型服務，能同時滿足各類使用者與多樣化應用情境的需求。</p>
-<p>5G 網路的關鍵技術是 軟體定義網路（SDN） 與 網路功能虛擬化（NFV）：</p>
-<ul>
-<li>SDN 讓網路具備可程式化與開放性，大幅提升網路資源控制的靈活性與效率，以因應未來網路的快速成長與多樣化。</li>
-<li>NFV 透過網路功能的虛擬化，提供高度彈性的配置能力，加速網路服務的部署，並降低購置專用硬體的成本。</li>
-</ul>
 
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2025/10/13/cloud-note-2/" target="_self">
+              <a href="/2025/10/13/5g-1/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -266,21 +342,21 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-10-14 20:05:01
+              2025-10-14 21:04:06
             </span>
             
                   <span class="post-tags">
                     <i class="iconfont icon-tags mr-10" title="Tags"></i>
                     
                     <span class="span--tag mr-8">
-                      <a href="/tags/5g/" title="5g">
-                        #5g
+                      <a href="/tags/aws/" title="aws">
+                        #aws
                       </a>
                     </span>
                     
                     <span class="span--tag mr-8">
-                      <a href="/tags/NFV/" title="NFV">
-                        #NFV
+                      <a href="/tags/cp/" title="cp">
+                        #cp
                       </a>
                     </span>
                     
@@ -288,11 +364,6 @@
               
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2025/10/14/cp-1/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
@@ -306,7 +377,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Function-Virtualization-NFV"><span class="toc-text">Network Function Virtualization(NFV)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NFV-%E4%B8%BB%E8%A6%81%E5%85%83%E7%B4%A0"><span class="toc-text">NFV 主要元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NFV-%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%B6%B2%E8%B7%AF%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8"><span class="toc-text">NFV 在不同網路中的應用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NFV-vs-SDN"><span class="toc-text">NFV vs SDN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5G-Network"><span class="toc-text">5G Network</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-1-Fundamentals-of-pricing"><span class="toc-text">Section 1: Fundamentals of pricing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pricing-model"><span class="toc-text">pricing model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#how-to-pay"><span class="toc-text">how to pay</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-2-Total-Cost-of-OwnershipIntroducing"><span class="toc-text">Section 2: Total Cost of OwnershipIntroducing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Total-Cost-of-Ownership-TCO"><span class="toc-text">Total Cost of Ownership (TCO)?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AWS-Pricing-Calculator"><span class="toc-text">AWS Pricing Calculator</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AWS-Organizations"><span class="toc-text">AWS Organizations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%84%AA%E9%BB%9E"><span class="toc-text">主要優點</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set-up-%E6%AD%A5%E9%A9%9F"><span class="toc-text">Set up 步驟</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AWS-Billing-and-Cost-Management"><span class="toc-text">AWS Billing and Cost Management</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Technical-support"><span class="toc-text">Technical support</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%8B%95%E5%BC%8F%E6%8C%87%E5%B0%8E%EF%BC%88Proactive-guidance%EF%BC%89"><span class="toc-text">主動式指導（Proactive guidance）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AF%A6%E8%B8%90%E5%BB%BA%E8%AD%B0%EF%BC%88Best-practices%EF%BC%89"><span class="toc-text">最佳實踐建議（Best practices）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B3%E8%99%9F%E5%8D%94%E5%8A%A9%EF%BC%88Account-assistance%EF%BC%89"><span class="toc-text">帳號協助（Account assistance）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AWS-Support-%E6%8F%90%E4%BE%9B%E5%9B%9B%E7%A8%AE%E6%94%AF%E6%8F%B4%E6%96%B9%E6%A1%88"><span class="toc-text">AWS Support 提供四種支援方案</span></a></li></ol>
       
     </div>
   </div>
@@ -594,12 +665,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + NFV%20%E8%88%87%20SDN%20%E4%B9%8B%E6%AF%94%E8%BC%83 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F10%2F13%2F5g-1%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + cp%20%E8%AD%89%E7%85%A7%20-%20Cloud%20Economics%20and%20Billing + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F10%2F14%2Fcp-1%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/10/13/5g-1/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/10/14/cp-1/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
