@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      GitLab 與 Terraform 的協作，以及 Drift 的處理方式 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">GitLab 與 Terraform 的協作，以及 Drift 的處理方式</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-08-19 11:49:40
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/terraform/" title="terraform">
+                    #terraform
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>在基礎建設自動化的世界裡，<strong>Terraform</strong> 扮演著「基礎設施即程式碼（IaC）」的角色，而 <strong>GitLab</strong> 則像是它的管家，幫忙保存狀態、管理版本，甚至透過 pipeline 自動執行。這兩者的結合，讓團隊能夠在混亂的雲端環境裡維持秩序。</p>
+<p>但現實世界總不乏例外。當基礎設施的「真實狀態」和 Terraform 腦袋裡的 <code>.tfstate</code> 不一致時，就會產生所謂的 <strong>Terraform Drift</strong>。這種情況有點像是你明明把房間收好，但有人半夜偷偷把桌子移走，早上醒來你還以為桌子還在原位。</p>
+<hr>
+<h2 id="什麼是-Terraform-Drift"><a href="#什麼是-Terraform-Drift" class="headerlink" title="什麼是 Terraform Drift?"></a>什麼是 Terraform Drift?</h2><p>Terraform 的狀態檔 (<code>terraform.tfstate</code>) 就是一份「地圖」，上面記錄了 Terraform 管理的資源和它們的設定值。<br><strong>Drift</strong> 則是「地圖」和「真實世界」不同步時產生的落差。</p>
+<p>常見原因包括：</p>
+<ul>
+<li><strong>手動修改</strong>：有人直接在 AWS Console 點了幾下，結果 Terraform 並不知道。</li>
+<li><strong>外部系統干預</strong>：像監控服務或 CI&#x2F;CD 流程自動幫你改了一些配置。</li>
+<li><strong>雲端預設行為</strong>：例如安全群組自動增加規則、自動擴展調整參數。</li>
+</ul>
+<p>結果就是：Terraform 以為的狀態和實際狀態對不上。</p>
+<hr>
+<h2 id="如何處理-Terraform-Drift"><a href="#如何處理-Terraform-Drift" class="headerlink" title="如何處理 Terraform Drift?"></a>如何處理 Terraform Drift?</h2><p>那麼問題來了，發現 Drift 後該怎麼辦？</p>
+<ol>
+<li><p><strong>偵測 Drift</strong></p>
+<ul>
+<li><p>可以利用 <strong>GitLab Scheduled Pipeline</strong> 定期執行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">terraform init</span><br><span class="line">terraform plan -detailed-exitcode</span><br></pre></td></tr></table></figure></li>
+<li><p>如果 <code>plan</code> 回傳的 exit code ≠ 0，就代表 drift 出現。這時 pipeline 可以設為失敗，並自動通知團隊（例如丟 Slack、Email，甚至直接開 issue）。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>同步狀態</strong></p>
+<ul>
+<li>使用 <code>terraform plan -refresh-only</code>，更新 state，讓 Terraform 的腦袋和真實環境對齊。</li>
+</ul>
+</li>
+<li><p><strong>處理 drift</strong></p>
+<ul>
+<li><strong>如果遠端的改動比較合理</strong>：那就更新 <code>.tf</code> 檔案，納入版本控制。</li>
+<li><strong>如果是 Terraform 設定比較合理</strong>：直接 <code>terraform apply</code>，讓雲端基礎設施回到我們的 IaC 定義。</li>
+</ul>
+</li>
+</ol>
+<p>這樣做能確保「程式碼才是唯一真實來源（Single Source of Truth）」。</p>
+<hr>
+<h2 id="Terraform-與-GitLab-的整合"><a href="#Terraform-與-GitLab-的整合" class="headerlink" title="Terraform 與 GitLab 的整合"></a>Terraform 與 GitLab 的整合</h2><p>除了偵測 drift，GitLab 本身也能成為 Terraform 的好夥伴。</p>
+<ul>
+<li><strong>Terraform Backend</strong><br>GitLab 可以作為 Terraform 的 backend，安全地存放和版本控制 <code>.tfstate</code> 檔。透過 API，存取會自動加密，避免狀態檔洩漏或版本衝突。</li>
+<li><strong>Pipeline 整合</strong><br>GitLab CI&#x2F;CD pipeline 可以直接執行 <code>terraform plan</code>、<code>apply</code> 等命令，實現「程式碼提交 → Pipeline 驗證 → 自動佈署」。</li>
+<li><strong>Module 儲存</strong><br>GitLab Repo 也能充當 Terraform module registry。公司內部常用的模組可以統一放在 GitLab，跨專案引用。</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">module &quot;xm-stg-ses&quot; &#123;</span><br><span class="line">  source  = &quot;fox.25sprout.com/25sprout/ses-product/aws&quot;</span><br><span class="line">  version = &quot;0.0.0&quot;</span><br><span class="line"></span><br><span class="line">  product_name = &quot;xm&quot;</span><br><span class="line">  domain_name  = &quot;xm-stg.svy.do&quot;</span><br><span class="line">  project_name = &quot;surveycake-xm-stg&quot;</span><br><span class="line"></span><br><span class="line">  aws_region  = &quot;us-west-2&quot;</span><br><span class="line">  mail_sender = &quot;xm_stg@25demo.com&quot;</span><br><span class="line">  tags        = &#123;&quot;usage&quot;:&quot;xm staging&quot;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這樣每個專案只要透過 <code>module</code> 呼叫，就能快速套用標準化的基礎設施組件。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/07/11/LAMP/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-08-19 11:49:40
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/terraform/" title="terraform">
+                        #terraform
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/10/12/aurora-same-db-error/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Terraform-Drift"><span class="toc-text">什麼是 Terraform Drift?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%99%95%E7%90%86-Terraform-Drift"><span class="toc-text">如何處理 Terraform Drift?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Terraform-%E8%88%87-GitLab-%E7%9A%84%E6%95%B4%E5%90%88"><span class="toc-text">Terraform 與 GitLab 的整合</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + GitLab%20%E8%88%87%20Terraform%20%E7%9A%84%E5%8D%94%E4%BD%9C%EF%BC%8C%E4%BB%A5%E5%8F%8A%20Drift%20%E7%9A%84%E8%99%95%E7%90%86%E6%96%B9%E5%BC%8F + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F08%2F19%2Fterraform-drift%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/08/19/terraform-drift/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

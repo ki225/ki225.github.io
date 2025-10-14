@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      NFV 與 SDN 之比較 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">NFV 與 SDN 之比較</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-10-14 20:05:01
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/5g/" title="5g">
+                    #5g
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/NFV/" title="NFV">
+                    #NFV
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="Network-Function-Virtualization-NFV"><a href="#Network-Function-Virtualization-NFV" class="headerlink" title="Network Function Virtualization(NFV)"></a>Network Function Virtualization(NFV)</h2><p>NFV 是一種利用虛擬化技術（virtualization），將原本異質的網路設備（heterogeneous network devices）整合到標準化的商用伺服器、交換器與儲存設備上的技術。換句話說，它把原本需要專用硬體的網路功能（例如防火牆、負載平衡器、路由器）改成軟體化（software-based）的形式，在虛擬環境中（像是容器）執行。</p>
+<h3 id="NFV-主要元素"><a href="#NFV-主要元素" class="headerlink" title="NFV 主要元素"></a>NFV 主要元素</h3><ol>
+<li>虛擬化網路功能（Virtualized Network Function，VNF）<ul>
+<li>指以軟體方式實作的網路功能，可以在 NFV 基礎設施（NFVI）上運行。</li>
+</ul>
+</li>
+<li>NFV 基礎設施（NFV Infrastructure, NFVI）<ul>
+<li>包含被虛擬化的運算（compute）、網路（network）與儲存（storage）資源。</li>
+</ul>
+</li>
+<li>NFV 管理與編排（NFV Management and Orchestration）<ul>
+<li>在 NFVI 上運行的軟體化網路功能（如防火牆、CDN 等），涵蓋實體與虛擬資源的協調與生命週期管理。</li>
+<li>聚焦於支援基礎設施虛擬化的軟體資源。</li>
+<li>負責 VNF（虛擬化網路功能）的生命週期管理。</li>
+</ul>
+</li>
+</ol>
+<p><img src="/images/cloud/img21.png" alt="alt text"></p>
+<h3 id="NFV-在不同網路中的應用"><a href="#NFV-在不同網路中的應用" class="headerlink" title="NFV 在不同網路中的應用"></a>NFV 在不同網路中的應用</h3><ol>
+<li>家用與企業網路虛擬化 (Virtualization of Home &amp; Enterprise Networks)<ul>
+<li>功能：NAT、BNG（寬頻網關）、STB（機上盒）</li>
+<li>目的：讓企業或家庭網路設備以虛擬化形式運作，提高彈性與可管理性。</li>
+</ul>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">subgraph Cloud[&quot;Virtualization of Home &amp; Enterprise Networks&quot;]</span><br><span class="line">    NAT[NAT]</span><br><span class="line">    BNG[BNG / Broadband Network Gateway]</span><br><span class="line">    STB[STB Set-Top Box]</span><br><span class="line">    NFVI[NFV Infrastructure]</span><br><span class="line">end</span><br><span class="line">NAT --&gt; NFVI</span><br><span class="line">BNG --&gt; NFVI</span><br><span class="line">STB --&gt; NFVI</span><br></pre></td></tr></table></figure></li>
+<li>內容傳遞網路虛擬化 (Virtualization of Content Delivery Networks)<ul>
+<li>功能：CDN-1、CDN-2、CDN-3</li>
+<li>目的：虛擬化多個內容節點，提升資料傳遞效率與負載分散能力。</li>
+</ul>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">subgraph Cloud[&quot;Virtualization of Content Delivery Networks&quot;]</span><br><span class="line">    CDN1[CDN-1]</span><br><span class="line">    CDN2[CDN-2]</span><br><span class="line">    CDN3[CDN-3]</span><br><span class="line">    NFVI[NFV Infrastructure]</span><br><span class="line">end</span><br><span class="line">CDN1 --&gt; NFVI</span><br><span class="line">CDN2 --&gt; NFVI</span><br><span class="line">CDN3 --&gt; NFVI</span><br></pre></td></tr></table></figure></li>
+<li>安全功能虛擬化 (Virtualization of Security Functions)<ul>
+<li>功能：防火牆（Firewall）、病毒掃描（Virus Scanner）、垃圾郵件偵測（Spam Detector）</li>
+<li>目的：以軟體形式實現安全機制，方便動態部署與更新。</li>
+</ul>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">subgraph Cloud[&quot;Virtualization of Security Functions&quot;]</span><br><span class="line">    FW[Firewall]</span><br><span class="line">    VS[Virus Scanner]</span><br><span class="line">    SP[Spam Detector]</span><br><span class="line">    NFVI[NFV Infrastructure]</span><br><span class="line">end</span><br><span class="line">FW --&gt; NFVI</span><br><span class="line">VS --&gt; NFVI</span><br><span class="line">SP --&gt; NFVI</span><br></pre></td></tr></table></figure></li>
+<li>行動核心網路虛擬化 (Virtualization of Mobile Core Network)<ul>
+<li>功能：MME、SGW、PGW</li>
+<li>目的：將行動網路核心模組（控制、閘道）虛擬化，降低硬體依賴、提升可擴展性。</li>
+</ul>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">subgraph Cloud[&quot;Virtualization of Mobile Core Network&quot;]</span><br><span class="line">    MME[MME]</span><br><span class="line">    SGW[SGW]</span><br><span class="line">    PGW[PGW]</span><br><span class="line">    NFVI[NFV Infrastructure]</span><br><span class="line">end</span><br><span class="line">MME --&gt; NFVI</span><br><span class="line">SGW --&gt; NFVI</span><br><span class="line">PGW --&gt; NFVI</span><br></pre></td></tr></table></figure></li>
+<li>家用與行動基地台虛擬化 (Virtualization of Home &amp; Mobile Base Stations)</li>
+</ol>
+<ul>
+<li>功能：LTE BS、3G BS、2G BS</li>
+<li>目的：以軟體方式模擬不同世代基地台，方便集中管理與多標準共存。   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    subgraph Cloud[&quot;Virtualization of Home &amp; Mobile Base Stations&quot;]</span><br><span class="line">        LTE[LTE BS]</span><br><span class="line">        _3G[3G BS]</span><br><span class="line">        _2G[2G BS]</span><br><span class="line">        NFVI[NFV Infrastructure]</span><br><span class="line">    end</span><br><span class="line">    LTE --&gt; NFVI</span><br><span class="line">    _3G --&gt; NFVI</span><br><span class="line">    _2G --&gt; NFVI</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="NFV-vs-SDN"><a href="#NFV-vs-SDN" class="headerlink" title="NFV vs SDN"></a>NFV vs SDN</h3><ul>
+<li>NFV 與 SDN 是互補的（complementary）技術。</li>
+<li>NFV 提供了 SDN 可運行的虛擬化基礎架構（infrastructure）。<ul>
+<li>SDN 管「如何控制流量」，</li>
+<li>NFV 管「這些控制或服務跑在哪些虛擬資源上」</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th><strong>SDN（Software-Defined Networking）</strong></th>
+<th><strong>NFV（Network Function Virtualization）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>方法 (Method)</strong></td>
+<td>分離控制層（Control Plane）與資料層（Data Plane）。</td>
+<td>將原本依賴專用硬體（如路由器、防火牆、應用傳遞控制器）的網路功能，轉化為可在標準商用硬體（如 x86 伺服器）上運行的虛擬化軟體平台。</td>
+</tr>
+<tr>
+<td><strong>效益 (Benefit)</strong></td>
+<td>透過集中化控制與可程式化管理，解決快速成長與分散式網路的管理複雜度問題。</td>
+<td>能根據需求在網路中靈活移動、擴充或縮減功能，避免新硬體部署的延遲與高成本負擔。</td>
+</tr>
+</tbody></table>
+<h2 id="5G-Network"><a href="#5G-Network" class="headerlink" title="5G Network"></a>5G Network</h2><p>下一代的 5G 網路架構將帶來重大變革，使電信服務更加靈活，並允許可程式化的控制。這將促成以「客戶需求為導向」的新型服務，能同時滿足各類使用者與多樣化應用情境的需求。</p>
+<p>5G 網路的關鍵技術是 軟體定義網路（SDN） 與 網路功能虛擬化（NFV）：</p>
+<ul>
+<li>SDN 讓網路具備可程式化與開放性，大幅提升網路資源控制的靈活性與效率，以因應未來網路的快速成長與多樣化。</li>
+<li>NFV 透過網路功能的虛擬化，提供高度彈性的配置能力，加速網路服務的部署，並降低購置專用硬體的成本。</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/10/13/cloud-note-2/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-10-14 20:05:01
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/5g/" title="5g">
+                        #5g
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/NFV/" title="NFV">
+                        #NFV
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Function-Virtualization-NFV"><span class="toc-text">Network Function Virtualization(NFV)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NFV-%E4%B8%BB%E8%A6%81%E5%85%83%E7%B4%A0"><span class="toc-text">NFV 主要元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NFV-%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%B6%B2%E8%B7%AF%E4%B8%AD%E7%9A%84%E6%87%89%E7%94%A8"><span class="toc-text">NFV 在不同網路中的應用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NFV-vs-SDN"><span class="toc-text">NFV vs SDN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5G-Network"><span class="toc-text">5G Network</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + NFV%20%E8%88%87%20SDN%20%E4%B9%8B%E6%AF%94%E8%BC%83 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F10%2F13%2F5g-1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/10/13/5g-1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
