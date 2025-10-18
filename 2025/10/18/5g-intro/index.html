@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      行動通訊網路概述 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">行動通訊網路概述</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-10-18 20:58:55
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/networking/" title="networking">
+                    #networking
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/5g/" title="5g">
+                    #5g
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="行動通訊技術演進總覽表"><a href="#行動通訊技術演進總覽表" class="headerlink" title="行動通訊技術演進總覽表"></a>行動通訊技術演進總覽表</h2><table>
+<thead>
+<tr>
+<th>世代</th>
+<th>名稱</th>
+<th>全名</th>
+<th>主要技術</th>
+<th>傳輸方式</th>
+<th>主要特色</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1G</strong></td>
+<td>Analog Cellular</td>
+<td>第一代行動通信系統</td>
+<td>AMPS（美國）、NMT（北歐）等</td>
+<td><strong>類比 (Analog)</strong></td>
+<td>只能進行語音通話、品質差、無加密。</td>
+<td>手機初始時代（1980s），每通話需專用頻道。</td>
+</tr>
+<tr>
+<td><strong>2G</strong></td>
+<td><strong>GSM</strong></td>
+<td>Global System for Mobile Communications</td>
+<td>TDMA、FDMA</td>
+<td><strong>數位 (Digital)</strong></td>
+<td>支援語音、簡訊 (SMS)、漫遊與基本資料傳輸。</td>
+<td>首個全球化的行動標準。</td>
+</tr>
+<tr>
+<td><strong>2.5G</strong></td>
+<td><strong>GPRS</strong></td>
+<td>General Packet Radio Service</td>
+<td>封包交換 (Packet Switching)</td>
+<td><strong>混合（電路＋封包）</strong></td>
+<td>新增封包數據傳輸，實現初步行動上網。</td>
+<td>可達約 56–114 kbps。</td>
+</tr>
+<tr>
+<td><strong>3G</strong></td>
+<td><strong>UMTS</strong></td>
+<td>Universal Mobile Telecommunications System</td>
+<td>WCDMA</td>
+<td><strong>全封包 (Packet Switching)</strong></td>
+<td>同時支援語音與高速資料（影像、網頁、串流）。</td>
+<td>速率達 384 kbps–2 Mbps。</td>
+</tr>
+<tr>
+<td><strong>4G</strong></td>
+<td><strong>LTE</strong></td>
+<td>Long Term Evolution</td>
+<td>OFDMA、SC-FDMA</td>
+<td><strong>All-IP (全封包)</strong></td>
+<td>高速行動網路、低延遲、支援 VoLTE。</td>
+<td>實現寬頻化與智慧手機時代。</td>
+</tr>
+<tr>
+<td><strong>4G+</strong></td>
+<td><strong>LTE-A</strong></td>
+<td>LTE-Advanced</td>
+<td>載波聚合、MIMO、多天線</td>
+<td><strong>All-IP (全封包)</strong></td>
+<td>更高傳輸速率（上看 1 Gbps）、更佳頻譜效率。</td>
+<td>為 5G 的過渡階段技術。</td>
+</tr>
+</tbody></table>
+<h2 id="5G頻段特性"><a href="#5G頻段特性" class="headerlink" title="5G頻段特性"></a>5G頻段特性</h2><table>
+<thead>
+<tr>
+<th>類別</th>
+<th><strong>低頻段 (Low Band)</strong></th>
+<th><strong>中頻段 (Mid Band)</strong></th>
+<th><strong>高頻段 (High Band &#x2F; mmWave)</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>頻段區間</strong></td>
+<td>&lt; 2 GHz</td>
+<td>2 GHz ～ 6 GHz</td>
+<td>&gt; 6 GHz（通常為毫米波 mmWave 頻段）</td>
+</tr>
+<tr>
+<td><strong>代表頻段</strong></td>
+<td>700 MHz、900 MHz、1.8 GHz</td>
+<td>3.3 ～ 4.2 GHz、4.4 ～ 5.0 GHz</td>
+<td>24.25 ～ 29.5 GHz、37 ～ 43.5 GHz</td>
+</tr>
+<tr>
+<td><strong>主要支援特性</strong></td>
+<td>eMBB、mMTC</td>
+<td>eMBB、URLLC、mMTC</td>
+<td>eMBB（主打高速）</td>
+</tr>
+<tr>
+<td><strong>主要功能</strong></td>
+<td>廣域涵蓋、良好穿透</td>
+<td><strong>訊號涵蓋 + 系統容量平衡</strong></td>
+<td><strong>超高頻寬、超高速率</strong></td>
+</tr>
+<tr>
+<td><strong>資料速率</strong></td>
+<td>幾十 Mbps</td>
+<td>百 Mbps ～ 1 Gbps</td>
+<td>可達 10 ～ 20 Gbps</td>
+</tr>
+<tr>
+<td><strong>涵蓋範圍</strong></td>
+<td>最廣（單站可覆蓋數公里）</td>
+<td>中等（城市區域）</td>
+<td>最小（數十公尺至數百公尺）</td>
+</tr>
+<tr>
+<td><strong>部屬時期</strong></td>
+<td>初期（先行覆蓋）</td>
+<td>初期 ～ 中期</td>
+<td>中期 ～ 晚期</td>
+</tr>
+<tr>
+<td><strong>部屬區域</strong></td>
+<td>郊區、廣域服務區</td>
+<td>人口密集區（市中心、商圈）</td>
+<td>特定地點（體育館、車站、機場）</td>
+</tr>
+<tr>
+<td><strong>基站形式</strong></td>
+<td>大型宏基站 (Macro Cell)</td>
+<td>大型基地台 + 街道小型基地台 (Small Cell)</td>
+<td>室內&#x2F;街道級小型基地台</td>
+</tr>
+<tr>
+<td><strong>優點</strong></td>
+<td>穿透力強、覆蓋廣</td>
+<td>傳輸速度與覆蓋兼顧</td>
+<td>傳輸速率極高、延遲最低</td>
+</tr>
+<tr>
+<td><strong>缺點</strong></td>
+<td>頻寬有限、速率較低</td>
+<td>成本中等、干擾需控管</td>
+<td>穿透力弱、需高密度布建</td>
+</tr>
+</tbody></table>
+<h2 id="5G-三大應用場景比較表"><a href="#5G-三大應用場景比較表" class="headerlink" title="5G 三大應用場景比較表"></a>5G 三大應用場景比較表</h2><table>
+<thead>
+<tr>
+<th>名稱</th>
+<th>全名</th>
+<th>中文名稱</th>
+<th>主要特色</th>
+<th>代表應用</th>
+<th>技術重點</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>eMBB</strong></td>
+<td>enhanced Mobile Broadband</td>
+<td>增強型行動寬頻</td>
+<td>高速率、大頻寬、高用戶密度</td>
+<td>4K&#x2F;8K 串流影音、雲端遊戲、AR&#x2F;VR、遠距教育</td>
+<td>使用 <strong>中&#x2F;高頻段</strong>，強調<strong>頻寬提升</strong>與<strong>用戶體驗</strong></td>
+</tr>
+<tr>
+<td><strong>URLLC</strong></td>
+<td>Ultra-Reliable and Low-Latency Communication</td>
+<td>超高可靠低延遲通訊</td>
+<td>延遲極低（&lt;1 毫秒）、可靠性極高（99.999%）</td>
+<td>自駕車、遠距手術、智慧工廠、電網控制</td>
+<td>核心為<strong>低延遲協定設計、邊緣運算 (MEC)</strong>、網路切片</td>
+</tr>
+<tr>
+<td><strong>mMTC</strong></td>
+<td>massive Machine-Type Communication</td>
+<td>大規模機器型通訊</td>
+<td>支援<strong>大量裝置連接</strong>（百萬級&#x2F;km²）</td>
+<td>智慧城市、智慧電錶、農業感測、環境監控</td>
+<td>著重<strong>省電、長連接時間、廣覆蓋</strong></td>
+</tr>
+</tbody></table>
+<h2 id="5G-核心網路架構演進"><a href="#5G-核心網路架構演進" class="headerlink" title="5G 核心網路架構演進"></a>5G 核心網路架構演進</h2><p>在 5G core network 中, 以 CUPS 技術將控制面(Control Plane)與使用者面(User Plane)切割，控制信令集中於核心，資料傳輸則就近於邊緣處理，提升速度與靈活性。</p>
+<table>
+<thead>
+<tr>
+<th>技術名稱</th>
+<th>全名</th>
+<th>中文名稱</th>
+<th>核心概念</th>
+<th>主要優點</th>
+<th>實際應用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>SBA</strong></td>
+<td>Service-Based Architecture</td>
+<td>服務化架構</td>
+<td>將核心網路功能以<strong>服務形式（Service）</strong> 模組化與 API 化，透過 HTTP&#x2F;REST 介面彼此通訊。</td>
+<td>網路功能軟體化、可虛擬化部署、開發敏捷性高。</td>
+<td>提供快速擴展與更新，例如 AMF、SMF、UPF 可獨立升級。</td>
+</tr>
+<tr>
+<td><strong>CUPS</strong></td>
+<td>Control and User Plane Separation</td>
+<td>控制面與使用者面分離</td>
+<td>將<strong>控制面 (Control Plane)</strong> 與<strong>使用者面 (User Plane)</strong> 拆開部署。</td>
+<td>支援<strong>分散式部署</strong>（中央與邊緣資料中心）、減少延遲。</td>
+<td>可在邊緣部署 UPF，加速自駕車、AR&#x2F;VR 等低延遲服務。</td>
+</tr>
+<tr>
+<td><strong>Network Slicing</strong></td>
+<td>—</td>
+<td>網路切片</td>
+<td>將一個實體網路切成多個<strong>虛擬、獨立的子網 (Slice)</strong>。</td>
+<td>根據應用需求客製化 QoS、延遲、頻寬等參數。</td>
+<td>不同切片支援不同服務，如 eMBB、URLLC、mMTC。</td>
+</tr>
+</tbody></table>
+<p><img src="/images/5g/img1.png" alt="alt text"></p>
+<h3 id="4G-EPC-vs-5G-Core-功能拆分與演進對照表"><a href="#4G-EPC-vs-5G-Core-功能拆分與演進對照表" class="headerlink" title="4G EPC vs 5G Core 功能拆分與演進對照表"></a>4G EPC vs 5G Core 功能拆分與演進對照表</h3><table>
+<thead>
+<tr>
+<th>類別</th>
+<th><strong>4G (EPC)</strong> 元件</th>
+<th><strong>5G (5GC)</strong> 對應元件</th>
+<th><strong>功能說明 &#x2F; 技術演進重點</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>架構形式</strong></td>
+<td>封閉式功能模組 (Box-based)</td>
+<td><strong>SBA (Service-Based Architecture)</strong></td>
+<td>5G 改採<strong>服務導向架構</strong>，所有網路功能以 API 形式溝通，支援虛擬化與彈性部署。</td>
+</tr>
+<tr>
+<td><strong>控制與使用者分離</strong></td>
+<td>EPC 多為集中式架構</td>
+<td><strong>CUPS (Control and User Plane Separation)</strong></td>
+<td>5G 完全實現控制面與使用者面分離，可分散至核心與邊緣資料中心。</td>
+</tr>
+<tr>
+<td><strong>接入與移動管理</strong></td>
+<td>MME (Mobility Management Entity)</td>
+<td><strong>AMF (Access and Mobility Management Function)</strong></td>
+<td>管理 UE 註冊、移動性與連線狀態。由 4G 的 MME 控制面拆出。</td>
+</tr>
+<tr>
+<td><strong>會話與承載管理</strong></td>
+<td>MME + SGW-C + PGW-C</td>
+<td><strong>SMF (Session Management Function)</strong></td>
+<td>負責建立、修改與釋放 PDU Session，管理 IP 位址與 QoS。由 4G 的 S-GW&#x2F;P-GW 控制面功能整合而成。</td>
+</tr>
+<tr>
+<td><strong>資料傳輸面</strong></td>
+<td>SGW-U + PGW-U</td>
+<td><strong>UPF (User Plane Function)</strong></td>
+<td>負責用戶資料封包轉送、路由、封包檢查，可就近於邊緣部署。為 5G CUPS 的核心成果。</td>
+</tr>
+<tr>
+<td><strong>用戶驗證與身分管理</strong></td>
+<td>HSS (Home Subscriber Server)</td>
+<td><strong>UDM (Unified Data Management)</strong> + <strong>AUSF (Authentication Server Function)</strong></td>
+<td>5G 將使用者資料與認證職能拆開：<br>• UDM：管理訂閱資料<br>• AUSF：處理認證請求與安全控制。</td>
+</tr>
+<tr>
+<td><strong>策略控制</strong></td>
+<td>PCRF (Policy and Charging Rules Function)</td>
+<td><strong>PCF (Policy Control Function)</strong></td>
+<td>管理服務品質 (QoS) 與流量策略，整合至 SBA 架構中。</td>
+</tr>
+<tr>
+<td><strong>網路功能註冊與發現</strong></td>
+<td>無對應 (固定連線)</td>
+<td><strong>NRF (NF Repository Function)</strong></td>
+<td>負責登錄與查詢各網路功能（NF）服務，支援動態擴展與負載均衡。</td>
+</tr>
+<tr>
+<td><strong>網路切片選擇</strong></td>
+<td>無對應</td>
+<td><strong>NSSF (Network Slice Selection Function)</strong></td>
+<td>決定 UE 要連入哪一個網路切片（如 eMBB、URLLC、mMTC）。</td>
+</tr>
+<tr>
+<td><strong>服務暴露介面</strong></td>
+<td>無對應</td>
+<td><strong>NEF (Network Exposure Function)</strong></td>
+<td>提供外部應用 (如第三方服務) 安全訪問網路能力的 API。</td>
+</tr>
+<tr>
+<td><strong>計費與政策整合</strong></td>
+<td>PCRF + OCS</td>
+<td><strong>PCF + UDM + NEF</strong></td>
+<td>5G 中的策略與收費由多個功能協同處理，提升彈性與安全性。</td>
+</tr>
+</tbody></table>
+<p><img src="/images/5g/img2.png" alt="alt text"></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/10/14/cp-2/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-10-18 20:58:55
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/networking/" title="networking">
+                        #networking
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/5g/" title="5g">
+                        #5g
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E5%8B%95%E9%80%9A%E8%A8%8A%E6%8A%80%E8%A1%93%E6%BC%94%E9%80%B2%E7%B8%BD%E8%A6%BD%E8%A1%A8"><span class="toc-text">行動通訊技術演進總覽表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5G%E9%A0%BB%E6%AE%B5%E7%89%B9%E6%80%A7"><span class="toc-text">5G頻段特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5G-%E4%B8%89%E5%A4%A7%E6%87%89%E7%94%A8%E5%A0%B4%E6%99%AF%E6%AF%94%E8%BC%83%E8%A1%A8"><span class="toc-text">5G 三大應用場景比較表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5G-%E6%A0%B8%E5%BF%83%E7%B6%B2%E8%B7%AF%E6%9E%B6%E6%A7%8B%E6%BC%94%E9%80%B2"><span class="toc-text">5G 核心網路架構演進</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4G-EPC-vs-5G-Core-%E5%8A%9F%E8%83%BD%E6%8B%86%E5%88%86%E8%88%87%E6%BC%94%E9%80%B2%E5%B0%8D%E7%85%A7%E8%A1%A8"><span class="toc-text">4G EPC vs 5G Core 功能拆分與演進對照表</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%A1%8C%E5%8B%95%E9%80%9A%E8%A8%8A%E7%B6%B2%E8%B7%AF%E6%A6%82%E8%BF%B0 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F10%2F18%2F5g-intro%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/10/18/5g-intro/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
