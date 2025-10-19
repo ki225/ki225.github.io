@@ -151,7 +151,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-10-19 19:34:00
+          2025-10-20 00:04:10
         </span>
         
               <span class="post-tags">
@@ -813,6 +813,102 @@
 </tbody></table>
 <p>隨著 SINR 增加（訊號變清晰），BER 以指數方式下降</p>
 <p><img src="/images/wireless/img1.png" alt="alt text"></p>
+<h2 id="通道模型-Channel-models"><a href="#通道模型-Channel-models" class="headerlink" title="通道模型(Channel models)"></a>通道模型(Channel models)</h2><h3 id="analog-signal-model"><a href="#analog-signal-model" class="headerlink" title="analog signal model"></a>analog signal model</h3><table>
+<thead>
+<tr>
+<th>模型名稱</th>
+<th>假設條件</th>
+<th>數學表達式 &#x2F; 分布</th>
+<th>通道特性</th>
+<th>適用環境</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>AWGN（Additive White Gaussian Noise）模型</strong></td>
+<td>- 傳輸功率與衰減固定不變<br>- 雜訊為時間上不相關的高斯白雜訊<br>- 有 line-of-sight(直接通訊)</td>
+<td>( r(t) &#x3D; s(t) + n(t) )<br>其中：<br>(r(t))：接收訊號<br>(s(t))：傳送訊號<br>(n(t))：白高斯雜訊</td>
+<td>- SNR 為常數<br>- 僅考慮雜訊，不考慮多路徑<br>- 理想化模型（基準情境）</td>
+<td>自由空間、理論模擬、基準測試</td>
+</tr>
+<tr>
+<td><strong>Rayleigh Fading（瑞利衰落）模型</strong></td>
+<td>- 無直視路徑（NLoS）<br>- 訊號由多條反射路徑隨機疊加</td>
+<td>振幅服從 <strong>Rayleigh 分布</strong></td>
+<td>- 多路徑效應明顯<br>- 訊號強度快速變化（深度衰落頻繁）</td>
+<td>都市高樓區、室內環境</td>
+</tr>
+<tr>
+<td><strong>Rice Fading（萊斯衰落）模型</strong></td>
+<td>- 有一條主導直視路徑（LoS）+ 多條反射路徑</td>
+<td>振幅服從 <strong>Rice 分布</strong><br>(K) 因子表示 LoS 與多路徑能量比</td>
+<td>- 同樣包含多路徑，但有強主徑分量<br>- 較穩定，衰落程度較低<br>- 可以算是前兩者的混合</td>
+<td>開放區域、有明顯 LoS 的場景（如基地台可視）</td>
+</tr>
+</tbody></table>
+<h3 id="digital-model"><a href="#digital-model" class="headerlink" title="digital model"></a>digital model</h3><p>只把模型分成兩種狀態，例如 Binary Symmetric Channel (BSC)，只關心「位元是否正確接收」，可簡化成：</p>
+<ul>
+<li>每個位元有固定錯誤機率 𝑝</li>
+<li>各位元錯誤彼此獨立</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>狀態</th>
+<th>概率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>傳對（bit 保持不變）</td>
+<td>(1 - p)</td>
+</tr>
+<tr>
+<td>傳錯（bit 翻轉）</td>
+<td>(p)</td>
+</tr>
+</tbody></table>
+<h3 id="現實狀況如何應對"><a href="#現實狀況如何應對" class="headerlink" title="現實狀況如何應對?"></a>現實狀況如何應對?</h3><p>上面提到了很多模型理論，但事實上現實世界是極端的，不可能存在理論上的 wireless channel。所以現實世界在硬體已經無法再提升的情況下，為了降低通道導致的錯誤率，軟體層面會採用：</p>
+<table>
+<thead>
+<tr>
+<th>技術</th>
+<th>目的</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>FEC (Forward Error Correction)</strong></td>
+<td>為了預防</td>
+<td>在傳輸前加入冗餘位元，讓接收端可自動修正錯誤</td>
+</tr>
+<tr>
+<td><strong>ARQ (Automatic Repeat Request)</strong></td>
+<td>事後補救</td>
+<td>發現錯誤時要求重新傳輸（常與 FEC 結合成 Hybrid ARQ）</td>
+</tr>
+</tbody></table>
+<h2 id="收發機設計-Transceiver-Design"><a href="#收發機設計-Transceiver-Design" class="headerlink" title="收發機設計(Transceiver Design)"></a>收發機設計(Transceiver Design)</h2><p>在前面的章節介紹了調變的方式、模型通道，這邊要來做最後的總結，也就是收發機設計的核心目標。</p>
+<h3 id="調變方式選擇與取捨"><a href="#調變方式選擇與取捨" class="headerlink" title="調變方式選擇與取捨"></a>調變方式選擇與取捨</h3><p>我們需要根據當下條件，適時選擇合適的調變技術，這些調件包含：</p>
+<ul>
+<li>所需資料率（Data Rate）</li>
+<li>可達符號率（Symbol Rate）</li>
+<li>實作複雜度（Implementation Complexity）</li>
+<li>允許錯誤率（BER 要求）</li>
+<li>通道特性（Channel Conditions）</li>
+</ul>
+<p>而調變需要注意符號率與資料率的取捨（Trade-offs），因為調變方式會影響功率消耗。當傳得越快（高 symbol rate）可更快進入休眠以省電，但高資料率也可能導致錯誤率上升與功耗增加。</p>
+<ul>
+<li>Symbol Rate 符號率：決定每秒發送的符號數；每個符號可攜帶多個位元。例如同樣符號率下，QPSK 資料率是 BPSK 的兩倍：<ul>
+<li>BPSK → 1 符號 &#x3D; 1 位元，可以代表 2 個情況</li>
+<li>QPSK → 1 符號 &#x3D; 2 位元，可以代表 4 個情況</li>
+<li>8PSK → 1 符號 &#x3D; 3 位元，可以代表 8 個情況</li>
+<li>16APSK → 1 符號 &#x3D; 4 位元，可以代表 16 個情況</li>
+<li>32APSK → 1 符號 &#x3D; 5 位元，可以代表 32 個情況</li>
+</ul>
+</li>
+</ul>
+<h3 id="說明"><a href="#說明" class="headerlink" title="說明"></a>說明</h3><p>FEC 1&#x2F;4 代表 4 個 bit 只有一個傳 data，其他容錯用，所以當 channel 不好的時候就可以選這個。C&#x2F;N [dB]為達到特定 BER（如 10⁻⁷）所需的最小載雜比。數值越高，表示對通道品質要求越高。</p>
+<p>所以當環境極好時，就可以調到32APSK的最後一個選項，實現高速傳輸</p>
+<p><img src="/images/wireless/img3.png" alt="alt text"></p>
 
       </div>
       
@@ -828,7 +924,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-10-19 19:34:00
+              2025-10-20 00:04:10
             </span>
             
                   <span class="post-tags">
@@ -869,7 +965,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Frequency-bands-%E9%A0%BB%E5%B8%B6%E8%88%87%E9%A0%BB%E8%AD%9C%E9%85%8D%E7%BD%AE"><span class="toc-text">Frequency bands 頻帶與頻譜配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%84%A1%E7%B7%9A%E9%9B%BB%E9%A0%BB%E8%AD%9C%E5%88%86%E9%A1%9E%EF%BC%88Radio-Spectrum%EF%BC%89"><span class="toc-text">無線電頻譜分類（Radio Spectrum）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ISM-bands"><span class="toc-text">ISM bands</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Modulation-%E8%AA%BF%E8%AE%8A%E6%8A%80%E8%A1%93"><span class="toc-text">Modulation 調變技術</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E7%84%A1%E7%B7%9A%E9%9B%BB%E6%B3%A2%E5%82%B3%E9%80%81%E8%B3%87%E6%96%99%EF%BC%88Transmitting-Data-Using-Radio-Waves%EF%BC%89"><span class="toc-text">利用無線電波傳送資料（Transmitting Data Using Radio Waves）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AA%BF%E8%AE%8A%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%83%B3%E6%B3%95%EF%BC%88Modulation-Concept%EF%BC%89"><span class="toc-text">調變的基本想法（Modulation Concept）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A6%8B%E7%9A%84%E6%95%B8%E4%BD%8D%E8%AA%BF%E8%AE%8A%E6%96%B9%E5%BC%8F%EF%BC%88Digital-Keying-Examples%EF%BC%89"><span class="toc-text">常見的數位調變方式（Digital Keying Examples）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E7%AB%AF%E7%9A%84%E4%BB%BB%E5%8B%99%EF%BC%9A%E8%A7%A3%E8%AA%BF%EF%BC%88Demodulation%EF%BC%89"><span class="toc-text">接收端的任務：解調（Demodulation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E8%AA%BF%E7%9A%84%E6%8C%91%E6%88%B0%EF%BC%88Demodulation-Problems%EF%BC%89"><span class="toc-text">解調的挑戰（Demodulation Problems）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%8A%E8%99%9F%E5%A4%B1%E7%9C%9F%E8%88%87%E7%84%A1%E7%B7%9A%E9%80%9A%E9%81%93%EF%BC%88Signal-Distortion-%E2%80%93-Wireless-Channels%EF%BC%89"><span class="toc-text">訊號失真與無線通道（Signal Distortion – Wireless Channels）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%A4%B1%E7%9C%9F%E4%BE%86%E6%BA%90%EF%BC%88Sources-of-Distortion%EF%BC%89"><span class="toc-text">主要失真來源（Sources of Distortion）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%B0%E6%B8%9B%E8%88%87%E8%B7%AF%E5%BE%91%E6%90%8D%E5%A4%B1%EF%BC%88Attenuation-Path-Loss%EF%BC%89"><span class="toc-text">衰減與路徑損失（Attenuation &amp; Path Loss）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Friis-%E8%87%AA%E7%94%B1%E7%A9%BA%E9%96%93%E6%96%B9%E7%A8%8B%E5%BC%8F%EF%BC%88Free-space-Equation%EF%BC%89"><span class="toc-text">Friis 自由空間方程式（Free-space Equation）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E8%A6%96%E8%B7%9D%E5%82%B3%E6%92%AD%EF%BC%88Non-Line-of-Sight-NLOS%EF%BC%89"><span class="toc-text">非視距傳播（Non-Line-of-Sight, NLOS）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%A3%E7%BE%A9%E8%A1%B0%E6%B8%9B%E6%A8%A1%E5%9E%8B%EF%BC%88Generalized-Path-Loss-Model%EF%BC%89"><span class="toc-text">廣義衰減模型（Generalized Path-Loss Model）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E5%85%A5%E7%92%B0%E5%A2%83%E5%9B%A0%E7%B4%A0"><span class="toc-text">加入環境因素</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B5%B1%E8%A8%88%E6%80%A7%E9%80%9A%E9%81%93%E5%BB%BA%E6%A8%A1%EF%BC%88Shadowing-Effect%EF%BC%89"><span class="toc-text">統計性通道建模（Shadowing Effect）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%9E%E6%B3%A2%E5%88%B0%E4%BD%8D%E5%85%83-From-waves-to-bits"><span class="toc-text">從波到位元(From waves to bits)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%84%A1%E7%B7%9A%E9%80%9A%E8%A8%8A%E4%B8%AD%E7%9A%84%E5%B9%B2%E6%93%BE%E4%BE%86%E6%BA%90%EF%BC%88Noise-and-Interference%EF%BC%89"><span class="toc-text">無線通訊中的干擾來源（Noise and Interference）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%9E%E6%B3%A2%E5%BD%A2%E9%82%84%E5%8E%9F%E8%B3%87%E6%96%99%EF%BC%9A%E7%AC%A6%E8%99%9F%E8%88%87%E4%BD%8D%E5%85%83%E9%8C%AF%E8%AA%A4%EF%BC%88Symbols-and-Bit-Errors%EF%BC%89"><span class="toc-text">從波形還原資料：符號與位元錯誤（Symbols and Bit Errors）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SINR%EF%BC%88Signal-to-Interference-and-Noise-Ratio%EF%BC%89"><span class="toc-text">SINR（Signal-to-Interference-and-Noise Ratio）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%9C%E8%A8%8A%E5%8A%9F%E7%8E%87%E8%88%87%E9%A0%BB%E5%AF%AC%E7%9A%84%E9%97%9C%E4%BF%82"><span class="toc-text">雜訊功率與頻寬的關係</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SINR-%E8%88%87-BER%EF%BC%88Bit-Error-Rate%EF%BC%89%E7%9A%84%E9%97%9C%E4%BF%82"><span class="toc-text">SINR 與 BER（Bit Error Rate）的關係</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%BD%E9%87%8F%E6%AF%94%E9%97%9C%E4%BF%82%E5%BC%8F"><span class="toc-text">能量比關係式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SNR-%E8%88%87-E-b-N-0-%E7%9A%84%E5%B0%8D%E6%87%89%E9%97%9C%E4%BF%82"><span class="toc-text">SNR 與 (E_b&#x2F;N_0) 的對應關係</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Frequency-bands-%E9%A0%BB%E5%B8%B6%E8%88%87%E9%A0%BB%E8%AD%9C%E9%85%8D%E7%BD%AE"><span class="toc-text">Frequency bands 頻帶與頻譜配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%84%A1%E7%B7%9A%E9%9B%BB%E9%A0%BB%E8%AD%9C%E5%88%86%E9%A1%9E%EF%BC%88Radio-Spectrum%EF%BC%89"><span class="toc-text">無線電頻譜分類（Radio Spectrum）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ISM-bands"><span class="toc-text">ISM bands</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Modulation-%E8%AA%BF%E8%AE%8A%E6%8A%80%E8%A1%93"><span class="toc-text">Modulation 調變技術</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E7%84%A1%E7%B7%9A%E9%9B%BB%E6%B3%A2%E5%82%B3%E9%80%81%E8%B3%87%E6%96%99%EF%BC%88Transmitting-Data-Using-Radio-Waves%EF%BC%89"><span class="toc-text">利用無線電波傳送資料（Transmitting Data Using Radio Waves）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AA%BF%E8%AE%8A%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%83%B3%E6%B3%95%EF%BC%88Modulation-Concept%EF%BC%89"><span class="toc-text">調變的基本想法（Modulation Concept）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A6%8B%E7%9A%84%E6%95%B8%E4%BD%8D%E8%AA%BF%E8%AE%8A%E6%96%B9%E5%BC%8F%EF%BC%88Digital-Keying-Examples%EF%BC%89"><span class="toc-text">常見的數位調變方式（Digital Keying Examples）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E7%AB%AF%E7%9A%84%E4%BB%BB%E5%8B%99%EF%BC%9A%E8%A7%A3%E8%AA%BF%EF%BC%88Demodulation%EF%BC%89"><span class="toc-text">接收端的任務：解調（Demodulation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E8%AA%BF%E7%9A%84%E6%8C%91%E6%88%B0%EF%BC%88Demodulation-Problems%EF%BC%89"><span class="toc-text">解調的挑戰（Demodulation Problems）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%8A%E8%99%9F%E5%A4%B1%E7%9C%9F%E8%88%87%E7%84%A1%E7%B7%9A%E9%80%9A%E9%81%93%EF%BC%88Signal-Distortion-%E2%80%93-Wireless-Channels%EF%BC%89"><span class="toc-text">訊號失真與無線通道（Signal Distortion – Wireless Channels）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%A4%B1%E7%9C%9F%E4%BE%86%E6%BA%90%EF%BC%88Sources-of-Distortion%EF%BC%89"><span class="toc-text">主要失真來源（Sources of Distortion）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%B0%E6%B8%9B%E8%88%87%E8%B7%AF%E5%BE%91%E6%90%8D%E5%A4%B1%EF%BC%88Attenuation-Path-Loss%EF%BC%89"><span class="toc-text">衰減與路徑損失（Attenuation &amp; Path Loss）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Friis-%E8%87%AA%E7%94%B1%E7%A9%BA%E9%96%93%E6%96%B9%E7%A8%8B%E5%BC%8F%EF%BC%88Free-space-Equation%EF%BC%89"><span class="toc-text">Friis 自由空間方程式（Free-space Equation）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E8%A6%96%E8%B7%9D%E5%82%B3%E6%92%AD%EF%BC%88Non-Line-of-Sight-NLOS%EF%BC%89"><span class="toc-text">非視距傳播（Non-Line-of-Sight, NLOS）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%A3%E7%BE%A9%E8%A1%B0%E6%B8%9B%E6%A8%A1%E5%9E%8B%EF%BC%88Generalized-Path-Loss-Model%EF%BC%89"><span class="toc-text">廣義衰減模型（Generalized Path-Loss Model）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E5%85%A5%E7%92%B0%E5%A2%83%E5%9B%A0%E7%B4%A0"><span class="toc-text">加入環境因素</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B5%B1%E8%A8%88%E6%80%A7%E9%80%9A%E9%81%93%E5%BB%BA%E6%A8%A1%EF%BC%88Shadowing-Effect%EF%BC%89"><span class="toc-text">統計性通道建模（Shadowing Effect）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%9E%E6%B3%A2%E5%88%B0%E4%BD%8D%E5%85%83-From-waves-to-bits"><span class="toc-text">從波到位元(From waves to bits)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%84%A1%E7%B7%9A%E9%80%9A%E8%A8%8A%E4%B8%AD%E7%9A%84%E5%B9%B2%E6%93%BE%E4%BE%86%E6%BA%90%EF%BC%88Noise-and-Interference%EF%BC%89"><span class="toc-text">無線通訊中的干擾來源（Noise and Interference）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%9E%E6%B3%A2%E5%BD%A2%E9%82%84%E5%8E%9F%E8%B3%87%E6%96%99%EF%BC%9A%E7%AC%A6%E8%99%9F%E8%88%87%E4%BD%8D%E5%85%83%E9%8C%AF%E8%AA%A4%EF%BC%88Symbols-and-Bit-Errors%EF%BC%89"><span class="toc-text">從波形還原資料：符號與位元錯誤（Symbols and Bit Errors）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SINR%EF%BC%88Signal-to-Interference-and-Noise-Ratio%EF%BC%89"><span class="toc-text">SINR（Signal-to-Interference-and-Noise Ratio）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%9C%E8%A8%8A%E5%8A%9F%E7%8E%87%E8%88%87%E9%A0%BB%E5%AF%AC%E7%9A%84%E9%97%9C%E4%BF%82"><span class="toc-text">雜訊功率與頻寬的關係</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SINR-%E8%88%87-BER%EF%BC%88Bit-Error-Rate%EF%BC%89%E7%9A%84%E9%97%9C%E4%BF%82"><span class="toc-text">SINR 與 BER（Bit Error Rate）的關係</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%BD%E9%87%8F%E6%AF%94%E9%97%9C%E4%BF%82%E5%BC%8F"><span class="toc-text">能量比關係式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SNR-%E8%88%87-E-b-N-0-%E7%9A%84%E5%B0%8D%E6%87%89%E9%97%9C%E4%BF%82"><span class="toc-text">SNR 與 (E_b&#x2F;N_0) 的對應關係</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E9%81%93%E6%A8%A1%E5%9E%8B-Channel-models"><span class="toc-text">通道模型(Channel models)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#analog-signal-model"><span class="toc-text">analog signal model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#digital-model"><span class="toc-text">digital model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8F%BE%E5%AF%A6%E7%8B%80%E6%B3%81%E5%A6%82%E4%BD%95%E6%87%89%E5%B0%8D"><span class="toc-text">現實狀況如何應對?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B6%E7%99%BC%E6%A9%9F%E8%A8%AD%E8%A8%88-Transceiver-Design"><span class="toc-text">收發機設計(Transceiver Design)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AA%BF%E8%AE%8A%E6%96%B9%E5%BC%8F%E9%81%B8%E6%93%87%E8%88%87%E5%8F%96%E6%8D%A8"><span class="toc-text">調變方式選擇與取捨</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AA%AA%E6%98%8E"><span class="toc-text">說明</span></a></li></ol></li></ol>
       
     </div>
   </div>
