@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      通訊的鏈路層 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">通訊的鏈路層</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-10-26 14:48:21
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/wireless/" title="wireless">
+                    #wireless
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/link-layer/" title="link layer">
+                    #link layer
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="Error-control"><a href="#Error-control" class="headerlink" title="Error control"></a>Error control</h2><h3 id="錯誤控制的目標"><a href="#錯誤控制的目標" class="headerlink" title="錯誤控制的目標"></a>錯誤控制的目標</h3><p>確保資料傳輸具有以下特性：</p>
+<table>
+<thead>
+<tr>
+<th>性質</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Error-free</strong></td>
+<td>無錯誤傳輸（收到的資料 &#x3D; 發送的資料）</td>
+</tr>
+<tr>
+<td><strong>In-sequence</strong></td>
+<td>順序正確</td>
+</tr>
+<tr>
+<td><strong>Duplicate-free</strong></td>
+<td>不重複（每封包僅一次）</td>
+</tr>
+<tr>
+<td><strong>Loss-free</strong></td>
+<td>不遺失（確保至少傳送一次）</td>
+</tr>
+</tbody></table>
+<h3 id="錯誤來源與挑戰"><a href="#錯誤來源與挑戰" class="headerlink" title="錯誤來源與挑戰"></a>錯誤來源與挑戰</h3><table>
+<thead>
+<tr>
+<th>來源</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Fading</strong></td>
+<td>訊號衰落</td>
+</tr>
+<tr>
+<td><strong>Interference</strong></td>
+<td>來自其他發射源的干擾</td>
+</tr>
+<tr>
+<td><strong>Loss of synchronization</strong></td>
+<td>位元同步錯誤</td>
+</tr>
+<tr>
+<td><strong>結果</strong></td>
+<td>位元錯誤率高（BER 約可達 10⁻²～10⁻⁴）</td>
+</tr>
+</tbody></table>
+<h3 id="錯誤控制方法分類"><a href="#錯誤控制方法分類" class="headerlink" title="錯誤控制方法分類"></a>錯誤控制方法分類</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>全名</th>
+<th>原理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ARQ</strong></td>
+<td>Automatic Repeat reQuest（回傳重傳）</td>
+<td>發現錯誤 → 要求重傳(事後修補)</td>
+</tr>
+<tr>
+<td><strong>FEC</strong></td>
+<td>Forward Error Correction（前向錯誤更正）</td>
+<td>加入冗餘碼 → 自行修正少量錯誤(事前預防)</td>
+</tr>
+</tbody></table>
+<h3 id="Backward-Error-Control（事後處理）"><a href="#Backward-Error-Control（事後處理）" class="headerlink" title="Backward Error Control（事後處理）"></a>Backward Error Control（事後處理）</h3><p>基本上就是實現先前提到的特性(Duplicate-free、in-sequence、error-free、loss-free)，每個特性的實現方式如下：</p>
+<ul>
+<li>Duplicate-free、in-sequence：在資料本體（payload）外加入標頭資訊</li>
+<li>error-free：計算封包的檢查碼（checksum）並附加在封包中，通常使用循環冗餘檢查（CRC, Cyclic Redundancy Check），速度快、額外負擔小。</li>
+<li>loss-free：由接收端回饋傳送狀態給發送端，狀態包含正向或負向回覆（ACK／NACK），傳送端使用計時器（timer）來偵測是否未收到回覆。<ul>
+<li>但多數情況不會使用 Nack 封包，是為了節省通訊資源</li>
+<li>若設定了最大重傳次數限制，則此協定最多只能達到**半可靠（semi-reliable）**的傳輸。</li>
+</ul>
+</li>
+</ul>
+<h4 id="常見-ARQ-協定比較"><a href="#常見-ARQ-協定比較" class="headerlink" title="常見 ARQ 協定比較"></a>常見 ARQ 協定比較</h4><table>
+<thead>
+<tr>
+<th>協定名稱</th>
+<th>原理</th>
+<th>優點</th>
+<th>缺點</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ABP (Alternating Bit Protocol)</strong></td>
+<td>每次只發送一個封包，使用 1-bit 序號（0&#x2F;1）區分新舊封包</td>
+<td>簡單、保證順序</td>
+<td>效率低，只能單封包往返</td>
+</tr>
+<tr>
+<td><strong>Go-Back-N</strong></td>
+<td>發送端可連續傳送 N 個封包，若其中一個錯誤 → 重傳從該點後所有封包</td>
+<td>實作簡單</td>
+<td>浪費頻寬（因連帶重傳）</td>
+</tr>
+<tr>
+<td><strong>Selective Repeat (SR)</strong></td>
+<td>只重傳錯誤的封包，其他保留</td>
+<td>效率高、節省頻寬</td>
+<td>實作複雜（需緩衝 out-of-order 封包）</td>
+</tr>
+</tbody></table>
+<p>會發現其實 Go-back-n 和 SR 非常的相似，都妥善的應用了 channel，那為什麼不用 SR 就好了呢? 其實選擇使用哪一個是根據 receiver 端的狀態去決定，如果接收端能力較弱，就選擇 Go-back-n，反之選 SR。</p>
+<h4 id="ACK-NACK-使用策略"><a href="#ACK-NACK-使用策略" class="headerlink" title="ACK&#x2F;NACK 使用策略"></a>ACK&#x2F;NACK 使用策略</h4><table>
+<thead>
+<tr>
+<th>策略</th>
+<th>說明</th>
+<th>取捨</th>
+<th>tradeoff</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Cumulative ACK</strong></td>
+<td>一次確認多個封包</td>
+<td>減少 ACK 數量，但需緩衝更多資料</td>
+<td>buffer space, Nack 的數量</td>
+</tr>
+<tr>
+<td><strong>Individual ACK</strong></td>
+<td>每封包都回覆</td>
+<td>簡單但增加控制流量</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Negative ACK (NACK)</strong></td>
+<td>僅回覆錯誤封包</td>
+<td>節省頻寬但需良好同步機制</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="何時重傳（Retransmission-Decision）"><a href="#何時重傳（Retransmission-Decision）" class="headerlink" title="何時重傳（Retransmission Decision）"></a>何時重傳（Retransmission Decision）</h4><table>
+<thead>
+<tr>
+<th>問題</th>
+<th>處理策略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>通道衰落時是否立即重傳？</strong></td>
+<td>建議暫緩（避免在壞通道浪費傳輸）</td>
+</tr>
+<tr>
+<td><strong>等待多久？</strong></td>
+<td>可用 <strong>Probing Protocol</strong>：<br>當錯誤發生 → 進入 probing 模式，定期傳送短封包測試通道 → 通道恢復後再回到 normal 模式。</td>
+</tr>
+</tbody></table>
+<h3 id="Forward-Error-Control（FEC-前向錯誤更正）"><a href="#Forward-Error-Control（FEC-前向錯誤更正）" class="headerlink" title="Forward Error Control（FEC 前向錯誤更正）"></a>Forward Error Control（FEC 前向錯誤更正）</h3><p>FEC 是在傳送端對資料加入<strong>冗餘位元</strong>進行編碼做容錯，讓接收端在不重傳的情況下自行修正少量錯誤。通常會根據 channel 狀態來決定編碼方式</p>
+<p><img src="/images/wireless/img4.png" alt="alt text"></p>
+<p>其中上圖的 Inter-leaver 是源自一個奇妙的觀察，發現先打亂原本要送出的封包，讓他變得不連續，反而讓接收端可以更好的找到所有的封包。</p>
+<h4 id="Block-coded-FEC（區塊編碼）"><a href="#Block-coded-FEC（區塊編碼）" class="headerlink" title="Block-coded FEC（區塊編碼）"></a>Block-coded FEC（區塊編碼）</h4><p>在這種 FEC 機制中，其中有種方式為區塊編碼，也就是說資料是以「區塊 (block)」為單位進行編碼，核心原理是在傳送數據時將資料分成固定大小的區塊，並在每個區塊中加入額外的冗餘資料。每個區塊包含 𝑘 個原始符號（source symbols），這些符號不一定只是位元（bits），也可能是更大的單位（稱為 p 元符號，p-ary symbols）。編碼器會將這 𝑘 個符號轉換成 𝑛 個通道符號（channel symbols），也就是在原本的資料中加入冗餘（redundancy）以便錯誤更正。</p>
+<p>為了能修正最多 𝑡 個位元錯誤，必須滿足 漢明界限 (Hamming Bound):<br>$2^{n - k} \ge \sum_{i&#x3D;0}^{t} \binom{n}{i}$</p>
+<ul>
+<li>左邊：$(2^{n-k})$ → 可用來識別錯誤的「檢查模式」數量（由冗餘位元提供的辨識能力）。</li>
+<li>右邊：$(\sum_{i&#x3D;0}^{t}\binom{n}{i})$ → 在一個碼字中，若最多可容忍 (t) 個錯誤，則可能出錯的情形數量。</li>
+</ul>
+<p>常見的 block-coded FEC 包含</p>
+<ul>
+<li>Reed-Solomon (RS)</li>
+<li>BCH (Bose–Chaudhuri–Hocquenghem)</li>
+</ul>
+<p>以下圖進行說明，紅色是無額外編碼的情形，可以看到當 channel 狀態良好的時候，他耗能最小，反而是橘色的線因為編碼複雜而耗更多能；但當 channel 狀態不好時，就會看到橘色線是耗能最少的</p>
+<p><img src="/images/wireless/img6.png" alt="alt text"></p>
+<h4 id="Convolutional-Codes（卷積編碼）"><a href="#Convolutional-Codes（卷積編碼）" class="headerlink" title="Convolutional Codes（卷積編碼）"></a>Convolutional Codes（卷積編碼）</h4><p>另一種 FEC 是卷積編碼，輸出的編碼位元（code bits）取決於目前的輸入與前面 K−1 個輸入（每次輸入包含 k 個使用者位元）。</p>
+<p>這種編碼的碼率為 𝑅 &#x3D; 𝑘&#x2F;𝑛，代表每 𝑘 個使用者位元會被映射成 𝑛 個編碼位元。編碼過程所需的能量成本很低（Encoding: cheap）。</p>
+<h3 id="FEC-vs-ARQ-比較"><a href="#FEC-vs-ARQ-比較" class="headerlink" title="FEC vs. ARQ 比較"></a>FEC vs. ARQ 比較</h3><table>
+<thead>
+<tr>
+<th>項目</th>
+<th><strong>FEC</strong></th>
+<th><strong>ARQ</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原理</td>
+<td>加入冗餘，自行修正</td>
+<td>錯誤回報並重傳</td>
+</tr>
+<tr>
+<td>傳輸開銷</td>
+<td>固定開銷（每封包都編碼）</td>
+<td>僅錯誤時才重傳</td>
+</tr>
+<tr>
+<td>延遲</td>
+<td>低（無需等待 ACK）</td>
+<td>高（需等待回報）</td>
+</tr>
+<tr>
+<td>通道適應性</td>
+<td>不易動態調整</td>
+<td>可根據錯誤即時反應</td>
+</tr>
+<tr>
+<td>適合環境</td>
+<td>高延遲或不穩定通道（如衛星）</td>
+<td>穩定、低延遲通道（如 WLAN）</td>
+</tr>
+</tbody></table>
+<p>但通常會視情形混和兩者方法去使用(hybrid schemes)</p>
+<h2 id="功率控制（Power-Control）"><a href="#功率控制（Power-Control）" class="headerlink" title="功率控制（Power Control）"></a>功率控制（Power Control）</h2><p>另一個可控制的參數是傳輸功率（transmission power）。</p>
+<ul>
+<li>功率提高 → 錯誤率降低 → 所需的 FEC&#x2F;ARQ 次數減少。</li>
+<li>功率降低 → 錯誤率上升 → 需要更強的 FEC 來維持可靠性。</li>
+</ul>
+<h2 id="Framing"><a href="#Framing" class="headerlink" title="Framing"></a>Framing</h2><h3 id="封包大小的取捨"><a href="#封包大小的取捨" class="headerlink" title="封包大小的取捨"></a>封包大小的取捨</h3><table>
+<thead>
+<tr>
+<th>封包大小</th>
+<th>優點</th>
+<th>缺點</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>小封包（Small packets）</strong></td>
+<td>錯誤率低（因較短、出錯機率小）</td>
+<td>封包化開銷高（header 比例大）</td>
+</tr>
+<tr>
+<td><strong>大封包（Large packets）</strong></td>
+<td>開銷低（header 比例小）</td>
+<td>錯誤率高（封包越長越容易出錯）</td>
+</tr>
+</tbody></table>
+<p>已知 h(overhead, payload size, Bit error rate (BER)) 如下，且縱軸是花的能量。可以看到左圖紅線因為拆成多個封包，所以封包 header 多，導致在 channel 良好的時候耗能多；但當 channel 狀態不好(bit error rate 上升後)的時候就會是綠線耗能多。  </p>
+<p><img src="/images/wireless/img7.png" alt="alt text"></p>
+<p>總之就是隨情況而改變封包方式，當 channel 狀態好，就用大封包；反之用小封包。</p>
+<h3 id="動態調整訊框長度（Dynamically-Adapt-Frame-Length）"><a href="#動態調整訊框長度（Dynamically-Adapt-Frame-Length）" class="headerlink" title="動態調整訊框長度（Dynamically Adapt Frame Length）"></a>動態調整訊框長度（Dynamically Adapt Frame Length）</h3><ul>
+<li>已知 BER 時<ul>
+<li>最佳訊框長度可直接根據理論公式求得</li>
+</ul>
+</li>
+<li>不知 BER 時<ul>
+<li>如何估計 BER？<ol>
+<li>在接收端蒐集通道狀態資訊（Channel State Information, CSI）</li>
+</ol>
+<ul>
+<li>RSSI（Received Signal Strength Indicator）</li>
+<li>FEC 解碼統計（decoder error info）</li>
+</ul>
+<ol start="2">
+<li>重傳統計</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Link-management"><a href="#Link-management" class="headerlink" title="Link management"></a>Link management</h2><p>上面的部份我們討論了底層可以如何設計讓封包在 link 內可以更順利，接著這章節要說明在 link 層要怎麼樣幫封包分辨好的和壞的鏈路並使用，也就是決定節點應與哪些「鄰居（neighbor）」保持連線，確保可達性（reachability）與通訊品質（communication quality）。</p>
+<p>在這部分可以探討的問題包含了：</p>
+<table>
+<thead>
+<tr>
+<th>問題來源</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>通訊品質不穩定</strong></td>
+<td>無線通道容易受干擾與環境影響而波動。</td>
+</tr>
+<tr>
+<td><strong>遠距離節點傳輸成本高</strong></td>
+<td>傳輸功率大、能量消耗高。</td>
+</tr>
+<tr>
+<td><strong>高錯誤率（error-prone）</strong></td>
+<td>封包丟失與錯誤傳輸頻繁。</td>
+</tr>
+<tr>
+<td><strong>品質僅能估測（estimation-based）</strong></td>
+<td>無法直接測得真實通道品質，只能根據統計結果判斷。</td>
+</tr>
+</tbody></table>
+<h3 id="鄰居表（Neighborhood-Table）"><a href="#鄰居表（Neighborhood-Table）" class="headerlink" title="鄰居表（Neighborhood Table）"></a>鄰居表（Neighborhood Table）</h3><ul>
+<li>每個節點維護一份鄰居清單（neighborhood table）。</li>
+<li>表中紀錄每個鄰居的通訊品質與連線狀態。</li>
+<li>通常由 MAC 層協定（如 CSMA&#x2F;CA）半自動建立與更新。</li>
+</ul>
+<h3 id="Link-Quality-Characteristics（鏈路品質特性）"><a href="#Link-Quality-Characteristics（鏈路品質特性）" class="headerlink" title="Link Quality Characteristics（鏈路品質特性）"></a>Link Quality Characteristics（鏈路品質特性）</h3><p>理想中我們會認為通訊範圍呈「圓形」，隨著半徑增加通訊品質逐漸下降，但現實世界有更多的干擾、區域邊界不規則、非對稱、不穩定等，這些原因導致：</p>
+<ol>
+<li>距離與封包遺失率（Loss Rate）關聯性弱</li>
+<li>等損耗線（iso-loss lines） 不呈圓形，而是不規則形狀</li>
+<li>鏈路不對稱現象常見（約 15%）：A 傳得到 B，但 B 傳不到 A</li>
+<li>即使節點靜止，短期內 PER（Packet Error Rate）仍劇烈變化</li>
+</ol>
+<h3 id="Three-Regions-of-Communication（三種通訊區域）"><a href="#Three-Regions-of-Communication（三種通訊區域）" class="headerlink" title="Three Regions of Communication（三種通訊區域）"></a>Three Regions of Communication（三種通訊區域）</h3><table>
+<thead>
+<tr>
+<th>區域</th>
+<th>特性</th>
+<th>封包錯誤率 (PER)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Effective Region（有效區域）</strong></td>
+<td>穩定通訊，品質佳</td>
+<td>PER &lt; 10%</td>
+</tr>
+<tr>
+<td><strong>Transitional Region（過渡區域）</strong></td>
+<td>不穩定、波動大，同距離節點表現差異可很大</td>
+<td>10% ≦ PER ≦ 90%</td>
+</tr>
+<tr>
+<td><strong>Poor Region（低品質區域）</strong></td>
+<td>幾乎無法通訊</td>
+<td>PER &gt; 90%</td>
+</tr>
+</tbody></table>
+<h3 id="Link-Quality-Estimation（鏈路品質估測）"><a href="#Link-Quality-Estimation（鏈路品質估測）" class="headerlink" title="Link Quality Estimation（鏈路品質估測）"></a>Link Quality Estimation（鏈路品質估測）</h3><p>為了在線（on-line）評估實際鏈路品質，以調整傳輸策略，測量鏈路品質的工具必須具備以下特性</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Precision（精確度）</strong></td>
+<td>應給出統計上合理的估測結果。</td>
+</tr>
+<tr>
+<td><strong>Agility（敏捷度）</strong></td>
+<td>能快速反應通道品質的變化。</td>
+</tr>
+<tr>
+<td><strong>Stability（穩定性）</strong></td>
+<td>不被短期波動（瞬時異常）誤導。</td>
+</tr>
+<tr>
+<td><strong>Efficiency（效率）</strong></td>
+<td>應盡量降低估測開銷（可為主動或被動方式）。</td>
+</tr>
+</tbody></table>
+<h4 id="WMEWMA（Window-Mean-Exponentially-Weighted-Moving-Average）"><a href="#WMEWMA（Window-Mean-Exponentially-Weighted-Moving-Average）" class="headerlink" title="WMEWMA（Window Mean Exponentially Weighted Moving Average）"></a>WMEWMA（Window Mean Exponentially Weighted Moving Average）</h4><p>在無線網路（特別是感測網路、Mesh、Ad-hoc）中，通道品質會隨時間變化（例如干擾、遮蔽、距離）。因此節點必須**即時估計「鏈路品質」**來決定是否重傳封包（ARQ）、是否切換連線對象（link switch）、或調整封包長度與功率。</p>
+<p>$P_n &#x3D; \alpha P_{n-1} + (1 - \alpha) \frac{r_n}{r_n + f_n}$</p>
+<table>
+<thead>
+<tr>
+<th>符號</th>
+<th>意義</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$P_n$</td>
+<td>當前估計的鏈路品質（第 n 次更新）</td>
+</tr>
+<tr>
+<td>$P_{n-1}$</td>
+<td>前一次估計的鏈路品質</td>
+</tr>
+<tr>
+<td>$\alpha$</td>
+<td>平滑係數（0～1 之間），控制「穩定 vs. 敏捷」的取捨</td>
+</tr>
+<tr>
+<td>$r_n$</td>
+<td>在此時間區間內<strong>成功接收的封包數</strong></td>
+</tr>
+<tr>
+<td>$f_n$</td>
+<td>在此時間區間內<strong>遺失的封包數（即 gap 數）</strong></td>
+</tr>
+</tbody></table>
+<ol>
+<li><strong>Window Mean（窗口平均）</strong>：在固定時間窗口內統計成功率<br>$\text{成功率} &#x3D; \frac{r_n}{r_n + f_n}$</li>
+<li><strong>EWMA（指數加權移動平均）</strong>：平滑過去與現在的估測值<br>$P_n &#x3D; \alpha P_{n-1} + (1 - \alpha)\text{(當前平均)}$</li>
+</ol>
+<p>這是一個 <strong>加權移動平均（Exponential Weighted Moving Average, EWMA）</strong> 的形式。</p>
+<ul>
+<li>$\frac{r_n}{r_n + f_n}$ ：代表最近一段時間的「封包成功率」。</li>
+<li>$\alpha P_{n-1}$：代表「過去的估測結果」——用來保持穩定。</li>
+<li>$(1 - \alpha)$：代表「新資料的權重」——用來反映變化。</li>
+</ul>
+<p>因此：</p>
+<blockquote>
+<p>(P_n) 是一個「平滑更新的封包成功率」，<br>可視為<strong>實時的鏈路品質指標（Link Quality Indicator, LQI）</strong>。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>$\alpha$ 值</th>
+<th>反應特性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>大（接近 1）</strong></td>
+<td>估測穩定、但反應慢（適合平穩環境）</td>
+</tr>
+<tr>
+<td><strong>小（接近 0）</strong></td>
+<td>反應快、但波動大（適合快速變動通道）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>每當收到一個封包時，節點根據成功與遺失封包的比例更新 (P_n)，<br>藉此持續估計目前鏈路的可靠程度。</p>
+</blockquote>
+<p><img src="/images/wireless/img8.png" alt="alt text"></p>
+<p>上方綠色的方塊代表「成功收到的封包」，<br>方塊上的數字（7、10、11、15）是<strong>封包序號（packet sequence number）</strong>。</p>
+<p>中間標註的 “Gap” 表示：<strong>中間缺少的封包數量</strong>（即有幾個封包遺失）。<br>例如：</p>
+<ul>
+<li>收到封包 7 之後，下一個是 10 → <strong>Gap &#x3D; 2</strong>（表示封包 8、9 遺失）</li>
+<li>收到 10 → 11 → Gap &#x3D; 0（連續）</li>
+<li>收到 11 → 15 → <strong>Gap &#x3D; 3</strong>（封包 12、13、14 遺失）</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/10/19/wireless-networking-phy/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-10-26 14:48:21
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/wireless/" title="wireless">
+                        #wireless
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/link-layer/" title="link layer">
+                        #link layer
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2025/10/26/wireless-networking-mac/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Error-control"><span class="toc-text">Error control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%8C%AF%E8%AA%A4%E6%8E%A7%E5%88%B6%E7%9A%84%E7%9B%AE%E6%A8%99"><span class="toc-text">錯誤控制的目標</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%8C%AF%E8%AA%A4%E4%BE%86%E6%BA%90%E8%88%87%E6%8C%91%E6%88%B0"><span class="toc-text">錯誤來源與挑戰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%8C%AF%E8%AA%A4%E6%8E%A7%E5%88%B6%E6%96%B9%E6%B3%95%E5%88%86%E9%A1%9E"><span class="toc-text">錯誤控制方法分類</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Backward-Error-Control%EF%BC%88%E4%BA%8B%E5%BE%8C%E8%99%95%E7%90%86%EF%BC%89"><span class="toc-text">Backward Error Control（事後處理）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A6%8B-ARQ-%E5%8D%94%E5%AE%9A%E6%AF%94%E8%BC%83"><span class="toc-text">常見 ARQ 協定比較</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ACK-NACK-%E4%BD%BF%E7%94%A8%E7%AD%96%E7%95%A5"><span class="toc-text">ACK&#x2F;NACK 使用策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%95%E6%99%82%E9%87%8D%E5%82%B3%EF%BC%88Retransmission-Decision%EF%BC%89"><span class="toc-text">何時重傳（Retransmission Decision）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Forward-Error-Control%EF%BC%88FEC-%E5%89%8D%E5%90%91%E9%8C%AF%E8%AA%A4%E6%9B%B4%E6%AD%A3%EF%BC%89"><span class="toc-text">Forward Error Control（FEC 前向錯誤更正）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Block-coded-FEC%EF%BC%88%E5%8D%80%E5%A1%8A%E7%B7%A8%E7%A2%BC%EF%BC%89"><span class="toc-text">Block-coded FEC（區塊編碼）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Convolutional-Codes%EF%BC%88%E5%8D%B7%E7%A9%8D%E7%B7%A8%E7%A2%BC%EF%BC%89"><span class="toc-text">Convolutional Codes（卷積編碼）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FEC-vs-ARQ-%E6%AF%94%E8%BC%83"><span class="toc-text">FEC vs. ARQ 比較</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E7%8E%87%E6%8E%A7%E5%88%B6%EF%BC%88Power-Control%EF%BC%89"><span class="toc-text">功率控制（Power Control）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Framing"><span class="toc-text">Framing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%81%E5%8C%85%E5%A4%A7%E5%B0%8F%E7%9A%84%E5%8F%96%E6%8D%A8"><span class="toc-text">封包大小的取捨</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8B%95%E6%85%8B%E8%AA%BF%E6%95%B4%E8%A8%8A%E6%A1%86%E9%95%B7%E5%BA%A6%EF%BC%88Dynamically-Adapt-Frame-Length%EF%BC%89"><span class="toc-text">動態調整訊框長度（Dynamically Adapt Frame Length）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Link-management"><span class="toc-text">Link management</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%84%B0%E5%B1%85%E8%A1%A8%EF%BC%88Neighborhood-Table%EF%BC%89"><span class="toc-text">鄰居表（Neighborhood Table）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Link-Quality-Characteristics%EF%BC%88%E9%8F%88%E8%B7%AF%E5%93%81%E8%B3%AA%E7%89%B9%E6%80%A7%EF%BC%89"><span class="toc-text">Link Quality Characteristics（鏈路品質特性）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Three-Regions-of-Communication%EF%BC%88%E4%B8%89%E7%A8%AE%E9%80%9A%E8%A8%8A%E5%8D%80%E5%9F%9F%EF%BC%89"><span class="toc-text">Three Regions of Communication（三種通訊區域）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Link-Quality-Estimation%EF%BC%88%E9%8F%88%E8%B7%AF%E5%93%81%E8%B3%AA%E4%BC%B0%E6%B8%AC%EF%BC%89"><span class="toc-text">Link Quality Estimation（鏈路品質估測）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#WMEWMA%EF%BC%88Window-Mean-Exponentially-Weighted-Moving-Average%EF%BC%89"><span class="toc-text">WMEWMA（Window Mean Exponentially Weighted Moving Average）</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E9%80%9A%E8%A8%8A%E7%9A%84%E9%8F%88%E8%B7%AF%E5%B1%A4 + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F10%2F20%2Fwireless-networking-link%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/10/20/wireless-networking-link/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -10,13 +10,10 @@
   <!-- 用于搜索引擎的文章摘要 -->
   
   
+    <meta name="robots" content="noindex" />
+  
   
   <title>
-    
-      Tag 
-      
-      
-      |
     
      Kiki&#39;s Blog
   </title>
@@ -100,57 +97,345 @@
 
 
       <div class="flex-container">
-        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
-<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+        <style>
+  :root {
+    --button-text: white;
+    --button-bg: #ff9800;
+    --button-hover-bg: #e08600;
+    
+    /* 添加字體大小變數，方便全局控制 */
+    --title-font-size: 3.5rem;
+    --intro-font-size: 1.5rem;
+    --highlight-color: #ff9800;
+  }
 
-
-  <!-- LaTex Display -->
-
-  
-    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
-  
-  <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --button-text: #1a1a1a;
+      --button-bg: #ff9800;
+      --button-hover-bg: #ffaa33;
     }
-  </script>
-
-
-
-
-
-  <!-- clipboard -->
-
+  }
   
-    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  /* 基本響應式佈局 */
+  @media (max-width: 768px) {
+    .desktop-image-container {
+      display: none !important;
+    }
+    .mobile-image-container {
+      display: flex !important;
+    }
+    :root {
+      --title-font-size: 2.5rem;
+      --intro-font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    :root {
+      --title-font-size: 2rem;
+      --intro-font-size: 1.1rem;
+    }
+  }
+
+  /* 非常小的螢幕 */
+  @media (max-width: 360px) {
+    :root {
+      --title-font-size: 1.8rem;
+      --intro-font-size: 1rem;
+    }
+  }
   
+  #content { display: none; }
   
-<script src="/js/codeCopy.js"></script>
+  /* 標題容器樣式優化 */
+  .title-container {
+    min-height: 4.5rem;
+    overflow: visible;
+    position: relative;
+    margin-bottom: 3rem;
+    width: 100%;
+  }
+
+  .markdown-body.title-text {
+    font-size: var(--title-font-size);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: visible;
+    position: absolute;
+    width: 100%;
+  }
+  
+  #dynamicTitle {
+    color: var(--highlight-color);
+    display: inline-block;
+  }
+  
+  @media (max-width: 768px) {
+    .title-container {
+      min-height: 3.5rem;
+      margin-bottom: 2rem;
+    }
+  }
+
+  /* 自我介紹樣式優化 */
+  .introduction-container {
+    font-size: var(--intro-font-size);
+    line-height: 1.5;
+    margin-top: 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 100%;
+  }
+  
+  /* 高亮文字的處理 */
+  .highlight-text {
+    color: var(--highlight-color);
+    display: inline;
+    white-space: normal;
+    font-weight: 500;
+  }
+  
+  /* 段落間距 */
+  .intro-paragraph {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    .introduction-container {
+      line-height: 1.4;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .introduction-container {
+      line-height: 1.3;
+    }
+    
+    .intro-paragraph {
+      margin-bottom: 0.8rem;
+    }
+  }
+  
+  /* 按鈕與社交圖示的響應式調整 */
+  .social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+  
+  .social-icons img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  @media (max-width: 480px) {
+    .social-icons img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  
+  .download-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  
+  @media (max-width: 480px) {
+    .download-button {
+      padding: 10px 18px;
+      font-size: 0.9rem;
+    }
+  }
+</style>
 
 
-
-
-
-
-  <!-- 标签页 url形式：https://yoursite/tags/ -->
-  <div class="container tag-index">
-    <div>
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/5g/" rel="tag">5g</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/" rel="tag">AWS</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS-Authentication/" rel="tag">AWS-Authentication</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AmazonAPIGateway/" rel="tag">AmazonAPIGateway</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Auora-serverless/" rel="tag">Auora serverless</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Authentication/" rel="tag">Authentication</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CORS/" rel="tag">CORS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DLT/" rel="tag">DLT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deployment/" rel="tag">Deployment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DevOps/" rel="tag">DevOps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Distributed-Ledger-Technology/" rel="tag">Distributed Ledger Technology</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticity/" rel="tag">Elasticity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GICS/" rel="tag">GICS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IaC/" rel="tag">IaC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LAMP/" rel="tag">LAMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Load-Balancing/" rel="tag">Load Balancing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NFV/" rel="tag">NFV</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PresignedURL/" rel="tag">PresignedURL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Replication/" rel="tag">Replication</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/S3/" rel="tag">S3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scalability/" rel="tag">Scalability</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Terraform/" rel="tag">Terraform</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/" rel="tag">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aif/" rel="tag">aif</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws/" rel="tag">aws</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blockchain/" rel="tag">blockchain</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/certificate/" rel="tag">certificate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cloud/" rel="tag">cloud</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie-session/" rel="tag">cookie-session</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cp/" rel="tag">cp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/credentials/" rel="tag">credentials</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/" rel="tag">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deployment-cross-acc/" rel="tag">deployment-cross-acc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/embedding/" rel="tag">embedding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encoding/" rel="tag">encoding</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hlf/" rel="tag">hlf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/intern/" rel="tag">intern</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/interview/" rel="tag">interview</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/link-layer/" rel="tag">link layer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/" rel="tag">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/" rel="tag">machine-learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/networking/" rel="tag">networking</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/physical-layer/" rel="tag">physical layer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/policy/" rel="tag">policy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/s3/" rel="tag">s3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/submodule/" rel="tag">submodule</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/terraform/" rel="tag">terraform</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualization/" rel="tag">virtualization</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vm/" rel="tag">vm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wireless/" rel="tag">wireless</a><span class="tag-list-count">3</span></li></ul>
+<div class="outer-container" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto;">
+  <div class="left-container" style="flex: 1; padding: 20px;">
+    <div></div>
+    <div class="title-container">
+      <div class="markdown-body title-text">
+        <span class="hi-im">Hi! I'm</span> <span id="dynamicTitle"></span>
+      </div>
     </div>
+
+    <div class="mobile-image-container" style="display: none; justify-content: center; margin: 20px 0;">
+      <img src="images/self/image.png" alt="Profile Picture" style="width: 180px; border-radius: 50%;">
+    </div>
+
+    <div class="markdown-body" style="font-size: 1.5rem;">
+      Welcome to my tech note site!
+      <br>
+      I focus on cloud, networking, and development, and I enjoy exploring the intersection of AI, security, and infrastructure.
+      <br>
+      This is where I document what I learn, what I break (and fix), and what excites me in tech.
+      
+</div>
+
+
+    <br>
+    <br>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/yung-chi-huang/" target="_blank">
+        <img src="images/linkedin.svg" alt="LinkedIn">
+      </a>
+      <a href="https://www.instagram.com/photokii_/" target="_blank">
+        <img src="images/instagram.svg" alt="Instagram">
+      </a>
+      <a href="https://github.com/ki225" target="_blank">
+        <img src="images/github.svg" alt="GitHub">
+      </a>
+      <a href="https://youtu.be/Dq_z8meAShM?si=V-PEjM61sWfRuYbm" target="_blank">
+        <img src="images/youtube.svg" alt="YouTube">
+      </a>
+      <a href="https://medium.com/@271yeye" target="_blank">
+        <img src="images/medium.svg" alt="Medium">
+      </a>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=yungchi.huang0225@gmail.com" target="_blank">
+        <img src="images/gmail.png" alt="Gmail">
+      </a>
+    </div>
+   
   </div>
   
+  <div class="desktop-image-container right-container" style="display: flex; justify-content: flex-end; align-items: center; padding: 20px;">
+    <img src="images/self/image.png" alt="Profile Picture" style="width: 200px; border-radius: 50%;">
+  </div>
 
-  
+</div>
+<br>
+<div class="resume-download" style="margin-top: 20px; text-align: center;">
+  <a href="https://raw.githubusercontent.com/ki225/ki225.github.io/main/source/files/resume.pdf" 
+     class="download-button" 
+     target="_blank"
+     onclick="downloadResume(event)">
+    <span style="display: flex; align-items: center; justify-content: center;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      Download Resume (PDF)
+    </span>
+  </a>
+</div>
 
-  
+<script>
+  const titles = ["Kiki", "an Active Learner", "Team Player", "a DAY ONE person", "a Cafe Hopper"];
+  let titleIndex = 0;
+  let charIndex = 0;
+  const dynamicTitle = document.getElementById('dynamicTitle');
+  const titleContainer = document.querySelector('.title-container');
+  const titleText = document.querySelector('.markdown-body.title-text');
 
-  
+  function typeTitle() {
+    if (charIndex < titles[titleIndex].length) {
+      dynamicTitle.textContent = titles[titleIndex].substring(0, charIndex + 1);
+      charIndex++;
+      setTimeout(adjustTitleFontSize, 10); // 每次添加字符後調整大小
+      setTimeout(typeTitle, 100);
+    } else {
+      setTimeout(eraseTitle, 1500);
+    }
+  }
 
-  
+  function eraseTitle() {
+    if (charIndex > 0) {
+      dynamicTitle.textContent = titles[titleIndex].substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(adjustTitleFontSize, 10); // 每次刪除字符後調整大小
+      setTimeout(eraseTitle, 50);
+    } else {
+      titleIndex = (titleIndex + 1) % titles.length;
+      setTimeout(typeTitle, 500);
+    }
+  }
 
+  function adjustTitleFontSize() {
+    // 重置字體大小為基礎大小
+    const baseSize = window.innerWidth <= 360 ? 1.8 :
+                     window.innerWidth <= 480 ? 2 : 
+                     window.innerWidth <= 768 ? 2.5 : 3.5;
+                     
+    titleText.style.fontSize = baseSize + 'rem';
+    
+    // 測量文字寬度
+    const textWidth = titleText.scrollWidth;
+    const containerWidth = titleContainer.clientWidth;
+    
+    if (textWidth > containerWidth) {
+      // 計算縮放因子
+      const scaleFactor = containerWidth / textWidth * 0.95;
+      // 新的字體大小
+      const newSize = baseSize * scaleFactor;
+      // 最小字體大小限制
+      const minSize = window.innerWidth <= 360 ? 1.4 :
+                      window.innerWidth <= 480 ? 1.6 : 
+                      window.innerWidth <= 768 ? 1.8 : 2;
+                      
+      titleText.style.fontSize = Math.max(newSize, minSize) + 'rem';
+    }
+  }
+
+  async function downloadResume(event) {
+    event.preventDefault();
+    
+    try {
+      // GitHub 原始內容 URL
+      const pdfUrl = 'https://raw.githubusercontent.com/ki225/ki225.github.io/main/source/files/resume.pdf';
+      
+      // 使用 fetch API 獲取 PDF 內容
+      const response = await fetch(pdfUrl);
+      const blob = await response.blob();
+      
+      // 創建下載鏈接
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = 'Yung-Chi_Huang_Resume.pdf'; // 設置下載文件的名稱
+      document.body.appendChild(a);
+      a.click();
+      
+      // 清理
+      window.URL.revokeObjectURL(downloadUrl);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('下載失敗:', error);
+      // 如果下載失敗，嘗試直接在新頁面打開
+      window.open('https://raw.githubusercontent.com/ki225/ki225.github.io/main/source/files/resume.pdf', '_blank');
+    }
+  }
   
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    typeTitle(); // 開始打字動畫
+    
+    // 調整圖像尺寸和間距在小螢幕上
+    if (window.innerWidth <= 480) {
+      const desktopImg = document.querySelector('.desktop-image-container img');
+      const mobileImg = document.querySelector('.mobile-image-container img');
+      
+      if (desktopImg) desktopImg.style.width = "150px";
+      if (mobileImg) mobileImg.style.width = "150px";
+    }
+  });
+  
+  // 在視窗改變大小時重新調整
+  window.addEventListener('resize', function() {
+    adjustTitleFontSize();
+  });
+</script>
 
         
 <div class="footer">
@@ -407,24 +692,6 @@
 
 
         
-  
-    <div class="share-icon tools-bar-item">
-      <a href="javascript: void(0)" id="share-icon">
-        <i class="iconfont iconshare"></i>
-      </a>
-      <div class="share-content hidden">
-        
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + tags + '&url=' + http%3A%2F%2Fexample.com%2Ftags%2Findex.html + '" target="_blank" title="Twitter">
-            <i class="iconfont icon-twitter"></i>
-          </a>
-        
-        
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/tags/index.html" target="_blank" title="Facebook">
-            <i class="iconfont icon-facebooksquare"></i>
-          </a>
-        
-      </div>
-    </div>
   
   
 <script src="/js/shares.js"></script>
