@@ -151,7 +151,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-10-27 13:00:27
+          2025-10-27 16:17:26
         </span>
         
               <span class="post-tags">
@@ -805,22 +805,378 @@
 <td><strong>⭐ Star Topology</strong>（星狀拓樸）</td>
 <td>Coordinator 為中心，RFDs 連接於其上</td>
 <td>- 中心節點（Coordinator）負責所有通訊<br>- 適合簡單應用，如家庭感測網路<br>- 所有 RFD 只能與中心 FFD 通訊</td>
-<td><img src="/images/wireless/img26.png" alt="alt text"></td>
+<td><img src="/images/wireless/img27.png" alt="alt text"></td>
 </tr>
 <tr>
 <td><strong>🔗 Peer-to-Peer (Mesh) Topology</strong>（點對點 &#x2F; 網狀拓樸）</td>
 <td>各 FFD 節點可直接連接彼此</td>
 <td>- 無中心節點，可多點連線<br>- 支援多跳傳輸，具高延展性與容錯性<br>- 常用於工業監控或智慧城市</td>
-<td><img src="/images/wireless/img27.png" alt="alt text"></td>
+<td><img src="/images/wireless/img28.png" alt="alt text"></td>
 </tr>
 <tr>
 <td><strong>🌐 Combined Topology</strong>（混合拓樸）</td>
 <td>星狀與網狀的結合</td>
 <td>- 常見於大型 ZigBee 網路<br>- 主幹為 Mesh 結構，末端連接 Star 型感測節點<br>- 兼具穩定性與節能特性</td>
-<td><img src="/images/wireless/img28.png" alt="alt text"></td>
+<td><img src="/images/wireless/img29.png" alt="alt text"></td>
 </tr>
 </tbody></table>
-<p>一個 Star Topology 的 ZigBee 網路，本質上就是一個 PAN（個人區域網路）<br><img src="/images/wireless/img26.png" alt="alt text"></p>
+<p>一個 Star Topology 的 ZigBee 網路，本質上就是一個 PAN（個人區域網路）<br><img src="/images/wireless/img27.png" alt="alt text"></p>
+<h3 id="slotted-unslotted-CSMA-CA-的-channel-access-機制"><a href="#slotted-unslotted-CSMA-CA-的-channel-access-機制" class="headerlink" title="slotted &amp; unslotted CSMA&#x2F;CA 的 channel access 機制"></a>slotted &amp; unslotted CSMA&#x2F;CA 的 channel access 機制</h3><p>IEEE 802.15.4 同時支援兩種網路運作模式，一個是有 slot（時槽）概念，一個是沒有，但 IEEE 802.11（Wi-Fi）則沒有。對於 unslotted CSMA&#x2F;CA 的 channel access 機制，其實就是指說每個人都有自己的時間系統，只是說沒有對齊彼此的時間就會很麻煩；而 slotted CSMA&#x2F;CA 的 channel access 機制就是彼此的 slot 起點有對齊。</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>是否有 Beacon</th>
+<th>通道存取機制</th>
+<th>特點</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Non Beacon-enabled</strong></td>
+<td>❌ 無 Beacon Frame</td>
+<td><strong>Unslotted CSMA&#x2F;CA</strong></td>
+<td>無時間同步機制，裝置隨時可競爭通道</td>
+</tr>
+<tr>
+<td><strong>Beacon-enabled</strong></td>
+<td>✅ 有 Beacon Frame</td>
+<td><strong>Slotted CSMA&#x2F;CA</strong></td>
+<td>以 Beacon 為時間基準，同步所有裝置的傳輸時槽（slot）</td>
+</tr>
+</tbody></table>
+<p>其實 802.15.4 的重點就是<strong>有時間就去睡覺(inactive portion)<strong>跟</strong>有 beacon 就畫 slot</strong>，而 802.15.4 的 Beacon 模式，就是使用 Beacon 定時間、有 slot 來排隊、有空就省電睡覺。</p>
+<p><img src="/images/wireless/img30.png" alt="alt text"></p>
+<p>在 IEEE 802.15.4 的 Beacon-enabled 網路中，整個時間被切成一個又一個的 Beacon interval，每個 interval 開始時會發送 Beacon frame，所有裝置都依這個 Beacon 同步時間，並把接下來的傳輸區段切成許多 slot（時槽）——這就是「有 beacon 就畫 slot」的意思。Beacon interval 又分成兩個主要部分：</p>
+<ol>
+<li>Active portion：可以傳資料的階段<ul>
+<li>CAP（Contention Access Period）：使用 Slotted CSMA&#x2F;CA，節點競爭通道傳輸。</li>
+<li>CFP（Contention-Free Period）：分配給特定節點的 GTS（Guaranteed Time Slot），不需競爭即可傳輸。</li>
+</ul>
+</li>
+<li>Inactive portion：所有裝置可進入睡眠以節省能量，這就是「有時間就去睡覺」。</li>
+</ol>
+<blockquote>
+<p>但這裡就出現了一個問題，如果宋封包後對方在 inactive portion，就會造成緊急問題沒辦法好好解決。</p>
+</blockquote>
+<h4 id="Slotted-CSMA-CA-Algorithm-IFS-interframe-space"><a href="#Slotted-CSMA-CA-Algorithm-IFS-interframe-space" class="headerlink" title="Slotted CSMA&#x2F;CA Algorithm IFS(interframe space)"></a>Slotted CSMA&#x2F;CA Algorithm IFS(interframe space)</h4><p>IFS（Interframe Space）是兩個資料幀（frame）之間必須保留的時間間隔，用來區分不同 frame 的傳輸（避免碰撞）、給接收端足夠的時間處理上一個 frame、幫助控制不同長度的資料幀之間的優先權。IFS 的兩種類型：</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>全名</th>
+<th>用途</th>
+<th>長度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>SIFS</strong></td>
+<td>Short Interframe Space</td>
+<td>用於<strong>短 frame</strong>或需立即回覆的情境（例如 ACK）</td>
+<td>短</td>
+</tr>
+<tr>
+<td><strong>LIFS</strong></td>
+<td>Long Interframe Space</td>
+<td>用於<strong>長 frame</strong>之後的等待間隔</td>
+<td>長</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>傳輸類型</th>
+<th>範例</th>
+<th>時間序列　time sequence</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>有 ACK</strong></td>
+<td>Data → t_ack → ACK → IFS（LIFS&#x2F;SIFS）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>無 ACK</strong></td>
+<td>Data → IFS（LIFS&#x2F;SIFS）</td>
+<td>❌</td>
+</tr>
+</tbody></table>
+<h4 id="Slotted-CSMA-CA-—-Backoff-機制"><a href="#Slotted-CSMA-CA-—-Backoff-機制" class="headerlink" title="Slotted CSMA&#x2F;CA — Backoff 機制"></a>Slotted CSMA&#x2F;CA — Backoff 機制</h4><ol>
+<li><strong>初始化參數</strong><ul>
+<li><code>NB = 0</code></li>
+<li><code>CW = 2</code></li>
+<li><code>BE = macMinBE</code>（一般為 3）</li>
+</ul>
+</li>
+<li><strong>等待一段隨機 backoff 時間</strong><ul>
+<li>延遲 <code>random(0, 2^BE - 1)</code> 個 backoff period（slot 為單位）</li>
+<li>這樣每個節點等待時間都不一樣，減少碰撞。</li>
+</ul>
+</li>
+<li><strong>執行第一次 CCA (Clear Channel Assessment)</strong><ul>
+<li>在 slot 邊界偵測通道是否空閒（Channel idle?）</li>
+<li>若通道忙碌：<ul>
+<li><code>NB = NB + 1</code></li>
+<li><code>BE = min(BE + 1, macMaxBE)</code></li>
+<li>若 <code>NB &gt; macMaxCSMABackoffs</code> → <strong>宣告失敗 (Failure)</strong></li>
+<li>否則回到第 2 步重新 backoff。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>若通道空閒 (Y)</strong><ul>
+<li><code>CW = CW - 1</code></li>
+<li>若 <code>CW &gt; 0</code> → 再進行一次 CCA（需連續兩次空閒才能傳）。</li>
+</ul>
+</li>
+<li><strong>若 <code>CW = 0</code> → 成功傳送 (Success)</strong><ul>
+<li>節點開始傳資料（Frame Transmission）。</li>
+</ul>
+</li>
+</ol>
+<p><img src="/images/wireless/img31.png" alt="alt text"></p>
+<h3 id="Data-Transfer-Model"><a href="#Data-Transfer-Model" class="headerlink" title="Data Transfer Model"></a>Data Transfer Model</h3><h4 id="Beacon-enabled-Network"><a href="#Beacon-enabled-Network" class="headerlink" title="Beacon-enabled Network"></a>Beacon-enabled Network</h4><ul>
+<li>資料由 Coordinator（協調者） 傳送至 Device（裝置）。</li>
+<li>在 Beacon-enabled 網路 中，協調者會在 Beacon frame 中標示「有資料待傳 (data pending)」。</li>
+<li>裝置會週期性地喚醒並接收 Beacon，若發現有資料待接收，則使用 Slotted CSMA&#x2F;CA 傳送一個 MAC command request（資料請求） 給協調者。<blockquote>
+<p>協調者在 Beacon 裡說「我有資料」，裝置再用 Slotted CSMA&#x2F;CA 來請求。</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/images/wireless/img32.png" alt="alt text"></p>
+<h4 id="Non-Beacon-enabled-Network"><a href="#Non-Beacon-enabled-Network" class="headerlink" title="Non Beacon-enabled Network"></a>Non Beacon-enabled Network</h4><ul>
+<li>資料同樣由 Coordinator 傳送至 Device。</li>
+<li>在 Non Beacon-enabled 網路 中，因為沒有 Beacon frame，裝置會主動使用 Unslotted CSMA&#x2F;CA 傳送 MAC command request（資料請求）。</li>
+<li>若協調者有資料待傳，則使用 Unslotted CSMA&#x2F;CA 將 Data frame 傳送給裝置。<blockquote>
+<p>沒有 Beacon，裝置自己主動問「你有我的資料嗎？」再用 Unslotted CSMA&#x2F;CA 收資料。</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/images/wireless/img33.png" alt="alt text"></p>
+<h2 id="802-15-4-適用於感測網路的特性"><a href="#802-15-4-適用於感測網路的特性" class="headerlink" title="802.15.4 適用於感測網路的特性"></a>802.15.4 適用於感測網路的特性</h2><p>IEEE 802.15.4 的 MAC 設計重點在「低功耗與高可靠性」，適合感測器與 IoT 裝置長時間運作。相比之下，Wi-Fi (802.11b) 追求的是「速度與彈性」，但耗能高、壽命短。</p>
+<p>一個設計良好的 MAC（Medium Access Control）協定，應具備 <strong>節能、高擴充性與適應性</strong> 等特性。由於無線感測網路的節點多半受限於電池供電，因此 <strong>能量效率（Energy efficiency）</strong> 是最核心的設計目標；MAC 機制必須盡量減少碰撞、閒置聆聽、與控制封包開銷，以降低耗電。同時，網路在節點數量增加或拓撲變化時，也應能 <strong>自我調整與擴展（Scalability &amp; Adaptability）</strong>，維持穩定通訊效能。至於 <strong>延遲、吞吐量與頻寬利用率</strong> 則屬於次要考量，通常在確保低功耗與可靠傳輸的前提下，再追求傳輸效能的最佳化。</p>
+<h3 id="感測網路中能量浪費的原因"><a href="#感測網路中能量浪費的原因" class="headerlink" title="感測網路中能量浪費的原因"></a>感測網路中能量浪費的原因</h3><table>
+<thead>
+<tr>
+<th>原因</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Collision（碰撞）</strong></td>
+<td>多個節點同時傳輸導致資料衝突，需要重傳。</td>
+</tr>
+<tr>
+<td><strong>Overhearing（過度聆聽）</strong></td>
+<td>節點無意中接收到與自己無關的封包。</td>
+</tr>
+<tr>
+<td><strong>Control-packet overhead（控制封包開銷）</strong></td>
+<td>控制訊息過多造成額外能量消耗。</td>
+</tr>
+<tr>
+<td><strong>Overemitting（過度發射）</strong></td>
+<td>傳輸功率超過實際所需距離或法規限制。</td>
+</tr>
+<tr>
+<td><strong>Idle listening（閒置聆聽） → 主要問題！</strong></td>
+<td>節點在沒有資料傳輸時仍保持接收狀態，是<strong>最主要的耗電來源</strong>。</td>
+</tr>
+</tbody></table>
+<h3 id="802-15-4-適用於-IoT-的特性比較"><a href="#802-15-4-適用於-IoT-的特性比較" class="headerlink" title="802.15.4 適用於 IoT 的特性比較"></a>802.15.4 適用於 IoT 的特性比較</h3><table>
+<thead>
+<tr>
+<th>項目</th>
+<th><strong>IEEE 802.15.4 (WPAN)</strong></th>
+<th><strong>IEEE 802.11b (WLAN)</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>應用焦點</strong></td>
+<td>監測與控制 (Monitoring &amp; Control)</td>
+<td>網頁、電子郵件、影片 (Web, Email, Video)</td>
+</tr>
+<tr>
+<td><strong>電池壽命（天）</strong></td>
+<td>100 – 1000+</td>
+<td>0.5 – 5</td>
+</tr>
+<tr>
+<td><strong>網路規模</strong></td>
+<td>幾乎無限制（26+ 節點以上）</td>
+<td>約 32 節點</td>
+</tr>
+<tr>
+<td><strong>頻寬 (Kb&#x2F;s)</strong></td>
+<td>20 – 250</td>
+<td>11,000+</td>
+</tr>
+<tr>
+<td><strong>成功指標</strong></td>
+<td><strong>可靠性、低功耗</strong></td>
+<td><strong>速度、靈活性</strong></td>
+</tr>
+</tbody></table>
+<h2 id="MAC-protocols-for-WSN"><a href="#MAC-protocols-for-WSN" class="headerlink" title="MAC protocols for WSN"></a>MAC protocols for WSN</h2><p>無線感測網路（Wireless Sensor Network, WSN）是一種由大量低功耗、具感測與無線通訊能力的節點所組成的分散式網路。這些節點可部署於各種環境中，用來監測溫度、濕度、壓力、光線或其他物理現象，並將資料透過無線方式傳送至匯聚節點（Sink）或基地台。由於 WSN 節點多半依賴電池供電且布建環境可能難以維護，節能設計與有效的媒體存取控制（MAC）協定便成為確保網路長期穩定運作的關鍵。</p>
+<h3 id="S-MAC"><a href="#S-MAC" class="headerlink" title="S-MAC"></a>S-MAC</h3><p>每個 cluster 都有自己的 週期性排程（Listen + Sleep），所以整個網路不需要全域時間同步，只需區域內同步即可，已下圖為例分為兩個 cluster，Cluster 1（紅色區域）節點 A、C 彼此同步即可。</p>
+<p><img src="/images/wireless/img34.png" alt="alt text"></p>
+<h4 id="periodic-sleep–listen-schedules"><a href="#periodic-sleep–listen-schedules" class="headerlink" title="periodic sleep–listen schedules"></a>periodic sleep–listen schedules</h4><p>而為了降低節點能量消耗，特別是減少 idle listening（閒置聆聽），它透過週期性的睡眠與喚醒機制 (sleep&#x2F;listen scheduling) 來節能。整個週期分成兩個主要階段：</p>
+<ol>
+<li>Listen period（監聽期）<ul>
+<li>所有節點都會醒來，用來執行時間同步與控制封包交換 (RTS&#x2F;CTS)。</li>
+<li>Listen period 的兩個子階段<table>
+<thead>
+<tr>
+<th>子階段</th>
+<th>名稱</th>
+<th>說明</th>
+<th>圖中表示</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>(1) Synchronization period</strong></td>
+<td>同步階段</td>
+<td>節點彼此交換 <strong>SYNC 封包</strong>，確保同一群（cluster）內時間一致。</td>
+<td>藍色箭頭區段（TX sync &#x2F; RX sync）</td>
+</tr>
+<tr>
+<td><strong>(2) Control period</strong></td>
+<td>控制階段</td>
+<td>執行 <strong>RTS&#x2F;CTS (Request to Send &#x2F; Clear to Send)</strong> 交握，確定誰要傳資料、誰要接收。</td>
+<td>紅色箭頭區段（RTS &#x2F; CTS 封包）</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li>Sleep &#x2F; Sending data period（休眠或資料傳送期）<ul>
+<li>節點若沒有通訊任務，會進入睡眠狀態；若有資料要傳輸，則利用此時段進行實際的資料傳送。</li>
+</ul>
+</li>
+</ol>
+<h4 id="Communication"><a href="#Communication" class="headerlink" title="Communication"></a>Communication</h4><p>節點會採用自適應式聆聽（Adaptive Listening）的機制應對，節點若「聽到」鄰居正在通訊（理想情況下只需聽到 RTS 或 CTS 封包），會在該次傳輸結束後短暫地喚醒自己。若該節點正好是  next-hop node(下一個要接收資料的對象)，則會保持醒著，準備接收並轉發鄰居的訊息。若在這段 Adaptive Listening 期間沒有收到任何資料，則會再次進入睡眠狀態以節省能量。</p>
+<ol>
+<li>synchronization period<ul>
+<li>CS (Carrier Sensing)：<ul>
+<li>傳送端先偵測通道是否空閒（避免碰撞）。</li>
+</ul>
+</li>
+<li>TX Sync：<ul>
+<li>傳送端在同步期傳送同步封包，讓鄰居節點維持相同時鐘。</li>
+<li>(在S-MAC 裡沒有人扮演 AP 的角色，任何裝置都可以自發性告訴週期開始；這裡不是發 beacon 而是發 TX Sync，但意義相同)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>control period<ul>
+<li>RTS&#x2F;CTS 控制交握：<ul>
+<li>傳送端（sender）發送 RTS (Request to Send)。</li>
+<li>接收端（receiver）回覆 CTS (Clear to Send)。</li>
+<li>這樣附近節點就知道不要干擾，避免碰撞。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>sending data&#x2F;sleep period：<ul>
+<li>要溝通的結點就會在 sleep period 醒著</li>
+<li>資料傳輸階段（TX&#x2F;RX Data）：<ul>
+<li>雙方進入資料傳送階段（TX Data、RX Data）。</li>
+<li>傳完後，雙方再進入 Sleep period 節省能量。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/images/wireless/img35.png" alt="alt text"></p>
+<h4 id="Re-transmit-message-problem-Message-Passing-機制"><a href="#Re-transmit-message-problem-Message-Passing-機制" class="headerlink" title="Re-transmit message problem - Message Passing 機制"></a>Re-transmit message problem - Message Passing 機制</h4><p>在無線感測網路中，若資料訊息（message）太長或太短都會造成效率問題，當訊息太長，若傳輸過程中發生錯誤，需要重傳整個長封包，導致時間與能量浪費；若訊息太短，每次傳送都要執行 RTS&#x2F;CTS 控制封包交換，導致控制開銷（control overhead）過大。</p>
+<p>為了解決這個問題，S-MAC 使用 Message Passing 機制，將長訊息分段成多個小封包連續傳送，這樣就可以實現</p>
+<ul>
+<li>傳送端只需在開始前執行一次 RTS&#x2F;CTS。</li>
+<li>接收端每收到一段就立即回 ACK。</li>
+<li>若中間某段出錯，只需重傳該段，不需重傳整筆資料。</li>
+<li>可同時減少 競爭延遲（contention latency） 與 控制開銷（RTS&#x2F;CTS overhead）。</li>
+</ul>
+<p><img src="/images/wireless/img36.png" alt="alt text"></p>
+<h3 id="B-MAC"><a href="#B-MAC" class="headerlink" title="B-MAC"></a>B-MAC</h3><p>S-MAC 因為 idle listening 機制，一直聽但沒事做，導致很浪費電。B-MAC 因為減少 idle listening，所以比 S-MAC 更省資源。在 B-MAC 機制裡，每個設備都有自己的時間安排，也就是他們的時間事沒有對齊的，導致 sender 不知道 receiver 確切醒來的時間(而且 receiver 設備會醒來的時間超短)，這導致 sender 要付出大的代價，也就是 preamble 要超過 receiver 休息的時間。</p>
+<blockquote>
+<p>老師當時做了一個很有趣的比喻，說已知學姐讀書一小時後會休息五分鐘(listen)，追求學姊的學長不知道學姐甚麼時候會開始讀書，但知道學姊一次讀一小時，所以只要自己在學姊的宿舍樓下彈超過一小時的吉他(preamble)，一定會有一小段吉他聲可以被學姊聽到(by 老師大學時間的故事改編)</p>
+</blockquote>
+<ul>
+<li>CCA 去聽 channel 是否擁擠，避免擠掉別人<br><img src="/images/wireless/img37.png" alt="alt text"></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>類別</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>✅ <strong>優點</strong></td>
+<td>- 不需時間同步（asynchronous）<br> - 不需 RTS&#x2F;CTS 控制封包<br> - 結構簡單、介面乾淨</td>
+</tr>
+<tr>
+<td>❌ <strong>缺點</strong></td>
+<td>- <strong>傳輸延遲長</strong>（因長 preamble）<br> - 當網路流量大時，<strong>效能下降</strong>（容易碰撞、干擾）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>當 preamble 短的話，反而要更頻繁的 wake up</p>
+</blockquote>
+<h3 id="D-MAC"><a href="#D-MAC" class="headerlink" title="D-MAC"></a>D-MAC</h3><p>之前的 S-mAC 有 DFI(The data forwarding interruption problem) 的問題，只有接收端的 next hop of receiver 能聽到（overhear）資料傳輸的過程，而其他聽不到此傳輸的節點（超出通訊範圍者）會在該輪通訊期間維持睡眠狀態，直到下一個週期（cycle&#x2F;interval）才會醒來。這個 sleeping period 就會導致傳輸中斷，在 MAC 層看似只有卡一下子(MAC層只在乎下一步的通訊是否成功)，但放大格局來看會造成整個網路傳輸很嚴重的延遲。</p>
+<p><img src="/images/wireless/img38.png" alt="alt text"></p>
+<ul>
+<li>透過資料收集樹（data gathering tree），將 IoT 感測節點的資料逐步傳送至 匯聚節點（sink）。</li>
+<li>多跳路徑上的節點會依序喚醒（sequentially wake up），如同**連鎖反應（chain reaction）**般地將資料一路轉送至匯聚端。<ol>
+<li>最底層的節點（感測端）在其醒著的時段進行資料感測，並執行 TX（傳送）。倒數第二層節點在稍後的時刻醒來（RX），剛好接收到資料。</li>
+<li>最底層送完就進入休息模式。此時倒數第二層成為 sender、倒數第三層成為 receiver</li>
+<li>如此依序傳遞資料往上層傳送。</li>
+</ol>
+</li>
+</ul>
+<p><img src="/images/wireless/img39.png" alt="alt text"></p>
+<p>節點根據樹的深度錯開睡眠時間，讓資料沿著多跳路徑像接力棒一樣快速傳到 Sink，既節能又減少延遲，確保資料可以一路順暢往上傳而不被中斷，但代價是需要精確的時間同步。</p>
+<h4 id="優缺點"><a href="#優缺點" class="headerlink" title="優缺點"></a>優缺點</h4><ul>
+<li>優點<ul>
+<li>與其他睡眠／喚醒週期分配方法相比，DMAC 能夠達到<strong>非常低的延遲（latency）</strong>，因為節點會依序醒來進行資料轉送，讓多跳傳輸更快速。</li>
+</ul>
+</li>
+<li>缺點<ul>
+<li>DMAC <strong>未使用碰撞避免機制（collision avoidance）</strong>。因此，若有多個擁有相同排程（schedule）的節點同時嘗試向同一個節點傳送資料，就可能發生**資料碰撞（collision）**的情況。</li>
+</ul>
+</li>
+</ul>
+<h3 id="整理"><a href="#整理" class="headerlink" title="整理"></a>整理</h3><table>
+<thead>
+<tr>
+<th>協定名稱</th>
+<th>是否需時間同步</th>
+<th>傳輸機制類型</th>
+<th>是否能適應網路變化</th>
+<th>主要特性摘要</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>S-MAC</strong></td>
+<td>❌ 不需要</td>
+<td><strong>CSMA&#x2F;CA</strong></td>
+<td>✅ 良好 (Good)</td>
+<td>採週期性睡眠以節能，具區域同步；簡單但可能產生轉送中斷問題。</td>
+</tr>
+<tr>
+<td><strong>B-MAC</strong></td>
+<td>❌ 不需要</td>
+<td><strong>CSMA</strong></td>
+<td>✅ 良好 (Good)</td>
+<td>採低功耗監聽 (LPL)，以長前導喚醒接收端；結構簡單、無需同步，但延遲較高。</td>
+</tr>
+<tr>
+<td><strong>DMAC</strong></td>
+<td>✅ 需要</td>
+<td><strong>TDMA &#x2F; 改良型 Slotted ALOHA</strong></td>
+<td>⚠️ 弱 (Weak)</td>
+<td>需時間同步，節點依樹狀結構深度依序喚醒；能快速傳送資料至 Sink，但彈性較低。</td>
+</tr>
+</tbody></table>
 
       </div>
       
@@ -836,7 +1192,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-10-27 13:00:27
+              2025-10-27 16:17:26
             </span>
             
                   <span class="post-tags">
@@ -871,7 +1227,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Medium-Access-Control-MAC"><span class="toc-text">Medium Access Control(MAC)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MAC-vs-LLC%EF%BC%88Logical-Link-Control%EF%BC%89"><span class="toc-text">MAC vs LLC（Logical Link Control）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-%E7%A2%B0%E6%92%9E%E8%AD%B0%E9%A1%8C%E7%9B%B8%E9%97%9C%E7%A0%94%E7%A9%B6-Collision-avoidance"><span class="toc-text">802.11 碰撞議題相關研究 Collision avoidance</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reservation-based%EF%BC%88%E9%A0%90%E7%B4%84%E5%BC%8F%EF%BC%89"><span class="toc-text">Reservation-based（預約式）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RB-in-5G"><span class="toc-text">RB in 5G</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MIMO%EF%BC%88Multiple-Input-Multiple-Output%EF%BC%8C%E5%A4%9A%E8%BC%B8%E5%85%A5%E5%A4%9A%E8%BC%B8%E5%87%BA%EF%BC%89"><span class="toc-text">MIMO（Multiple Input Multiple Output，多輸入多輸出）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Contention-based%EF%BC%88%E7%AB%B6%E7%88%AD%E5%BC%8F%EF%BC%89"><span class="toc-text">Contention-based（競爭式）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CSMA-Carrier-Sense-Multiple-Access"><span class="toc-text">CSMA (Carrier Sense Multiple Access)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hybrid%EF%BC%88%E6%B7%B7%E5%90%88%E5%BC%8F%EF%BC%89"><span class="toc-text">Hybrid（混合式）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-MAC%E6%A9%9F%E5%88%B6"><span class="toc-text">802.11 MAC機制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Super-Frame"><span class="toc-text">Super Frame</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Point-Coordination-Function-PCF"><span class="toc-text">Point Coordination Function (PCF)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Piggyback%E6%A9%9F%E5%88%B6"><span class="toc-text">Piggyback機制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Distributed-Coordination-Function-DCF"><span class="toc-text">Distributed Coordination Function (DCF)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE-802-11-%E7%84%A1%E7%B7%9A%E7%B6%B2%E8%B7%AF%E4%B8%AD%E7%9A%84%E5%84%AA%E5%85%88%E6%AC%8A%E6%A9%9F%E5%88%B6%EF%BC%88Priority-Scheme%EF%BC%89"><span class="toc-text">IEEE 802.11 無線網路中的優先權機制（Priority Scheme）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSMA-CA-%E8%BC%89%E6%B3%A2%E5%81%B5%E6%B8%AC%E5%A4%9A%E9%87%8D%E5%AD%98%E5%8F%96-%E7%A2%B0%E6%92%9E%E9%81%BF%E5%85%8D"><span class="toc-text">CSMA&#x2F;CA (載波偵測多重存取&#x2F;碰撞避免)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hidden-terminal-problem"><span class="toc-text">Hidden terminal problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exposed-terminal-problem"><span class="toc-text">Exposed terminal problem</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-%E7%AF%80%E8%83%BD%E3%80%81%E7%9C%81%E9%9B%BB%E8%AD%B0%E9%A1%8C%E7%9B%B8%E9%97%9C%E7%A0%94%E7%A9%B6"><span class="toc-text">802.11 節能、省電議題相關研究</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%BB%E6%BA%90%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E7%B8%BD%E8%A6%BD"><span class="toc-text">電源管理模式總覽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%81%E9%9B%BB%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E8%A1%8C%E7%82%BA"><span class="toc-text">省電模式下的行為</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TIM-Traffic-Indication-Map"><span class="toc-text">TIM(Traffic Indication Map)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Infrastructure-mode-%E7%9A%84%E7%9C%81%E9%9B%BB%E6%A8%A1%E5%BC%8F"><span class="toc-text">Infrastructure mode 的省電模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ad-hoc-mode%E7%9A%84%E7%9C%81%E9%9B%BB%E6%A8%A1%E5%BC%8F"><span class="toc-text">Ad-hoc mode的省電模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-15-4-MAC"><span class="toc-text">802.15.4 MAC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Device-Types-%E2%80%94-FFD-vs-RFD"><span class="toc-text">Device Types — FFD vs RFD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Network-topology"><span class="toc-text">Network topology</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Medium-Access-Control-MAC"><span class="toc-text">Medium Access Control(MAC)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MAC-vs-LLC%EF%BC%88Logical-Link-Control%EF%BC%89"><span class="toc-text">MAC vs LLC（Logical Link Control）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-%E7%A2%B0%E6%92%9E%E8%AD%B0%E9%A1%8C%E7%9B%B8%E9%97%9C%E7%A0%94%E7%A9%B6-Collision-avoidance"><span class="toc-text">802.11 碰撞議題相關研究 Collision avoidance</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reservation-based%EF%BC%88%E9%A0%90%E7%B4%84%E5%BC%8F%EF%BC%89"><span class="toc-text">Reservation-based（預約式）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RB-in-5G"><span class="toc-text">RB in 5G</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MIMO%EF%BC%88Multiple-Input-Multiple-Output%EF%BC%8C%E5%A4%9A%E8%BC%B8%E5%85%A5%E5%A4%9A%E8%BC%B8%E5%87%BA%EF%BC%89"><span class="toc-text">MIMO（Multiple Input Multiple Output，多輸入多輸出）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Contention-based%EF%BC%88%E7%AB%B6%E7%88%AD%E5%BC%8F%EF%BC%89"><span class="toc-text">Contention-based（競爭式）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CSMA-Carrier-Sense-Multiple-Access"><span class="toc-text">CSMA (Carrier Sense Multiple Access)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hybrid%EF%BC%88%E6%B7%B7%E5%90%88%E5%BC%8F%EF%BC%89"><span class="toc-text">Hybrid（混合式）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-MAC%E6%A9%9F%E5%88%B6"><span class="toc-text">802.11 MAC機制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Super-Frame"><span class="toc-text">Super Frame</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Point-Coordination-Function-PCF"><span class="toc-text">Point Coordination Function (PCF)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Piggyback%E6%A9%9F%E5%88%B6"><span class="toc-text">Piggyback機制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Distributed-Coordination-Function-DCF"><span class="toc-text">Distributed Coordination Function (DCF)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE-802-11-%E7%84%A1%E7%B7%9A%E7%B6%B2%E8%B7%AF%E4%B8%AD%E7%9A%84%E5%84%AA%E5%85%88%E6%AC%8A%E6%A9%9F%E5%88%B6%EF%BC%88Priority-Scheme%EF%BC%89"><span class="toc-text">IEEE 802.11 無線網路中的優先權機制（Priority Scheme）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSMA-CA-%E8%BC%89%E6%B3%A2%E5%81%B5%E6%B8%AC%E5%A4%9A%E9%87%8D%E5%AD%98%E5%8F%96-%E7%A2%B0%E6%92%9E%E9%81%BF%E5%85%8D"><span class="toc-text">CSMA&#x2F;CA (載波偵測多重存取&#x2F;碰撞避免)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hidden-terminal-problem"><span class="toc-text">Hidden terminal problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exposed-terminal-problem"><span class="toc-text">Exposed terminal problem</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-%E7%AF%80%E8%83%BD%E3%80%81%E7%9C%81%E9%9B%BB%E8%AD%B0%E9%A1%8C%E7%9B%B8%E9%97%9C%E7%A0%94%E7%A9%B6"><span class="toc-text">802.11 節能、省電議題相關研究</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%BB%E6%BA%90%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E7%B8%BD%E8%A6%BD"><span class="toc-text">電源管理模式總覽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%81%E9%9B%BB%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E8%A1%8C%E7%82%BA"><span class="toc-text">省電模式下的行為</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TIM-Traffic-Indication-Map"><span class="toc-text">TIM(Traffic Indication Map)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Infrastructure-mode-%E7%9A%84%E7%9C%81%E9%9B%BB%E6%A8%A1%E5%BC%8F"><span class="toc-text">Infrastructure mode 的省電模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ad-hoc-mode%E7%9A%84%E7%9C%81%E9%9B%BB%E6%A8%A1%E5%BC%8F"><span class="toc-text">Ad-hoc mode的省電模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-15-4-MAC"><span class="toc-text">802.15.4 MAC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Device-Types-%E2%80%94-FFD-vs-RFD"><span class="toc-text">Device Types — FFD vs RFD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Network-topology"><span class="toc-text">Network topology</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#slotted-unslotted-CSMA-CA-%E7%9A%84-channel-access-%E6%A9%9F%E5%88%B6"><span class="toc-text">slotted &amp; unslotted CSMA&#x2F;CA 的 channel access 機制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Slotted-CSMA-CA-Algorithm-IFS-interframe-space"><span class="toc-text">Slotted CSMA&#x2F;CA Algorithm IFS(interframe space)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Slotted-CSMA-CA-%E2%80%94-Backoff-%E6%A9%9F%E5%88%B6"><span class="toc-text">Slotted CSMA&#x2F;CA — Backoff 機制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Transfer-Model"><span class="toc-text">Data Transfer Model</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Beacon-enabled-Network"><span class="toc-text">Beacon-enabled Network</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Non-Beacon-enabled-Network"><span class="toc-text">Non Beacon-enabled Network</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-15-4-%E9%81%A9%E7%94%A8%E6%96%BC%E6%84%9F%E6%B8%AC%E7%B6%B2%E8%B7%AF%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-text">802.15.4 適用於感測網路的特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%84%9F%E6%B8%AC%E7%B6%B2%E8%B7%AF%E4%B8%AD%E8%83%BD%E9%87%8F%E6%B5%AA%E8%B2%BB%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-text">感測網路中能量浪費的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#802-15-4-%E9%81%A9%E7%94%A8%E6%96%BC-IoT-%E7%9A%84%E7%89%B9%E6%80%A7%E6%AF%94%E8%BC%83"><span class="toc-text">802.15.4 適用於 IoT 的特性比較</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MAC-protocols-for-WSN"><span class="toc-text">MAC protocols for WSN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S-MAC"><span class="toc-text">S-MAC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#periodic-sleep%E2%80%93listen-schedules"><span class="toc-text">periodic sleep–listen schedules</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Communication"><span class="toc-text">Communication</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Re-transmit-message-problem-Message-Passing-%E6%A9%9F%E5%88%B6"><span class="toc-text">Re-transmit message problem - Message Passing 機制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-MAC"><span class="toc-text">B-MAC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D-MAC"><span class="toc-text">D-MAC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%84%AA%E7%BC%BA%E9%BB%9E"><span class="toc-text">優缺點</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E7%90%86"><span class="toc-text">整理</span></a></li></ol></li></ol>
       
     </div>
   </div>
