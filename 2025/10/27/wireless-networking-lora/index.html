@@ -151,7 +151,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-10-27 23:35:59
+          2025-10-28 00:41:26
         </span>
         
               <span class="post-tags">
@@ -1235,6 +1235,217 @@
 <td align="left">保留位。</td>
 </tr>
 </tbody></table>
+<h4 id="Setting-delay-between-TX-and-RX-RXTimingSetupReq"><a href="#Setting-delay-between-TX-and-RX-RXTimingSetupReq" class="headerlink" title="Setting delay between TX and RX (RXTimingSetupReq)"></a>Setting delay between TX and RX (RXTimingSetupReq)</h4><ul>
+<li>RXTimingSetupReq 是由 Network Server 下發給 End Device 的命令，用來設定上行傳輸（TX）結束與接收視窗（RX）開啟之間的延遲時間，白話就是 uplink 送完多久後要延遲多久才開始有第一個 receive window</li>
+<li>這影響裝置接收下行訊息（downlink）的時機。</li>
+<li>運作說明<ul>
+<li>RX1（第一接收視窗）<ul>
+<li>在 TX 結束後 Delay 秒（±20 μs） 開啟。</li>
+</ul>
+</li>
+<li>RX2（第二接收視窗）<ul>
+<li>永遠在 RX1 之後 1 秒 開啟。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>RXTimingSetupReq Payload 結構</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">欄位名稱</th>
+<th align="left">大小（bytes）</th>
+<th align="left">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Delay</strong></td>
+<td align="left">1</td>
+<td align="left">設定 TX 結束後至 RX1 視窗開啟的延遲時間（單位：秒）</td>
+</tr>
+</tbody></table>
+<h4 id="DeviceTime-commands-DeviceTimeReq"><a href="#DeviceTime-commands-DeviceTimeReq" class="headerlink" title="DeviceTime commands(DeviceTimeReq)"></a>DeviceTime commands(DeviceTimeReq)</h4><p>終端裝置可以使用 DeviceTimeReq 命令，請求 Network Server 提供目前的網路日期與時間，以對齊時間避免太大落差</p>
+<h2 id="End-device-activation"><a href="#End-device-activation" class="headerlink" title="End-device activation"></a>End-device activation</h2><p>裝置要加入到 LoRaWAN 網路環境，每個裝置會需要先被 activate，主要方式有兩種</p>
+<ol>
+<li>Over-The-Air Activation (OTAA): 在空氣中連接需要做的完整 activation 流程</li>
+<li>Activation By Personalization (ABP): 事先有做好一些前置作業，所以要做的事比 OTAA 少很多</li>
+</ol>
+<p>加入前要做身分驗證，所以 end-device 需要具備以下資訊，以確保加入過程中的加密安全性與完整性驗證。</p>
+<table>
+<thead>
+<tr>
+<th align="left">項目</th>
+<th align="left">名稱</th>
+<th align="left">中文說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>1️⃣ JoinEUI（Join Server ID）</strong></td>
+<td align="left">要加入 server 的 id</td>
+<td align="left">代表負責裝置註冊與金鑰生成的 <strong>Join Server</strong>。<br>在 OTAA（Over-The-Air Activation）過程中，Join Server 負責協助裝置進行<strong>入網認證（Join Procedure）</strong>，並推導出<strong>工作階段金鑰（Session Keys）</strong>。</td>
+</tr>
+<tr>
+<td align="left"><strong>2️⃣ DevEUI（Device ID）</strong></td>
+<td align="left">裝置自己的 id</td>
+<td align="left">為終端裝置的<strong>全球唯一識別碼（64-bit IEEE EUI-64）</strong>，由製造商分配，用於在入網與管理過程中識別特定裝置。</td>
+</tr>
+<tr>
+<td align="left"><strong>3️⃣ Device Root Keys（AppKey &amp; NwkKey）</strong></td>
+<td align="left">裝置根金鑰</td>
+<td align="left">在裝置出廠時分配的兩組<strong>長期對稱金鑰</strong>：<br> - <strong>AppKey（Application Key）</strong>：用於推導應用層安全金鑰（AppSKey）。<br> - <strong>NwkKey（Network Key）</strong>：用於推導網路層安全金鑰（FNwkSIntKey、SNwkSIntKey、NwkSEncKey）。<br> 這兩組金鑰<strong>永不在空中傳輸</strong>，只用於安全地生成 session keys。</td>
+</tr>
+<tr>
+<td align="left"><strong>4️⃣ JSIntKey &amp; JSEncKey Derivation</strong></td>
+<td align="left">Join Server 金鑰衍生</td>
+<td align="left">由 <strong>NwkKey</strong> 推導出兩個臨時金鑰：<br> - <strong>JSIntKey（Join Server Integrity Key）</strong>：用於驗證 Join 訊息的完整性。<br> - <strong>JSEncKey（Join Server Encryption Key）</strong>：用於加密 Join-Accept 訊息內容。<br> 這確保 OTAA 加入過程中的認證與金鑰交換皆受到保護。</td>
+</tr>
+</tbody></table>
+<h3 id="JoinEUI"><a href="#JoinEUI" class="headerlink" title="JoinEUI"></a>JoinEUI</h3><ul>
+<li>JoinEUI（加入伺服器識別碼） 是一個依據 IEEE EUI-64 標準 的全球唯一應用識別碼。</li>
+<li>它用來唯一識別要加入的 Join Server，即協助裝置完成 Join 流程與 Session Key 推導 的伺服器。</li>
+<li>對於 OTAA 模式的裝置，JoinEUI 必須在執行 Join 流程前預先儲存在裝置內部。</li>
+</ul>
+<h3 id="DevEUI"><a href="#DevEUI" class="headerlink" title="DevEUI"></a>DevEUI</h3><ul>
+<li>DevEUI（裝置識別碼） 是一個在 IEEE EUI-64 位址空間中定義的全球唯一裝置 ID。</li>
+<li>它用於在整個 LoRaWAN 網路中唯一識別該終端裝置。</li>
+<li>對於 OTAA 裝置，DevEUI 必須在 Join 前預先儲存在裝置中，以便網路識別裝置身份。</li>
+</ul>
+<h3 id="Device-Root-Keys（AppKey-NwkKey）"><a href="#Device-Root-Keys（AppKey-NwkKey）" class="headerlink" title="Device Root Keys（AppKey &amp; NwkKey）"></a>Device Root Keys（AppKey &amp; NwkKey）</h3><ul>
+<li>NwkKey（Network Key） 與 AppKey（Application Key） 是在裝置製造階段就分配的 AES-128 根金鑰。</li>
+<li>這兩把金鑰是裝置在 OTAA 加入網路時的安全基礎，不會經由空中傳輸。</li>
+<li>在 OTAA 過程中：</li>
+<li>若純粹因為 LoRaWAN 網路需要 key 就會使用 NwkKey 用於推導以下網路層安全金鑰：<ul>
+<li>FNwkSIntKey（上行訊息完整性金鑰）</li>
+<li>SNwkSIntKey（下行訊息完整性金鑰）</li>
+<li>NwkSEncKey（網路層加密金鑰）</li>
+</ul>
+</li>
+<li>若是為了 data，就會用 AppKey 用於推導以下應用層金鑰：<ul>
+<li>AppSKey（應用層資料加密金鑰）</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>平常若有 key 需求的話，會是用這兩個 key 衍生出的這些 key</p>
+</blockquote>
+<p>在經過 activation 後， end-device 內部就會儲存</p>
+<ul>
+<li>DevAddr (Device address) -&gt; 讓別人知道這個 device node</li>
+<li>NwkSEncKey&#x2F; SNwkSIntKey&#x2F;FNwkSIntKey (Triplet of network session key)</li>
+<li>AppSKey (Application session key)</li>
+</ul>
+<h4 id="Forwarding-Network-Session-Integrity-Key（FNwkSIntKey）"><a href="#Forwarding-Network-Session-Integrity-Key（FNwkSIntKey）" class="headerlink" title="Forwarding Network Session Integrity Key（FNwkSIntKey）"></a>Forwarding Network Session Integrity Key（FNwkSIntKey）</h4><p>這個針對 LoRa node 送給 server</p>
+<ul>
+<li>FNwkSIntKey（轉送網路完整性金鑰）用於 uplink 封包的完整性驗證。</li>
+<li>終端裝置在每次傳送上行資料時，都會用此金鑰搭配公式計算出 MIC（Message Integrity Code，訊息完整碼），以確保封包內容未被竄改。<ul>
+<li>在 MAC 層用封包的 MIC 判斷有沒有被修改</li>
+</ul>
+</li>
+</ul>
+<h4 id="Serving-Network-Session-Integrity-Key（SNwkSIntKey）"><a href="#Serving-Network-Session-Integrity-Key（SNwkSIntKey）" class="headerlink" title="Serving Network Session Integrity Key（SNwkSIntKey）"></a>Serving Network Session Integrity Key（SNwkSIntKey）</h4><p>這個針對 server 送給 LoRa node -&gt; downlink</p>
+<ul>
+<li>SNwkSIntKey（服務網路完整性金鑰）有兩個主要用途：<ul>
+<li>驗證所有下行封包的 MIC，確保從伺服器發出的資料未被竄改。</li>
+<li>在上行封包中參與計算 MIC（與 FNwkSIntKey 一起），以支援漫遊網路環境。<ul>
+<li>漫遊表示離開原本的  LoRa 網路，要走到別人的 LoRa 網路</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>這種「雙金鑰」設計讓轉送伺服器（Forwarding Network Server）只需驗證部分 MIC，而主伺服器（Serving Network Server）負責最終驗證。</li>
+</ul>
+<blockquote>
+<p>MIC 本身沒有加解密，只是用來檢查</p>
+</blockquote>
+<h4 id="Network-Session-Encryption-Key（NwkSEncKey）"><a href="#Network-Session-Encryption-Key（NwkSEncKey）" class="headerlink" title="Network Session Encryption Key（NwkSEncKey）"></a>Network Session Encryption Key（NwkSEncKey）</h4><ul>
+<li>NwkSEncKey（網路加密金鑰）用於加密與解密 MAC 命令，包含：<ul>
+<li>在 FOpts 欄位中 傳輸的控制指令。</li>
+<li>在 Port 0 的 FRMPayload 傳輸的 MAC 指令封包。</li>
+</ul>
+</li>
+</ul>
+<h4 id="Application-Session-Key（AppSKey）"><a href="#Application-Session-Key（AppSKey）" class="headerlink" title="Application Session Key（AppSKey）"></a>Application Session Key（AppSKey）</h4><ul>
+<li>AppSKey（應用層會話金鑰）由 應用伺服器與終端裝置 共同使用，用來加密與解密應用層資料（Application Payload）。</li>
+<li>它與網路層金鑰分離，確保應用層內容在傳輸中對網路營運商仍保持保密性。</li>
+</ul>
+<h4 id="DevAddr（End-Device-Address）"><a href="#DevAddr（End-Device-Address）" class="headerlink" title="DevAddr（End Device Address）"></a>DevAddr（End Device Address）</h4><ul>
+<li>因為用 EUI 代表 LoRa node 實在是太長了，所以用比較短的 Device Address</li>
+<li>DevAddr（裝置位址） 為 32 位元（4 bytes）識別碼，由 Network Server 分配。</li>
+<li>它在區域網路內唯一識別裝置，並包含網路識別資訊（NetID）。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">位元範圍</th>
+<th align="left">欄位名稱</th>
+<th align="left">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Bits 31 – 32-N</td>
+<td align="left"><strong>AddrPrefix</strong></td>
+<td align="left">Network server 編號，表示出在哪個 network。概念大概是”班級”</td>
+</tr>
+<tr>
+<td align="left">Bits 31-N – 0</td>
+<td align="left"><strong>NwkAddr</strong></td>
+<td align="left">裝置位址（Device Address within that network），概念大概是一個班級內的”座號”</td>
+</tr>
+</tbody></table>
+<ul>
+<li>AddrPrefix（地址前綴） 用於識別目前管理該裝置的 Network Server。<ul>
+<li>當裝置進行 漫遊（Roaming） 時，AddrPrefix 讓外部網路能快速辨認出哪個伺服器擁有該裝置的控制權。<ul>
+<li>如果前後 AddrPrefix 不一樣，就可以代表漫遊。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>NwkAddr（Network Address）<ul>
+<li>由 Network Server 或網路管理者 任意指派的裝置識別碼。</li>
+<li>它在同一個網路中必須唯一，但在不同網路中可以重複使用（因為由 AddrPrefix 區分）。</li>
+<li>NwkAddr 通常用於內部路由與裝置識別。</li>
+</ul>
+</li>
+</ul>
+<h3 id="OTAA"><a href="#OTAA" class="headerlink" title="OTAA"></a>OTAA</h3><p>在 OTAA（Over-The-Air Activation，空中啟用） 模式下，終端裝置必須先完成一次 Join（入網）流程，才能與 Network Server 進行任何資料交換。當裝置遺失會話相關資訊（Session Context，例如金鑰或 DevAddr）時，必須重新執行一次 Join 程序，以重新取得新的會話金鑰與裝置位址。</p>
+<h3 id="Join-Procedure"><a href="#Join-Procedure" class="headerlink" title="Join Procedure"></a>Join Procedure</h3><p>無論是 Join-Request 還是 Rejoin-Request，最後都要獲得 server 驗證裝置身份後所回覆的加密 Join-Accept 訊息。</p>
+<h4 id="Join-request-message"><a href="#Join-request-message" class="headerlink" title="Join-request message"></a>Join-request message</h4><ul>
+<li>Join-Request（加入請求） 由 終端裝置（End Device） 主動發起，是 OTAA（Over-The-Air Activation） 流程的第一步。</li>
+<li>該訊息用來通知網路伺服器（Network Server）：「我要加入 LoRaWAN 網路」。</li>
+<li>Join-Request 訊息未加密（明文傳送）。</li>
+<li>可使用任意 資料速率（Data Rate） 與 隨機頻率跳頻（Frequency Hopping），在指定的入網頻道上發送，以提升成功率與抗干擾性。</li>
+<li>DevNonce（Device Nonce）<ul>
+<li>當裝置首次上電時，DevNonce 從 0 開始。</li>
+<li>每次發送 Join-Request 時，DevNonce 都會 +1。</li>
+<li>Network Server 會記錄裝置的最後 DevNonce 值，若偵測到重複或未遞增的 DevNonce，會忽略該 Join-Request（防止重放攻擊）。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">欄位名稱</th>
+<th align="left">大小（Bytes）</th>
+<th align="left">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>JoinEUI</strong></td>
+<td align="left">8</td>
+<td align="left">加入伺服器識別碼（Join Server ID）</td>
+</tr>
+<tr>
+<td align="left"><strong>DevEUI</strong></td>
+<td align="left">8</td>
+<td align="left">裝置唯一識別碼（Device EUI）</td>
+</tr>
+<tr>
+<td align="left"><strong>DevNonce</strong></td>
+<td align="left">2</td>
+<td align="left">裝置隨機計數器（Device Nonce）</td>
+</tr>
+</tbody></table>
 
       </div>
       
@@ -1250,7 +1461,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-10-27 23:35:59
+              2025-10-28 00:41:26
             </span>
             
                   <span class="post-tags">
@@ -1285,7 +1496,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#LoRa"><span class="toc-text">LoRa</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LoRaWAN"><span class="toc-text">LoRaWAN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LoRaWAN-Device-Classes"><span class="toc-text">LoRaWAN Device Classes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pysical-Message-Format"><span class="toc-text">Pysical Message Format</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LoRaWAN-%E6%8E%A5%E6%94%B6%E8%A6%96%E7%AA%97%E9%81%8B%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">LoRaWAN 接收視窗運作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%8E%A5%E6%94%B6%E8%A6%96%E7%AA%97%EF%BC%88RX1%EF%BC%89"><span class="toc-text">第一接收視窗（RX1）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%8E%A5%E6%94%B6%E8%A6%96%E7%AA%97%EF%BC%88RX2%EF%BC%89"><span class="toc-text">第二接收視窗（RX2）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mac-Message-Format"><span class="toc-text">Mac Message Format</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHYPayload%EF%BC%88Physical-Layer-Payload%EF%BC%89"><span class="toc-text">PHYPayload（Physical Layer Payload）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MHDR%EF%BC%88MAC-Header%EF%BC%89"><span class="toc-text">MHDR（MAC Header）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MType%EF%BC%88%E8%A8%8A%E6%81%AF%E9%A1%9E%E5%9E%8B%EF%BC%89"><span class="toc-text">MType（訊息類型）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Major%EF%BC%88%E5%8D%94%E5%AE%9A%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-text">Major（協定版本）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MACPayload%EF%BC%88MAC-%E5%B1%A4%E8%B2%A0%E8%BC%89%EF%BC%89"><span class="toc-text">MACPayload（MAC 層負載）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FHDR-%E2%80%93-Frame-Header%EF%BC%88%E6%A1%86%E6%9E%B6%E6%A8%99%E9%A0%AD%EF%BC%89"><span class="toc-text">FHDR – Frame Header（框架標頭）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FCtrl%EF%BC%88Downlink%EF%BC%89"><span class="toc-text">FCtrl（Downlink）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FCtrl%EF%BC%88Uplink%EF%BC%89"><span class="toc-text">FCtrl（Uplink）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adaptive-Data-Rate%EF%BC%88ADR%EF%BC%89%E8%87%AA%E9%81%A9%E6%87%89%E8%B3%87%E6%96%99%E9%80%9F%E7%8E%87"><span class="toc-text">Adaptive Data Rate（ADR）自適應資料速率</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ADR-%E7%8B%80%E6%85%8B%E8%A1%8C%E7%82%BA%E5%B0%8D%E7%85%A7%E8%A1%A8"><span class="toc-text">ADR 狀態行為對照表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B6%B2%E8%B7%AF%E4%BC%BA%E6%9C%8D%E5%99%A8%E6%98%AF%E5%90%A6%E4%BB%8D%E8%83%BD%E6%8E%A5%E6%94%B6%E8%A8%8A%E8%99%9F%EF%BC%88Check-Network-Server-Reception%EF%BC%89"><span class="toc-text">網路伺服器是否仍能接收訊號（Check Network Server Reception）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ACK-%E4%BD%8D%E5%85%83"><span class="toc-text">ACK 位元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retransmission-Procedure"><span class="toc-text">Retransmission Procedure</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Frame-Pending-Bit"><span class="toc-text">Frame Pending Bit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Frame-counter-FCnt-Bit"><span class="toc-text">Frame counter (FCnt) Bit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Port-Field-FPort"><span class="toc-text">Port Field (FPort)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MAC-commands"><span class="toc-text">MAC commands</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9A%E9%BA%BC%E6%98%AF-MAC-commands"><span class="toc-text">甚麼是 MAC commands?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAC-commands-%E6%94%BE%E5%93%AA%E8%A3%A1"><span class="toc-text">MAC commands 放哪裡?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%83%E8%80%83%E7%9A%84%E6%8C%87%E4%BB%A4-%E9%87%8D%E8%A6%81"><span class="toc-text">會考的指令(重要)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Link-Check-Commands-LinkCheckReq-LinkCheckAns"><span class="toc-text">Link Check Commands(LinkCheckReq &#x2F; LinkCheckAns)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#LinkCheckAns-Payload"><span class="toc-text">LinkCheckAns Payload</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Link-ADR-Commands-LinkADRReq-LinkADRAns"><span class="toc-text">Link ADR Commands(LinkADRReq &#x2F; LinkADRAns)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#LinkADRReq-Payload"><span class="toc-text">LinkADRReq Payload</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#LinkADRAns-Payload"><span class="toc-text">LinkADRAns Payload</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#End-Device-Transmit-Duty-Cycle%EF%BC%88DutyCycleReq-DutyCycleAns%EF%BC%89"><span class="toc-text">End-Device Transmit Duty Cycle（DutyCycleReq &#x2F; DutyCycleAns）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#DutyCycleReq"><span class="toc-text">DutyCycleReq</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DutyCycleAns"><span class="toc-text">DutyCycleAns</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Receive-Windows-Parameters%EF%BC%88RXParamSetupReq-RXParamSetupAns%EF%BC%89"><span class="toc-text">Receive Windows Parameters（RXParamSetupReq &#x2F; RXParamSetupAns）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#RXParamSetupReq"><span class="toc-text">RXParamSetupReq</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RXParamSetupAns"><span class="toc-text">RXParamSetupAns</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#End-Device-Status-Command%EF%BC%88DevStatusReq-DevStatusAns%EF%BC%89"><span class="toc-text">End-Device Status Command（DevStatusReq &#x2F; DevStatusAns）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#DevStatusReq"><span class="toc-text">DevStatusReq</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DevStatusAns"><span class="toc-text">DevStatusAns</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel-Creation-Modification-NewChannelReq-NewChannelAns"><span class="toc-text">Channel Creation &amp; Modification (NewChannelReq &#x2F; NewChannelAns)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#NewChannelReq"><span class="toc-text">NewChannelReq</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#NewChannelAns"><span class="toc-text">NewChannelAns</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#LoRa"><span class="toc-text">LoRa</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LoRaWAN"><span class="toc-text">LoRaWAN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LoRaWAN-Device-Classes"><span class="toc-text">LoRaWAN Device Classes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pysical-Message-Format"><span class="toc-text">Pysical Message Format</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LoRaWAN-%E6%8E%A5%E6%94%B6%E8%A6%96%E7%AA%97%E9%81%8B%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">LoRaWAN 接收視窗運作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%8E%A5%E6%94%B6%E8%A6%96%E7%AA%97%EF%BC%88RX1%EF%BC%89"><span class="toc-text">第一接收視窗（RX1）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%8E%A5%E6%94%B6%E8%A6%96%E7%AA%97%EF%BC%88RX2%EF%BC%89"><span class="toc-text">第二接收視窗（RX2）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mac-Message-Format"><span class="toc-text">Mac Message Format</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHYPayload%EF%BC%88Physical-Layer-Payload%EF%BC%89"><span class="toc-text">PHYPayload（Physical Layer Payload）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MHDR%EF%BC%88MAC-Header%EF%BC%89"><span class="toc-text">MHDR（MAC Header）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MType%EF%BC%88%E8%A8%8A%E6%81%AF%E9%A1%9E%E5%9E%8B%EF%BC%89"><span class="toc-text">MType（訊息類型）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Major%EF%BC%88%E5%8D%94%E5%AE%9A%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-text">Major（協定版本）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MACPayload%EF%BC%88MAC-%E5%B1%A4%E8%B2%A0%E8%BC%89%EF%BC%89"><span class="toc-text">MACPayload（MAC 層負載）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FHDR-%E2%80%93-Frame-Header%EF%BC%88%E6%A1%86%E6%9E%B6%E6%A8%99%E9%A0%AD%EF%BC%89"><span class="toc-text">FHDR – Frame Header（框架標頭）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FCtrl%EF%BC%88Downlink%EF%BC%89"><span class="toc-text">FCtrl（Downlink）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FCtrl%EF%BC%88Uplink%EF%BC%89"><span class="toc-text">FCtrl（Uplink）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adaptive-Data-Rate%EF%BC%88ADR%EF%BC%89%E8%87%AA%E9%81%A9%E6%87%89%E8%B3%87%E6%96%99%E9%80%9F%E7%8E%87"><span class="toc-text">Adaptive Data Rate（ADR）自適應資料速率</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ADR-%E7%8B%80%E6%85%8B%E8%A1%8C%E7%82%BA%E5%B0%8D%E7%85%A7%E8%A1%A8"><span class="toc-text">ADR 狀態行為對照表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B6%B2%E8%B7%AF%E4%BC%BA%E6%9C%8D%E5%99%A8%E6%98%AF%E5%90%A6%E4%BB%8D%E8%83%BD%E6%8E%A5%E6%94%B6%E8%A8%8A%E8%99%9F%EF%BC%88Check-Network-Server-Reception%EF%BC%89"><span class="toc-text">網路伺服器是否仍能接收訊號（Check Network Server Reception）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ACK-%E4%BD%8D%E5%85%83"><span class="toc-text">ACK 位元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retransmission-Procedure"><span class="toc-text">Retransmission Procedure</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Frame-Pending-Bit"><span class="toc-text">Frame Pending Bit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Frame-counter-FCnt-Bit"><span class="toc-text">Frame counter (FCnt) Bit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Port-Field-FPort"><span class="toc-text">Port Field (FPort)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MAC-commands"><span class="toc-text">MAC commands</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9A%E9%BA%BC%E6%98%AF-MAC-commands"><span class="toc-text">甚麼是 MAC commands?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAC-commands-%E6%94%BE%E5%93%AA%E8%A3%A1"><span class="toc-text">MAC commands 放哪裡?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%83%E8%80%83%E7%9A%84%E6%8C%87%E4%BB%A4-%E9%87%8D%E8%A6%81"><span class="toc-text">會考的指令(重要)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Link-Check-Commands-LinkCheckReq-LinkCheckAns"><span class="toc-text">Link Check Commands(LinkCheckReq &#x2F; LinkCheckAns)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#LinkCheckAns-Payload"><span class="toc-text">LinkCheckAns Payload</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Link-ADR-Commands-LinkADRReq-LinkADRAns"><span class="toc-text">Link ADR Commands(LinkADRReq &#x2F; LinkADRAns)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#LinkADRReq-Payload"><span class="toc-text">LinkADRReq Payload</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#LinkADRAns-Payload"><span class="toc-text">LinkADRAns Payload</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#End-Device-Transmit-Duty-Cycle%EF%BC%88DutyCycleReq-DutyCycleAns%EF%BC%89"><span class="toc-text">End-Device Transmit Duty Cycle（DutyCycleReq &#x2F; DutyCycleAns）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#DutyCycleReq"><span class="toc-text">DutyCycleReq</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DutyCycleAns"><span class="toc-text">DutyCycleAns</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Receive-Windows-Parameters%EF%BC%88RXParamSetupReq-RXParamSetupAns%EF%BC%89"><span class="toc-text">Receive Windows Parameters（RXParamSetupReq &#x2F; RXParamSetupAns）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#RXParamSetupReq"><span class="toc-text">RXParamSetupReq</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RXParamSetupAns"><span class="toc-text">RXParamSetupAns</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#End-Device-Status-Command%EF%BC%88DevStatusReq-DevStatusAns%EF%BC%89"><span class="toc-text">End-Device Status Command（DevStatusReq &#x2F; DevStatusAns）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#DevStatusReq"><span class="toc-text">DevStatusReq</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DevStatusAns"><span class="toc-text">DevStatusAns</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Channel-Creation-Modification-NewChannelReq-NewChannelAns"><span class="toc-text">Channel Creation &amp; Modification (NewChannelReq &#x2F; NewChannelAns)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#NewChannelReq"><span class="toc-text">NewChannelReq</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#NewChannelAns"><span class="toc-text">NewChannelAns</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Setting-delay-between-TX-and-RX-RXTimingSetupReq"><span class="toc-text">Setting delay between TX and RX (RXTimingSetupReq)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DeviceTime-commands-DeviceTimeReq"><span class="toc-text">DeviceTime commands(DeviceTimeReq)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#End-device-activation"><span class="toc-text">End-device activation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JoinEUI"><span class="toc-text">JoinEUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DevEUI"><span class="toc-text">DevEUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Device-Root-Keys%EF%BC%88AppKey-NwkKey%EF%BC%89"><span class="toc-text">Device Root Keys（AppKey &amp; NwkKey）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Forwarding-Network-Session-Integrity-Key%EF%BC%88FNwkSIntKey%EF%BC%89"><span class="toc-text">Forwarding Network Session Integrity Key（FNwkSIntKey）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Serving-Network-Session-Integrity-Key%EF%BC%88SNwkSIntKey%EF%BC%89"><span class="toc-text">Serving Network Session Integrity Key（SNwkSIntKey）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Network-Session-Encryption-Key%EF%BC%88NwkSEncKey%EF%BC%89"><span class="toc-text">Network Session Encryption Key（NwkSEncKey）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Application-Session-Key%EF%BC%88AppSKey%EF%BC%89"><span class="toc-text">Application Session Key（AppSKey）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DevAddr%EF%BC%88End-Device-Address%EF%BC%89"><span class="toc-text">DevAddr（End Device Address）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OTAA"><span class="toc-text">OTAA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Join-Procedure"><span class="toc-text">Join Procedure</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Join-request-message"><span class="toc-text">Join-request message</span></a></li></ol></li></ol></li></ol>
       
     </div>
   </div>
