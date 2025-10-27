@@ -151,7 +151,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-10-26 15:17:44
+          2025-10-27 13:00:27
         </span>
         
               <span class="post-tags">
@@ -277,7 +277,11 @@
 <td><img src="/images/wireless/img11.png" alt="alt text"></td>
 </tr>
 </tbody></table>
-<p>在 5G 中，一個 Resource Block (RB) 是最基本的頻時資源分配單位，由 12 個子載波 × 多個 OFDM 符號 組成，每個小格（RE）則對應到一個實際可承載資料的最小訊號單位。<br><img src="/images/wireless/img12.png" alt="alt text"></p>
+<h4 id="RB-in-5G"><a href="#RB-in-5G" class="headerlink" title="RB in 5G"></a>RB in 5G</h4><p>在 5G 中，一個 Resource Block (RB) 是最基本的頻時資源分配單位，由 12 個子載波 × 多個 OFDM 符號 組成，每個小格（RE）則對應到一個實際可承載資料的最小訊號單位。</p>
+<p><img src="/images/wireless/img12.png" alt="alt text"></p>
+<h4 id="MIMO（Multiple-Input-Multiple-Output，多輸入多輸出）"><a href="#MIMO（Multiple-Input-Multiple-Output，多輸入多輸出）" class="headerlink" title="MIMO（Multiple Input Multiple Output，多輸入多輸出）"></a>MIMO（Multiple Input Multiple Output，多輸入多輸出）</h4><p>MIMO（Multiple Input Multiple Output，多輸入多輸出）是一種屬於 <strong>Reservation-based（預約式）媒體存取技術</strong> 的無線傳輸方式。它在發射端與接收端都配置多根天線，使得系統能在<strong>相同的時間與頻率</strong>條件下同時傳送多個資料流，大幅提升資料速率與頻譜利用率。其核心概念是 <strong>Spatial Multiplexing（空間復用）</strong>：當多根天線發射的訊號在接收端具有足夠不同的空間特徵（spatial signatures），且接收端能精確掌握通道狀態資訊（CSI）時，接收端便能透過空間解碼將多條資料流分離成近似獨立的平行通道。這意味著在相同資源條件下，MIMO 能同時承載更多的訊號傳輸。</p>
+<p>與傳統的單天線系統（SISO）相比，MIMO 不需要額外的頻寬或時間資源，就能藉由增加天線數量成倍提升通道容量與傳輸速率。例如在 4×4 MIMO 配置下，最多可同時傳送四條獨立資料流，達到約四倍於 SISO 的頻譜效率。這種技術實質上在「時間」與「頻率」之外新增了「空間」維度，使無線網路能在高訊號雜訊比（SNR）條件下實現更高的通訊容量與效能，成為 4G 與 5G 無線通訊中的關鍵技術之一。</p>
+<p><img src="/images/wireless/img13.png" alt="alt text"></p>
 <h3 id="Contention-based（競爭式）"><a href="#Contention-based（競爭式）" class="headerlink" title="Contention-based（競爭式）"></a>Contention-based（競爭式）</h3><p>節點即時競爭媒體使用權，無預約，靠隨機機制避免碰撞。</p>
 <table>
 <thead>
@@ -290,12 +294,12 @@
 <tbody><tr>
 <td><strong>ALOHA</strong></td>
 <td>無線隨機存取協定</td>
-<td>節點隨機傳送，易碰撞</td>
+<td>當想要傳送Data時，就直接往外傳送，在低traffic load 時成功率高，反之碰撞率高</td>
 </tr>
 <tr>
 <td><strong>Slotted ALOHA</strong></td>
 <td>時槽化 ALOHA</td>
-<td>僅在時槽邊界傳送，減少碰撞機率</td>
+<td>把頻道在時間上分段(slot)，每個傳輸點只能在一個分段(slot)的開始處進行傳送。每次傳送的數據必須少於或者等於一個頻道的一個時間分段(slot)。這樣大大的減少了傳輸頻道的衝突，改善了隨時隨地都有可能封包的缺點。</td>
 </tr>
 <tr>
 <td><strong>CSMA</strong></td>
@@ -306,6 +310,104 @@
 <td><strong>MACA</strong></td>
 <td>Multiple Access with Collision Avoidance</td>
 <td>使用 RTS&#x2F;CTS 封包避免隱藏節點問題</td>
+</tr>
+</tbody></table>
+<p><img src="/images/wireless/img14.png" alt="alt text"></p>
+<h4 id="CSMA-Carrier-Sense-Multiple-Access"><a href="#CSMA-Carrier-Sense-Multiple-Access" class="headerlink" title="CSMA (Carrier Sense Multiple Access)"></a>CSMA (Carrier Sense Multiple Access)</h4><ol>
+<li>1-persistent CSMA<ul>
+<li>傳送機率固定為 1。</li>
+<li>延遲較小，但碰撞機率高（因為多個節點可能同時偵測到媒體空閒而立刻傳送）。<table>
+<thead>
+<tr>
+<th>狀況</th>
+<th>行為</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>媒體空閒（Idle）</strong></td>
+<td><strong>立即傳送</strong>（Transmit probability &#x3D; 1）</td>
+</tr>
+<tr>
+<td><strong>媒體忙碌（Busy）</strong></td>
+<td><strong>持續監聽</strong>直到媒體變空閒，再立即傳送</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li>Non-persistent CSMA<ul>
+<li>傳送延遲較大，但碰撞機率較低。</li>
+<li>適合高負載環境，可減少媒體競爭。<table>
+<thead>
+<tr>
+<th>狀況</th>
+<th>行為</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>媒體空閒（Idle）</strong></td>
+<td>立即傳送資料</td>
+</tr>
+<tr>
+<td><strong>媒體忙碌（Busy）</strong></td>
+<td><strong>等待一段隨機時間</strong>（由機率分布決定）後再重新偵測媒體</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li>p-persistent CSMA<ul>
+<li>適用於時槽化系統（Slotted channel）。</li>
+<li>透過調整 p 值 在「延遲」與「碰撞」間取得平衡。<table>
+<thead>
+<tr>
+<th>狀況</th>
+<th>行為</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>媒體空閒（Idle）</strong></td>
+<td>以機率 <strong>p 傳送</strong>、以機率 <strong>(1−p) 延遲一個時槽</strong>（再重試）</td>
+</tr>
+<tr>
+<td><strong>媒體忙碌（Busy）</strong></td>
+<td>持續監聽直到媒體變空閒</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>傳送條件</th>
+<th>等待策略</th>
+<th>碰撞風險</th>
+<th>特點</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>1-persistent</strong></td>
+<td>空閒立即傳</td>
+<td>忙碌時持續監聽</td>
+<td>高</td>
+<td>延遲低但易碰撞</td>
+</tr>
+<tr>
+<td><strong>Non-persistent</strong></td>
+<td>空閒立即傳</td>
+<td>忙碌時隨機等待再偵測</td>
+<td>低</td>
+<td>延遲較高但穩定</td>
+</tr>
+<tr>
+<td><strong>p-persistent</strong></td>
+<td>空閒時以 p 機率傳</td>
+<td>以 (1−p) 機率延遲一個 slot</td>
+<td>中</td>
+<td>可動態平衡效率與碰撞率</td>
 </tr>
 </tbody></table>
 <h3 id="Hybrid（混合式）"><a href="#Hybrid（混合式）" class="headerlink" title="Hybrid（混合式）"></a>Hybrid（混合式）</h3><p>結合預約式與競爭式的優點，平時採競爭式存取，有需要時可保留資源。</p>
@@ -323,6 +425,402 @@
 <td>節點先提出傳輸請求（Request），由中心分配時槽或頻道</td>
 </tr>
 </tbody></table>
+<p><img src="/images/wireless/img15.png" alt="alt text"></p>
+<p>DAMA 分為兩個階段：</p>
+<ol>
+<li>Contention-based Phase（競爭階段）<ul>
+<li>節點使用 Slotted ALOHA 方式在共享通道上發送「傳輸請求」。</li>
+<li>因為是競爭式，所以仍有可能發生碰撞。</li>
+<li>一旦某節點的請求成功被接收，系統會分配一段保留時槽給它。</li>
+<li>🟦 圖中藍色虛線 → 表示「Slotted ALOHA 競爭階段」。</li>
+</ul>
+</li>
+<li>Reservation-based Phase（預約階段）<ul>
+<li>節點獲得通道後，系統將該時槽「保留（reserved）」給它使用。</li>
+<li>節點可在後續時間內穩定地傳送資料，不再與其他節點競爭。</li>
+<li>🔴 圖中紅色虛線 → 表示「預約使用階段」。</li>
+</ul>
+</li>
+</ol>
+<h2 id="802-11-MAC機制"><a href="#802-11-MAC機制" class="headerlink" title="802.11 MAC機制"></a>802.11 MAC機制</h2><p>這張圖展示的是 IEEE 802.11 無線區域網路（WLAN） 的整體架構與組成方式，說明了不同層級的無線網路如何相互連接與運作。圖中可以看到，無線網路的基本單位是 BSS（Basic Service Set），每個 BSS 由一個無線存取點（AP, Access Point）與多個無線終端（STA, Station）組成，例如 BSS1 由 AP1 管理、BSS2 由 AP2 管理。當多個 BSS 之間透過 Distribution System（分配系統） 互相連接時，就形成 ESS（Extended Service Set），這讓使用者能在不同 AP 所覆蓋的區域中自由漫遊（roaming），而整個 ESS 對外則透過 Portal 與其他有線網路（如 IEEE 802.3 Ethernet 或 802.16 WiMAX）連接，實現無線與有線網路之間的整合。</p>
+<p>此外，圖中右側的 IBSS（Independent Basic Service Set） 代表「自組式網路（Ad-hoc mode）」的情境，這種網路不需要 AP，各個終端裝置（STA）可以直接彼此通信，常用於臨時性或分散式的網路連線。整體而言，802.11 無線網路可由多個基本單元（BSS）組成並透過分配系統擴展成 ESS，同時也支援不依賴基礎設施的 IBSS 模式，形成靈活且層次化的無線網路架構。</p>
+<p>而這樣的網路結構能夠順利運作，關鍵在於底層的 MAC（Medium Access Control，媒體存取控制）機制。MAC 層負責管理節點之間如何共用無線媒介、避免訊號碰撞、進行封包轉送與連線管理，確保整個 BSS、ESS、甚至 IBSS 結構之間都能「在共享空氣中有秩序地說話」。</p>
+<p><img src="/images/wireless/img16.png" alt="alt text"></p>
+<h3 id="Super-Frame"><a href="#Super-Frame" class="headerlink" title="Super Frame"></a>Super Frame</h3><p><img src="/images/wireless/img17.png" alt="alt text"></p>
+<p>這張圖展示了 IEEE 802.11 無線網路中 Super Frame（超框架） 的運作機制，說明了 PCF 與 DCF 如何在時間上交替運作。每個 Super Frame 由 AP 發送的 Beacon 封包 開始，用以同步所有終端（STA）並宣告進入 PCF 期間。在這段期間內，AP 以集中控制的方式進行輪詢（Polling），逐一分配傳輸權給各個 STA，以確保無碰撞、低延遲的資料傳輸。若某些 STA（如圖中的 STA2）未被分配傳輸權，則會設定 NAV（Network Allocation Vector） 進入休眠狀態，避免干擾通道並節省能源。</p>
+<p>當 AP 發送 CF_END 封包 時，代表 PCF 期間結束，網路進入 DCF 期間，所有 STA 恢復採用 CSMA&#x2F;CA（Carrier Sense Multiple Access with Collision Avoidance） 的分散式競爭機制，自由傳輸資料。整體而言，這張圖呈現了 Super Frame 中 集中式（PCF） 與 分散式（DCF） 傳輸模式的交替運作方式，使無線網路能同時兼顧即時性傳輸的穩定與一般資料傳輸的效率。</p>
+<p>圖中主要元素說明</p>
+<table>
+<thead>
+<tr>
+<th>元件</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>AP（Access Point）</strong></td>
+<td>無線存取點，負責發送 <strong>Beacon</strong> 封包以同步所有裝置的時間，並在 <strong>PCF 期間</strong> 主導傳輸。</td>
+</tr>
+<tr>
+<td><strong>STA1 &#x2F; STA2（Stations）</strong></td>
+<td>無線終端裝置（使用者端），依據 AP 的排程或媒體狀態參與資料傳輸。</td>
+</tr>
+<tr>
+<td><strong>Beacon</strong></td>
+<td>由 AP 週期性發送，用來宣告新的 <strong>Super Frame</strong> 開始，並通知進入 PCF 期間。</td>
+</tr>
+<tr>
+<td><strong>CF_END</strong></td>
+<td>表示 <strong>PCF period（無競爭期）</strong> 結束，之後進入 <strong>DCF period（競爭期）</strong>。</td>
+</tr>
+<tr>
+<td><strong>NAV（Network Allocation Vector）</strong></td>
+<td>一種「虛擬載波感知」計時器，用來表示媒體被占用的時間；當 STA 判斷媒體正在被使用，就會暫停傳輸並進入休眠。</td>
+</tr>
+</tbody></table>
+<h3 id="Point-Coordination-Function-PCF"><a href="#Point-Coordination-Function-PCF" class="headerlink" title="Point Coordination Function (PCF)"></a>Point Coordination Function (PCF)</h3><p>IEEE 802.11 的 PCF（Point Coordination Function）輪詢式傳輸以集中控制的方式，依序與多個終端裝置（STA）進行下行與上行資料交換。整個流程由 AP 主導，確保各節點能在無碰撞的情況下完成傳輸。整體流程如下：</p>
+<ul>
+<li><strong>① PCF Beacon 發送：</strong><br>AP 先送出 <strong>Beacon 封包</strong> 宣告 PCF 週期開始，通知所有 STA 進入無競爭期（CFP）。</li>
+<li><strong>② 下行傳輸（DL）：</strong><br>AP 向某個 STA（例如 STA1）發送資料封包。</li>
+<li><strong>③ ACK 回覆：</strong><br>STA1 收到資料後立即回傳 <strong>ACK</strong>，確認封包成功接收。</li>
+<li><strong>④ 輪詢下一個 STA（Polling）：</strong><br>AP 傳送 <strong>Polling 封包</strong> 給另一個 STA（如 STA2），詢問是否有資料要上傳。</li>
+<li><strong>⑤ 上行傳輸（UL）：</strong><br>被輪詢的 STA2 立即回傳資料封包給 AP，完成上行傳輸。</li>
+<li><strong>⑥ AP 回覆 ACK：</strong><br>AP 收到上行資料後發送 <strong>ACK</strong>，確認接收成功。</li>
+<li><strong>⑦ 重複進行：</strong><br>AP 持續重複 DL、ACK、Polling、UL 的過程，依序與各個 STA 進行通訊，直到 PCF 期間結束。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>符號</th>
+<th>含義</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>PCF Beacon</strong></td>
+<td>由 AP 送出，宣告 PCF 週期開始。</td>
+</tr>
+<tr>
+<td><strong>DL（Downlink）</strong></td>
+<td>AP 向某個 STA 傳送資料封包。</td>
+</tr>
+<tr>
+<td><strong>UL（Uplink）</strong></td>
+<td>STA 向 AP 上傳資料封包。</td>
+</tr>
+<tr>
+<td><strong>ACK（Acknowledgement）</strong></td>
+<td>確認封包成功接收的回覆訊息。</td>
+</tr>
+<tr>
+<td><strong>Polling（輪詢）</strong></td>
+<td>AP 詢問下一個 STA 是否有資料要上傳。</td>
+</tr>
+</tbody></table>
+<p><img src="/images/wireless/img18.png" alt="alt text"></p>
+<h4 id="Piggyback機制"><a href="#Piggyback機制" class="headerlink" title="Piggyback機制"></a>Piggyback機制</h4><p>Piggyback 技術的目的，是為了減少原始 PCF 模式中多次獨立封包交換（例如 DL、Polling、ACK）的頻繁往返，藉由「將多個控制訊息合併在同一封包中」來提升傳輸效率、降低延遲。</p>
+<ol>
+<li><p><strong>Beacon 宣告開始：</strong><br>AP 傳送 Beacon，通知所有 STA 進入 PCF 週期（CFP）。</p>
+</li>
+<li><p><strong>DL1 + Polling1（合併封包）：</strong><br>AP 同時在一個封包內傳送下行資料（DL1）給 STA1，並附帶下一個 STA（STA1）輪詢指令。<br>👉 <strong>這就是 Piggyback：把 Polling 訊息「捎帶」在資料封包中。</strong></p>
+</li>
+<li><p><strong>STA1 回傳 ACK + UL1：</strong><br>STA1 收到封包後，一併傳回 <strong>ACK（確認）</strong> 與 <strong>上行資料（UL1）</strong>，也是 Piggyback 的應用。</p>
+</li>
+<li><p><strong>ACK + DL2 + Polling2：</strong><br>AP 收到 STA1 的回覆後，再發送另一個 Piggyback 封包，包含：</p>
+<ul>
+<li>對 STA1 的 ACK、</li>
+<li>對 STA2 的下行資料（DL2）、</li>
+<li>以及 Polling 指令。</li>
+</ul>
+</li>
+<li><p><strong>STA2 回傳 ACK + UL2：</strong><br>STA2 收到後以相同方式捎帶回覆。</p>
+</li>
+<li><p><strong>STA2 未回應情況：</strong><br>如果 STA2 超過 <strong>PIFS</strong> 間隔沒有回覆（例如封包遺失或 STA 離開網路），<br>AP 就會認定該 STA 不存在，跳過它並繼續下一輪（DL3 + Polling3）。</p>
+</li>
+<li><p><strong>CF_END：</strong><br>當所有排程完成或時間結束時，AP 傳送 CF_END 封包結束 PCF 週期。</p>
+</li>
+</ol>
+<p><img src="/images/wireless/img19.png" alt="alt text"></p>
+<h3 id="Distributed-Coordination-Function-DCF"><a href="#Distributed-Coordination-Function-DCF" class="headerlink" title="Distributed Coordination Function (DCF)"></a>Distributed Coordination Function (DCF)</h3><p>在 PCF 結束後的 DCF 期間，各個 STA 透過 DIFS 等待時間 + 隨機退避機制 來公平競爭通道傳送資料，而 AP 透過 較短的 PIFS 間隔 保留對通道的優先權，確保能準時發送下一個 Beacon 開啟新的 Super Frame。</p>
+<ol>
+<li><strong>CF_END（PCF 結束 → DCF 開始）</strong><br>當 AP 傳送 CF_END 封包後，PCF 模式結束，進入 DCF 模式。<br>所有 STA 可以開始依規則競爭通道傳送資料。</li>
+<li><strong>DIFS（DCF Interframe Space）固定等待時間</strong><br>每個 STA 在發送前都必須先等待一段固定時間 <strong>DIFS</strong>（紅色虛線區）。<br>若在此期間通道保持空閒，才允許進入下一步「退避倒數」。</li>
+<li><strong>Random Backoff（隨機退避時間）</strong><br>為了避免多個 STA 同時開始傳送，<br>每個 STA 會從一個「隨機時間窗口」中挑選一個倒數計時值（藍色虛線）。<br>當倒數歸零時，該 STA 才開始發送資料（Data frame）。</li>
+<li><strong>Data 傳輸</strong><br>如圖中所示，STA1 與 STA2 依序完成傳輸。<br>若有碰撞或干擾，則會再次進入退避階段重新競爭通道。</li>
+<li><strong>Beacon 延遲（Defer Beacon）</strong><br>若下一個 PCF Beacon 的預定時間到了，但通道仍被佔用（例如 STA 正在傳資料），<br>AP 會<strong>延遲（Defer）發送 Beacon</strong>，直到通道再次空閒為止。</li>
+<li><strong>PIFS（PCF Interframe Space）優先權</strong><br>當 DCF 結束後，AP 會以較短的等待時間 <strong>PIFS（綠色虛線）</strong> 發送下一個 Beacon，<br>因為 <strong>PIFS &lt; DIFS</strong>，所以 AP 具有比一般 STA 更高的媒體存取優先權。</li>
+</ol>
+<p><img src="/images/wireless/img20.png" alt="alt text"></p>
+<h4 id="IEEE-802-11-無線網路中的優先權機制（Priority-Scheme）"><a href="#IEEE-802-11-無線網路中的優先權機制（Priority-Scheme）" class="headerlink" title="IEEE 802.11 無線網路中的優先權機制（Priority Scheme）"></a>IEEE 802.11 無線網路中的優先權機制（Priority Scheme）</h4><p>在 802.11 中，每個節點在發送封包前，都必須先偵測媒體是否空閒，若空閒，則必須等待一段固定的時間間隔（IFS）後才能開始傳送。而不同的 IFS 對應不同類型的封包，也代表不同的 媒體存取優先權。例如：ACK 或 CTS 這類需要立即回覆的控制訊息會使用最短的 SIFS，確保能最快回應並避免碰撞；AP 在集中控制模式（PCF）下傳送 Beacon 或 Polling 時會使用 PIFS，讓它比一般裝置更快取得通道；一般用戶端在分散式模式（DCF）下傳輸資料封包時，則需等待較長的 DIFS，以實現公平競爭；若發生錯誤封包或干擾，節點必須再等待更長的 EIFS 才能重傳，避免影響其他正在進行的通訊。</p>
+<table>
+<thead>
+<tr>
+<th>間隔名稱</th>
+<th>全名</th>
+<th>用途</th>
+<th>優先權</th>
+<th>時間（範例：802.11 DSSS）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>SIFS</strong></td>
+<td>Short Interframe Space</td>
+<td>立即回覆用（ACK、CTS、Data fragment）</td>
+<td>🥇 <strong>最高</strong></td>
+<td>約 <strong>10 μs</strong></td>
+</tr>
+<tr>
+<td><strong>PIFS</strong></td>
+<td>PCF Interframe Space</td>
+<td>AP 在 PCF 模式下使用（Beacon、Poll 等）</td>
+<td>🥈 <strong>中等</strong></td>
+<td>約 <strong>30 μs</strong></td>
+</tr>
+<tr>
+<td><strong>DIFS</strong></td>
+<td>DCF Interframe Space</td>
+<td>一般資料傳輸（DCF 模式下）</td>
+<td>🥉 <strong>低</strong></td>
+<td>約 <strong>50 μs</strong></td>
+</tr>
+<tr>
+<td><strong>EIFS</strong></td>
+<td>Extended Interframe Space</td>
+<td>錯誤封包處理後等待時間（避免干擾）</td>
+<td>🚫 <strong>最低</strong></td>
+<td><strong>&gt;50 μs</strong></td>
+</tr>
+</tbody></table>
+<p><img src="/images/wireless/img21.png" alt="alt text"></p>
+<h3 id="CSMA-CA-載波偵測多重存取-碰撞避免"><a href="#CSMA-CA-載波偵測多重存取-碰撞避免" class="headerlink" title="CSMA&#x2F;CA (載波偵測多重存取&#x2F;碰撞避免)"></a>CSMA&#x2F;CA (載波偵測多重存取&#x2F;碰撞避免)</h3><p>在前面有介紹 CSMA 的機制是傳送前先「聽」媒體是否空閒以避免碰撞，而 CA 是碰撞避免機制，透過這兩個方法能確保節點之間能有序傳輸。運作過程中，節點不僅聽取頻道（Carrier Sense），還會透過 RTS（Request To Send） 與 CTS（Clear To Send） 封包協調傳輸時機，以避免同時發送造成干擾。</p>
+<ol>
+<li><strong>頻道偵測（Carrier Sense）</strong><br>傳送端（Sender）在發送前，先確認頻道是否空閒。若空閒，等待一段 <strong>IFS（Interframe Space）</strong> 後開始發送。</li>
+<li><strong>RTS（Request To Send）傳送</strong><ul>
+<li>Sender 向 Receiver 發送 <strong>RTS 封包</strong>，告知自己希望佔用媒體的時間長度。</li>
+<li>任何接收到 RTS 的 Sender Neighbor 會設定一個計時器 <strong>NAV(RTS)</strong>，在這段時間內「鎖住通道」，避免干擾。</li>
+</ul>
+</li>
+<li><strong>CTS（Clear To Send）回覆</strong><ul>
+<li>Receiver 收到 RTS 後，如果頻道空閒，則回覆一個 <strong>CTS 封包</strong> 給 Sender，表示可以傳送資料。</li>
+<li>接收到 CTS 的 Receiver Neighbor 同樣會設定 <strong>NAV(CTS)</strong>，進入靜默狀態，暫時停止傳輸。</li>
+</ul>
+</li>
+<li><strong>資料傳輸（DATA）</strong><ul>
+<li>在 CTS 回覆後，Sender 開始傳送資料封包（Data）。</li>
+<li>由於周圍的節點都被 NAV 鎖住，因此此時通道專屬給這對通信端使用。</li>
+</ul>
+</li>
+<li><strong>ACK（Acknowledgement）確認</strong><ul>
+<li>Receiver 收到資料後回傳 <strong>ACK</strong>，確認資料正確接收。</li>
+<li>所有鄰近節點在 NAV 時間結束後，才重新參與通道競爭。</li>
+</ul>
+</li>
+</ol>
+<p><img src="/images/wireless/img22.png" alt="alt text"></p>
+<h3 id="Hidden-terminal-problem"><a href="#Hidden-terminal-problem" class="headerlink" title="Hidden terminal problem"></a>Hidden terminal problem</h3><p>以下圖為例，A 送封包給 B 的時候，因為 C 不在通訊範圍內，所以 C 也同時給 B，這時 B 收到兩個同時來的封包而無法分辨，最後 crash。這裡的 Hidden 是因為 sender 彼此看不見，但在 receiver 範圍內而造成的破壞。</p>
+<p><img src="/images/wireless/img23.png" alt="alt text"></p>
+<h3 id="Exposed-terminal-problem"><a href="#Exposed-terminal-problem" class="headerlink" title="Exposed terminal problem"></a>Exposed terminal problem</h3><p>Exposed Terminal Problem 是指節點「能聽到其他傳輸但實際上不會互相干擾」，造成它誤以為頻道忙碌而停止傳輸，降低整體通道利用率。以下圖為例，雖然 C 理論上可以傳資料給 D（不會造成碰撞），但它卻被 CSMA&#x2F;CA 機制「誤判為忙碌」而被迫等待，造成通道利用率降低。解法是使用 RTS&#x2F;CTS 機制 讓節點能更精確判斷真正的干擾關係。</p>
+<p><img src="/images/wireless/img24.png" alt="alt text"></p>
+<h2 id="802-11-節能、省電議題相關研究"><a href="#802-11-節能、省電議題相關研究" class="headerlink" title="802.11 節能、省電議題相關研究"></a>802.11 節能、省電議題相關研究</h2><h3 id="電源管理模式總覽"><a href="#電源管理模式總覽" class="headerlink" title="電源管理模式總覽"></a>電源管理模式總覽</h3><table>
+<thead>
+<tr>
+<th>模式</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Active Mode (AM)</strong></td>
+<td>裝置持續保持喚醒狀態，可即時收發資料。</td>
+</tr>
+<tr>
+<td><strong>Power Saving Mode (PS)</strong></td>
+<td>裝置進入省電模式，週期性喚醒接收控制訊息（如 Beacon），其餘時間關閉無線模組以節省能量。</td>
+</tr>
+</tbody></table>
+<h3 id="省電模式下的行為"><a href="#省電模式下的行為" class="headerlink" title="省電模式下的行為"></a>省電模式下的行為</h3><table>
+<thead>
+<tr>
+<th>類型</th>
+<th>有無 AP</th>
+<th>模式名稱</th>
+<th>特性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Infrastructure Mode</strong></td>
+<td>✅ 有 AP</td>
+<td>省電模式 with AP</td>
+<td>STA 透過 Beacon 的 TIM&#x2F;DTIM 機制由 AP 管理資料接收。</td>
+</tr>
+<tr>
+<td><strong>Ad-hoc Mode</strong></td>
+<td>❌ 無 AP</td>
+<td>省電模式 without AP</td>
+<td>節點彼此協調，使用 ATIM 機制通告有資料待收。</td>
+</tr>
+</tbody></table>
+<h3 id="TIM-Traffic-Indication-Map"><a href="#TIM-Traffic-Indication-Map" class="headerlink" title="TIM(Traffic Indication Map)"></a>TIM(Traffic Indication Map)</h3><p>TIM（Traffic Indication Map） 是實現省電機制的關鍵資訊元素，用來通知進入 Power Saving 模式 的終端裝置（STA）是否有資料被暫存在基地台（AP）端的緩衝區中。</p>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>適用模式</th>
+<th>用途</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>TIM</strong></td>
+<td>Infrastructure</td>
+<td>通知 STA 有暫存的 <strong>Unicast 封包</strong>。</td>
+<td>隨 Beacon 傳送。</td>
+</tr>
+<tr>
+<td><strong>DTIM (Delivery TIM)</strong></td>
+<td>Infrastructure</td>
+<td>通知所有 STA 有暫存的 <strong>Broadcast &#x2F; Multicast 封包</strong>。</td>
+<td>所有 STA 會在 DTIM Beacon 時醒來接收。</td>
+</tr>
+<tr>
+<td><strong>ATIM (Ad hoc TIM)</strong></td>
+<td>Ad-hoc</td>
+<td>通知節點有資料待收。</td>
+<td>在 ATIM window 中以 Unicast ATIM frame 傳送。</td>
+</tr>
+</tbody></table>
+<h4 id="Infrastructure-mode-的省電模式"><a href="#Infrastructure-mode-的省電模式" class="headerlink" title="Infrastructure mode 的省電模式"></a>Infrastructure mode 的省電模式</h4><p>在 Infrastructure 模式下，AP 是網路的核心控制者。當一個 STA 進入省電模式時，它會在控制訊框（Management Frame）中，將 Power Management 欄位設為 1，通知 AP「我要休眠」。此後，AP 會暫存（buffer）該 STA 的所有資料封包，直到 STA 再次醒來接收。STA 會定期醒來接收 Beacon，並透過其中的 TIM&#x2F;DTIM 來判斷是否有資料等待傳送。</p>
+<ol>
+<li>TIM：針對個別 STA 的暫存資料（Unicast）<ul>
+<li>當 Beacon 中的 TIM 指示該 STA 有暫存資料（Buffered &#x3D; 1）時，STA 會依據所採用的 媒體存取控制（MAC）模式決定動作：</li>
+<li>a. PCF（Point Coordination Function）模式 — 集中輪詢<ul>
+<li>STA 不需主動要求資料，僅需等待 AP 在輪詢（Polling）過程中主動傳送。</li>
+<li>此模式屬於「集中式」控制，AP 會決定哪個 STA 能在該時段傳輸。</li>
+<li>（保留式傳輸：由 AP 決定誰可溝通）</li>
+</ul>
+</li>
+<li>b. DCF（Distributed Coordination Function）模式 — 分散競爭<ul>
+<li>STA 必須主動向 AP 請求資料，步驟如下：<ol>
+<li>STA 傳送 PS-Poll frame 給 AP。</li>
+<li>AP 收到 PS-Poll 後，立即傳送暫存的資料給該 STA。</li>
+</ol>
+</li>
+<li>此模式屬於「競爭式」存取，AP 無法干預，STA 必須透過 CSMA&#x2F;CA 競爭通道才能成功請求資料。</li>
+<li>延伸閱讀：<a target="_blank" rel="noopener" href="https://note-on-clouds.blogspot.com/2019/02/wifi-power-saving-mode.html">https://note-on-clouds.blogspot.com/2019/02/wifi-power-saving-mode.html</a><br><img src="/images/wireless/img26.png" alt="alt text"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>DTIM：針對廣播或群播資料（Broadcast &#x2F; Multicast）<ul>
+<li>若 DTIM（Delivery TIM）顯示 Buffered &#x3D; 1，代表 AP 有群播或廣播封包要送出。</li>
+<li>所有 STA 都會在這個 Beacon 週期醒來，等待 AP 傳送這些暫存的 Broadcast&#x2F;Multicast 封包，接收完成後再回到省電狀態。</li>
+</ul>
+</li>
+</ol>
+<h4 id="Ad-hoc-mode的省電模式"><a href="#Ad-hoc-mode的省電模式" class="headerlink" title="Ad-hoc mode的省電模式"></a>Ad-hoc mode的省電模式</h4><p>在 Ad-hoc 模式中，沒有 AP 來幫忙儲存或通知資料，所以各節點（STA）必須自行協調資料傳遞與喚醒時間，因此 IEEE 802.11 設計了一個稱為 ATIM Window 的時段，讓所有節點在該時段內保持喚醒狀態並交換控制訊息。整個流程以 <strong>Beacon interval（信標間隔）</strong> 為一個週期單位，週期內又分為：</p>
+<ol>
+<li><strong>TBTT (Target Beacon Transmission Time) window</strong><br>→ 節點定時傳送 Beacon，讓網路保持同步。</li>
+<li><strong>ATIM window</strong><br>→ 所有節點都會醒來，在此期間交換 ATIM 控制訊息，通知誰有資料要傳。</li>
+<li><strong>Data Transmission period</strong><br>→ 只有收到 ATIM 的節點保持喚醒進行資料交換；其他節點回到休眠狀態節省電力。</li>
+</ol>
+<p>這裡比較特別的是，任何節點只要發現沒有其他裝置通知周期開始了，就可以自行發送 beacon 來通知其他裝置周期開始了。所以沒有 AP 這個角色。</p>
+<p><img src="/images/wireless/img25.png" alt="alt text"></p>
+<h2 id="802-15-4-MAC"><a href="#802-15-4-MAC" class="headerlink" title="802.15.4 MAC"></a>802.15.4 MAC</h2><p>802.11 是針對 Wi-Fi、藍芽，而 802.15.4 更針對 IOT 設備。ZigBee 是一種基於 IEEE 802.15.4 標準的低功耗、低速率無線個人區域網路（WPAN, Wireless Personal Area Network） 技術，常用於 IoT（例如智慧家庭、感測器網路、工業監控）。</p>
+<table>
+<thead>
+<tr>
+<th>層級</th>
+<th>名稱</th>
+<th>標準 &#x2F; 定義者</th>
+<th>功能說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ZigBee Applications</strong></td>
+<td>應用層</td>
+<td>ZigBee Alliance</td>
+<td>定義應用邏輯與通訊介面，例如智慧燈泡控制、溫濕度感測等應用。包含 Application Framework、ZCL（ZigBee Cluster Library）。</td>
+</tr>
+<tr>
+<td><strong>ZigBee Network</strong></td>
+<td>網路層</td>
+<td>ZigBee Alliance</td>
+<td>定義節點如何組成網路、尋址與路由。例如 Mesh Routing、協調者（Coordinator）、路由器（Router）與終端裝置（End Device）的角色。</td>
+</tr>
+<tr>
+<td><strong>IEEE 802.15.4 MAC</strong></td>
+<td>媒體存取控制層</td>
+<td>IEEE</td>
+<td>管理無線傳輸的存取方式，例如 CSMA&#x2F;CA（避免碰撞）、封包確認、節能模式。負責資料幀的傳送與接收。</td>
+</tr>
+<tr>
+<td><strong>IEEE 802.15.4 PHY</strong></td>
+<td>實體層</td>
+<td>IEEE</td>
+<td>定義無線電訊號的物理特性，如頻率（2.4GHz &#x2F; 868MHz &#x2F; 915MHz）、調變方式（O-QPSK &#x2F; BPSK）與資料速率（250 kbps）。</td>
+</tr>
+</tbody></table>
+<h3 id="Device-Types-—-FFD-vs-RFD"><a href="#Device-Types-—-FFD-vs-RFD" class="headerlink" title="Device Types — FFD vs RFD"></a>Device Types — FFD vs RFD</h3><table>
+<thead>
+<tr>
+<th>分類</th>
+<th>全功能裝置（FFD, Full Function Device）</th>
+<th>簡化裝置（RFD, Reduced Function Device）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>網路角色</strong></td>
+<td>可擔任協調者（Coordinator）、路由器（Router）、或終端裝置（End Device）</td>
+<td>僅可作為終端裝置（End Device）</td>
+</tr>
+<tr>
+<td><strong>支援拓樸</strong></td>
+<td>支援 <strong>任何拓樸</strong>（Star、Peer-to-Peer、Mesh）</td>
+<td>僅支援 <strong>Star 拓樸</strong></td>
+</tr>
+<tr>
+<td><strong>通訊對象</strong></td>
+<td>可與 <strong>任何裝置</strong>（FFD 或 RFD）通訊</td>
+<td>僅能與 <strong>FFD</strong> 通訊</td>
+</tr>
+<tr>
+<td><strong>功能複雜度</strong></td>
+<td>完整協定實作，功能強大</td>
+<td>實作簡單，功耗低</td>
+</tr>
+<tr>
+<td><strong>典型用途</strong></td>
+<td>ZigBee 協調者（Coordinator）、路由節點</td>
+<td>感測節點（例如溫度感測器）</td>
+</tr>
+</tbody></table>
+<h3 id="Network-topology"><a href="#Network-topology" class="headerlink" title="Network topology"></a>Network topology</h3><table>
+<thead>
+<tr>
+<th>拓樸類型</th>
+<th>結構圖示</th>
+<th>特性說明</th>
+<th>圖片</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>⭐ Star Topology</strong>（星狀拓樸）</td>
+<td>Coordinator 為中心，RFDs 連接於其上</td>
+<td>- 中心節點（Coordinator）負責所有通訊<br>- 適合簡單應用，如家庭感測網路<br>- 所有 RFD 只能與中心 FFD 通訊</td>
+<td><img src="/images/wireless/img26.png" alt="alt text"></td>
+</tr>
+<tr>
+<td><strong>🔗 Peer-to-Peer (Mesh) Topology</strong>（點對點 &#x2F; 網狀拓樸）</td>
+<td>各 FFD 節點可直接連接彼此</td>
+<td>- 無中心節點，可多點連線<br>- 支援多跳傳輸，具高延展性與容錯性<br>- 常用於工業監控或智慧城市</td>
+<td><img src="/images/wireless/img27.png" alt="alt text"></td>
+</tr>
+<tr>
+<td><strong>🌐 Combined Topology</strong>（混合拓樸）</td>
+<td>星狀與網狀的結合</td>
+<td>- 常見於大型 ZigBee 網路<br>- 主幹為 Mesh 結構，末端連接 Star 型感測節點<br>- 兼具穩定性與節能特性</td>
+<td><img src="/images/wireless/img28.png" alt="alt text"></td>
+</tr>
+</tbody></table>
+<p>一個 Star Topology 的 ZigBee 網路，本質上就是一個 PAN（個人區域網路）<br><img src="/images/wireless/img26.png" alt="alt text"></p>
 
       </div>
       
@@ -338,7 +836,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-10-26 15:17:44
+              2025-10-27 13:00:27
             </span>
             
                   <span class="post-tags">
@@ -373,7 +871,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Medium-Access-Control-MAC"><span class="toc-text">Medium Access Control(MAC)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MAC-vs-LLC%EF%BC%88Logical-Link-Control%EF%BC%89"><span class="toc-text">MAC vs LLC（Logical Link Control）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-%E7%A2%B0%E6%92%9E%E8%AD%B0%E9%A1%8C%E7%9B%B8%E9%97%9C%E7%A0%94%E7%A9%B6-Collision-avoidance"><span class="toc-text">802.11 碰撞議題相關研究 Collision avoidance</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reservation-based%EF%BC%88%E9%A0%90%E7%B4%84%E5%BC%8F%EF%BC%89"><span class="toc-text">Reservation-based（預約式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Contention-based%EF%BC%88%E7%AB%B6%E7%88%AD%E5%BC%8F%EF%BC%89"><span class="toc-text">Contention-based（競爭式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hybrid%EF%BC%88%E6%B7%B7%E5%90%88%E5%BC%8F%EF%BC%89"><span class="toc-text">Hybrid（混合式）</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Medium-Access-Control-MAC"><span class="toc-text">Medium Access Control(MAC)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MAC-vs-LLC%EF%BC%88Logical-Link-Control%EF%BC%89"><span class="toc-text">MAC vs LLC（Logical Link Control）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-%E7%A2%B0%E6%92%9E%E8%AD%B0%E9%A1%8C%E7%9B%B8%E9%97%9C%E7%A0%94%E7%A9%B6-Collision-avoidance"><span class="toc-text">802.11 碰撞議題相關研究 Collision avoidance</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reservation-based%EF%BC%88%E9%A0%90%E7%B4%84%E5%BC%8F%EF%BC%89"><span class="toc-text">Reservation-based（預約式）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RB-in-5G"><span class="toc-text">RB in 5G</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MIMO%EF%BC%88Multiple-Input-Multiple-Output%EF%BC%8C%E5%A4%9A%E8%BC%B8%E5%85%A5%E5%A4%9A%E8%BC%B8%E5%87%BA%EF%BC%89"><span class="toc-text">MIMO（Multiple Input Multiple Output，多輸入多輸出）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Contention-based%EF%BC%88%E7%AB%B6%E7%88%AD%E5%BC%8F%EF%BC%89"><span class="toc-text">Contention-based（競爭式）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CSMA-Carrier-Sense-Multiple-Access"><span class="toc-text">CSMA (Carrier Sense Multiple Access)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hybrid%EF%BC%88%E6%B7%B7%E5%90%88%E5%BC%8F%EF%BC%89"><span class="toc-text">Hybrid（混合式）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-MAC%E6%A9%9F%E5%88%B6"><span class="toc-text">802.11 MAC機制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Super-Frame"><span class="toc-text">Super Frame</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Point-Coordination-Function-PCF"><span class="toc-text">Point Coordination Function (PCF)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Piggyback%E6%A9%9F%E5%88%B6"><span class="toc-text">Piggyback機制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Distributed-Coordination-Function-DCF"><span class="toc-text">Distributed Coordination Function (DCF)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IEEE-802-11-%E7%84%A1%E7%B7%9A%E7%B6%B2%E8%B7%AF%E4%B8%AD%E7%9A%84%E5%84%AA%E5%85%88%E6%AC%8A%E6%A9%9F%E5%88%B6%EF%BC%88Priority-Scheme%EF%BC%89"><span class="toc-text">IEEE 802.11 無線網路中的優先權機制（Priority Scheme）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSMA-CA-%E8%BC%89%E6%B3%A2%E5%81%B5%E6%B8%AC%E5%A4%9A%E9%87%8D%E5%AD%98%E5%8F%96-%E7%A2%B0%E6%92%9E%E9%81%BF%E5%85%8D"><span class="toc-text">CSMA&#x2F;CA (載波偵測多重存取&#x2F;碰撞避免)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hidden-terminal-problem"><span class="toc-text">Hidden terminal problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exposed-terminal-problem"><span class="toc-text">Exposed terminal problem</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-%E7%AF%80%E8%83%BD%E3%80%81%E7%9C%81%E9%9B%BB%E8%AD%B0%E9%A1%8C%E7%9B%B8%E9%97%9C%E7%A0%94%E7%A9%B6"><span class="toc-text">802.11 節能、省電議題相關研究</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%BB%E6%BA%90%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E7%B8%BD%E8%A6%BD"><span class="toc-text">電源管理模式總覽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%81%E9%9B%BB%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E8%A1%8C%E7%82%BA"><span class="toc-text">省電模式下的行為</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TIM-Traffic-Indication-Map"><span class="toc-text">TIM(Traffic Indication Map)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Infrastructure-mode-%E7%9A%84%E7%9C%81%E9%9B%BB%E6%A8%A1%E5%BC%8F"><span class="toc-text">Infrastructure mode 的省電模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ad-hoc-mode%E7%9A%84%E7%9C%81%E9%9B%BB%E6%A8%A1%E5%BC%8F"><span class="toc-text">Ad-hoc mode的省電模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-15-4-MAC"><span class="toc-text">802.15.4 MAC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Device-Types-%E2%80%94-FFD-vs-RFD"><span class="toc-text">Device Types — FFD vs RFD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Network-topology"><span class="toc-text">Network topology</span></a></li></ol></li></ol>
       
     </div>
   </div>
