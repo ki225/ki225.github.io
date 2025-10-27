@@ -356,8 +356,231 @@ Duty Cycle 每個整數就代表一個值，這是因為如果要表示成浮點
 
 #### Receive Windows Parameters（RXParamSetupReq / RXParamSetupAns）
 
+##### RXParamSetupReq
+由網路伺服器下發，用來設定終端裝置的：
+- 第二接收窗（RX2）頻率（Frequency）
+- RX2 接收資料速率（RX2DataRate）
+- RX1 上下行資料速率偏移（RX1DRoffset）
+
+RXParamSetupReq Payload = DLsettings | Frequency
+| 欄位名稱           | 大小（bytes） | 位元位置                                                   | 說明                                      |
+| :------------- | :-------- | :----------------------------------------------------- | :-------------------------------------- |
+| **DLsettings** | 1         | Bit7 RFU<br>Bits6–4 RX1DRoffset<br>Bits3–0 RX2DataRate | 定義 RX1 與 RX2 的資料速率設定                    |
+| **Frequency**  | 3         | –                                                      | 設定 RX2 頻率（Hz），通常為 24-bit 值表示 MHz × 100。 |
+
+##### RXParamSetupAns
+RXParamSetupAns 由 end-device 回覆，回報是否成功套用設定，確保雙方同步參數。根據 LoRaWAN 規範，RXParamSetupAns 必須持續放在 FOpts 欄位中，直到裝置收到一個下行（Class A）訊息為止。這樣即使中途 uplink 遺失，Network Server 仍能最終得知下行參數是否已被成功套用。
+
+| 欄位名稱       | 大小（bytes） | 位元                                                                                        | 說明     |
+| :--------- | :-------- | :---------------------------------------------------------------------------------------- | :----- |
+| **Status** | 1         | Bit0 – Channel ACK<br>Bit1 – RX2 Data Rate ACK<br>Bit2 – RX1DRoffset ACK<br>Bits7–3 – RFU | 回覆設定結果 |
+
+| 位元名稱                  | Bit = 0（失敗）         | Bit = 1（成功） |
+| :-------------------- | :------------------ | :---------- |
+| **Channel ACK**       | RX2 頻率不可用（裝置不支援該頻段） | 頻率設定成功      |
+| **RX2 Data Rate ACK** | RX2 資料速率不被允許        | 資料速率設定成功    |
+| **RX1DRoffset ACK**   | RX1 上下行速率偏移超出允許範圍   | 設定成功        |
+
+#### End-Device Status Command（DevStatusReq / DevStatusAns）
+##### DevStatusReq
+Network Server 可使用 DevStatusReq 指令，請求終端裝置（End Device）回報其狀態。
 
 
+##### DevStatusAns
+當裝置接收到 DevStatusReq 時，會回覆 DevStatusAns，提供電池電量與通訊品質資訊。
 
+DevStatusAns Payload = Battery | Margin
+| 欄位名稱        | 大小（bytes） | 說明                         |
+| :---------- | :-------- | :------------------------- |
+| **Battery** | 1         | 電池電量狀態                     |
+| **Margin**  | 1         | 解調信號雜訊比（SNR Margin, 單位 dB） |
+
+Battery 欄位編碼與說明：
+|     值     | 狀態說明                                   |
+| :-------: | :------------------------------------- |
+|   **0**   | 裝置使用外部電源（External Power Source）。       |
+| **1–254** | 電池電量（Battery Level），1 代表最低、254 代表最高電量。 |
+|  **255**  | 裝置無法量測電池電量（例如無電池偵測功能）。                 |
+
+Battery 欄位是 Network Server 用來監控裝置能耗的重要指標，可協助網路管理系統進行電源管理或觸發節能機制。
+
+Margin 欄位說明
+| 項目       | 說明                                                   |
+| :------- | :--------------------------------------------------- |
+| **意義**   | 表示上一次成功接收到 DevStatusReq 封包的 **解調訊號雜訊比（SNR）**，單位為 dB。 |
+| **數值範圍** | –32 ～ +31（6-bit 有號整數）                                |
+| **取值方式** | 四捨五入至最接近的整數。                                         |
+| **意義解讀** | 值越大 → 訊號品質越好；值為負 → 雜訊干擾嚴重。                           |
+
+Margin 反映無線鏈路的物理層品質（PHY Layer），Network Server 可據此判斷是否需要調整 Data Rate 或 Tx Power。
+
+#### Channel Creation & Modification (NewChannelReq / NewChannelAns)
+
+##### NewChannelReq
+- NewChannelReq 是由 Network Server 傳送給 End Device 的命令，用來
+  - 建立新頻道（New Channel）
+  - 修改現有的雙向頻道（Bidirectional Channel）
+- 此命令會設定：
+  - 該頻道的 中心頻率（Center Frequency）
+  - 該頻道可使用的 上行資料速率範圍（Uplink Data Rate Range）
+
+NewChannelReq Payload = ChIndex | Freq | DrRange
+| 欄位名稱        | 大小（bytes） | 說明                                  |
+| :---------- | :-------- | :---------------------------------- |
+| **ChIndex** | 1         | 頻道索引（Channel Index）                 |
+| **Freq**    | 3         | 頻道中心頻率（Center Frequency），單位為 100 Hz |
+| **DrRange** | 1         | 資料速率範圍（Data Rate Range）             |
+
+- ChIndex（Channel Index）
+  - 指定要修改或建立的頻道索引。
+  - LoRaWAN 規範定義了「預設頻道（Default Channels）」，這些頻道對所有裝置都相同，不可被修改或刪除。
+  - 可設定範圍 N≤ChIndex≤15，其中 N 為預設頻道數量（例如 EU868 為 3）。
+  - 裝置必須至少支援 16 個頻道定義（部分地區可能要求更多）
+- Freq（Frequency）
+  - 3 bytes（24 bits）值，單位為 100 Hz。
+  - 實際頻率計算方式：Frequency (Hz)=Freq×100
+- DrRange（Data Rate Range）
+  - 用來指定該頻道可使用的 資料速率範圍。
+  - 欄位被分為兩個 4-bit 部分：
+  - 若 DrRange = 0x52 → MaxDR = 5、MinDR = 2 → 表示該頻道允許 DR2 ~ DR5 的速率傳輸。
+    | 位元範圍     | 名稱        | 說明           |
+    | :------- | :-------- | :----------- |
+    | Bits 7–4 | **MaxDR** | 該頻道允許的最高資料速率 |
+    | Bits 3–0 | **MinDR** | 該頻道允許的最低資料速率 |
+
+##### NewChannelAns
+裝置在接收到 NewChannelReq 後，會回傳 NewChannelAns 命令以確認設定結果。Payload 含有一個 Status byte：
+| 位元       | 名稱                        | 說明                     |
+| :------- | :------------------------ | :--------------------- |
+| Bit 0    | **Channel frequency ACK** | 頻率有效時回 1；若超出允許範圍回 0。   |
+| Bit 1    | **Data rate range ACK**   | 資料速率範圍有效時回 1；若不支援則回 0。 |
+| Bits 7–2 | **RFU**                   | 保留位。                   |
+
+#### Setting delay between TX and RX (RXTimingSetupReq)
+
+- RXTimingSetupReq 是由 Network Server 下發給 End Device 的命令，用來設定上行傳輸（TX）結束與接收視窗（RX）開啟之間的延遲時間，白話就是 uplink 送完多久後要延遲多久才開始有第一個 receive window
+- 這影響裝置接收下行訊息（downlink）的時機。
+- 運作說明
+  - RX1（第一接收視窗）
+    - 在 TX 結束後 Delay 秒（±20 μs） 開啟。
+  - RX2（第二接收視窗）
+    - 永遠在 RX1 之後 1 秒 開啟。
+- RXTimingSetupReq Payload 結構
+
+| 欄位名稱      | 大小（bytes） | 說明                             |
+| :-------- | :-------- | :----------------------------- |
+| **Delay** | 1         | 設定 TX 結束後至 RX1 視窗開啟的延遲時間（單位：秒） |
+
+#### DeviceTime commands(DeviceTimeReq)
+
+終端裝置可以使用 DeviceTimeReq 命令，請求 Network Server 提供目前的網路日期與時間，以對齊時間避免太大落差
+
+## End-device activation
+裝置要加入到 LoRaWAN 網路環境，每個裝置會需要先被 activate，主要方式有兩種
+1. Over-The-Air Activation (OTAA): 在空氣中連接需要做的完整 activation 流程
+2. Activation By Personalization (ABP): 事先有做好一些前置作業，所以要做的事比 OTAA 少很多
+
+
+加入前要做身分驗證，所以 end-device 需要具備以下資訊，以確保加入過程中的加密安全性與完整性驗證。
+
+| 項目                                        | 名稱               | 中文說明                                                                                                                                                                                                      |
+| :---------------------------------------- | :--------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1️⃣ JoinEUI（Join Server ID）**           | 要加入 server 的 id         | 代表負責裝置註冊與金鑰生成的 **Join Server**。<br>在 OTAA（Over-The-Air Activation）過程中，Join Server 負責協助裝置進行**入網認證（Join Procedure）**，並推導出**工作階段金鑰（Session Keys）**。                                                          |
+| **2️⃣ DevEUI（Device ID）**                 | 裝置自己的 id            | 為終端裝置的**全球唯一識別碼（64-bit IEEE EUI-64）**，由製造商分配，用於在入網與管理過程中識別特定裝置。                                                                                                                                           |
+| **3️⃣ Device Root Keys（AppKey & NwkKey）** | 裝置根金鑰            | 在裝置出廠時分配的兩組**長期對稱金鑰**：<br> - **AppKey（Application Key）**：用於推導應用層安全金鑰（AppSKey）。<br> - **NwkKey（Network Key）**：用於推導網路層安全金鑰（FNwkSIntKey、SNwkSIntKey、NwkSEncKey）。<br> 這兩組金鑰**永不在空中傳輸**，只用於安全地生成 session keys。 |
+| **4️⃣ JSIntKey & JSEncKey Derivation**    | Join Server 金鑰衍生 | 由 **NwkKey** 推導出兩個臨時金鑰：<br> - **JSIntKey（Join Server Integrity Key）**：用於驗證 Join 訊息的完整性。<br> - **JSEncKey（Join Server Encryption Key）**：用於加密 Join-Accept 訊息內容。<br> 這確保 OTAA 加入過程中的認證與金鑰交換皆受到保護。            |
+
+### JoinEUI
+- JoinEUI（加入伺服器識別碼） 是一個依據 IEEE EUI-64 標準 的全球唯一應用識別碼。
+- 它用來唯一識別要加入的 Join Server，即協助裝置完成 Join 流程與 Session Key 推導 的伺服器。
+- 對於 OTAA 模式的裝置，JoinEUI 必須在執行 Join 流程前預先儲存在裝置內部。
+
+### DevEUI
+- DevEUI（裝置識別碼） 是一個在 IEEE EUI-64 位址空間中定義的全球唯一裝置 ID。
+- 它用於在整個 LoRaWAN 網路中唯一識別該終端裝置。
+- 對於 OTAA 裝置，DevEUI 必須在 Join 前預先儲存在裝置中，以便網路識別裝置身份。
+
+### Device Root Keys（AppKey & NwkKey）
+- NwkKey（Network Key） 與 AppKey（Application Key） 是在裝置製造階段就分配的 AES-128 根金鑰。
+- 這兩把金鑰是裝置在 OTAA 加入網路時的安全基礎，不會經由空中傳輸。
+- 在 OTAA 過程中：
+- 若純粹因為 LoRaWAN 網路需要 key 就會使用 NwkKey 用於推導以下網路層安全金鑰：
+  - FNwkSIntKey（上行訊息完整性金鑰）
+  - SNwkSIntKey（下行訊息完整性金鑰）
+  - NwkSEncKey（網路層加密金鑰）
+- 若是為了 data，就會用 AppKey 用於推導以下應用層金鑰：
+  - AppSKey（應用層資料加密金鑰）
+
+> 平常若有 key 需求的話，會是用這兩個 key 衍生出的這些 key
+
+在經過 activation 後， end-device 內部就會儲存
+- DevAddr (Device address) -> 讓別人知道這個 device node
+- NwkSEncKey/ SNwkSIntKey/FNwkSIntKey (Triplet of network session key)
+- AppSKey (Application session key)
+
+#### Forwarding Network Session Integrity Key（FNwkSIntKey）
+這個針對 LoRa node 送給 server
+
+- FNwkSIntKey（轉送網路完整性金鑰）用於 uplink 封包的完整性驗證。
+- 終端裝置在每次傳送上行資料時，都會用此金鑰搭配公式計算出 MIC（Message Integrity Code，訊息完整碼），以確保封包內容未被竄改。
+  - 在 MAC 層用封包的 MIC 判斷有沒有被修改
+
+#### Serving Network Session Integrity Key（SNwkSIntKey）
+這個針對 server 送給 LoRa node -> downlink
+
+- SNwkSIntKey（服務網路完整性金鑰）有兩個主要用途：
+  - 驗證所有下行封包的 MIC，確保從伺服器發出的資料未被竄改。
+  - 在上行封包中參與計算 MIC（與 FNwkSIntKey 一起），以支援漫遊網路環境。
+    - 漫遊表示離開原本的  LoRa 網路，要走到別人的 LoRa 網路
+- 這種「雙金鑰」設計讓轉送伺服器（Forwarding Network Server）只需驗證部分 MIC，而主伺服器（Serving Network Server）負責最終驗證。
+
+> MIC 本身沒有加解密，只是用來檢查
+#### Network Session Encryption Key（NwkSEncKey）
+- NwkSEncKey（網路加密金鑰）用於加密與解密 MAC 命令，包含：
+  - 在 FOpts 欄位中 傳輸的控制指令。
+  - 在 Port 0 的 FRMPayload 傳輸的 MAC 指令封包。
+
+#### Application Session Key（AppSKey）
+- AppSKey（應用層會話金鑰）由 應用伺服器與終端裝置 共同使用，用來加密與解密應用層資料（Application Payload）。
+- 它與網路層金鑰分離，確保應用層內容在傳輸中對網路營運商仍保持保密性。
+
+#### DevAddr（End Device Address）
+- 因為用 EUI 代表 LoRa node 實在是太長了，所以用比較短的 Device Address
+- DevAddr（裝置位址） 為 32 位元（4 bytes）識別碼，由 Network Server 分配。
+- 它在區域網路內唯一識別裝置，並包含網路識別資訊（NetID）。
+
+| 位元範圍       | 欄位名稱        | 說明                                       |
+| :--------- | :---------- | :--------------------------------------- |
+| Bits 31 – 32-N | **AddrPrefix**   | Network server 編號，表示出在哪個 network。概念大概是"班級"                |
+| Bits 31-N – 0  | **NwkAddr** | 裝置位址（Device Address within that network），概念大概是一個班級內的"座號" |
+
+- AddrPrefix（地址前綴） 用於識別目前管理該裝置的 Network Server。
+  - 當裝置進行 漫遊（Roaming） 時，AddrPrefix 讓外部網路能快速辨認出哪個伺服器擁有該裝置的控制權。
+    - 如果前後 AddrPrefix 不一樣，就可以代表漫遊。
+- NwkAddr（Network Address）
+  - 由 Network Server 或網路管理者 任意指派的裝置識別碼。
+  - 它在同一個網路中必須唯一，但在不同網路中可以重複使用（因為由 AddrPrefix 區分）。
+  - NwkAddr 通常用於內部路由與裝置識別。
+
+### OTAA
+在 OTAA（Over-The-Air Activation，空中啟用） 模式下，終端裝置必須先完成一次 Join（入網）流程，才能與 Network Server 進行任何資料交換。當裝置遺失會話相關資訊（Session Context，例如金鑰或 DevAddr）時，必須重新執行一次 Join 程序，以重新取得新的會話金鑰與裝置位址。
+
+### Join Procedure
+無論是 Join-Request 還是 Rejoin-Request，最後都要獲得 server 驗證裝置身份後所回覆的加密 Join-Accept 訊息。
+#### Join-request message
+- Join-Request（加入請求） 由 終端裝置（End Device） 主動發起，是 OTAA（Over-The-Air Activation） 流程的第一步。
+- 該訊息用來通知網路伺服器（Network Server）：「我要加入 LoRaWAN 網路」。
+- Join-Request 訊息未加密（明文傳送）。
+- 可使用任意 資料速率（Data Rate） 與 隨機頻率跳頻（Frequency Hopping），在指定的入網頻道上發送，以提升成功率與抗干擾性。
+- DevNonce（Device Nonce）
+  - 當裝置首次上電時，DevNonce 從 0 開始。
+  - 每次發送 Join-Request 時，DevNonce 都會 +1。
+  - Network Server 會記錄裝置的最後 DevNonce 值，若偵測到重複或未遞增的 DevNonce，會忽略該 Join-Request（防止重放攻擊）。
+
+| 欄位名稱         | 大小（Bytes） | 說明                       |
+| :----------- | :-------- | :----------------------- |
+| **JoinEUI**  | 8         | 加入伺服器識別碼（Join Server ID） |
+| **DevEUI**   | 8         | 裝置唯一識別碼（Device EUI）      |
+| **DevNonce** | 2         | 裝置隨機計數器（Device Nonce）    |
 
 
