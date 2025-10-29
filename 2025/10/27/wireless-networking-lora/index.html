@@ -151,7 +151,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-10-28 00:41:26
+          2025-10-29 14:00:48
         </span>
         
               <span class="post-tags">
@@ -761,6 +761,7 @@
 </tbody></table>
 <p>其實 SINR 也是</p>
 <h5 id="LinkCheckAns-Payload"><a href="#LinkCheckAns-Payload" class="headerlink" title="LinkCheckAns Payload"></a>LinkCheckAns Payload</h5><p>LinkCheckAns Payload &#x3D; Margin | GwCnt</p>
+<p>在這邊不是用 good&#x2F;bad 來回答這個 link 的品質如何，而是用 link margin 和 gateway count 來表示。所謂的 link margin 就是 link budget 扣除成功接收的最低要求後所多出的量。比如說當前 link budget 透過 SINR 測量出是 10db(link budget)，而 link 通訊最低要 8db，則 link margin 就是 10-8&#x3D;2(db)。但後來大家好像都把 margin &amp; budget 混著用了(老師說的)所以看到 margin 就是 SINR。</p>
 <table>
 <thead>
 <tr>
@@ -777,7 +778,7 @@
 <tr>
 <td align="left"><strong>GwCnt</strong></td>
 <td align="left">1</td>
-<td align="left">Gateway Count：成功接收到該訊息的閘道器數量。</td>
+<td align="left">Gateway Count：network server 成功接收到該訊息的所來自的閘道器數量。(在 n 個閘道的交集處傳送訊息，則可能m個閘道會幫你送訊息)</td>
 </tr>
 </tbody></table>
 <h4 id="Link-ADR-Commands-LinkADRReq-LinkADRAns"><a href="#Link-ADR-Commands-LinkADRReq-LinkADRAns" class="headerlink" title="Link ADR Commands(LinkADRReq &#x2F; LinkADRAns)"></a>Link ADR Commands(LinkADRReq &#x2F; LinkADRAns)</h4><p>用於 ADR（Adaptive Data Rate）機制，由網路伺服器指示終端裝置調整傳輸速率（Data Rate）、發射功率（Tx Power）或可用通道（Channel Mask）。</p>
@@ -1461,7 +1462,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-10-28 00:41:26
+              2025-10-29 14:00:48
             </span>
             
                   <span class="post-tags">
