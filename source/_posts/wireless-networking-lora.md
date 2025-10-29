@@ -267,10 +267,13 @@ MAC Commands 是 LoRaWAN MAC 層（Medium Access Control Layer）用來進行 �
 其實 SINR 也是
 ##### LinkCheckAns Payload
 LinkCheckAns Payload = Margin | GwCnt
+
+在這邊不是用 good/bad 來回答這個 link 的品質如何，而是用 link margin 和 gateway count 來表示。所謂的 link margin 就是 link budget 扣除成功接收的最低要求後所多出的量。比如說當前 link budget 透過 SINR 測量出是 10db(link budget)，而 link 通訊最低要 8db，則 link margin 就是 10-8=2(db)。但後來大家好像都把 margin & budget 混著用了(老師說的)所以看到 margin 就是 SINR。
+
 | 欄位名稱       | 大小（bytes） | 說明                                                                 |
 | :--------- | :-------- | :----------------------------------------------------------------- |
 | **Margin** | 1         | 解調裕度（Demodulation Margin）：以 dB 為單位，代表最後一次成功接收的 LinkCheckReq 的訊號品質。 |
-| **GwCnt**  | 1         | Gateway Count：成功接收到該訊息的閘道器數量。                                      |
+| **GwCnt**  | 1         | Gateway Count：network server 成功接收到該訊息的所來自的閘道器數量。(在 n 個閘道的交集處傳送訊息，則可能m個閘道會幫你送訊息)                                      |
 
 #### Link ADR Commands(LinkADRReq / LinkADRAns)
 用於 ADR（Adaptive Data Rate）機制，由網路伺服器指示終端裝置調整傳輸速率（Data Rate）、發射功率（Tx Power）或可用通道（Channel Mask）。

@@ -59,7 +59,7 @@ MIMO（Multiple Input Multiple Output，多輸入多輸出）是一種屬於 **R
 | **ALOHA**         | 無線隨機存取協定                                 | 當想要傳送Data時，就直接往外傳送，在低traffic load 時成功率高，反之碰撞率高              |
 | **Slotted ALOHA** | 時槽化 ALOHA                                | 把頻道在時間上分段(slot)，每個傳輸點只能在一個分段(slot)的開始處進行傳送。每次傳送的數據必須少於或者等於一個頻道的一個時間分段(slot)。這樣大大的減少了傳輸頻道的衝突，改善了隨時隨地都有可能封包的缺點。         |
 | **CSMA**          | Carrier Sense Multiple Access            | 傳送前先「聽」媒體是否空閒（Wi-Fi 使用） |
-| **MACA**          | Multiple Access with Collision Avoidance | 使用 RTS/CTS 封包避免隱藏節點問題   |
+| **MACA**          | Multiple Access with Collision Avoidance | 傳送前先「打招呼」，使用 RTS/CTS 封包避免隱藏節點問題   |
 
 ![alt text](images/wireless/img14.png)
 
@@ -184,7 +184,6 @@ Piggyback 技術的目的，是為了減少原始 PCF 模式中多次獨立封�
    STA1 收到封包後，一併傳回 **ACK（確認）** 與 **上行資料（UL1）**，也是 Piggyback 的應用。
 4. **ACK + DL2 + Polling2：**
    AP 收到 STA1 的回覆後，再發送另一個 Piggyback 封包，包含：
-
    * 對 STA1 的 ACK、
    * 對 STA2 的下行資料（DL2）、
    * 以及 Polling 指令。
@@ -224,6 +223,11 @@ Piggyback 技術的目的，是為了減少原始 PCF 模式中多次獨立封�
 
 ![alt text](images/wireless/img20.png)
 
+#### Random Backoff 機制
+當多個節點想同時講話（傳送封包）時，為了避免撞在一起（collision），Random Backoff 機制用隨機等待的方式，分散每個節點的傳送時機，降低碰撞機率。他會設定 Backoff Counter（退避計數器），也就是節點會隨機選一個整數作為等待時槽數。下圖是 DIFS + backoff 為例子，station1 想要傳送東西，然後他的 BC 是 5，在等完 DIFS(大家都要等待的時間)後就會開始倒數，倒數到 3 的時候 station3 送東西了，所以停止倒數，過完 DIFS 後繼續倒數，數完就傳送。但可以發現 station1 還是跟 station4 碰撞了，所以這個機制還是有可能產生碰撞。
+
+![alt text](images/wireless/img47.png)
+
 #### IEEE 802.11 無線網路中的優先權機制（Priority Scheme）
 在 802.11 中，每個節點在發送封包前，都必須先偵測媒體是否空閒，若空閒，則必須等待一段固定的時間間隔（IFS）後才能開始傳送。而不同的 IFS 對應不同類型的封包，也代表不同的 媒體存取優先權。例如：ACK 或 CTS 這類需要立即回覆的控制訊息會使用最短的 SIFS，確保能最快回應並避免碰撞；AP 在集中控制模式（PCF）下傳送 Beacon 或 Polling 時會使用 PIFS，讓它比一般裝置更快取得通道；一般用戶端在分散式模式（DCF）下傳輸資料封包時，則需等待較長的 DIFS，以實現公平競爭；若發生錯誤封包或干擾，節點必須再等待更長的 EIFS 才能重傳，避免影響其他正在進行的通訊。
 
@@ -238,7 +242,7 @@ Piggyback 技術的目的，是為了減少原始 PCF 模式中多次獨立封�
 ![alt text](images/wireless/img21.png)
 
 ### CSMA/CA (載波偵測多重存取/碰撞避免)
-在前面有介紹 CSMA 的機制是傳送前先「聽」媒體是否空閒以避免碰撞，而 CA 是碰撞避免機制，透過這兩個方法能確保節點之間能有序傳輸。運作過程中，節點不僅聽取頻道（Carrier Sense），還會透過 RTS（Request To Send） 與 CTS（Clear To Send） 封包協調傳輸時機，以避免同時發送造成干擾。
+在前面有介紹 CSMA 的機制是傳送前先「聽」媒體是否空閒以避免碰撞，而 CA 是碰撞避免機制，透過這兩個方法能確保節點之間能有序傳輸。運作過程中，為了解決 Hidden Terminal Problem，節點不僅聽取頻道（Carrier Sense），還會透過 RTS（Request To Send） 與 CTS（Clear To Send） 封包協調傳輸時機，以避免同時發送造成干擾。
 
 1. **頻道偵測（Carrier Sense）**
    傳送端（Sender）在發送前，先確認頻道是否空閒。若空閒，等待一段 **IFS（Interframe Space）** 後開始發送。
@@ -377,7 +381,7 @@ IEEE 802.15.4 同時支援兩種網路運作模式，一個是有 slot（時槽�
     - CFP（Contention-Free Period）：分配給特定節點的 GTS（Guaranteed Time Slot），不需競爭即可傳輸。
 2. Inactive portion：所有裝置可進入睡眠以節省能量，這就是「有時間就去睡覺」。
 
-> 但這裡就出現了一個問題，如果宋封包後對方在 inactive portion，就會造成緊急問題沒辦法好好解決。
+> 但這裡就出現了一個問題，如果送封包後對方在 inactive portion，就會造成緊急問題沒辦法好好解決。
 
 #### Slotted CSMA/CA Algorithm IFS(interframe space)
 IFS（Interframe Space）是兩個資料幀（frame）之間必須保留的時間間隔，用來區分不同 frame 的傳輸（避免碰撞）、給接收端足夠的時間處理上一個 frame、幫助控制不同長度的資料幀之間的優先權。IFS 的兩種類型：
