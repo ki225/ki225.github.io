@@ -151,7 +151,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2025-11-16 11:11:30
+          2025-11-16 11:45:43
         </span>
         
               <span class="post-tags">
@@ -418,8 +418,60 @@
 <td>3GPP 或非 3GPP 定義的無線介面</td>
 </tr>
 </tbody></table>
+<p>可以看到在欄位 “最大往返時延（僅傳播延遲）”，Scenario C 的時間很明顯比 Scenario D 多，這是因為 Scenario C 的 Transparent payload 無法做解調，所以路徑變成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UE → 衛星（service 上行） → 地面 gateway（feeder 下行） → 衛星（feeder 上行） → UE（service 下行）</span><br></pre></td></tr></table></figure>
+
+<p>然而 Scenario D 只需要計算</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UE → 衛星（service 上行）</span><br><span class="line">UE ← 衛星（service 下行）</span><br></pre></td></tr></table></figure>
+
+<p>另外「仰角」會決定 UE 與衛星之間連線的幾何路徑長度，</p>
+<ul>
+<li>UE 在頭頂仰角高 → 衛星最近</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">🛰 衛星</span><br><span class="line"> |</span><br><span class="line"> |   （最短）</span><br><span class="line"> |</span><br><span class="line">🧍 UE</span><br></pre></td></tr></table></figure>
+<ul>
+<li>UE 在地平線附近（仰角 0°）→ 衛星最遠<ul>
+<li>因為地球是球體，在仰角 0° 時 UE 幾乎看不到衛星（視線沿地球表面切線），所以距離變成「地球邊緣 → 太空」的斜邊</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">衛星  🛰</span><br><span class="line">       \</span><br><span class="line">        \</span><br><span class="line">         \       （最遠）</span><br><span class="line">          \</span><br><span class="line">           🧍 UE</span><br></pre></td></tr></table></figure>
+<p>所以用 GEO 例子來看數字差多少，會發現</p>
+<table>
+<thead>
+<tr>
+<th>情境</th>
+<th>距離</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正頭頂（仰角 90°）</td>
+<td><strong>35,786 km</strong>（高度）</td>
+</tr>
+<tr>
+<td>仰角 10°（3GPP 最低可見度）</td>
+<td><strong>40,581 km</strong></td>
+</tr>
+<tr>
+<td>仰角 0°（理論極限）</td>
+<td><strong>更長，甚至超過 42,000 km</strong></td>
+</tr>
+</tbody></table>
+<p>而 GEO 高度非常高，spot beam 投射到地表會被放大，這是因為在這麼高的位置上，只要天線指向地面稍微偏斜，beam 在地球表面上的 footprint 就會變大。再搭配低仰角的情況，就會因為 beam 是斜著照到地球表面，使得橢圓投影變長。因此 3GPP 使用「覆蓋邊緣（低仰角）」來定義最大 footprint</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">衛星 (非常高)</span><br><span class="line">  \     ← beam 傾斜照射</span><br><span class="line">   \</span><br><span class="line">    \___________________   ← 地球表面投影變長</span><br></pre></td></tr></table></figure>
+
+<p>HTS（高吞吐量衛星）技術使 spot beam 更聚焦，但 footprint 還是大</p>
+<ul>
+<li>HTS（High Throughput Satellite）<ul>
+<li>使用多個高增益 spot beams</li>
+<li>每個 spot beam 比傳統 GEO 覆蓋小很多（不是覆蓋整個大陸那種）</li>
+<li>但在 GEO 高度下，再小的 beam 投到地球上都會變大</li>
+</ul>
+</li>
+</ul>
 <h3 id="其他小補充"><a href="#其他小補充" class="headerlink" title="其他小補充"></a>其他小補充</h3><ul>
 <li>用於延遲計算的光速為 <strong>299,792,458 m&#x2F;s</strong>。</li>
+<li>GEO 的最大波束覆蓋尺寸是依據先進的 GEO 高吞吐量系統（HTS）估算，  假設使用覆蓋邊緣（低仰角）的 spot beams，所以最大波束覆蓋直徑（edge to edge）	3500km</li>
 </ul>
 
       </div>
@@ -436,7 +488,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2025-11-16 11:11:30
+              2025-11-16 11:45:43
             </span>
             
                   <span class="post-tags">
