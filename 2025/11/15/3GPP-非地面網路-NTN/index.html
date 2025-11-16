@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Kiki Huang" />
+  <!-- Open Graph Description 简短摘要-->
+  
+  <!-- 用于搜索引擎的文章摘要 -->
+  
+  
+  
+  <title>
+    
+      3GPP - 非地面網路 NTN 
+      
+      
+      |
+    
+     Kiki&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/black-cat.jpg">
+    <link rel="icon" href="/images/black-cat.jpg">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  <!-- 
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+ -->
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/funnycir.gif" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Kiki's Blog</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Blog</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">Tags</a>
+        </li>
+      
+        <li class="nav-item" data-path="/map/">
+          <a href="/map/">CafeSeeker</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友resume」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">3GPP - 非地面網路 NTN</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2025-11-16 11:11:30
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/3gpp/" title="3gpp">
+                    #3gpp
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/ntn/" title="ntn">
+                    #ntn
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>這篇筆記是講解 3GPP 文件的第四章 “Non-Terrestrial Networks overview and scenarios”，非地面網路（NTN） 指的是利用天基或空基平台（如衛星、無人機、高空平台等）提供行動或寬頻通信服務的網路架構，藉由 NTN 與地面行動網路（Terrestrial Networks, TN）共同構成 5G 與未來 6G 的整體通信生態系，以擴大行動網路涵蓋範圍，讓網路能夠在任何位置、任何時間提供連接能力。</p>
+<h2 id="非地面網路（Non-Terrestrial-Networks-NTN）"><a href="#非地面網路（Non-Terrestrial-Networks-NTN）" class="headerlink" title="非地面網路（Non-Terrestrial Networks, NTN）"></a>非地面網路（Non-Terrestrial Networks, NTN）</h2><p>非地面網路（NTN）是 5G 與未來 6G 架構中的重要組成，主要透過部署於空中或太空的通訊平台（如衛星、UAS 無人機、HAPS 高空平台等）來提供廣域、跨國甚至全球的行動通訊服務。NTN 的基本組成可分為下列三類：</p>
+<ul>
+<li>sat-gateway（衛星閘道）<ul>
+<li>負責將 NTN 與地面的公共資料網路（如 Internet、5GC）連接</li>
+<li>與衛星或 UAS 之間以 feeder link（回傳鏈路） 通訊</li>
+</ul>
+</li>
+<li>衛星 &#x2F; UAS（空中通訊平台）<ul>
+<li>承載 RF 處理設備，用以連接地面與空中的使用者</li>
+<li>可搭載「透明載荷」或「再生載荷」</li>
+<li>也可能透過 ISL（Inter-Satellite Link）星間鏈路 與其他衛星進行溝通</li>
+</ul>
+</li>
+<li>UE（使用者設備）<ul>
+<li>位於衛星或 UAS 的 beam 覆蓋範圍內</li>
+<li>透過 service link（服務鏈路） 與空中平台連線</li>
+</ul>
+</li>
+</ul>
+<h3 id="單一空中平台產生的問題：覆蓋範圍與-gateway-稀少"><a href="#單一空中平台產生的問題：覆蓋範圍與-gateway-稀少" class="headerlink" title="單一空中平台產生的問題：覆蓋範圍與 gateway 稀少"></a>單一空中平台產生的問題：覆蓋範圍與 gateway 稀少</h3><p>在下圖可以看到衛星和無人機等空中通訊設備會透過 service link &amp; feeder link 的方式和地面進行通訊，在此簡化情境中，僅有單一空中平台提供覆蓋，但這也暴露了一個關鍵限制：空中平台的覆蓋範圍內不一定存在地面 gateway。例如，當一顆 LEO 衛星移動到海洋上空時，其覆蓋區域內可能完全沒有地面站。若此時某位使用者正在通話，雖然 service link 仍能連上衛星，但因缺乏可用的 feeder link，資料無法回傳至地面網路，使用者可能必須等到衛星再次覆蓋陸地、或下一顆具有 gateway 連線能力的衛星接手，可能延遲數十分鐘。這種情形顯然無法滿足 5G 所要求的即時性與服務連續性。</p>
+<blockquote>
+<p>衛星或 UAS 通常會在其視野（field of view）內產生多個 beam，beam footprint 通常呈橢圓形。<br><img src="/images/3gpp/img1.png" alt="alt text"></p>
+</blockquote>
+<p>為了解決「覆蓋範圍有限」與「gateway 密度不足」的問題，NTN 通常不是部署一顆，而是部署大量的衛星 &#x2F; UAS 節點形成一個星座（constellation）。</p>
+<p><img src="/images/3gpp/img2.png" alt="alt text"></p>
+<h3 id="NTN-plateform-類型"><a href="#NTN-plateform-類型" class="headerlink" title="NTN plateform 類型"></a>NTN plateform 類型</h3><ul>
+<li>大部分 GEO 都是同步衛星</li>
+<li>LEO 通常不會在眼前停留超過十多分鐘</li>
+</ul>
+<p>衛星與地面之間的通訊必須同時考量通訊品質與設備保護，其中一項重要原因是：若接收端收到的訊號功率過強，而設備本身的耐受能力不足，就可能造成元件損壞，而為了避免「被訊號燒掉」，就必須採用成本更高、可承受大幅功率變動的高階射頻設備。</p>
+<p>以圓形軌道的 LEO、MEO 與 GEO 衛星為例，它們相對於地表位置變化較為可預期，因此能夠提供較穩定的接收功率，終端設備的設計也較為簡單。然而，HEO（Highly Elliptical Orbit，高橢圓軌道）衛星在軌道上與地表距離變化劇烈，導致接收端的訊號強度會大幅波動，因此需要更高成本、更耐受高功率變動的 RF 設備才能維持正常運作。也因此，HEO 衛星較常用於太空探測或特定軍事應用，而不是一般民用通訊場景。</p>
+<table>
+<thead>
+<tr>
+<th>platform 類型</th>
+<th>高度範圍</th>
+<th>軌道</th>
+<th>典型 beam footprint</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>LEO 衛星</strong></td>
+<td>300–1500 km</td>
+<td>環繞地球的近地軌道</td>
+<td>100–1000 km</td>
+</tr>
+<tr>
+<td><strong>MEO 衛星</strong></td>
+<td>7000–25000 km</td>
+<td>中地球軌道</td>
+<td>100–1000 km</td>
+</tr>
+<tr>
+<td><strong>GEO 衛星</strong></td>
+<td>35,786 km</td>
+<td>固定於地球某點的仰角&#x2F;方位</td>
+<td>200–3500 km</td>
+</tr>
+<tr>
+<td><strong>UAS（含 HAPS）</strong></td>
+<td>8–50 km（HAPS 多為 20 km）</td>
+<td>——</td>
+<td>5–200 km</td>
+</tr>
+<tr>
+<td><strong>HEO 衛星</strong></td>
+<td>400–50000 km</td>
+<td>橢圓軌道</td>
+<td>200–3500 km</td>
+</tr>
+</tbody></table>
+<p><img src="/images/3gpp/img3.png" alt="alt text"></p>
+<h3 id="衛星-payload"><a href="#衛星-payload" class="headerlink" title="衛星 payload"></a>衛星 payload</h3><p>這裡所指的 payload 並非通訊封包中的 payload，而是衛星或 UAS 平台上，為了執行特定任務（如觀測、通訊或導航）而設計的功能性次系統。在 NTN 架構中，衛星或 UAS 可能搭載以下兩種類型的通訊酬載：</p>
+<h4 id="Transparent-Payload"><a href="#Transparent-Payload" class="headerlink" title="Transparent Payload"></a>Transparent Payload</h4><p>Transparent Payload 主要負責將接收到的 RF 訊號以最基本的方式轉發，並不進行通訊協定層面的處理，屬於「訊號放大轉發（bent-pipe）」架構，具有低複雜度與低延遲的特性，它的特色就是訊號波形不會被改變，幾乎不做解調或處理。</p>
+<p>另外，之所以需要進行濾波、頻率轉換與放大，是因為 uplink（地面 → 太空） 與 downlink（太空 → 地面） 所使用的頻段通常不同，衛星必須在中繼時切換至適合下行傳輸的頻率，同時確保訊號品質符合通訊需求。</p>
+<ul>
+<li>radio frequency filtering</li>
+<li>frequency conversion</li>
+<li>amplification</li>
+</ul>
+<h4 id="regenerative-payload"><a href="#regenerative-payload" class="headerlink" title="regenerative payload"></a>regenerative payload</h4><p>regenerative payload 會在衛星或 UAS 平台上執行更進階的訊號處理，相當於在空中放置部分或完整的基地台功能。與 Transparent Payload 僅放大與轉發訊號不同，regenerative payload 會先透過 demodulation&#x2F;decoding 將 uplink 訊號還原成基頻資料，再經由 coding&#x2F;modulation 重新封裝成 downlink，因此相當於在衛星上對訊號進行完整的重新打包（regeneration）。</p>
+<p>包含以下典型功能：</p>
+<ul>
+<li>radio frequency filtering</li>
+<li>frequency conversion</li>
+<li>amplification</li>
+<li>demodulation&#x2F;decoding、coding&#x2F;modulation</li>
+<li>switch and&#x2F;or routing</li>
+<li>having all or part of base station functions (e.g. gNB)</li>
+<li>Inter-satellite links (ISL) optionally in case of a constellation of satellites</li>
+</ul>
+<p>如果沒有 regeneration，資料一定要回到地面 gateway 才能被解碼，再傳給下一顆衛星或下一個 UE，造成更多的延遲</p>
+<h2 id="Non-Terrestrial-Networks-reference-scenarios"><a href="#Non-Terrestrial-Networks-reference-scenarios" class="headerlink" title="Non-Terrestrial Networks reference scenarios"></a>Non-Terrestrial Networks reference scenarios</h2><p>依照衛星軌道類型和衛星 payload 類型兩個維度對 NTN 進行分類，並將不同組合對應到 3GPP 設定的情境 Scenario A &#x2F; B &#x2F; C1 &#x2F; C2 &#x2F; D1 &#x2F; D2。</p>
+<table>
+<thead>
+<tr>
+<th>衛星軌道</th>
+<th>Beam 模式</th>
+<th>Transparent</th>
+<th>Regenerative</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GEO</td>
+<td>固定覆蓋</td>
+<td>A</td>
+<td>B</td>
+</tr>
+<tr>
+<td>LEO</td>
+<td>steerable beam</td>
+<td>C1</td>
+<td>D1</td>
+</tr>
+<tr>
+<td>LEO</td>
+<td>beam 隨衛星移動</td>
+<td>C2</td>
+<td>D2</td>
+</tr>
+</tbody></table>
+<p>ps. MEO 在商業上比較不常用，因為他軌道高但又不能同步，需要更高成本去做地面設備、接收發送訊號，且延遲久</p>
+<h3 id="Steerable-Beams（Earth-fixed）"><a href="#Steerable-Beams（Earth-fixed）" class="headerlink" title="Steerable Beams（Earth-fixed）"></a>Steerable Beams（Earth-fixed）</h3><ul>
+<li>LEO 衛星快速移動</li>
+<li>Beam（藍色覆蓋區）會持續指向地球上同一個地區</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(Satellite moving →)</span><br><span class="line">     🛰️</span><br><span class="line">      \   beam steer</span><br><span class="line">       \ ↘</span><br><span class="line">        🌍 fixed spot</span><br></pre></td></tr></table></figure>
+<h3 id="Beams-Move-With-Satellite（Satellite-fixed）"><a href="#Beams-Move-With-Satellite（Satellite-fixed）" class="headerlink" title="Beams Move With Satellite（Satellite-fixed）"></a>Beams Move With Satellite（Satellite-fixed）</h3><ul>
+<li>衛星移動時</li>
+<li>Beam footprint 會掃過地面，不在固定位置</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(Satellite moving →)</span><br><span class="line">     🛰️</span><br><span class="line">      \ </span><br><span class="line">       \  beam stays under satellite</span><br><span class="line">        🌍 footprint sweeps across ground</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Earth-fixed beam 指的是，即使衛星本身在移動，波束覆蓋區（beam footprint）仍然固定在地球表面某一位置不動。Steerable beam 衛星內的天線陣列會不斷重新調整波束角度才能實現。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>參數</th>
+<th>GEO 為基礎的非地面接取網路 (Scenario A &amp; B)</th>
+<th>LEO 為基礎的非地面接取網路 (Scenario C &amp; D)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>軌道類型 (Orbit type)</strong></td>
+<td>以固定仰角／方位維持相對地球上某點的定點位置（同步軌道）</td>
+<td>繞地球運行的圓形軌道</td>
+</tr>
+<tr>
+<td><strong>高度 (Altitude)</strong></td>
+<td>35,786 公里</td>
+<td>600 公里 &#x2F; 1,200 公里</td>
+</tr>
+<tr>
+<td><strong>服務鏈路頻段 (Spectrum, service link)</strong></td>
+<td>&lt; 6 GHz（例：2 GHz）<br>&gt; 6 GHz（例：下行 20 GHz、上行 30 GHz）</td>
+<td>&lt; 6 GHz（例：2 GHz）<br>&gt; 6 GHz（例：下行 20 GHz、上行 30 GHz）</td>
+</tr>
+<tr>
+<td><strong>最大通道頻寬 (Max channel bandwidth capability)</strong></td>
+<td>低於 6 GHz：30 MHz <br>高於 6 GHz：1 GHz</td>
+<td>低於 6 GHz：30 MHz <br>高於 6 GHz：1 GHz</td>
+</tr>
+<tr>
+<td><strong>酬載類型 (Payload)</strong></td>
+<td>Scenario A：Transparent（僅射頻功能）<br>Scenario B：Regenerative（包含部分或全部 RAN 功能）</td>
+<td>Scenario C：Transparent（僅射頻功能）<br>Scenario D：Regenerative（包含部分或全部 RAN 功能）</td>
+</tr>
+<tr>
+<td><strong>星間鏈路 (Inter-Satellite Link)</strong></td>
+<td>無</td>
+<td>Scenario C：無 <br>Scenario D：可有／可無（兩者皆可能）</td>
+</tr>
+<tr>
+<td><strong>地球固定波束 (Earth-fixed beams)</strong></td>
+<td>是</td>
+<td>Scenario C1：是（可轉向波束 steerable beams）<br>Scenario C2：否（波束隨衛星移動）<br>Scenario D1：是（可轉向波束 steerable beams）<br>Scenario D2：否（波束隨衛星移動）</td>
+</tr>
+<tr>
+<td><strong>最大波束覆蓋直徑（edge to edge）</strong></td>
+<td>3500 km</td>
+<td>1000 km</td>
+</tr>
+<tr>
+<td><strong>最低仰角（sat-gateway 與 UE）</strong></td>
+<td>服務鏈路 10°、回傳鏈路 10°</td>
+<td>服務鏈路 10°、回傳鏈路 10°</td>
+</tr>
+<tr>
+<td><strong>衛星與 UE 之間的最遠距離（在最低仰角）</strong></td>
+<td>40,581 km</td>
+<td>1,932 km（600 km 高度）<br>3,131 km（1,200 km 高度）</td>
+</tr>
+<tr>
+<td><strong>最大往返時延（僅傳播延遲）</strong></td>
+<td>Scenario A：541.46 ms（service + feeder）<br>Scenario B：270.73 ms（service link only）</td>
+<td>Scenario C（透明酬載：service + feeder）：<br>25.77 ms（600 km）<br>41.77 ms（1200 km）<br><br>Scenario D（再生酬載：service only）：<br>12.89 ms（600 km）<br>20.89 ms（1200 km）</td>
+</tr>
+<tr>
+<td><strong>單一 cell 內最大差分延遲</strong></td>
+<td>10.3 ms</td>
+<td>600 km：3.12 ms <br>1200 km：3.18 ms</td>
+</tr>
+<tr>
+<td><strong>最大都卜勒偏移（地球固定 UE）</strong></td>
+<td>0.93 ppm <br><br><strong>Doppler shift 公式：</strong><br>f’ &#x3D; f (1 + Δv &#x2F; c)<br>f：發射頻率<br>Δv：相對速度<br>c：光速</td>
+<td>24 ppm（600 km）<br>21 ppm（1200 km）</td>
+</tr>
+<tr>
+<td><strong>最大都卜勒偏移變化率（地球固定 UE）</strong></td>
+<td>0.000045 ppm&#x2F;s</td>
+<td>0.27 ppm&#x2F;s（600 km）<br>0.13 ppm&#x2F;s（1200 km）</td>
+</tr>
+<tr>
+<td><strong>地表上 UE 的移動速度</strong></td>
+<td>1200 km&#x2F;h（例如：飛機）</td>
+<td>500 km&#x2F;h（例如：高速列車）<br>最高可達 1200 km&#x2F;h（例如：飛機）</td>
+</tr>
+<tr>
+<td><strong>UE 天線類型</strong></td>
+<td>全向性天線（線性極化），假設 0 dBi</td>
+<td>全向性天線（線性極化），假設 0 dBi<br>指向性天線（等效孔徑直徑可達 60 cm，圓極化）</td>
+</tr>
+<tr>
+<td><strong>UE 發射功率 (Tx Power)</strong></td>
+<td>全向性天線：UE power class 3，最高 200 mW</td>
+<td>指向性天線：最高可達 20 W</td>
+</tr>
+<tr>
+<td><strong>UE 噪聲指數 (Noise Figure)</strong></td>
+<td>全向性天線：7 dB<br>指向性天線：1.2 dB</td>
+<td>全向性天線：7 dB<br>指向性天線：1.2 dB</td>
+</tr>
+<tr>
+<td><strong>Service link（服務鏈路）</strong></td>
+<td>3GPP 定義的新無線電介面（NR）</td>
+<td>3GPP 定義的新無線電介面（NR）</td>
+</tr>
+<tr>
+<td><strong>Feeder link（回傳鏈路）</strong></td>
+<td>3GPP 或非 3GPP 定義的無線介面</td>
+<td>3GPP 或非 3GPP 定義的無線介面</td>
+</tr>
+</tbody></table>
+<h3 id="其他小補充"><a href="#其他小補充" class="headerlink" title="其他小補充"></a>其他小補充</h3><ul>
+<li>用於延遲計算的光速為 <strong>299,792,458 m&#x2F;s</strong>。</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2025/10/27/wireless-networking-lora/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2025-11-16 11:11:30
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/3gpp/" title="3gpp">
+                        #3gpp
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/ntn/" title="ntn">
+                        #ntn
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E5%9C%B0%E9%9D%A2%E7%B6%B2%E8%B7%AF%EF%BC%88Non-Terrestrial-Networks-NTN%EF%BC%89"><span class="toc-text">非地面網路（Non-Terrestrial Networks, NTN）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%96%AE%E4%B8%80%E7%A9%BA%E4%B8%AD%E5%B9%B3%E5%8F%B0%E7%94%A2%E7%94%9F%E7%9A%84%E5%95%8F%E9%A1%8C%EF%BC%9A%E8%A6%86%E8%93%8B%E7%AF%84%E5%9C%8D%E8%88%87-gateway-%E7%A8%80%E5%B0%91"><span class="toc-text">單一空中平台產生的問題：覆蓋範圍與 gateway 稀少</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NTN-plateform-%E9%A1%9E%E5%9E%8B"><span class="toc-text">NTN plateform 類型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%9B%E6%98%9F-payload"><span class="toc-text">衛星 payload</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Transparent-Payload"><span class="toc-text">Transparent Payload</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#regenerative-payload"><span class="toc-text">regenerative payload</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Non-Terrestrial-Networks-reference-scenarios"><span class="toc-text">Non-Terrestrial Networks reference scenarios</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Steerable-Beams%EF%BC%88Earth-fixed%EF%BC%89"><span class="toc-text">Steerable Beams（Earth-fixed）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Beams-Move-With-Satellite%EF%BC%88Satellite-fixed%EF%BC%89"><span class="toc-text">Beams Move With Satellite（Satellite-fixed）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B0%8F%E8%A3%9C%E5%85%85"><span class="toc-text">其他小補充</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        Copyright © 2025 Kiki
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + 3GPP%20-%20%E9%9D%9E%E5%9C%B0%E9%9D%A2%E7%B6%B2%E8%B7%AF%20NTN + '&url=' + http%3A%2F%2Fexample.com%2F2025%2F11%2F15%2F3GPP-%25E9%259D%259E%25E5%259C%25B0%25E9%259D%25A2%25E7%25B6%25B2%25E8%25B7%25AF-NTN%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2025/11/15/3GPP-%E9%9D%9E%E5%9C%B0%E9%9D%A2%E7%B6%B2%E8%B7%AF-NTN/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
