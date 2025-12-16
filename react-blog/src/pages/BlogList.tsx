@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import Loading from "../components/Loading";
 import {
   loadAllPosts,
   getAllTags,
@@ -77,7 +78,7 @@ function BlogList() {
       <div className="blog-layout">
         <Sidebar tags={[]} />
         <main className="blog-main">
-          <div className="loading">Loading posts...</div>
+          <Loading />
         </main>
       </div>
     );

@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import Sidebar from "../components/Sidebar";
+import Loading from "../components/Loading";
 import {
   loadPostBySlug,
   loadAllPosts,
@@ -74,7 +75,7 @@ function BlogDetail() {
       <div className="blog-layout">
         <Sidebar tags={[]} />
         <main className="blog-detail-main">
-          <div className="loading">Loading article...</div>
+          <Loading />
         </main>
       </div>
     );
