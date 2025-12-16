@@ -162,13 +162,30 @@
 }
 
 @media (max-width: 768px) {
+  .home-content {
+    padding-top: 8rem;
+    padding-bottom: 2rem;
+  }
+
   .content-wrapper {
     flex-direction: column;
     gap: 2rem;
   }
 
   .main-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .title-section {
+    margin-bottom: 1.5rem;
+    order: 2;
+  }
+
+  .mobile-image {
+    order: 1;
+    margin-bottom: 1.5rem;
+    margin-top: 0;
   }
 
   .right-section {
@@ -180,21 +197,22 @@
   }
 
   .introduction {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    text-align: center;
   }
 }
 
 @media (max-width: 480px) {
   .main-title {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 
   .subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .introduction {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .social-icons img {

@@ -6,7 +6,6 @@ interface SidebarProps {
 }
 
 function Sidebar({ tags }: SidebarProps) {
-
   return (
     <aside className="sidebar">
       <div className="sidebar-section">

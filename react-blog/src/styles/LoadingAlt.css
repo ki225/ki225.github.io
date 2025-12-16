@@ -1,7 +1,7 @@
 /* Alternative leg positions for running animation */
 
 .row-10-alt::before {
-  box-shadow: 
+  box-shadow:
     4px 0 0 #000,
     8px 0 0 #000,
     12px 0 0 #b8b5d1,
@@ -19,7 +19,7 @@
 }
 
 .row-11-alt::before {
-  box-shadow: 
+  box-shadow:
     12px 0 0 #000,
     16px 0 0 #000,
     20px 0 0 #000,

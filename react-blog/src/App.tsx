@@ -15,7 +15,7 @@ function App() {
           <Link to="/" className="logo">
             kiki.dev
           </Link>
-          <button 
+          <button
             className="menu-toggle"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
@@ -24,10 +24,21 @@ function App() {
             <span></span>
             <span></span>
           </button>
-          <nav className={`nav ${menuOpen ? 'nav-open' : ''}`}>
-            <Link to="/blog" onClick={() => setMenuOpen(false)}>Blog</Link>
-            <a href="#" onClick={() => setMenuOpen(false)}>Projects</a>
-            <a href="https://www.linkedin.com/in/yung-chi-huang/" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>About Me</a>
+          <nav className={`nav ${menuOpen ? "nav-open" : ""}`}>
+            <Link to="/blog" onClick={() => setMenuOpen(false)}>
+              Blog
+            </Link>
+            <a href="#" onClick={() => setMenuOpen(false)}>
+              Projects
+            </a>
+            <a
+              href="https://www.linkedin.com/in/yung-chi-huang/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+            >
+              About Me
+            </a>
           </nav>
         </header>
 

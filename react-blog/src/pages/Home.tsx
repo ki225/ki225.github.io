@@ -45,47 +45,22 @@ function Home() {
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, titleIndex, titles]);
 
-  const downloadResume = async (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-
-    try {
-      const pdfUrl =
-        "https://raw.githubusercontent.com/ki225/ki225.github.io/main/source/files/resume.pdf";
-      const response = await fetch(pdfUrl);
-      const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = "Yung-Chi_Huang_Resume.pdf";
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(downloadUrl);
-      document.body.removeChild(a);
-    } catch (error) {
-      console.error("下載失敗:", error);
-      window.open(
-        "https://raw.githubusercontent.com/ki225/ki225.github.io/main/source/files/resume.pdf",
-        "_blank",
-      );
-    }
-  };
-
   return (
     <main className="home-content">
       <div className="content-wrapper">
         <div className="left-section">
-          <div className="title-section">
-            <h1 className="main-title">
-              <span className="hi-text">Hi! I'm</span>{" "}
-              <span className="dynamic-title">{displayText}</span>
-            </h1>
-          </div>
-
           <div className="mobile-image">
             <img
               src="https://ki225.github.io/images/self/image.png"
               alt="Profile Picture"
             />
+          </div>
+
+          <div className="title-section">
+            <h1 className="main-title">
+              <span className="hi-text">Hi! I'm</span>{" "}
+              <span className="dynamic-title">{displayText}</span>
+            </h1>
           </div>
 
           <div className="introduction">
@@ -158,27 +133,6 @@ function Home() {
               rel="noopener noreferrer"
             >
               <img src="https://ki225.github.io/images/gmail.png" alt="Gmail" />
-            </a>
-          </div>
-
-          <div className="resume-download">
-            <a href="#" className="download-button" onClick={downloadResume}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-              Download Resume (PDF)
             </a>
           </div>
         </div>
