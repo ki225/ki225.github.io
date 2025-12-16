@@ -1,14 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import "../styles/Home.css";
 
 function Home() {
-  const titles = [
-    "Kiki",
-    "an Active Learner",
-    "Team Player",
-    "a DAY ONE person",
-    "a Cafe Hopper",
-  ];
+  const titles = useMemo(
+    () => [
+      "Kiki",
+      "an Active Learner",
+      "Team Player",
+      "a DAY ONE person",
+      "a Cafe Hopper",
+    ],
+    [],
+  );
   const [displayText, setDisplayText] = useState("");
   const [titleIndex, setTitleIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
