@@ -3,6 +3,7 @@ import { useState } from "react";
 import Home from "./pages/Home";
 import BlogList from "./pages/BlogList";
 import BlogDetail from "./pages/BlogDetail";
+import CategoryList from "./pages/CategoryList";
 import "./App.css";
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
             <Link to="/blog" onClick={() => setMenuOpen(false)}>
               Blog
             </Link>
+            <Link to="/categories" onClick={() => setMenuOpen(false)}>
+              Categories
+            </Link>
             <a href="#" onClick={() => setMenuOpen(false)}>
               Projects
             </a>
@@ -46,6 +50,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:id" element={<BlogDetail />} />
+          <Route path="/categories" element={<CategoryList />} />
+          <Route path="/category/:category" element={<CategoryList />} />
         </Routes>
 
         <footer className="footer">
