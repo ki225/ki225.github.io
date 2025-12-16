@@ -1,0 +1,34 @@
+/* Alternative leg positions for running animation */
+
+.row-10-alt::before {
+  box-shadow: 
+    4px 0 0 #000,
+    8px 0 0 #000,
+    12px 0 0 #b8b5d1,
+    16px 0 0 #b8b5d1,
+    20px 0 0 #b8b5d1,
+    24px 0 0 #000,
+    28px 0 0 #000,
+    32px 0 0 #b8b5d1,
+    36px 0 0 #b8b5d1,
+    40px 0 0 #b8b5d1,
+    44px 0 0 #b8b5d1,
+    48px 0 0 #000,
+    52px 0 0 #000,
+    56px 0 0 #000;
+}
+
+.row-11-alt::before {
+  box-shadow: 
+    12px 0 0 #000,
+    16px 0 0 #000,
+    20px 0 0 #000,
+    24px 0 0 #b8b5d1,
+    28px 0 0 #000,
+    32px 0 0 #000,
+    36px 0 0 #000,
+    40px 0 0 #000,
+    44px 0 0 #000,
+    48px 0 0 #b8b5d1,
+    52px 0 0 #000;
+}
