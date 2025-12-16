@@ -1,0 +1,121 @@
+const n=`---
+title: NFV 與 SDN 之比較
+date: 2025-10-13 16:48:30
+tags: [5g, NFV]
+---
+
+## Network Function Virtualization(NFV)
+
+NFV 是一種利用虛擬化技術（virtualization），將原本異質的網路設備（heterogeneous network devices）整合到標準化的商用伺服器、交換器與儲存設備上的技術。換句話說，它把原本需要專用硬體的網路功能（例如防火牆、負載平衡器、路由器）改成軟體化（software-based）的形式，在虛擬環境中（像是容器）執行。
+
+
+### NFV 主要元素
+1. 虛擬化網路功能（Virtualized Network Function，VNF）
+   - 指以軟體方式實作的網路功能，可以在 NFV 基礎設施（NFVI）上運行。
+2. NFV 基礎設施（NFV Infrastructure, NFVI）
+   - 包含被虛擬化的運算（compute）、網路（network）與儲存（storage）資源。
+3. NFV 管理與編排（NFV Management and Orchestration）
+   - 在 NFVI 上運行的軟體化網路功能（如防火牆、CDN 等），涵蓋實體與虛擬資源的協調與生命週期管理。
+   - 聚焦於支援基礎設施虛擬化的軟體資源。
+   - 負責 VNF（虛擬化網路功能）的生命週期管理。
+
+
+![alt text](images/cloud/img21.png)
+
+### NFV 在不同網路中的應用
+1. 家用與企業網路虛擬化 (Virtualization of Home & Enterprise Networks)
+   - 功能：NAT、BNG（寬頻網關）、STB（機上盒）
+   - 目的：讓企業或家庭網路設備以虛擬化形式運作，提高彈性與可管理性。
+    \`\`\`mermaid
+    graph TD
+    subgraph Cloud["Virtualization of Home & Enterprise Networks"]
+        NAT[NAT]
+        BNG[BNG / Broadband Network Gateway]
+        STB[STB Set-Top Box]
+        NFVI[NFV Infrastructure]
+    end
+    NAT --> NFVI
+    BNG --> NFVI
+    STB --> NFVI
+    \`\`\`
+2. 內容傳遞網路虛擬化 (Virtualization of Content Delivery Networks)
+   - 功能：CDN-1、CDN-2、CDN-3
+   - 目的：虛擬化多個內容節點，提升資料傳遞效率與負載分散能力。
+    \`\`\`mermaid
+    graph TD
+    subgraph Cloud["Virtualization of Content Delivery Networks"]
+        CDN1[CDN-1]
+        CDN2[CDN-2]
+        CDN3[CDN-3]
+        NFVI[NFV Infrastructure]
+    end
+    CDN1 --> NFVI
+    CDN2 --> NFVI
+    CDN3 --> NFVI
+    \`\`\`
+3. 安全功能虛擬化 (Virtualization of Security Functions)
+   - 功能：防火牆（Firewall）、病毒掃描（Virus Scanner）、垃圾郵件偵測（Spam Detector）
+   - 目的：以軟體形式實現安全機制，方便動態部署與更新。
+    \`\`\`mermaid
+    graph TD
+    subgraph Cloud["Virtualization of Security Functions"]
+        FW[Firewall]
+        VS[Virus Scanner]
+        SP[Spam Detector]
+        NFVI[NFV Infrastructure]
+    end
+    FW --> NFVI
+    VS --> NFVI
+    SP --> NFVI
+    \`\`\`
+4. 行動核心網路虛擬化 (Virtualization of Mobile Core Network)
+   - 功能：MME、SGW、PGW
+   - 目的：將行動網路核心模組（控制、閘道）虛擬化，降低硬體依賴、提升可擴展性。
+    \`\`\`mermaid
+    graph TD
+    subgraph Cloud["Virtualization of Mobile Core Network"]
+        MME[MME]
+        SGW[SGW]
+        PGW[PGW]
+        NFVI[NFV Infrastructure]
+    end
+    MME --> NFVI
+    SGW --> NFVI
+    PGW --> NFVI
+    \`\`\`
+5.  家用與行動基地台虛擬化 (Virtualization of Home & Mobile Base Stations)
+   - 功能：LTE BS、3G BS、2G BS
+   - 目的：以軟體方式模擬不同世代基地台，方便集中管理與多標準共存。
+        \`\`\`mermaid
+        graph TD
+            subgraph Cloud["Virtualization of Home & Mobile Base Stations"]
+                LTE[LTE BS]
+                _3G[3G BS]
+                _2G[2G BS]
+                NFVI[NFV Infrastructure]
+            end
+            LTE --> NFVI
+            _3G --> NFVI
+            _2G --> NFVI
+        \`\`\`
+    
+
+### NFV vs SDN
+- NFV 與 SDN 是互補的（complementary）技術。
+- NFV 提供了 SDN 可運行的虛擬化基礎架構（infrastructure）。
+   - SDN 管「如何控制流量」，
+    -  NFV 管「這些控制或服務跑在哪些虛擬資源上」
+
+| 項目               | **SDN（Software-Defined Networking）**  | **NFV（Network Function Virtualization）**                            |
+| ---------------- | ------------------------------------- | ------------------------------------------------------------------- |
+| **方法 (Method)**  | 分離控制層（Control Plane）與資料層（Data Plane）。 | 將原本依賴專用硬體（如路由器、防火牆、應用傳遞控制器）的網路功能，轉化為可在標準商用硬體（如 x86 伺服器）上運行的虛擬化軟體平台。 |
+| **效益 (Benefit)** | 透過集中化控制與可程式化管理，解決快速成長與分散式網路的管理複雜度問題。  | 能根據需求在網路中靈活移動、擴充或縮減功能，避免新硬體部署的延遲與高成本負擔。                             |
+
+
+## 5G Network
+下一代的 5G 網路架構將帶來重大變革，使電信服務更加靈活，並允許可程式化的控制。這將促成以「客戶需求為導向」的新型服務，能同時滿足各類使用者與多樣化應用情境的需求。
+
+5G 網路的關鍵技術是 軟體定義網路（SDN） 與 網路功能虛擬化（NFV）：
+
+- SDN 讓網路具備可程式化與開放性，大幅提升網路資源控制的靈活性與效率，以因應未來網路的快速成長與多樣化。
+- NFV 透過網路功能的虛擬化，提供高度彈性的配置能力，加速網路服務的部署，並降低購置專用硬體的成本。`;export{n as default};
