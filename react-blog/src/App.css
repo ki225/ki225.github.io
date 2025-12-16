@@ -1,0 +1,65 @@
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  background-color: #1e1e1e;
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav a {
+  color: #b0b0b0;
+  text-decoration: none;
+  transition: color 0.3s;
+  font-size: 0.95rem;
+}
+
+.nav a:hover {
+  color: #ff9800;
+}
+
+.footer {
+  text-align: center;
+  padding: 0.5rem 2rem;
+  color: #666;
+  font-size: 0.85rem;
+  border-top: 1px solid #333;
+  background-color: #1e1e1e;
+  flex-shrink: 0;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
