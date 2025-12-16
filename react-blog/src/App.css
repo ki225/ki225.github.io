@@ -26,6 +26,7 @@
 .nav {
   display: flex;
   gap: 2rem;
+  transition: all 0.3s ease;
 }
 
 .nav a {
@@ -37,6 +38,24 @@
 
 .nav a:hover {
   color: #ff9800;
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
 .footer {
@@ -52,14 +71,41 @@
 /* 響應式設計 */
 @media (max-width: 768px) {
   .header {
-    flex-direction: column;
-    padding: 1rem;
-    gap: 1rem;
+    padding: 1rem 1.5rem;
+    position: relative;
+  }
+
+  .menu-toggle {
+    display: flex;
   }
 
   .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     flex-direction: column;
-    gap: 0.5rem;
-    text-align: center;
+    gap: 0;
+    background-color: #1e1e1e;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .nav.nav-open {
+    max-height: 300px;
+    opacity: 1;
+    padding: 1rem 0;
+  }
+
+  .nav a {
+    padding: 0.75rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid #333;
+  }
+
+  .nav a:last-child {
+    border-bottom: none;
   }
 }
