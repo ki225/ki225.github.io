@@ -1,12 +1,11 @@
-import { Link, useLocation } from 'react-router-dom'
-import '../styles/Sidebar.css'
+import { Link } from "react-router-dom";
+import "../styles/Sidebar.css";
 
 interface SidebarProps {
-  tags: { name: string; count: number }[]
+  tags: { name: string; count: number }[];
 }
 
 function Sidebar({ tags }: SidebarProps) {
-  const location = useLocation()
 
   return (
     <aside className="sidebar">
@@ -26,7 +25,7 @@ function Sidebar({ tags }: SidebarProps) {
         </nav>
       </div>
     </aside>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;

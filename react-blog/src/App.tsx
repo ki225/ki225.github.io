@@ -1,15 +1,17 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import Home from './pages/Home'
-import BlogList from './pages/BlogList'
-import BlogDetail from './pages/BlogDetail'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import BlogList from "./pages/BlogList";
+import BlogDetail from "./pages/BlogDetail";
+import "./App.css";
 
 function App() {
   return (
     <Router>
       <div className="app-container">
         <header className="header">
-          <Link to="/" className="logo">kiki.dev</Link>
+          <Link to="/" className="logo">
+            kiki.dev
+          </Link>
           <nav className="nav">
             <Link to="/">About me (CV)</Link>
             <Link to="/blog">Blog</Link>
@@ -30,7 +32,7 @@ function App() {
         </footer>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
