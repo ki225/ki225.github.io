@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import BlogList from "./pages/BlogList";
 import BlogDetail from "./pages/BlogDetail";
@@ -13,11 +13,9 @@ function App() {
             kiki.dev
           </Link>
           <nav className="nav">
-            <Link to="/">About me (CV)</Link>
             <Link to="/blog">Blog</Link>
             <a href="#">Projects</a>
-            <a href="#">LinkTree</a>
-            <a href="#">Contact me</a>
+            <a href="https://www.linkedin.com/in/yung-chi-huang/" target="_blank" rel="noopener noreferrer">About Me</a>
           </nav>
         </header>
 
