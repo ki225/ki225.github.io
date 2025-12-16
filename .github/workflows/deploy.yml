@@ -28,23 +28,23 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: 'react-dev/package-lock.json'
+          cache-dependency-path: 'react-blog/package-lock.json'
           
       - name: Install dependencies
         run: |
-          cd react-dev
+          cd react-blog
           npm ci
           
       - name: Build
         run: |
-          cd react-dev
+          cd react-blog
           npm run build
         env:
           NODE_ENV: production
           
       - name: Deploy to main branch
         run: |
-          cd react-dev/dist
+          cd react-blog/dist
           git init
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
@@ -58,7 +58,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './react-dev/dist'
+          path: './react-blog/dist'
           
   deploy:
     environment:
