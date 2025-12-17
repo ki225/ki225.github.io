@@ -66,14 +66,15 @@ function Home() {
 
           <div className="introduction">
             <p>
-              Welcome to my tech note site!
-              <br />I focus on <span className="highlight">cloud</span>,{" "}
-              <span className="highlight">networking</span>, and{" "}
-              <span className="highlight">development</span>, and I enjoy
-              exploring the intersection of AI, security, and infrastructure.
+              Welcome to my note site!
               <br />
-              This is where I document what I learn, what I break (and fix), and
-              what excites me in tech.
+              I’m interested in <span className="highlight">cloud computing</span>,{" "}
+              <span className="highlight">containerization</span>, and{" "}
+              <span className="highlight">software development</span>, and I’m gradually
+              diving into <span className="highlight">next-generation networking</span>.
+              <br />
+              This site is where I document my learning notes, share experiences like career and competitions,
+              and keep track of pitfalls I’ve run into (and fixed).
             </p>
           </div>
 
