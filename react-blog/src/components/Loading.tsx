@@ -34,6 +34,8 @@ function Loading() {
           <div className="pixel-row row-12"></div>
         </div>
       </div>
+      <br></br>
+        <p className="pixel-subtitle">Loading......</p>
     </div>
   );
 }

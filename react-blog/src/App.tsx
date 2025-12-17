@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import BlogList from "./pages/BlogList";
 import BlogDetail from "./pages/BlogDetail";
 import CategoryList from "./pages/CategoryList";
+import Projects from "./pages/Projects";
 import "./App.css";
 
 function App() {
@@ -32,9 +33,9 @@ function App() {
             <Link to="/categories" onClick={() => setMenuOpen(false)}>
               Categories
             </Link>
-            <a href="#" onClick={() => setMenuOpen(false)}>
+            <Link to="/projects" onClick={() => setMenuOpen(false)}>
               Projects
-            </a>
+            </Link>
             <a
               href="https://www.linkedin.com/in/yung-chi-huang/"
               target="_blank"
@@ -52,6 +53,7 @@ function App() {
           <Route path="/blog/:id" element={<BlogDetail />} />
           <Route path="/categories" element={<CategoryList />} />
           <Route path="/category/:category" element={<CategoryList />} />
+          <Route path="/projects" element={<Projects />} />
         </Routes>
 
         <footer className="footer">
