@@ -152,13 +152,13 @@ export function getCategory(tags: string[]): string {
 
 export function getCategoryFromPath(path: string): string {
   const parts = path.split("/");
-  const postsIndex = parts.findIndex(p => p === "posts");
-  
+  const postsIndex = parts.findIndex((p) => p === "posts");
+
   if (postsIndex === -1 || postsIndex >= parts.length - 2) {
     return "General";
   }
-  
-  return parts[postsIndex + 1]; 
+
+  return parts[postsIndex + 1];
 }
 
 export async function loadAllPosts(): Promise<BlogPost[]> {
@@ -203,12 +203,12 @@ export async function loadAllPosts(): Promise<BlogPost[]> {
 export async function loadPostBySlug(slug: string): Promise<BlogPost | null> {
   // 先嘗試從所有文章中找到對應的 slug
   const allPosts = await loadAllPosts();
-  const post = allPosts.find(p => p.slug === slug);
-  
+  const post = allPosts.find((p) => p.slug === slug);
+
   if (post) {
     return post;
   }
-  
+
   console.error(`Post not found: ${slug}`);
   return null;
 }

@@ -51,10 +51,7 @@ function Home() {
       <div className="content-wrapper">
         <div className="left-section">
           <div className="mobile-image">
-            <img
-              src="/images/self/chiikawa.jpg"
-              alt="Profile Picture"
-            />
+            <img src="/images/self/chiikawa.jpg" alt="Profile Picture" />
           </div>
 
           <div className="title-section">
@@ -68,13 +65,16 @@ function Home() {
             <p>
               Welcome to my note site!
               <br />
-              I’m interested in <span className="highlight">cloud computing</span>,{" "}
+              I’m interested in{" "}
+              <span className="highlight">cloud computing</span>,{" "}
               <span className="highlight">containerization</span>, and{" "}
-              <span className="highlight">software development</span>, and I’m gradually
-              diving into <span className="highlight">next-generation networking</span>.
+              <span className="highlight">software development</span>, and I’m
+              gradually diving into{" "}
+              <span className="highlight">next-generation networking</span>.
               <br />
-              This site is where I document my learning notes, share experiences like career and competitions,
-              and keep track of pitfalls I’ve run into (and fixed).
+              This site is where I document my learning notes, share experiences
+              like career and competitions, and keep track of pitfalls I’ve run
+              into (and fixed).
             </p>
           </div>
 
@@ -141,10 +141,7 @@ function Home() {
 
         <div className="right-section">
           <div className="profile-image">
-            <img
-              src="/images/self/chiikawa.jpg"
-              alt="Profile Picture"
-            />
+            <img src="/images/self/chiikawa.jpg" alt="Profile Picture" />
           </div>
         </div>
       </div>
