@@ -15,7 +15,7 @@ function App() {
       <div className="app-container">
         <header className="header">
           <Link to="/" className="logo">
-            kiki.dev
+            kiki::blog
           </Link>
           <button
             className="menu-toggle"

@@ -5,9 +5,10 @@ function Home() {
   const titles = useMemo(
     () => [
       "Kiki",
-      "an Active Learner",
-      "Team Player",
-      "a DAY ONE person",
+      "Senior CS Student",
+      "IT Sprouter",
+      "AWS Educate AMB",
+      "Ex-ECV Intern",
       "a Cafe Hopper",
     ],
     [],
@@ -51,7 +52,7 @@ function Home() {
         <div className="left-section">
           <div className="mobile-image">
             <img
-              src="https://ki225.github.io/images/self/image.png"
+              src="/images/self/chiikawa.jpg"
               alt="Profile Picture"
             />
           </div>
@@ -140,7 +141,7 @@ function Home() {
         <div className="right-section">
           <div className="profile-image">
             <img
-              src="https://ki225.github.io/images/self/image.png"
+              src="/images/self/chiikawa.jpg"
               alt="Profile Picture"
             />
           </div>
