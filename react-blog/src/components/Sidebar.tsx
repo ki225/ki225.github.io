@@ -7,7 +7,7 @@ interface SidebarProps {
 }
 
 function Sidebar({ tags }: SidebarProps) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   return (
     <aside className={`sidebar ${isCollapsed ? "sidebar-collapsed" : ""}`}>
