@@ -5,6 +5,7 @@ import Loading from "../components/Loading";
 import {
   loadAllPosts,
   getAllTags,
+  getAllCategories,
   formatDate,
   type BlogPost,
 } from "../utils/blogParser";
@@ -20,34 +21,27 @@ function CategoryList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  // 根據 tag 名稱取得對應的背景圖片
-  const getTagImage = (tagName: string): string => {
-    const tagLower = tagName.toLowerCase();
+  // 根據 category 名稱取得對應的背景圖片
+  const getCategoryImage = (categoryName: string): string => {
+    const categoryLower = categoryName.toLowerCase();
     const imageMap: { [key: string]: string } = {
-      aws: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800",
-      cloud: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800",
-      networking: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
-      "5g": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
       "3gpp": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
-      security: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800",
-      blockchain: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800",
-      terraform: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=800",
-      devops: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=800",
-      docker: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=800",
-      iac: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=800",
+      "5g": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
       ai: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800",
-      ml: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800",
-      "machine-learning": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800",
-      git: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800",
-      hexo: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=800",
-      php: "https://images.unsplash.com/photo-1599507593499-a3f7d7d97667?w=800",
+      aws: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800",
+      blockchain: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800",
+      career: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800",
+      "developing note": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800",
+      devops: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=800",
+      life: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=800",
       linux: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800",
-      ubuntu: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800",
-      interview: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800",
-      gics: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800",
+      security: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800",
+      "virtualize networking": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
+      "wireless networking": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
+      general: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800",
     };
 
-    return imageMap[tagLower] || "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800";
+    return imageMap[categoryLower] || "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800";
   };
 
   useEffect(() => {
@@ -55,15 +49,15 @@ function CategoryList() {
       setIsLoading(true);
       const allPosts = await loadAllPosts();
       const allTags = getAllTags(allPosts);
+      const allCategories = getAllCategories(allPosts);
+      
       setTags(allTags);
+      setCategories(allCategories);
 
-      // 使用 tags 作為分類，直接使用 getAllTags 的結果
-      setCategories(allTags);
-
-      // 如果有指定分類（tag），篩選該 tag 的文章
+      // 如果有指定分類，篩選該 category 的文章
       if (category) {
         const filteredPosts = allPosts.filter((post) =>
-          post.tags.some((tag) => tag.toLowerCase() === category.toLowerCase())
+          post.category.toLowerCase() === category.toLowerCase()
         );
         setPosts(filteredPosts);
         setDisplayedPosts(filteredPosts);
@@ -98,7 +92,7 @@ function CategoryList() {
           <div className="category-header">
             <h1>Categories</h1>
             <p className="category-description">
-              Browse articles by tags
+              Browse articles by category
             </p>
           </div>
 
@@ -109,7 +103,7 @@ function CategoryList() {
                 to={`/category/${encodeURIComponent(cat.name.toLowerCase())}`}
                 className="category-card"
                 style={{
-                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${getTagImage(cat.name)})`,
+                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${getCategoryImage(cat.name)})`,
                 }}
               >
                 <div className="category-card-content">
@@ -234,12 +228,12 @@ function CategoryList() {
                   <img
                     src={
                       post.thumbnail ||
-                      getTagImage(categoryName) ||
+                      getCategoryImage(categoryName) ||
                       "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800"
                     }
                     alt={post.title}
                   />
-                  <span className="article-category">#{categoryName}</span>
+                  <span className="article-category">{categoryName}</span>
                 </div>
                 <div className="article-content">
                   <div className="article-meta">
