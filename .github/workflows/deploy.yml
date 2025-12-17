@@ -46,6 +46,10 @@ jobs:
         env:
           NODE_ENV: production
           
+      - name: Add .nojekyll file
+        run: |
+          touch react-blog/dist/.nojekyll
+          
       - name: Deploy to master branch
         run: |
           cd react-blog/dist
