@@ -3,6 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import Sidebar from "../components/Sidebar";
 import Loading from "../components/Loading";
 import {
@@ -106,8 +108,8 @@ function BlogDetail() {
           <header className="article-header">
             <div className="article-meta-info">
               <img
-                src="https://ki225.github.io/images/self/image.png"
-                alt="Kiki Huang"
+                src="/images/self/chiikawa.jpg"
+                alt="Kiki H."
                 className="author-avatar"
               />
               <div>
@@ -131,22 +133,28 @@ function BlogDetail() {
             </div>
           </header>
 
-          <div className="article-image-container">
-            <img
-              src={
-                post.thumbnail ||
-                categoryImages[post.category] ||
-                "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200"
-              }
-              alt={post.title}
-            />
-          </div>
-
           <div className="article-body">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeRaw]}
               components={{
+                code({ node, inline, className, children, ...props }: any) {
+                  const match = /language-(\w+)/.exec(className || "");
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      style={vscDarkPlus}
+                      language={match[1]}
+                      PreTag="div"
+                      {...props}
+                    >
+                      {String(children).replace(/\n$/, "")}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <code className={className} {...props}>
+                      {children}
+                    </code>
+                  );
+                },
                 img: ({ ...props }) => {
                   let src = props.src || "";
                   if (

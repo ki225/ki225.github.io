@@ -177,6 +177,47 @@
   border-radius: 8px;
 }
 
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.article-body table thead {
+  background-color: #f8f9fa;
+}
+
+.article-body table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #1a1a1a;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+}
+
+.article-body table td {
+  padding: 0.875rem 1rem;
+  border: 1px solid #ddd;
+  color: #333;
+}
+
+.article-body table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.article-body table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.article-body table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
 .article-footer {
   padding: 2rem 3rem;
   border-top: 1px solid #eee;
