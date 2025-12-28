@@ -2,11 +2,15 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkToc from "remark-toc";
 import rehypeRaw from "rehype-raw";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import Sidebar from "../components/Sidebar";
 import Loading from "../components/Loading";
+import MermaidDiagram from "../components/MermaidDiagram";
+import BookmarkCard from "../components/BookmarkCard";
+import Callout from "../components/Callout";
 import {
   loadPostBySlug,
   loadAllPosts,
@@ -135,7 +139,7 @@ function BlogDetail() {
 
           <div className="article-body">
             <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
+              remarkPlugins={[remarkGfm, [remarkToc, { tight: true, ordered: false }]]}
               rehypePlugins={[rehypeRaw]}
               components={{
                 code({ inline, className, children, ...props }: {
@@ -144,10 +148,16 @@ function BlogDetail() {
                   children?: React.ReactNode;
                 }) {
                   const match = /language-(\w+)/.exec(className || "");
+                  const language = match ? match[1] : "";
+                  
+                  if (!inline && language === "mermaid") {
+                    return <MermaidDiagram chart={String(children)} />;
+                  }
+                  
                   return !inline && match ? (
                     <SyntaxHighlighter
                       style={vscDarkPlus}
-                      language={match[1]}
+                      language={language}
                       PreTag="div"
                       {...props}
                     >
@@ -157,6 +167,28 @@ function BlogDetail() {
                     <code className={className} {...props}>
                       {children}
                     </code>
+                  );
+                },
+                a: ({ href, children, ...props }) => {
+                  // 检测是否为 bookmark 格式: [bookmark](url)
+                  let childText = '';
+                  if (Array.isArray(children)) {
+                    childText = children.map((child) => 
+                      typeof child === 'string' ? child : child?.props?.children || ''
+                    ).join('');
+                  } else if (typeof children === 'string') {
+                    childText = children;
+                  }
+                  
+                  if (childText.trim() === 'bookmark' && href) {
+                    return <BookmarkCard url={href} />;
+                  }
+                  
+                  // 普通链接
+                  return (
+                    <a href={href} {...props} target="_blank" rel="noopener noreferrer">
+                      {children}
+                    </a>
                   );
                 },
                 img: ({ ...props }) => {
@@ -170,6 +202,9 @@ function BlogDetail() {
                     src = "/" + src;
                   }
                   return <img {...props} src={src} alt={props.alt || ""} />;
+                },
+                aside: ({ children}) => {
+                  return <Callout type="info">{children}</Callout>;
                 },
               }}
             >
