@@ -139,21 +139,29 @@ function BlogDetail() {
 
           <div className="article-body">
             <ReactMarkdown
-              remarkPlugins={[remarkGfm, [remarkToc, { tight: true, ordered: false }]]}
+              remarkPlugins={[
+                remarkGfm,
+                [remarkToc, { tight: true, ordered: false }],
+              ]}
               rehypePlugins={[rehypeRaw]}
               components={{
-                code({ inline, className, children, ...props }: {
+                code({
+                  inline,
+                  className,
+                  children,
+                  ...props
+                }: {
                   inline?: boolean;
                   className?: string;
                   children?: React.ReactNode;
                 }) {
                   const match = /language-(\w+)/.exec(className || "");
                   const language = match ? match[1] : "";
-                  
+
                   if (!inline && language === "mermaid") {
                     return <MermaidDiagram chart={String(children)} />;
                   }
-                  
+
                   return !inline && match ? (
                     <SyntaxHighlighter
                       style={vscDarkPlus}
@@ -171,22 +179,31 @@ function BlogDetail() {
                 },
                 a: ({ href, children, ...props }) => {
                   // 检测是否为 bookmark 格式: [bookmark](url)
-                  let childText = '';
+                  let childText = "";
                   if (Array.isArray(children)) {
-                    childText = children.map((child) => 
-                      typeof child === 'string' ? child : child?.props?.children || ''
-                    ).join('');
-                  } else if (typeof children === 'string') {
+                    childText = children
+                      .map((child) =>
+                        typeof child === "string"
+                          ? child
+                          : child?.props?.children || "",
+                      )
+                      .join("");
+                  } else if (typeof children === "string") {
                     childText = children;
                   }
-                  
-                  if (childText.trim() === 'bookmark' && href) {
+
+                  if (childText.trim() === "bookmark" && href) {
                     return <BookmarkCard url={href} />;
                   }
-                  
+
                   // 普通链接
                   return (
-                    <a href={href} {...props} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={href}
+                      {...props}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {children}
                     </a>
                   );
@@ -203,7 +220,7 @@ function BlogDetail() {
                   }
                   return <img {...props} src={src} alt={props.alt || ""} />;
                 },
-                aside: ({ children}) => {
+                aside: ({ children }) => {
                   return <Callout type="info">{children}</Callout>;
                 },
               }}

@@ -224,7 +224,9 @@
   background: #1e1e1e;
   border-radius: 8px;
   overflow-x: auto;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   position: relative;
 }
 
