@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import "../styles/BookmarkCard.css";
 
 interface BookmarkCardProps {
@@ -8,30 +8,27 @@ interface BookmarkCardProps {
   image?: string;
 }
 
-function BookmarkCard({ url, title, description, image }: BookmarkCardProps) {
-  const [favicon, setFavicon] = useState<string>("");
-  const [siteLogo, setSiteLogo] = useState<string>("");
-
-  useEffect(() => {
+function BookmarkCard({ url, title, description }: BookmarkCardProps) {
+  const icons = useMemo(() => {
     try {
       const urlObj = new URL(url);
-      setFavicon(`${urlObj.protocol}//${urlObj.host}/favicon.ico`);
-      // 使用 Google's favicon service 获取更高质量的图标
-      setSiteLogo(`https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=128`);
-    } catch (e) {
-      setFavicon("");
-      setSiteLogo("");
+      return {
+        favicon: `${urlObj.protocol}//${urlObj.host}/favicon.ico`,
+        siteLogo: `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=128`,
+      };
+    } catch {
+      return { favicon: "", siteLogo: "" };
     }
   }, [url]);
 
-  const displayUrl = (() => {
+  const displayUrl = useMemo(() => {
     try {
       const urlObj = new URL(url);
       return urlObj.hostname;
-    } catch (e) {
+    } catch {
       return url;
     }
-  })();
+  }, [url]);
 
   return (
     <a
@@ -47,9 +44,9 @@ function BookmarkCard({ url, title, description, image }: BookmarkCardProps) {
             <div className="bookmark-description">{description}</div>
           )}
           <div className="bookmark-link">
-            {favicon && (
+            {icons.favicon && (
               <img
-                src={favicon}
+                src={icons.favicon}
                 alt=""
                 className="bookmark-favicon"
                 onError={(e) => {
@@ -61,16 +58,15 @@ function BookmarkCard({ url, title, description, image }: BookmarkCardProps) {
           </div>
         </div>
         <div className="bookmark-icon">
-          {siteLogo && (
-            <img 
-              src={siteLogo} 
-              alt="" 
+          {icons.siteLogo && (
+            <img
+              src={icons.siteLogo}
+              alt=""
               onError={(e) => {
-                // 如果 Google 服务失败，尝试直接使用 favicon
-                if ((e.target as HTMLImageElement).src !== favicon) {
-                  (e.target as HTMLImageElement).src = favicon || '';
+                if ((e.target as HTMLImageElement).src !== icons.favicon) {
+                  (e.target as HTMLImageElement).src = icons.favicon || "";
                 } else {
-                  (e.target as HTMLImageElement).style.display = 'none';
+                  (e.target as HTMLImageElement).style.display = "none";
                 }
               }}
             />

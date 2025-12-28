@@ -23,8 +23,8 @@ const colorMap = {
 
 function Callout({ type = "info", children }: CalloutProps) {
   return (
-    <div 
-      className="callout" 
+    <div
+      className="callout"
       style={{ borderLeftColor: colorMap[type] }}
       data-type={type}
     >

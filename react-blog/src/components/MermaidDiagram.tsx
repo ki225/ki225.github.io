@@ -60,8 +60,8 @@ export default function MermaidDiagram({ chart }: MermaidDiagramProps) {
 
   return (
     <>
-      <div 
-        className="mermaid-container" 
+      <div
+        className="mermaid-container"
         ref={containerRef}
         onClick={() => setIsZoomed(true)}
         style={{ cursor: "zoom-in" }}
@@ -75,12 +75,9 @@ export default function MermaidDiagram({ chart }: MermaidDiagramProps) {
       </div>
 
       {isZoomed && (
-        <div 
-          className="mermaid-modal" 
-          onClick={() => setIsZoomed(false)}
-        >
+        <div className="mermaid-modal" onClick={() => setIsZoomed(false)}>
           <div className="mermaid-modal-content">
-            <button 
+            <button
               className="mermaid-modal-close"
               onClick={() => setIsZoomed(false)}
             >
