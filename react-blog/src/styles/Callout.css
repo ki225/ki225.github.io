@@ -1,0 +1,97 @@
+.callout {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  margin: 1.5rem 0;
+  border-left: 4px solid;
+  border-radius: 6px;
+  background: #f8f9fa;
+  transition: all 0.2s ease;
+}
+
+.callout:hover {
+  background: #f1f3f5;
+}
+
+.callout-icon {
+  flex-shrink: 0;
+  font-size: 20px;
+  line-height: 1.5;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.callout-content {
+  flex: 1;
+  line-height: 1.6;
+}
+
+.callout-content > *:first-child {
+  margin-top: 0;
+}
+
+.callout-content > *:last-child {
+  margin-bottom: 0;
+}
+
+.callout-content p {
+  margin: 0.5em 0;
+}
+
+.callout-content h1,
+.callout-content h2,
+.callout-content h3,
+.callout-content h4,
+.callout-content h5,
+.callout-content h6 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.callout-content pre {
+  margin: 0.75em 0;
+}
+
+.callout-content code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+/* 类型特定样式 */
+.callout[data-type="info"] {
+  background: #eff6ff;
+}
+
+.callout[data-type="warning"] {
+  background: #fffbeb;
+}
+
+.callout[data-type="important"] {
+  background: #fef2f2;
+}
+
+.callout[data-type="tip"] {
+  background: #f0fdf4;
+}
+
+.callout[data-type="note"] {
+  background: #faf5ff;
+}
+
+@media (max-width: 768px) {
+  .callout {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .callout-icon {
+    font-size: 18px;
+    width: 20px;
+    height: 20px;
+  }
+}

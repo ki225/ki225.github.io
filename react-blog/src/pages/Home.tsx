@@ -5,9 +5,10 @@ function Home() {
   const titles = useMemo(
     () => [
       "Kiki",
-      "an Active Learner",
-      "Team Player",
-      "a DAY ONE person",
+      "Senior CS Student",
+      "IT Sprouter",
+      "AWS Educate AMB",
+      "Ex-ECV Intern",
       "a Cafe Hopper",
     ],
     [],
@@ -50,10 +51,7 @@ function Home() {
       <div className="content-wrapper">
         <div className="left-section">
           <div className="mobile-image">
-            <img
-              src="https://ki225.github.io/images/self/image.png"
-              alt="Profile Picture"
-            />
+            <img src="/images/self/chiikawa.jpg" alt="Profile Picture" />
           </div>
 
           <div className="title-section">
@@ -65,14 +63,18 @@ function Home() {
 
           <div className="introduction">
             <p>
-              Welcome to my tech note site!
-              <br />I focus on <span className="highlight">cloud</span>,{" "}
-              <span className="highlight">networking</span>, and{" "}
-              <span className="highlight">development</span>, and I enjoy
-              exploring the intersection of AI, security, and infrastructure.
+              Welcome to my note site!
               <br />
-              This is where I document what I learn, what I break (and fix), and
-              what excites me in tech.
+              I’m interested in{" "}
+              <span className="highlight">cloud computing</span>,{" "}
+              <span className="highlight">containerization</span>, and{" "}
+              <span className="highlight">software development</span>, and I’m
+              gradually diving into{" "}
+              <span className="highlight">next-generation networking</span>.
+              <br />
+              This site is where I document my learning notes, share experiences
+              like career and competitions, and keep track of pitfalls I’ve run
+              into (and fixed).
             </p>
           </div>
 
@@ -139,10 +141,7 @@ function Home() {
 
         <div className="right-section">
           <div className="profile-image">
-            <img
-              src="https://ki225.github.io/images/self/image.png"
-              alt="Profile Picture"
-            />
+            <img src="/images/self/chiikawa.jpg" alt="Profile Picture" />
           </div>
         </div>
       </div>

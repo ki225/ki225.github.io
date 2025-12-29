@@ -2,9 +2,15 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkToc from "remark-toc";
 import rehypeRaw from "rehype-raw";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import Sidebar from "../components/Sidebar";
 import Loading from "../components/Loading";
+import MermaidDiagram from "../components/MermaidDiagram";
+import BookmarkCard from "../components/BookmarkCard";
+import Callout from "../components/Callout";
 import {
   loadPostBySlug,
   loadAllPosts,
@@ -106,8 +112,8 @@ function BlogDetail() {
           <header className="article-header">
             <div className="article-meta-info">
               <img
-                src="https://ki225.github.io/images/self/image.png"
-                alt="Kiki Huang"
+                src="/images/self/chiikawa.jpg"
+                alt="Kiki H."
                 className="author-avatar"
               />
               <div>
@@ -131,22 +137,77 @@ function BlogDetail() {
             </div>
           </header>
 
-          <div className="article-image-container">
-            <img
-              src={
-                post.thumbnail ||
-                categoryImages[post.category] ||
-                "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200"
-              }
-              alt={post.title}
-            />
-          </div>
-
           <div className="article-body">
             <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
+              remarkPlugins={[
+                remarkGfm,
+                [remarkToc, { tight: true, ordered: false }],
+              ]}
               rehypePlugins={[rehypeRaw]}
               components={{
+                code({
+                  inline,
+                  className,
+                  children,
+                  ...props
+                }: {
+                  inline?: boolean;
+                  className?: string;
+                  children?: React.ReactNode;
+                }) {
+                  const match = /language-(\w+)/.exec(className || "");
+                  const language = match ? match[1] : "";
+
+                  if (!inline && language === "mermaid") {
+                    return <MermaidDiagram chart={String(children)} />;
+                  }
+
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      style={vscDarkPlus}
+                      language={language}
+                      PreTag="div"
+                      {...props}
+                    >
+                      {String(children).replace(/\n$/, "")}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <code className={className} {...props}>
+                      {children}
+                    </code>
+                  );
+                },
+                a: ({ href, children, ...props }) => {
+                  // 检测是否为 bookmark 格式: [bookmark](url)
+                  let childText = "";
+                  if (Array.isArray(children)) {
+                    childText = children
+                      .map((child) =>
+                        typeof child === "string"
+                          ? child
+                          : child?.props?.children || "",
+                      )
+                      .join("");
+                  } else if (typeof children === "string") {
+                    childText = children;
+                  }
+
+                  if (childText.trim() === "bookmark" && href) {
+                    return <BookmarkCard url={href} />;
+                  }
+
+                  // 普通链接
+                  return (
+                    <a
+                      href={href}
+                      {...props}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {children}
+                    </a>
+                  );
+                },
                 img: ({ ...props }) => {
                   let src = props.src || "";
                   if (
@@ -158,6 +219,9 @@ function BlogDetail() {
                     src = "/" + src;
                   }
                   return <img {...props} src={src} alt={props.alt || ""} />;
+                },
+                aside: ({ children }) => {
+                  return <Callout type="info">{children}</Callout>;
                 },
               }}
             >

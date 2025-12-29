@@ -7,7 +7,7 @@ interface SidebarProps {
 }
 
 function Sidebar({ tags }: SidebarProps) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   return (
     <aside className={`sidebar ${isCollapsed ? "sidebar-collapsed" : ""}`}>
@@ -17,7 +17,13 @@ function Sidebar({ tags }: SidebarProps) {
         aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M10 4L6 8L10 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path
+            d="M10 4L6 8L10 12"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </button>
       <div className="sidebar-section">

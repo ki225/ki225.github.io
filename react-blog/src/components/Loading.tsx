@@ -35,7 +35,7 @@ function Loading() {
         </div>
       </div>
       <br></br>
-        <p className="pixel-subtitle">Loading......</p>
+      <p className="pixel-subtitle">Loading......</p>
     </div>
   );
 }

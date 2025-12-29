@@ -150,8 +150,19 @@ export function getCategory(tags: string[]): string {
   return tags[0];
 }
 
+export function getCategoryFromPath(path: string): string {
+  const parts = path.split("/");
+  const postsIndex = parts.findIndex((p) => p === "posts");
+
+  if (postsIndex === -1 || postsIndex >= parts.length - 2) {
+    return "General";
+  }
+
+  return parts[postsIndex + 1];
+}
+
 export async function loadAllPosts(): Promise<BlogPost[]> {
-  const postFiles = import.meta.glob("/src/posts/*.md", { as: "raw" });
+  const postFiles = import.meta.glob("/src/posts/**/*.md", { as: "raw" });
 
   const posts: BlogPost[] = [];
 
@@ -161,6 +172,7 @@ export async function loadAllPosts(): Promise<BlogPost[]> {
       const { metadata, content } = parseFrontmatter(markdown);
 
       const filename = path.split("/").pop()?.replace(".md", "") || "";
+      const category = getCategoryFromPath(path);
 
       const post: BlogPost = {
         id: filename,
@@ -170,7 +182,7 @@ export async function loadAllPosts(): Promise<BlogPost[]> {
         tags: metadata.tags,
         excerpt: generateExcerpt(content),
         content: content,
-        category: getCategory(metadata.tags),
+        category: category,
         readTime: calculateReadTime(content),
         thumbnail: extractFirstImage(content),
       };
@@ -189,26 +201,16 @@ export async function loadAllPosts(): Promise<BlogPost[]> {
 }
 
 export async function loadPostBySlug(slug: string): Promise<BlogPost | null> {
-  try {
-    const markdown = await import(`../posts/${slug}.md?raw`);
-    const { metadata, content } = parseFrontmatter(markdown.default);
+  // 先嘗試從所有文章中找到對應的 slug
+  const allPosts = await loadAllPosts();
+  const post = allPosts.find((p) => p.slug === slug);
 
-    return {
-      id: slug,
-      slug: slug,
-      title: metadata.title,
-      date: metadata.date,
-      tags: metadata.tags,
-      excerpt: generateExcerpt(content),
-      content: content,
-      category: getCategory(metadata.tags),
-      readTime: calculateReadTime(content),
-      thumbnail: extractFirstImage(content),
-    };
-  } catch (error) {
-    console.error(`Error loading post ${slug}:`, error);
-    return null;
+  if (post) {
+    return post;
   }
+
+  console.error(`Post not found: ${slug}`);
+  return null;
 }
 
 export function getAllCategories(

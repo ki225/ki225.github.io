@@ -200,6 +200,10 @@
     font-size: 1rem;
     text-align: center;
   }
+
+  .social-icons {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 480px) {
