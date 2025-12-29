@@ -1,11 +1,12 @@
 ---
 title: API Gateway 整合 CloudFront 與自有網域
 date: 2025-12-28 21:04:27
-tags: [aws]
+tags: [AWS]
 ---
 
 ## Table of Contents
 
+---
 ## 1. 背景知識
 
 在八屆 [dev team training 1 課程](https://youtu.be/oTzyq0q3KV0?si=cRQ6hEZFdNS2Hk7A)裡面，我們知道在 TPET 中一個 API 請求的執行路徑是：
@@ -43,6 +44,43 @@ tags: [aws]
 
 1. 會透過 Route 53 進行 DNS lookup
 2. Route 53 回傳一個 CloudFront distribution domain ([dxxxxx.cloudfront.net](http://dxxxxx.cloudfront.net/))，這樣請求就可以進入到 Cloudfront
+
+<aside>
+如果是配置 CNAME ，才會中間會解析出 CloudFront Distribution Endpoint 再解析出 IP，但我們是用 Alias (A Record) 會直接解析到 CloudFront 的 Anycast IP
+
+```
+dig api.tpet.aws-educate.tw
+
+; <<>> DiG 9.10.6 <<>> api.tpet.aws-educate.tw
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 11086
+;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 4, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;api.tpet.aws-educate.tw.	IN	A
+
+;; ANSWER SECTION:
+api.tpet.aws-educate.tw. 60	IN	A	3.169.121.127
+api.tpet.aws-educate.tw. 60	IN	A	3.169.121.80
+api.tpet.aws-educate.tw. 60	IN	A	3.169.121.109
+api.tpet.aws-educate.tw. 60	IN	A	3.169.121.65
+
+;; AUTHORITY SECTION:
+aws-educate.tw.		300	IN	NS	ns-1103.awsdns-09.org.
+aws-educate.tw.		300	IN	NS	ns-1728.awsdns-24.co.uk.
+aws-educate.tw.		300	IN	NS	ns-4.awsdns-00.com.
+aws-educate.tw.		300	IN	NS	ns-668.awsdns-19.net.
+
+;; Query time: 211 msec
+;; SERVER: 2407:4b00:1c02:77d9:4f2:67ff:fe6e:e6a8#53(2407:4b00:1c02:77d9:4f2:67ff:fe6e:e6a8)
+;; WHEN: Sun Dec 28 04:47:21 CST 2025
+;; MSG SIZE  rcvd: 254
+
+```
+</aside>
 
 ### 2-2. CloudFront：統一入口 + Path-based routing
 

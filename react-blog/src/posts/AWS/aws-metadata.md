@@ -1,7 +1,7 @@
 ---
 title: AWS Metadata？
 date: 2025-02-16 00:50:29
-tags:
+tags: [AWS]
 ---
 
 # 什麼是 AWS Metadata？

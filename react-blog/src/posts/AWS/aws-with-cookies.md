@@ -1,6 +1,6 @@
 ---
 title: 介紹 AWS 如何在網頁上辨識使用者帳戶？以及第三方 Cookie 封鎖對使用 AWS 資源的影響？
-date: 2025-02-15 00:10:35
+date: 2024-10-15 00:10:35
 tags: [cookie-session, AWS-Authentication, AWS, Authentication]
 ---
 
