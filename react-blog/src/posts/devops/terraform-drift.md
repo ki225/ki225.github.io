@@ -79,11 +79,11 @@ Drift 的可怕之處不在於「資源被改了」，而在於：
 * **Module 儲存**
   GitLab Repo 也能充當 Terraform module registry。公司內部常用的模組可以統一放在 GitLab，跨專案引用。
 
-例如：
+例如，我可以在其他專案引用某個專案定義的 terraform module `ses-product`：
 
 ```hcl
 module "xm-stg-ses" {
-  source  = "fox.25sprout.com/25sprout/ses-product/aws"
+  source  = "<gitlab-host-domain>/<ses-product-module-path>"
   version = "0.0.0"
 
   product_name = "xm"
@@ -93,6 +93,7 @@ module "xm-stg-ses" {
   aws_region  = "us-west-2"
   mail_sender = "xm_stg@25demo.com"
   tags        = {"usage":"xm staging"}
+  ...
 }
 ```
 
