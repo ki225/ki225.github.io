@@ -236,7 +236,7 @@
 }
 
 .mermaid-container::after {
-  content: "🔍 點擊放大";
+  content: "點擊放大";
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
