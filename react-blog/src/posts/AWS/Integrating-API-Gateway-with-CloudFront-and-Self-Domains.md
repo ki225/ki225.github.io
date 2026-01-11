@@ -1,6 +1,6 @@
 ---
 title: API Gateway 整合 CloudFront 與自有網域
-date: 2025-12-28 21:04:27
+date: 2025-11-28 21:04:27
 tags: [AWS]
 ---
 
@@ -73,11 +73,6 @@ aws-educate.tw.		300	IN	NS	ns-1103.awsdns-09.org.
 aws-educate.tw.		300	IN	NS	ns-1728.awsdns-24.co.uk.
 aws-educate.tw.		300	IN	NS	ns-4.awsdns-00.com.
 aws-educate.tw.		300	IN	NS	ns-668.awsdns-19.net.
-
-;; Query time: 211 msec
-;; SERVER: 2407:4b00:1c02:77d9:4f2:67ff:fe6e:e6a8#53(2407:4b00:1c02:77d9:4f2:67ff:fe6e:e6a8)
-;; WHEN: Sun Dec 28 04:47:21 CST 2025
-;; MSG SIZE  rcvd: 254
 
 ```
 </aside>

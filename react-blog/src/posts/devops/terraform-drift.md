@@ -1,7 +1,7 @@
 ---
 title: Terraform Drift 的治理實戰：結合 GitLab Pipeline 的偵測與修復流程
-date: 2025-10-19 11:45:43
-tags: [Terraform]
+date: 2025-9-19 11:45:43
+tags: [Terraform, AWS]
 ---
 
 在基礎建設自動化的世界裡，**Terraform** 扮演著「基礎設施即程式碼（IaC）」的角色，而 **GitLab** 則像是它的管家，幫忙保存狀態、管理版本，甚至透過 pipeline 自動執行。這兩者的結合，讓團隊能夠在混亂的雲端環境裡維持秩序。

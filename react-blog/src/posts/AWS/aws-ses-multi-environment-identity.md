@@ -1,6 +1,6 @@
 ---
 title: 使用 AWS SES + 子網域委派，實作多環境 Email Identity 與轉寄架構
-date: 2025-12-8 21:04:27
+date: 2025-10-18 15:14:27
 tags: [AWS, SES identity]
 ---
 
