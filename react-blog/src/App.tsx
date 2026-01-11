@@ -30,12 +30,25 @@ function App() {
             <Link to="/blog" onClick={() => setMenuOpen(false)}>
               Blog
             </Link>
+            <a
+              href="https://ki225.github.io/#/blog?tag=AWS"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+            >
+              AWS Blog
+            </a>
             <Link to="/categories" onClick={() => setMenuOpen(false)}>
               Categories
             </Link>
-            <Link to="/projects" onClick={() => setMenuOpen(false)}>
-              Projects
-            </Link>
+            <a
+              href="https://free-ran-ue.github.io/doc-5g-core-book/en/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+            >
+              5GC book
+            </a>
             <a
               href="https://www.linkedin.com/in/yung-chi-huang/"
               target="_blank"
@@ -57,7 +70,7 @@ function App() {
         </Routes>
 
         <footer className="footer">
-          <p>© 2025 Kiki. All Rights Reserved.</p>
+          <p>© 2024 - 2026 Kiki. All Rights Reserved.</p>
         </footer>
       </div>
     </Router>

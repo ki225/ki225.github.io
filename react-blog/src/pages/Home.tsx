@@ -65,16 +65,12 @@ function Home() {
             <p>
               Welcome to my note site!
               <br />
-              I’m interested in{" "}
-              <span className="highlight">cloud computing</span>,{" "}
-              <span className="highlight">containerization</span>, and{" "}
-              <span className="highlight">software development</span>, and I’m
-              gradually diving into{" "}
+              I’m engaged in{" "}
+              <span className="highlight">AWS</span> and{" "}
               <span className="highlight">next-generation networking</span>.
               <br />
-              This site is where I document my learning notes, share experiences
-              like career and competitions, and keep track of pitfalls I’ve run
-              into (and fixed).
+              This blog site is where I document my explorations, experiments, and system-level
+              thinking—turning what I build and learn into shared notes along the way.
             </p>
           </div>
 
