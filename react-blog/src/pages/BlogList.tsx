@@ -172,7 +172,7 @@ function BlogList() {
           </div>
 
           <div className="articles-grid">
-            {displayedPosts.map((post) => (
+            {displayedPosts.map((post, index) => (
               <Link
                 key={post.id}
                 to={`/blog/${post.slug}`}
@@ -180,7 +180,8 @@ function BlogList() {
               >
                 <div className="article-image">
                   <img
-                    loading="lazy"
+                    loading={index < 4 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : "auto"}
                     src={
                       post.thumbnail ||
                       categoryImages[post.category] ||
