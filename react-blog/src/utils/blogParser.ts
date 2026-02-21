@@ -168,7 +168,10 @@ export function loadAllPosts(): BlogPost[] {
 
   for (const path in postFiles) {
     try {
-      const markdown = (postFiles[path] as any).default || postFiles[path];
+      const rawContent = postFiles[path] as unknown;
+      const markdown = (typeof rawContent === 'object' && rawContent !== null && 'default' in rawContent) 
+        ? (rawContent as { default: string }).default 
+        : (rawContent as string);
       const { metadata, content } = parseFrontmatter(markdown);
 
       const filename = path.split("/").pop()?.replace(".md", "") || "";
