@@ -180,6 +180,7 @@ function BlogList() {
               >
                 <div className="article-image">
                   <img
+                    loading="lazy"
                     src={
                       post.thumbnail ||
                       categoryImages[post.category] ||
