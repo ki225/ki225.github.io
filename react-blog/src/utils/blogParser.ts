@@ -161,14 +161,14 @@ export function getCategoryFromPath(path: string): string {
   return parts[postsIndex + 1];
 }
 
-export async function loadAllPosts(): Promise<BlogPost[]> {
-  const postFiles = import.meta.glob("/src/posts/**/*.md", { as: "raw" });
+export function loadAllPosts(): BlogPost[] {
+  const postFiles = import.meta.glob("/src/posts/**/*.md", { as: "raw", eager: true });
 
   const posts: BlogPost[] = [];
 
   for (const path in postFiles) {
     try {
-      const markdown = (await postFiles[path]()) as string;
+      const markdown = (postFiles[path] as any).default || postFiles[path];
       const { metadata, content } = parseFrontmatter(markdown);
 
       const filename = path.split("/").pop()?.replace(".md", "") || "";
@@ -201,12 +201,34 @@ export async function loadAllPosts(): Promise<BlogPost[]> {
 }
 
 export async function loadPostBySlug(slug: string): Promise<BlogPost | null> {
-  // 先嘗試從所有文章中找到對應的 slug
-  const allPosts = await loadAllPosts();
-  const post = allPosts.find((p) => p.slug === slug);
+  const postFiles = import.meta.glob("/src/posts/**/*.md", { as: "raw" });
 
-  if (post) {
-    return post;
+  for (const path in postFiles) {
+    const filename = path.split("/").pop()?.replace(".md", "") || "";
+    
+    if (filename === slug) {
+      try {
+        const markdown = (await postFiles[path]()) as string;
+        const { metadata, content } = parseFrontmatter(markdown);
+        const category = getCategoryFromPath(path);
+
+        return {
+          id: filename,
+          slug: filename,
+          title: metadata.title,
+          date: metadata.date,
+          tags: metadata.tags,
+          excerpt: generateExcerpt(content),
+          content: content,
+          category: category,
+          readTime: calculateReadTime(content),
+          thumbnail: extractFirstImage(content),
+        };
+      } catch (error) {
+        console.error(`Error loading post ${path}:`, error);
+        return null;
+      }
+    }
   }
 
   console.error(`Post not found: ${slug}`);

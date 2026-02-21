@@ -57,7 +57,7 @@ function BlogDetail() {
       const currentPost = await loadPostBySlug(id);
       setPost(currentPost);
 
-      const allPosts = await loadAllPosts();
+      const allPosts = loadAllPosts();
       const allTags = getAllTags(allPosts);
       setTags(allTags);
 

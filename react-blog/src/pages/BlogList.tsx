@@ -40,9 +40,9 @@ function BlogList() {
   };
 
   useEffect(() => {
-    async function fetchPosts() {
+    function fetchPosts() {
       setIsLoading(true);
-      const posts = await loadAllPosts();
+      const posts = loadAllPosts();
 
       const allTags = getAllTags(posts);
       setTags(allTags);
