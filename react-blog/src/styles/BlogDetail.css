@@ -177,6 +177,28 @@
   border-radius: 8px;
 }
 
+.article-body .markdown-blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border-left: 4px solid #ff9800;
+  background: #fff8f0;
+  border-radius: 4px;
+  color: #555;
+  font-style: italic;
+}
+
+.article-body .markdown-blockquote p {
+  margin: 0.5rem 0;
+}
+
+.article-body .markdown-blockquote p:first-child {
+  margin-top: 0;
+}
+
+.article-body .markdown-blockquote p:last-child {
+  margin-bottom: 0;
+}
+
 .article-body table {
   width: 100%;
   border-collapse: collapse;

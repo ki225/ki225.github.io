@@ -178,6 +178,9 @@ function BlogDetail() {
                     </code>
                   );
                 },
+                blockquote: ({ children }) => {
+                  return <blockquote className="markdown-blockquote">{children}</blockquote>;
+                },
                 a: ({ href, children, ...props }) => {
                   let childText = "";
                   if (Array.isArray(children)) {
