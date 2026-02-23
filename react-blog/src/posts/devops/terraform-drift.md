@@ -1,7 +1,7 @@
 ---
 title: Terraform Drift 的治理實戰：結合 GitLab Pipeline 的偵測與修復流程
-date: 2025-10-19 11:45:43
-tags: [Terraform]
+date: 2025-9-19 11:45:43
+tags: [Terraform, AWS]
 ---
 
 在基礎建設自動化的世界裡，**Terraform** 扮演著「基礎設施即程式碼（IaC）」的角色，而 **GitLab** 則像是它的管家，幫忙保存狀態、管理版本，甚至透過 pipeline 自動執行。這兩者的結合，讓團隊能夠在混亂的雲端環境裡維持秩序。
@@ -79,11 +79,11 @@ Drift 的可怕之處不在於「資源被改了」，而在於：
 * **Module 儲存**
   GitLab Repo 也能充當 Terraform module registry。公司內部常用的模組可以統一放在 GitLab，跨專案引用。
 
-例如：
+例如，我可以在其他專案引用某個專案定義的 terraform module `ses-product`：
 
 ```hcl
 module "xm-stg-ses" {
-  source  = "fox.25sprout.com/25sprout/ses-product/aws"
+  source  = "<gitlab-host-domain>/<ses-product-module-path>"
   version = "0.0.0"
 
   product_name = "xm"
@@ -93,6 +93,7 @@ module "xm-stg-ses" {
   aws_region  = "us-west-2"
   mail_sender = "xm_stg@25demo.com"
   tags        = {"usage":"xm staging"}
+  ...
 }
 ```
 

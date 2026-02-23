@@ -1,6 +1,6 @@
 ---
 title: 跨帳戶代理建立 AWS 資源
-date: 2025-03-16 10:24:02
+date: 2024-08-16 10:24:02
 tags: [AWS, credentials, deployment-cross-acc]
 ---
 

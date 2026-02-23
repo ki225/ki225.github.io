@@ -40,9 +40,9 @@ function BlogList() {
   };
 
   useEffect(() => {
-    async function fetchPosts() {
+    function fetchPosts() {
       setIsLoading(true);
-      const posts = await loadAllPosts();
+      const posts = loadAllPosts();
 
       const allTags = getAllTags(posts);
       setTags(allTags);
@@ -172,7 +172,7 @@ function BlogList() {
           </div>
 
           <div className="articles-grid">
-            {displayedPosts.map((post) => (
+            {displayedPosts.map((post, index) => (
               <Link
                 key={post.id}
                 to={`/blog/${post.slug}`}
@@ -180,6 +180,8 @@ function BlogList() {
               >
                 <div className="article-image">
                   <img
+                    loading={index < 4 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : "auto"}
                     src={
                       post.thumbnail ||
                       categoryImages[post.category] ||

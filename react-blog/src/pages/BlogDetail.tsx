@@ -6,6 +6,7 @@ import remarkToc from "remark-toc";
 import rehypeRaw from "rehype-raw";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import rehypeSlug from "rehype-slug";
 import Sidebar from "../components/Sidebar";
 import Loading from "../components/Loading";
 import MermaidDiagram from "../components/MermaidDiagram";
@@ -56,7 +57,7 @@ function BlogDetail() {
       const currentPost = await loadPostBySlug(id);
       setPost(currentPost);
 
-      const allPosts = await loadAllPosts();
+      const allPosts = loadAllPosts();
       const allTags = getAllTags(allPosts);
       setTags(allTags);
 
@@ -143,7 +144,7 @@ function BlogDetail() {
                 remarkGfm,
                 [remarkToc, { tight: true, ordered: false }],
               ]}
-              rehypePlugins={[rehypeRaw]}
+              rehypePlugins={[rehypeRaw, rehypeSlug]}
               components={{
                 code({
                   inline,
@@ -177,8 +178,10 @@ function BlogDetail() {
                     </code>
                   );
                 },
+                blockquote: ({ children }) => {
+                  return <blockquote className="markdown-blockquote">{children}</blockquote>;
+                },
                 a: ({ href, children, ...props }) => {
-                  // 检测是否为 bookmark 格式: [bookmark](url)
                   let childText = "";
                   if (Array.isArray(children)) {
                     childText = children
@@ -196,7 +199,43 @@ function BlogDetail() {
                     return <BookmarkCard url={href} />;
                   }
 
-                  // 普通链接
+                  // Handle anchor links (TOC links)
+                  if (href?.startsWith('#')) {
+                    return (
+                      <a
+                        href={href}
+                        {...props}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const id = decodeURIComponent(href.substring(1));
+                          const element = document.getElementById(id);
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          }
+                        }}
+                      >
+                        {children}
+                      </a>
+                    );
+                  }
+
+                  if (href?.endsWith('.md')) {
+                    const slug = href.replace('.md', '');
+                    return (
+                      <Link to={`/blog/${slug}`} {...props}>
+                        {children}
+                      </Link>
+                    );
+                  }
+
+                  if (href?.startsWith('/') && !href.match(/\.(png|jpg|jpeg|gif|svg)$/i)) {
+                    return (
+                      <Link to={href} {...props}>
+                        {children}
+                      </Link>
+                    );
+                  }
+
                   return (
                     <a
                       href={href}
