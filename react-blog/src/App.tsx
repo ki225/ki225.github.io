@@ -31,17 +31,6 @@ function App() {
               Blog
             </Link>
             <a
-              href="https://ki225.github.io/#/blog?tag=AWS"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMenuOpen(false)}
-            >
-              AWS Blog
-            </a>
-            <Link to="/categories" onClick={() => setMenuOpen(false)}>
-              Categories
-            </Link>
-            <a
               href="https://free-ran-ue.github.io/doc-5g-core-book/en/"
               target="_blank"
               rel="noopener noreferrer"

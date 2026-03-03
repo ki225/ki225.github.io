@@ -92,10 +92,6 @@ function BlogList() {
         <div className="blog-header">
           <div>
             <h1>Blog</h1>
-            <p className="blog-description">
-              Tech notes on cloud, networking, AI, and development. Learning,
-              breaking, fixing, and sharing.
-            </p>
           </div>
           <div className="blog-actions">
             <div className="search-container">

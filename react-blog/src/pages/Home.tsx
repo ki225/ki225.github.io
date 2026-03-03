@@ -69,8 +69,7 @@ function Home() {
               <span className="highlight">AWS</span> and{" "}
               <span className="highlight">next-generation networking</span>.
               <br />
-              This blog site is where I document my explorations, experiments, and system-level
-              thinking—turning what I build and learn into shared notes along the way.
+              This blog site is where I keep track of my learning journey and explorations.
             </p>
           </div>
 
@@ -86,16 +85,6 @@ function Home() {
               />
             </a>
             <a
-              href="https://www.instagram.com/photokii_/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="https://ki225.github.io/images/instagram.svg"
-                alt="Instagram"
-              />
-            </a>
-            <a
               href="https://github.com/ki225"
               target="_blank"
               rel="noopener noreferrer"
@@ -103,16 +92,6 @@ function Home() {
               <img
                 src="https://ki225.github.io/images/github.svg"
                 alt="GitHub"
-              />
-            </a>
-            <a
-              href="https://youtu.be/Dq_z8meAShM?si=V-PEjM61sWfRuYbm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="https://ki225.github.io/images/youtube.svg"
-                alt="YouTube"
               />
             </a>
             <a
