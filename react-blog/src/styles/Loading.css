@@ -266,23 +266,6 @@
     56px 0 0 #000;
 }
 
-.loading-text {
-  font-size: 1.2rem;
-  color: #2c3e50;
-  font-weight: 500;
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
 @media (max-width: 768px) {
   .pixel-row {
     height: 3px;
@@ -291,9 +274,5 @@
   .pixel-row::before {
     width: 3px;
     height: 3px;
-  }
-
-  .loading-text {
-    font-size: 1rem;
   }
 }

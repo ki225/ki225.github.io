@@ -10,7 +10,6 @@ import {
   formatDate,
   type BlogPost,
 } from "../utils/blogParser";
-import "../styles/BlogList.css";
 
 function BlogList() {
   const [searchParams] = useSearchParams();
@@ -91,12 +90,13 @@ function BlogList() {
       <main className="blog-main">
         <div className="blog-header">
           <div>
-            <h1>Blog</h1>
+            <h1>Writing</h1>
           </div>
           <div className="blog-actions">
             <div className="search-container">
               <input
                 type="text"
+                aria-label="Search articles"
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -148,6 +148,7 @@ function BlogList() {
             <div className="article-controls">
               <select
                 className="sort-select"
+                aria-label="Sort articles"
                 onChange={(e) => {
                   const sorted = [...displayedPosts];
                   if (e.target.value === "date") {
@@ -185,7 +186,6 @@ function BlogList() {
                     }
                     alt={post.title}
                   />
-                  <span className="article-category">{post.category}</span>
                 </div>
                 <div className="article-content">
                   <div className="article-meta">

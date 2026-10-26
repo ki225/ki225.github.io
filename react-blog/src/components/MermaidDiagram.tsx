@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import mermaid from "mermaid";
 
 interface MermaidDiagramProps {
@@ -8,7 +8,6 @@ interface MermaidDiagramProps {
 let mermaidInitialized = false;
 
 export default function MermaidDiagram({ chart }: MermaidDiagramProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [isZoomed, setIsZoomed] = useState(false);
@@ -62,7 +61,6 @@ export default function MermaidDiagram({ chart }: MermaidDiagramProps) {
     <>
       <div
         className="mermaid-container"
-        ref={containerRef}
         onClick={() => setIsZoomed(true)}
         style={{ cursor: "zoom-in" }}
         title="點擊放大查看"
