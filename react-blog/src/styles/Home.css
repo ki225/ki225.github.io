@@ -260,6 +260,40 @@ body:has(.profile-page) {
   width: 15px;
   height: 15px;
 }
+.profile-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.profile-skill-group {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.profile-skill-group h3 {
+  margin: 0;
+  color: var(--profile-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 28px;
+}
+.profile-skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.profile-skill-list li {
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: var(--profile-elevated);
+  color: var(--profile-body);
+  font-size: 13px;
+  line-height: 18px;
+}
 .profile-research {
   padding: 22px 24px;
   border: 1px solid var(--profile-border);
@@ -416,6 +450,13 @@ body:has(.profile-page) {
   }
   .profile-project-context {
     font-size: 12px;
+  }
+  .profile-skill-group {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+  }
+  .profile-skill-group h3 {
+    font-size: 13px;
   }
   .profile-footer {
     margin-top: 48px;

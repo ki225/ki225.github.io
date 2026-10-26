@@ -10,6 +10,7 @@ import {
   profile,
   projects,
   research,
+  skillStack,
 } from "../data/profile";
 
 function ResumeSection({
@@ -114,6 +115,28 @@ function Home() {
                 </div>
               </div>
             </article>
+          ))}
+        </div>
+      </section>
+      <section
+        className="profile-section"
+        id="skills"
+        aria-labelledby="skills-title"
+      >
+        <h2 id="skills-title">
+          <Icon name="skills" />
+          Skill Stack
+        </h2>
+        <div className="profile-skills">
+          {skillStack.map((group) => (
+            <div className="profile-skill-group" key={group.category}>
+              <h3>{group.category}</h3>
+              <ul className="profile-skill-list">
+                {group.skills.map((skill) => (
+                  <li key={skill}>{skill}</li>
+                ))}
+              </ul>
+            </div>
           ))}
         </div>
       </section>

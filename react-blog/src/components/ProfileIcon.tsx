@@ -7,6 +7,7 @@ export type IconName =
   | "work"
   | "education"
   | "community"
+  | "skills"
   | "research"
   | "certificate"
   | "award"
@@ -49,6 +50,7 @@ export default function Icon({ name }: { name: IconName }) {
         <path d="M3 21v-3a6 6 0 0 1 12 0v3M16 5a3 3 0 0 1 0 6m3 10v-3a6 6 0 0 0-2-4" />
       </>
     ),
+    skills: <path d="m8 8-4 4 4 4m8-8 4 4-4 4M14 5l-4 14" />,
     research: (
       <>
         <path d="M9 3h6m-5 0v7L4 20a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1l-6-10V3M7 15h10" />

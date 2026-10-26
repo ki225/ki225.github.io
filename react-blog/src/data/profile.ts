@@ -120,6 +120,33 @@ export const projects = [
   },
 ];
 
+export const skillStack = [
+  {
+    category: "Software Engineering",
+    skills: ["Python", "C++", "TypeScript", "Node.js", "React", "Postman"],
+  },
+  {
+    category: "Cloud & DevOps",
+    skills: [
+      "AWS",
+      "Google Cloud",
+      "Docker",
+      "Kubernetes",
+      "Terraform",
+      "Jenkins",
+      "Linux",
+    ],
+  },
+  {
+    category: "Networking & Distributed Systems",
+    skills: ["free5GC", "Hyperledger Fabric", "IPFS"],
+  },
+  {
+    category: "AI & Data",
+    skills: ["LangGraph", "LangChain", "OpenSearch", "Federated Learning"],
+  },
+];
+
 export const research = {
   authors:
     "Yung-Chi Huang, Pei-Yi Tsao, Szu-Hua Huang, Yi-An Lien, and Li-Der Chou",
