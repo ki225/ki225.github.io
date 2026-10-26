@@ -9,7 +9,6 @@ import {
   formatDate,
   type BlogPost,
 } from "../utils/blogParser";
-import "../styles/CategoryList.css";
 
 function CategoryList() {
   const { category } = useParams();
@@ -245,7 +244,6 @@ function CategoryList() {
                     }
                     alt={post.title}
                   />
-                  <span className="article-category">{categoryName}</span>
                 </div>
                 <div className="article-content">
                   <div className="article-meta">

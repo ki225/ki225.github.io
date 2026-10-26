@@ -18,18 +18,6 @@
   gap: 2rem;
 }
 
-.pixel-title {
-  font-family: "Courier New", monospace;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #333;
-  letter-spacing: 0.3rem;
-  text-align: center;
-  text-shadow: 3px 3px 0 #ff9800;
-  margin: 0;
-  animation: blink 1.5s infinite;
-}
-
 .pixel-subtitle {
   font-family: "Courier New", monospace;
   font-size: 1.2rem;
@@ -39,24 +27,7 @@
   margin: 0;
 }
 
-@keyframes blink {
-  0%,
-  50%,
-  100% {
-    opacity: 1;
-  }
-  25%,
-  75% {
-    opacity: 0.5;
-  }
-}
-
 @media (max-width: 768px) {
-  .pixel-title {
-    font-size: 1.5rem;
-    letter-spacing: 0.1rem;
-  }
-
   .pixel-subtitle {
     font-size: 1rem;
     letter-spacing: 0.1rem;

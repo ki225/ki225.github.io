@@ -11,7 +11,7 @@ export interface BlogPost {
   thumbnail?: string;
 }
 
-export interface BlogMetadata {
+interface BlogMetadata {
   title: string;
   date: string;
   tags: string[];
@@ -20,7 +20,7 @@ export interface BlogMetadata {
 /**
  * 解析 Markdown frontmatter
  */
-export function parseFrontmatter(markdown: string): {
+function parseFrontmatter(markdown: string): {
   metadata: BlogMetadata;
   content: string;
 } {
@@ -59,14 +59,14 @@ export function parseFrontmatter(markdown: string): {
 /**
  * 计算阅读时间（基于字数）
  */
-export function calculateReadTime(content: string): string {
+function calculateReadTime(content: string): string {
   const wordsPerMinute = 200;
   const words = content.trim().split(/\s+/).length;
   const minutes = Math.ceil(words / wordsPerMinute);
   return `${minutes} min read`;
 }
 
-export function extractFirstImage(content: string): string | undefined {
+function extractFirstImage(content: string): string | undefined {
   const imageRegex = /!\[.*?\]\((.+?)\)/;
   const match = content.match(imageRegex);
 
@@ -85,10 +85,7 @@ export function extractFirstImage(content: string): string | undefined {
   return undefined;
 }
 
-export function generateExcerpt(
-  content: string,
-  maxLength: number = 150,
-): string {
+function generateExcerpt(content: string, maxLength: number = 150): string {
   const plainText = content
     .replace(/^#+ .+$/gm, "")
     .replace(/!\[.*?\]\(.*?\)/g, "")
@@ -114,43 +111,7 @@ export function formatDate(dateString: string): string {
   return date.toLocaleDateString("en-US", options);
 }
 
-export function getCategory(tags: string[]): string {
-  if (tags.length === 0) return "General";
-
-  const categoryMap: { [key: string]: string } = {
-    aws: "AWS",
-    cloud: "Cloud",
-    networking: "Networking",
-    "5g": "Networking",
-    "3gpp": "Networking",
-    security: "Security",
-    blockchain: "Blockchain",
-    terraform: "DevOps",
-    devops: "DevOps",
-    docker: "DevOps",
-    iac: "DevOps",
-    ai: "AI",
-    ml: "AI",
-    "machine-learning": "AI",
-    git: "Development",
-    hexo: "Development",
-    php: "Development",
-    linux: "Linux",
-    ubuntu: "Linux",
-    interview: "Career",
-  };
-
-  for (const tag of tags) {
-    const normalizedTag = tag.toLowerCase();
-    if (categoryMap[normalizedTag]) {
-      return categoryMap[normalizedTag];
-    }
-  }
-
-  return tags[0];
-}
-
-export function getCategoryFromPath(path: string): string {
+function getCategoryFromPath(path: string): string {
   const parts = path.split("/");
   const postsIndex = parts.findIndex((p) => p === "posts");
 
@@ -162,16 +123,17 @@ export function getCategoryFromPath(path: string): string {
 }
 
 export function loadAllPosts(): BlogPost[] {
-  const postFiles = import.meta.glob("/src/posts/**/*.md", { as: "raw", eager: true });
+  const postFiles = import.meta.glob<string>("/src/posts/**/*.md", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  });
 
   const posts: BlogPost[] = [];
 
   for (const path in postFiles) {
     try {
-      const rawContent = postFiles[path] as unknown;
-      const markdown = (typeof rawContent === 'object' && rawContent !== null && 'default' in rawContent) 
-        ? (rawContent as { default: string }).default 
-        : (rawContent as string);
+      const markdown = postFiles[path];
       const { metadata, content } = parseFrontmatter(markdown);
 
       const filename = path.split("/").pop()?.replace(".md", "") || "";
@@ -204,38 +166,7 @@ export function loadAllPosts(): BlogPost[] {
 }
 
 export async function loadPostBySlug(slug: string): Promise<BlogPost | null> {
-  const postFiles = import.meta.glob("/src/posts/**/*.md", { as: "raw" });
-
-  for (const path in postFiles) {
-    const filename = path.split("/").pop()?.replace(".md", "") || "";
-    
-    if (filename === slug) {
-      try {
-        const markdown = (await postFiles[path]()) as string;
-        const { metadata, content } = parseFrontmatter(markdown);
-        const category = getCategoryFromPath(path);
-
-        return {
-          id: filename,
-          slug: filename,
-          title: metadata.title,
-          date: metadata.date,
-          tags: metadata.tags,
-          excerpt: generateExcerpt(content),
-          content: content,
-          category: category,
-          readTime: calculateReadTime(content),
-          thumbnail: extractFirstImage(content),
-        };
-      } catch (error) {
-        console.error(`Error loading post ${path}:`, error);
-        return null;
-      }
-    }
-  }
-
-  console.error(`Post not found: ${slug}`);
-  return null;
+  return loadAllPosts().find((post) => post.slug === slug) ?? null;
 }
 
 export function getAllCategories(
@@ -258,12 +189,6 @@ export function filterPostsByCategory(
   category: string,
 ): BlogPost[] {
   return posts.filter((post) => post.category === category);
-}
-
-export function filterPostsByTag(posts: BlogPost[], tag: string): BlogPost[] {
-  return posts.filter((post) =>
-    post.tags.some((t) => t.toLowerCase() === tag.toLowerCase()),
-  );
 }
 
 export function searchPosts(posts: BlogPost[], query: string): BlogPost[] {

@@ -19,7 +19,6 @@ import {
   formatDate,
   type BlogPost,
 } from "../utils/blogParser";
-import "../styles/BlogDetail.css";
 
 function BlogDetail() {
   const { id } = useParams();
@@ -179,7 +178,11 @@ function BlogDetail() {
                   );
                 },
                 blockquote: ({ children }) => {
-                  return <blockquote className="markdown-blockquote">{children}</blockquote>;
+                  return (
+                    <blockquote className="markdown-blockquote">
+                      {children}
+                    </blockquote>
+                  );
                 },
                 a: ({ href, children, ...props }) => {
                   let childText = "";
@@ -200,7 +203,7 @@ function BlogDetail() {
                   }
 
                   // Handle anchor links (TOC links)
-                  if (href?.startsWith('#')) {
+                  if (href?.startsWith("#")) {
                     return (
                       <a
                         href={href}
@@ -210,7 +213,10 @@ function BlogDetail() {
                           const id = decodeURIComponent(href.substring(1));
                           const element = document.getElementById(id);
                           if (element) {
-                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            element.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
                           }
                         }}
                       >
@@ -219,8 +225,8 @@ function BlogDetail() {
                     );
                   }
 
-                  if (href?.endsWith('.md')) {
-                    const slug = href.replace('.md', '');
+                  if (href?.endsWith(".md")) {
+                    const slug = href.replace(".md", "");
                     return (
                       <Link to={`/blog/${slug}`} {...props}>
                         {children}
@@ -228,7 +234,10 @@ function BlogDetail() {
                     );
                   }
 
-                  if (href?.startsWith('/') && !href.match(/\.(png|jpg|jpeg|gif|svg)$/i)) {
+                  if (
+                    href?.startsWith("/") &&
+                    !href.match(/\.(png|jpg|jpeg|gif|svg)$/i)
+                  ) {
                     return (
                       <Link to={href} {...props}>
                         {children}
