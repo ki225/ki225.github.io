@@ -177,6 +177,7 @@ export const awards = [
         name: "趙啟翔",
         href: "https://www.linkedin.com/in/%E5%95%9F%E7%BF%94-%E8%B6%99-457378198/",
       },
+      { name: "何雅智", href: "https://www.linkedin.com/in/lindahoduck/" },
       {
         name: "Yung-Chi Huang",
         href: "https://www.linkedin.com/in/yung-chi-huang/",
